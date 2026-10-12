@@ -205,7 +205,12 @@ def make_holomotion_k1_mjlab_cfg(
     )
     from mjlab.sensor import ContactMatch, ContactSensorCfg
 
-    from .holomotion_mjlab_rewards import K1_BODY_NAMES
+    from .holomotion_mjlab_rewards import (
+        HOLOMOTION_AUX_CONTACT_SENSOR,
+        K1_AUX_CONTACT_BODY_NAMES,
+        K1_BODY_NAMES,
+    )
+    from .envs.mjlab_physics import CONTACT_SENSOR_NAME
 
     allowed_contacts = {
         "left_ankle_roll_link",
@@ -232,6 +237,35 @@ def make_holomotion_k1_mjlab_cfg(
             reduce="maxforce",
             num_slots=1,
             history_length=decimation,
+        ),
+        ContactSensorCfg(
+            name=HOLOMOTION_AUX_CONTACT_SENSOR,
+            primary=ContactMatch(
+                mode="body",
+                pattern=K1_AUX_CONTACT_BODY_NAMES,
+                entity="robot",
+            ),
+            secondary=ContactMatch(mode="body", pattern="terrain"),
+            fields=("found",),
+            reduce="maxforce",
+            num_slots=1,
+            track_air_time=True,
+        ),
+        # Deployable input for DynamicsModel.  Keep this separate from the
+        # auxiliary-label sensor above: the physical encoder needs the actual
+        # contact point, normal and force, not only a binary contact flag.
+        ContactSensorCfg(
+            name=CONTACT_SENSOR_NAME,
+            primary=ContactMatch(
+                mode="subtree",
+                pattern=r"^(left_ankle_roll_link|right_ankle_roll_link)$",
+                entity="robot",
+            ),
+            secondary=ContactMatch(mode="body", pattern="terrain"),
+            fields=("found", "force", "pos", "normal", "tangent"),
+            reduce="maxforce",
+            global_frame=True,
+            num_slots=1,
         ),
     )
     cfg.terminations.pop("fallen", None)

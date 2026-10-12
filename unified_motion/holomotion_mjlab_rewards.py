@@ -66,6 +66,29 @@ K1_REWARD_POINT_BODY_NAMES = (
 )
 
 HOLOMOTION_UNDESIRED_CONTACT_SENSOR = "holomotion_undesired_contacts"
+HOLOMOTION_AUX_CONTACT_SENSOR = "holomotion_aux_contacts"
+
+K1_AUX_CONTACT_BODY_NAMES = (
+    "left_hip_pitch_link",
+    "right_hip_pitch_link",
+    "left_knee_pitch_link",
+    "right_knee_pitch_link",
+    "left_ankle_roll_link",
+    "right_ankle_roll_link",
+    "left_elbow_pitch_link",
+    "right_elbow_pitch_link",
+    "left_elbow_yaw_link",
+    "right_elbow_yaw_link",
+)
+
+K1_AUX_POSITION_BODY_NAMES = (
+    "left_knee_pitch_link",
+    "right_knee_pitch_link",
+    "left_ankle_roll_link",
+    "right_ankle_roll_link",
+    "left_elbow_yaw_link",
+    "right_elbow_yaw_link",
+)
 
 
 @dataclass(frozen=True)

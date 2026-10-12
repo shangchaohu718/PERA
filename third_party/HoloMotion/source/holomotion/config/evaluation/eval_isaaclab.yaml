@@ -1,0 +1,115 @@
+# @package _global_
+
+defaults:
+  - /robot: unitree/G1/29dof/29dof_training_isaaclab
+  - /env: motion_tracking
+  - /env/terrain: isaaclab_plane
+  - /env/terminations: NO_termination
+  - /env/domain_randomization: NO_domain_rand
+
+project_name: ???
+experiment_name: ???
+
+num_envs: ???
+headless: ???
+
+motion_h5_path: null
+checkpoint: null
+log_dir: null
+ckpt_pt_names: null
+
+num_processes: ???
+main_process: ???
+process_id: ???
+
+timestamp: ${now:%Y%m%d_%H%M%S}
+base_dir: logs
+experiment_dir: ${base_dir}/${project_name}/${timestamp}-${experiment_name}
+save_dir: ${experiment_dir}/.hydra
+output_dir: ${experiment_dir}/output
+experiment_save_dir: ???
+
+export_policy: false
+export_only: false
+
+dump_npzs: false
+calc_per_clip_metrics: false
+generate_report: false
+dof_mode: "23"
+
+obs:
+  critic_obs_prefix: "ref_"
+
+rewards:
+  _config:
+    reward_prefix: "ref_"
+
+algo:
+  config:
+    dynamo_backend: null
+    sampling_strategy: uniform
+    seed: 114514
+
+env:
+  config:
+    seed: 42
+    simulation:
+      episode_length_s: 36000
+
+robot:
+  motion:
+    backend: "hdf5_v2"
+    cache_max_num_clips: ${num_envs}
+    train_hdf5_roots: ${robot.motion.val_hdf5_roots}
+    val_hdf5_roots: ${motion_h5_path}
+    max_frame_length: 10000  # 20s
+    min_frame_length: 1
+    # handpicked_motion_names: ${handpicked_motion_names}
+    world_frame_normalization: false
+    dataloader:
+      num_workers: 2
+      pin_memory: true
+      persistent_workers: false
+      prefetch_factor: 1
+      timeout: 600
+      batch_progress_bar: true
+
+terrain:
+  terrain_type: generator
+  prim_path: /World/ground
+  static_friction: 1.0
+  dynamic_friction: 1.0
+  restitution: 0.0
+  friction_combine_mode: multiply
+  restitution_combine_mode: multiply
+  debug_vis: false
+  max_init_terrain_level: 0
+
+  # Use RandomSpawnTerrainImporter for optional random XY spawn inside the plane patch.
+  # When false, env origins are placed on a regular grid as in the default importer.
+  random_spawn: true
+  # Keep random spawn points away from terrain edges to avoid spawning onto the outer border.
+  random_spawn_margin: 2.0
+
+  # TerrainGeneratorCfg parameters.
+  generator:
+    num_rows: 1
+    num_cols: 1
+    size: [10.0, 10.0]
+    border_width: 1000.0
+    horizontal_scale: 0.1
+    vertical_scale: 0.005
+    slope_threshold: null
+    difficulty_range: [0.0, 0.0]
+    color_scheme: height
+    sub_terrains:
+      plane:
+        type: plane
+        proportion: 1.0
+
+  # Offline visual material configuration (PreviewSurface, no MDL/Nucleus).
+  visual_material:
+    type: color
+    diffuse_color: [0.25, 0.25, 0.25]
+    metallic: 0.0
+    roughness: 0.5

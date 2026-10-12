@@ -21,7 +21,7 @@ from unified_motion.rewards.motion_tracking import (
 from unified_motion.envs.mjlab_k1 import K1MJLabBridge, read_k1_joint_specs
 from unified_motion.envs.mjlab_physics import (
     K1PhysicsBridge, ObjectObservationSpec, CONTACT_SENSOR_NAME, FOOT_NAMES,
-    _contact_primary_names,
+    PrivilegedFootContactTruth, _contact_primary_names,
 )
 from unified_motion.algorithms.sequence_training import (
     MotionTrackingTask, PhysicsSequenceCollector, PhysicsSequencePPO, DynamicsUpdater,
@@ -116,6 +116,13 @@ class MotionDataTests(unittest.TestCase):
         self.assertEqual(w.valid_mask.tolist(),[[True,False,False]]*2)
         self.assertEqual(w.joint_pos[:,1:].count_nonzero().item(),0)
         s.advance(30);torch.testing.assert_close(s.current_times_s(),torch.ones(2))
+
+    def test_finished_reserves_future_reference_lookahead(self):
+        _,s=sampler_fixture()
+        s.advance(44)  # 0.88 s in a 1.0 s clip.
+        self.assertFalse(s.finished().any())
+        self.assertTrue(s.finished(min_remaining_s=.12).all())
+        with self.assertRaises(ValueError):s.finished(min_remaining_s=-.1)
 
     def test_unready_unknown_and_duplicate_envs(self):
         lib,_=sampler_fixture();s=MotionSampler(lib,num_envs=2,step_dt=.02,future_offsets_s=(0.,.1))
@@ -359,6 +366,33 @@ class PhysicsBridgeTests(unittest.TestCase):
         out=p.read();torch.testing.assert_close(out.object_features[:,0,:3],torch.tensor([1.,0.,0.]).repeat(2,1))
         torch.testing.assert_close(out.object_features[:,0,13:],torch.tensor([.2,.3,.4]).repeat(2,1))
 
+    def test_deployable_foot_observation_cannot_read_exact_contact_truth(self):
+        env,b,p=make_bridge()
+        sensor=env.scene[CONTACT_SENSOR_NAME].data
+        first=p.read_deployable()
+        sensor.found.fill_(1);sensor.pos.fill_(91);sensor.force.fill_(73)
+        sensor.normal.fill_(0);sensor.normal[...,2]=1
+        second=p.read_deployable()
+        torch.testing.assert_close(first.contact_features,second.contact_features)
+        self.assertEqual(second.base_lin_vel_b.count_nonzero().item(),0)
+        self.assertEqual(second.contact_features[...,6:].count_nonzero().item(),0)
+        self.assertEqual(second.object_features.shape,(2,0,16))
+
+    def test_privileged_contact_truth_is_separate_and_reads_sensor(self):
+        env,b,p=make_bridge()
+        sensor=env.scene[CONTACT_SENSOR_NAME].data
+        sensor.found.fill_(1);sensor.force.zero_();sensor.force[...,2]=40
+        sensor.normal.zero_();sensor.normal[...,2]=1
+        truth=p.privileged_contact_truth()
+        self.assertIsInstance(truth,PrivilegedFootContactTruth)
+        self.assertTrue(truth.contact_found.all())
+        torch.testing.assert_close(truth.normal_force_n,torch.full((2,2),40.))
+        teacher=truth.teacher_tensor()
+        self.assertEqual(teacher.shape,(2,28))
+        # Left/right remain adjacent fixed slots rather than being pooled.
+        torch.testing.assert_close(teacher[:,9],torch.full((2,),.4))
+        torch.testing.assert_close(teacher[:,23],torch.full((2,),.4))
+
     def test_wrong_sensor_semantics_and_specs_rejected(self):
         env,b,p=make_bridge();env.scene[CONTACT_SENSOR_NAME].cfg.global_frame=False
         with self.assertRaises(ValueError):K1PhysicsBridge(b)
@@ -403,7 +437,7 @@ class PhysicsBridgeTests(unittest.TestCase):
         task.reset();full=phy.read();visible=task.read();priv=task.privileged()
         self.assertEqual(task.privileged_dim,5)
         self.assertEqual(visible.base_lin_vel_b.count_nonzero().item(),0)
-        self.assertEqual(visible.contact_features[...,3:10].count_nonzero().item(),0)
+        self.assertEqual(visible.contact_features[...,6:].count_nonzero().item(),0)
         torch.testing.assert_close(priv[:,:3],full.base_lin_vel_b)
         torch.testing.assert_close(priv[:,3:],full.contact_features[...,9]/100.)
         dyn=DynamicsModel(ROBOT,physics_width=8,memory_width=8,latent_width=4,hidden_dim=16,

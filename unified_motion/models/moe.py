@@ -193,6 +193,7 @@ class ReferenceRoutedMoE(nn.Module):
         router_context: torch.Tensor,
         *,
         valid_mask: torch.Tensor | None = None,
+        balance_mask: torch.Tensor | None = None,
     ) -> MoEOutput:
         """让Router按条件选专家，再组合专家的输出。
 
@@ -200,13 +201,23 @@ class ReferenceRoutedMoE(nn.Module):
         输出：MoEOutput，包含delta同形状特征增量、Top-K结果、专家负载和可选balance_loss。
         注意：top_k=1时当前选中后softmax恒为1，任务损失不能通过组合权重训练Router；默认用top_k=2。"""
         valid = self._validate_inputs(x, router_context, valid_mask)
+        if balance_mask is None:
+            balance_valid = valid
+        elif (not isinstance(balance_mask,torch.Tensor)
+              or balance_mask.shape != valid.shape
+              or balance_mask.dtype != torch.bool
+              or balance_mask.device != valid.device
+              or (balance_mask & ~valid).any().item()):
+            raise ValueError("balance_mask必须是valid_mask的同形状子集")
+        else:
+            balance_valid = balance_mask
         leading = x.shape[:-1]
         # 先把 [B,T,D] 摊平为 [B*T,D]；不混合不同环境的数值。
         flat_x = torch.where(valid.unsqueeze(-1), x, 0.0).reshape(-1, self.d_model)
         flat_ref = torch.where(valid.unsqueeze(-1), router_context, 0.0).reshape(-1, self.d_model)
         flat_valid = valid.reshape(-1)
-        n_tokens = flat_x.shape[0]
-        n_valid = flat_valid.sum()  # Tensor；统计时不用强制同步成 Python 数字。
+        flat_balance = balance_valid.reshape(-1)
+        n_balance = flat_balance.sum()
 
         # Router 先给所有 Fine Expert 打分，训练时通过梯度学习打分方法。
         logits = self.router(flat_ref)
@@ -243,15 +254,17 @@ class ReferenceRoutedMoE(nn.Module):
         delta = torch.where(flat_valid[:, None], fine_delta + shared_delta, 0.0)
 
         # 负载诊断：占全部 Top-K 选择的比例。均匀使用时每个专家接近 1/E。
-        counts = torch.stack([((picked == i) & flat_valid[:, None]).sum()
+        counts = torch.stack([((picked == i) & flat_balance[:, None]).sum()
                               for i in range(self.num_fine_experts)])
-        load = counts.to(probs.dtype) / (n_valid * self.top_k).clamp_min(1)
-        mean_probs = probs.sum(dim=0) / n_valid.clamp_min(1)
+        load = counts.to(probs.dtype) / (n_balance * self.top_k).clamp_min(1)
+        balance_probs=torch.where(flat_balance[:,None],probs,0.0)
+        mean_probs = balance_probs.sum(dim=0) / n_balance.clamp_min(1)
         # Switch-style 负载均衡项；硬选择的 load 不传梯度，概率分布传梯度。
         # 均匀选中通常接近 1，集中到少数专家可能更大；训练器决定是否采用。
         balance = self.num_fine_experts * (load.detach() * mean_probs).sum()
-        entropy = -(probs * probs.clamp_min(torch.finfo(probs.dtype).tiny).log()).sum()
-        entropy = entropy / n_valid.clamp_min(1)
+        entropy = -(balance_probs * balance_probs.clamp_min(
+            torch.finfo(probs.dtype).tiny).log()).sum()
+        entropy = entropy / n_balance.clamp_min(1)
 
         # 开发时尽早发现坏权重、溢出或错误的 Softmax；正式性能测试可关闭同步检查。
         if self.check_values:
@@ -271,7 +284,5 @@ class ReferenceRoutedMoE(nn.Module):
             expert_counts=counts.detach(),
             expert_load=load.detach(),
         )
-
-
 
 

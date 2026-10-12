@@ -23,6 +23,8 @@ from torch import nn
 
 from ..robot_contract import RobotContract, get_robot_contract
 from ..reference_observations import ReferenceObservation, ReferenceObservationBuilder
+from .fixed_normalization import SCHEMA as NORMALIZATION_SCHEMA
+from .fixed_normalization import body_observation, reference_observation
 
 
 @dataclass
@@ -33,6 +35,8 @@ class EncodedMotion:
     state_token: torch.Tensor          # [B,D] 或 [B,T,D]
     reference_tokens: torch.Tensor     # [B,H,D] 或 [B,T,H,D]
     reference_mask: torch.Tensor       # [B,H] 或 [B,T,H]，True=有效
+    # 可选的物理路由条件；仅供 MoE Router 选专家，不改 Expert 的输入。
+    router_context: torch.Tensor | None = None  # [B,D] 或 [B,T,D]
 
     def flatten_for_mlp(self) -> torch.Tensor:
         """保留所有参考点，拼成一排供后续 MLP 使用；下游 MLP 必须固定 H。
@@ -66,7 +70,7 @@ class MultiRobotEncoder(nn.Module):
     关闭数值检查只适用于已验证的数据管线，形状/设备/类型检查仍保留。
     """
 
-    SCHEMA_VERSION = 1
+    SCHEMA_VERSION = 2
 
     def __init__(
         self,
@@ -127,6 +131,7 @@ class MultiRobotEncoder(nn.Module):
             "encoder_schema": self.SCHEMA_VERSION,
             "observation_schema": "body_v1_angular_gravity_q_qd_action",
             "reference_schema": ReferenceObservationBuilder.SCHEMA_VERSION,
+            "input_normalization": NORMALIZATION_SCHEMA,
             "d_model": self.d_model,
             "hidden_dim": self.hidden_dim,
             "robots": {
@@ -203,10 +208,11 @@ class MultiRobotEncoder(nn.Module):
                 raise ValueError("无效参考只能在末尾补位，不能中间挖洞")
 
         # 身体特征只经过自己的小网络；不与其他机器人或历史帧混在一起。
-        state_token = state_encoder(observation)
+        robot = self._robots[robot_id]
+        state_token = state_encoder(body_observation(observation, robot))
         mask = valid.unsqueeze(-1)
         # 编码前清零：让补位中的任意有限垃圾数值无法影响计算和梯度。
-        safe_features = torch.where(mask, features, 0.0)
+        safe_features = torch.where(mask, reference_observation(features, robot), 0.0)
         reference_tokens = reference_encoder(safe_features)
         # 编码后再清零：Linear 的 bias 等可能让“零输入”产生非零输出。
         reference_tokens = torch.where(mask, reference_tokens, 0.0)
@@ -216,7 +222,5 @@ class MultiRobotEncoder(nn.Module):
                 if not torch.isfinite(value).all().item():
                     raise ValueError(f"{name} 出现 NaN 或 Inf")
         return EncodedMotion(robot_id, state_token, reference_tokens, valid.clone())
-
-
 
 

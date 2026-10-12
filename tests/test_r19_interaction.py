@@ -69,7 +69,9 @@ def test_closed_loop_with_interaction_feedback(kind):
     task=build_task(c);dyn,pol=build_models(c,task)
     collector=PhysicsSequenceCollector(task,dyn,pol)
     ppo=PhysicsSequencePPO(pol,PPOConfig(epochs=1,minibatch_envs=2))
-    update=DynamicsUpdater(dyn)
+    # This test intentionally waits for a second mid-episode rollout; use one
+    # truncated-BPTT step rather than the production reset-per-update schedule.
+    update=DynamicsUpdater(dyn,epochs=1)
     rollout=collector.collect(6)
     assert rollout.previous_interaction_prediction is not None
     first=model_digest(pol)
@@ -247,9 +249,11 @@ def test_delay_queue_preserves_raw_action_in_observation():
     a=torch.ones(2,task.robot.dof)*.2
     task.step(a)
     assert (task.backend.action==0).all()
+    assert (task.last_executed_action==0).all()
     torch.testing.assert_close(task.read().body_obs[:,-task.robot.dof:],a)
     task.step(a*2)
     torch.testing.assert_close(task.backend.action,a)
+    torch.testing.assert_close(task.last_executed_action,a)
     task.reset(torch.tensor([0]));assert (task.queue[0]==0).all()
 
 

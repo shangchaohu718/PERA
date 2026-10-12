@@ -22,6 +22,7 @@ from .api import (
     MotionTrackingReward, MotionTrackingRewardConfig, DynamicsModel, PPOConfig, MotionTrackingTask,
     PhysicsSequenceCollector, PhysicsSequencePPO, DynamicsUpdater,
 )
+from .algorithms.common import learning_rate_scale
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -40,10 +41,17 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument('--horizon', type=int, default=32, help='每轮采样控制步数')
     parser.add_argument('--updates', type=int, default=100, help='本次追加多少轮采样/优化')
     parser.add_argument('--epochs', type=int, default=4)
+    parser.add_argument('--entropy-coef', type=float, default=0.005)
     parser.add_argument('--minibatch-envs', type=int, default=16)
     parser.add_argument('--learning-rate', type=float, default=3e-4)
+    parser.add_argument('--lr-schedule', choices=('constant','linear','cosine'), default='cosine')
+    parser.add_argument('--lr-min-ratio', type=float, default=0.1)
+    parser.add_argument('--balance-coef', type=float, default=0.01,
+                        help='MoE专家负载均衡权重；非MoE主干该项恒为0')
     parser.add_argument('--dynamics-lr', type=float, default=1e-4)
-    parser.add_argument('--dynamics-every', type=int, default=8, help='每多少轮更新一次动力学；更新后重新开始环境和记忆')
+    parser.add_argument('--dynamics-every', type=int, default=1, help='每多少轮更新一次动力学；更新后重新开始环境和记忆')
+    parser.add_argument('--dynamics-epochs', type=int, default=4,
+                        help='每批真实动力学序列重复优化次数')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--d-model', type=int, default=128)
     parser.add_argument('--hidden-dim', type=int, default=256)
@@ -82,16 +90,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument('--model-check-values', action=argparse.BooleanOptionalAction, default=True,
                         help='模型内部逐层NaN/Inf检查；关闭可减少GPU同步，训练器关键检查仍保留')
     args = parser.parse_args(argv)
-    for name in ('num_envs','horizon','updates','epochs','minibatch_envs','dynamics_every',
+    for name in ('num_envs','horizon','updates','epochs','minibatch_envs','dynamics_every','dynamics_epochs',
                  'd_model','hidden_dim','latent_width','layers','context_len','experts','save_every'):
         if getattr(args,name) <= 0:
             parser.error(f'--{name.replace("_","-")} 必须大于0')
     for name in ('system_id_weight','teacher_distillation_weight','teacher_reconstruction_weight',
-                 'multi_step_weight','latent_slow_weight',
+                 'multi_step_weight','latent_slow_weight','entropy_coef','balance_coef',
                  'body_pos_weight','body_rot_weight','body_lin_vel_weight'):
         value=getattr(args,name)
         if not np.isfinite(value) or value < 0:
             parser.error(f'--{name.replace("_","-")} 必须是非负有限数')
+    if not np.isfinite(args.lr_min_ratio) or not 0 < args.lr_min_ratio <= 1:
+        parser.error('--lr-min-ratio必须在(0,1]内')
     if args.adaptation=='full' and (not args.system_id_weight or
             bool(args.teacher_distillation_weight) != bool(args.teacher_reconstruction_weight)):
         parser.error('full adaptation要求非零system-id，且Teacher蒸馏/重建须同时开启')
@@ -203,13 +213,16 @@ def run(args: argparse.Namespace) -> None:
             privileged_dims=({'k1_22dof':task.privileged_dim} if full_adaptation else None),
             check_values=args.model_check_values).to(device)
         ppo=PhysicsSequencePPO(policy,PPOConfig(epochs=args.epochs,minibatch_envs=args.minibatch_envs,
-                                              learning_rate=args.learning_rate,entropy_coef=0.,balance_coef=0.))
+                                              learning_rate=args.learning_rate,
+                                              entropy_coef=args.entropy_coef,
+                                              balance_coef=args.balance_coef))
         dyn_optimizer=DynamicsUpdater(dynamics,learning_rate=args.dynamics_lr,
             system_id_weight=args.system_id_weight if full_adaptation else 0.,
             teacher_distillation_weight=args.teacher_distillation_weight if full_adaptation else 0.,
             teacher_reconstruction_weight=args.teacher_reconstruction_weight if full_adaptation else 0.,
             multi_step_weight=args.multi_step_weight,
-            latent_slow_weight=args.latent_slow_weight)
+            latent_slow_weight=args.latent_slow_weight,
+            epochs=args.dynamics_epochs)
         collector=PhysicsSequenceCollector(task,dynamics,policy)
         start=0
         if args.resume:
@@ -223,6 +236,11 @@ def run(args: argparse.Namespace) -> None:
         # 每次启动都建立新的物理场景；resume 不声称逐步复现被中断的环境。
         with (args.output/'metrics.jsonl').open('a',encoding='utf-8') as log:
             for iteration in range(start+1,start+args.updates+1):
+                progress=(iteration-start-1)/max(args.updates-1,1)
+                lr_scale=learning_rate_scale(progress,schedule=args.lr_schedule,
+                                             min_ratio=args.lr_min_ratio)
+                policy_lr=ppo.set_learning_rate_scale(lr_scale)
+                dynamics_lr=dyn_optimizer.set_learning_rate_scale(lr_scale)
                 rollout=collector.collect(args.horizon)
                 stats=ppo.update(rollout)
                 dyn_stats=None
@@ -233,7 +251,9 @@ def run(args: argparse.Namespace) -> None:
                 row=dict(iteration=iteration,reward_mean=rollout.reward.mean().item(),
                          policy_std=rollout.old_std.mean().item(),ppo=asdict(stats),
                          dynamics=None if dyn_stats is None else asdict(dyn_stats),
-                         rollout=reward_terms)
+                         rollout=reward_terms,policy_learning_rate=policy_lr,
+                         dynamics_learning_rate=dynamics_lr,
+                         learning_rate_scale=lr_scale)
                 encoded=json.dumps(row,ensure_ascii=False,allow_nan=False)
                 log.write(encoded+'\n');log.flush();print(encoded,flush=True)
                 if iteration % args.save_every==0 or iteration==start+args.updates:

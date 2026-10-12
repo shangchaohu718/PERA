@@ -19,9 +19,8 @@
 - 这里只连接策略网络，不执行 mjlab、PPO 更新或动力学监督优化。
 - 不能直接把本文件的 Transformer 策略塞进第15阶段的 MLP PPOUpdater：
   它的旧代码是逐帧重新评估 MLP 的，没有重建 Transformer 的历史。
-- 动力学 context/latent 没有独立直连 Router。路由读取“目标token摘要”，但
-  接触/物体token包含当前状态误差，完整动作目标也在当前机身系表达；因此
-  不能称为与反馈完全无关的纯目标路由。这是代码的真实语义，而不是论文结论。
+- MoE Router 同时读取目标 token 摘要与 Dynamics context/latent，因此同一目标
+  可以在不同地面/负载下选不同专家。动力学张量在 Actor 侧 detach，PPO 不反向改 DynamicsModel。
 - 物理模型由另外的 DynamicsUpdater 独立优化，本 Actor 默认对其输入 detach。
 - 真正零样本滑板需要训练任务/测试任务分离和高层接触规划，本文件不声称实现。
 - 生产模块不内嵌自测；统一回归位于 tests/，运行 python tools/evaluate.py。
@@ -56,6 +55,15 @@ from .transformer import (
 from .distributions import GaussianActionHead
 from .recurrent import RecurrentReferenceBackbone, RecurrentCache, weight_stamp
 from .lru import validate_lru_settings
+from .fixed_normalization import (
+    SCHEMA as NORMALIZATION_SCHEMA,
+    body_observation,
+    contact_goal,
+    contact_observation,
+    object_goal,
+    object_observation,
+    reference_observation,
+)
 from .physics import (
     CONTACT_GOAL_DIM,
     OBJECT_GOAL_DIM,
@@ -385,7 +393,7 @@ class PhysicsConditionedActorCritic(nn.Module):
     跨机器人联合训练是否产生迁移，需要实验，不能因为特征宽度相同就认定成功。
     """
 
-    SCHEMA_VERSION = 1
+    SCHEMA_VERSION = 3
 
     def __init__(self, robots: Mapping[str, RobotContract],
                  cfg: PhysicsPolicyConfig | None = None,
@@ -440,6 +448,15 @@ class PhysicsConditionedActorCritic(nn.Module):
             self.cfg.d_model, self.cfg.physics_width, self.cfg.latent_width,
             hidden_dim=self.cfg.input_hidden_dim,
         )
+        # Router 直接看动力学的物理上下文和低维隐变量；不经过零初始化残差支路。
+        if self.cfg.backbone == "moe":
+            self.router_physics_proj = nn.Sequential(
+                nn.Linear(self.cfg.physics_width + self.cfg.latent_width,
+                          self.cfg.input_hidden_dim),
+                nn.SiLU(),
+                nn.Linear(self.cfg.input_hidden_dim, self.cfg.d_model),
+                nn.LayerNorm(self.cfg.d_model),
+            )
         if self.cfg.backbone == "moe":
             transformer_cfg = TransformerConfig(
                 d_model=self.cfg.d_model, n_layers=self.cfg.n_layers,
@@ -491,6 +508,7 @@ class PhysicsConditionedActorCritic(nn.Module):
                     robots={k: (v.root_name, v.joint_names, v.root_qpos_dim)
                             for k, v in self.robots.items()},
                     privileged_dims=self.privileged_dims,
+                    input_normalization=NORMALIZATION_SCHEMA,
                     goal_tokens="motion_contact_object_separate_v1")
 
     def set_extra_state(self, state: dict) -> None:
@@ -569,7 +587,8 @@ class PhysicsConditionedActorCritic(nn.Module):
               reference_mask [...,H总]。H总 是全部有效任务 token 的合并个数。
 
         关键：接触/物体每个槽位都单独保留一个 token，不简单平均掉位置细节。
-        只有任务目标进入 Router 摘要；动力学条件通过 state_token 进入 Expert。
+        MoE Router 同时读取任务目标摘要和独立的 context/latent 投影；
+        Expert 仍通过 state_token 中的物理残差取得条件。
         """
         if robot_id not in self.robots:
             raise KeyError(f"未知机器人 {robot_id!r}")
@@ -593,8 +612,9 @@ class PhysicsConditionedActorCritic(nn.Module):
         # 身体状态 encoder 因为是独立分支，可以在无参考 motion 时照样计算。
         # 这里复用第04个文件创建的子网络；不用伪造一个“假 MoCap”骗过它的 forward。
         key = self._keys[robot_id]
+        normalized_body=body_observation(physics.body_obs,robot)
         state_token = self.encoder.state_encoders[key](
-            torch.where(valid.unsqueeze(-1), physics.body_obs, 0.0)
+            torch.where(valid.unsqueeze(-1), normalized_body, 0.0)
         )
         tokens: list[torch.Tensor] = []
         masks: list[torch.Tensor] = []
@@ -611,7 +631,7 @@ class PhysicsConditionedActorCritic(nn.Module):
             self._check_field("motion.valid_mask", mask, (*lead, h), p.device, p.dtype, boolean=True)
             mask = mask & valid.unsqueeze(-1)
             item = self.encoder.reference_encoders[key](
-                torch.where(mask.unsqueeze(-1), features, 0.0)
+                torch.where(mask.unsqueeze(-1),reference_observation(features,robot),0.0)
             ) + self.modality_embeddings[0]
             tokens.append(torch.where(mask.unsqueeze(-1), item, 0.0))
             masks.append(mask)
@@ -625,8 +645,8 @@ class PhysicsConditionedActorCritic(nn.Module):
             if (goal.contact_mask & ~physics.contact_mask).any().item():
                 raise ValueError("接触目标指向了不存在的接触槽位")
             mask = goal.contact_mask & physics.contact_mask & valid.unsqueeze(-1)
-            wanted = goal.contact_features
-            real = physics.contact_features
+            wanted = contact_goal(goal.contact_features)
+            real = contact_observation(physics.contact_features,robot)
             # 第7个接触目标为 -1 时，代表不指定接触状态，不应计算接触差异。
             contact_diff = torch.cat((wanted[..., :3] - real[..., :3],
                                       wanted[..., 3:6] - real[..., 3:6],
@@ -649,8 +669,8 @@ class PhysicsConditionedActorCritic(nn.Module):
             if (goal.object_mask & ~physics.object_mask).any().item():
                 raise ValueError("物体目标指向了不存在的对象槽位")
             mask = goal.object_mask & physics.object_mask & valid.unsqueeze(-1)
-            wanted = goal.object_features
-            real = physics.object_features
+            wanted = object_goal(goal.object_features)
+            real = object_observation(physics.object_features)
             object_diff = torch.cat((wanted[..., :3] - real[..., :3],
                                      wanted[..., 3:6] - real[..., 7:10]), dim=-1)
             item = self.object_goal_proj(torch.where(mask.unsqueeze(-1),
@@ -673,7 +693,11 @@ class PhysicsConditionedActorCritic(nn.Module):
         order = torch.argsort((~combined_mask).to(torch.int64), dim=-1, stable=True)
         joined = joined.gather(-2, order.unsqueeze(-1).expand_as(joined))
         combined_mask = combined_mask.gather(-1, order)
-        encoded = EncodedMotion(robot_id, state_token, joined, combined_mask)
+        router_context = (self.router_physics_proj(torch.cat(
+            (dynamics.context.detach(), dynamics.latent.detach()), dim=-1
+        )) if self.cfg.backbone == "moe" else None)
+        encoded = EncodedMotion(robot_id, state_token, joined, combined_mask,
+                                router_context)
         # 复用第14阶段的物理特征注入层，DynamicsModel 的权重并不属于本策略。
         detached = DynamicsEncoding(dynamics.latent.detach(), dynamics.context.detach(),
                                     dynamics.hidden.detach(), dynamics.prediction_error.detach())
@@ -699,7 +723,8 @@ class PhysicsConditionedActorCritic(nn.Module):
         summary = (encoded.reference_tokens * mask.unsqueeze(-1)).sum(dim=-2) / (
             mask.sum(dim=-1, keepdim=True).clamp_min(1)
         )
-        parts = (physics.body_obs.detach(), dynamics.context.detach(),
+        parts = (body_observation(physics.body_obs, self.robots[robot_id]).detach(),
+                 dynamics.context.detach(),
                  dynamics.latent.detach(), summary.detach())
         extras = (privileged,) if pdim > 0 else ()
         critic_input = torch.cat((*parts, *extras), dim=-1)
@@ -710,6 +735,7 @@ class PhysicsConditionedActorCritic(nn.Module):
                          dynamics: DynamicsEncoding, goal: ControlGoal, *,
                          valid_mask: torch.Tensor | None = None,
                          episode_start: torch.Tensor,
+                         router_balance_mask: torch.Tensor | None = None,
                          privileged: torch.Tensor | None = None,
                          require_fresh_start: bool = True) -> PhysicsSequenceOutput:
         """功能：整段计算动作分布和价值，供时序 PPO 重新评估历史采样动作。
@@ -738,14 +764,23 @@ class PhysicsConditionedActorCritic(nn.Module):
         b, t = lead
         valid = self._valid_flag(valid_mask, (b, t), physics.body_obs.device, default=True)
         starts = self._valid_flag(episode_start, (b, t), physics.body_obs.device, default=False)
+        balance = (valid if router_balance_mask is None else self._valid_flag(
+            router_balance_mask, (b, t), physics.body_obs.device, default=False
+        ))
         if (valid[:, 1:] & ~valid[:, :-1]).any().item():
             raise ValueError("时间补位只能在末尾")
         if (starts & ~valid).any().item():
             raise ValueError("补位时间点不能标记为新回合")
+        if (balance & ~valid).any().item():
+            raise ValueError("router_balance_mask必须是valid_mask的子集")
         if require_fresh_start and not starts[:, 0].all().item():
             raise ValueError("序列从回合中间开始，缺少 KV 历史；不能直接重算 PPO")
         encoded = self._build_encoded(robot_id, physics, dynamics, goal, valid)
-        features = self.backbone(encoded, valid_mask=valid, episode_start=starts)
+        if self.cfg.backbone == "moe":
+            features = self.backbone(encoded, valid_mask=valid, episode_start=starts,
+                                     balance_mask=balance)
+        else:
+            features = self.backbone(encoded, valid_mask=valid, episode_start=starts)
         mean, std = self.action_heads[self._keys[robot_id]](features.features)
         mean = torch.where(valid.unsqueeze(-1), mean, 0.0)
         std = torch.where(valid.unsqueeze(-1), std, 1.0)

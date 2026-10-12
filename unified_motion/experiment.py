@@ -15,6 +15,7 @@ import json
 import math
 from pathlib import Path
 import random
+import time
 
 import numpy as np
 import torch
@@ -71,8 +72,8 @@ def load_config(path):
                   "lru_state_dim","lru_r_min","lru_r_max","lru_max_phase","lru_scan"},
         "dynamics": {"physics_width","memory_width","latent_width","hidden_dim","interaction_feedback",
                      "scene_encoder","graph_layers","contact_object_indices"},
-        "run": {"updates","horizon","dynamics_every","dynamics_learning_rate","evaluation_episodes",
-                "evaluation_max_steps"},
+        "run": {"updates","horizon","dynamics_every","dynamics_epochs","dynamics_learning_rate","evaluation_episodes",
+                "evaluation_max_steps","lr_schedule","lr_min_ratio"},
         "curriculum": {"level","promote_threshold","window"},
     }
     for key,names in checks.items():
@@ -80,8 +81,15 @@ def load_config(path):
         if not isinstance(values,dict) or set(values)-names:
             raise ValueError(f"{key}存在未知字段")
     run=config["run"]
+    run.setdefault("lr_schedule", "cosine")
+    run.setdefault("lr_min_ratio", 0.1)
     for key in ("updates","horizon","dynamics_every","evaluation_episodes","evaluation_max_steps"):
         if type(run.get(key)) is not int or run[key]<1: raise ValueError(f"run.{key}必须正整数")
+    if type(run.get("dynamics_epochs",4)) is not int or run.get("dynamics_epochs",4)<1:
+        raise ValueError("run.dynamics_epochs必须正整数")
+    from .algorithms.common import learning_rate_scale
+    learning_rate_scale(0.0, schedule=run["lr_schedule"],
+                        min_ratio=run["lr_min_ratio"])
     model = config.get("model", {})
     kind = model.get("backbone", "mlp")
     if kind not in ("mlp", "dense", "transformer", "moe", "gru", "lstm", "lru"):
@@ -281,7 +289,8 @@ def run_training(config, checkpoint=None):
         updater=DynamicsUpdater(dyn,learning_rate=config["run"].get("dynamics_learning_rate",1e-4),
             system_id_weight=config.get("adaptation",{}).get("system_identification_weight",0.0),
             teacher_distillation_weight=config.get("adaptation",{}).get("teacher_distillation_weight",0.0),
-            teacher_reconstruction_weight=config.get("adaptation",{}).get("teacher_reconstruction_weight",0.0))
+            teacher_reconstruction_weight=config.get("adaptation",{}).get("teacher_reconstruction_weight",0.0),
+            epochs=config["run"].get("dynamics_epochs",4))
         collector=PhysicsSequenceCollector(task,dyn,policy)
         output=Path(config["output"]);output.mkdir(parents=True,exist_ok=True)
         start=0
@@ -298,13 +307,31 @@ def run_training(config, checkpoint=None):
         (output/"resolved_config.yaml").write_text(yaml.safe_dump(config,allow_unicode=True,sort_keys=False),encoding="utf-8")
         (output/"split_report.json").write_text(json.dumps(task.scheduler.split_report(),indent=2),encoding="utf-8")
         run=config["run"]
+        history_requirement=(0 if isinstance(policy,PhysicsMLPActorCritic)
+                             else policy.history_requirement)
+        history_report={
+            "actor_history_mode": ("episode" if history_requirement is None else "finite"),
+            "actor_visible_history_steps": (None if history_requirement is None
+                                             else history_requirement+1),
+        }
         with (output/"metrics.jsonl").open("a",encoding="utf-8") as log:
             for i in range(start+1,start+run["updates"]+1):
+                progress = ((i - start - 1) / max(run["updates"] - 1, 1))
+                from .algorithms.common import learning_rate_scale
+                lr_scale = learning_rate_scale(progress, schedule=run["lr_schedule"],
+                                               min_ratio=run["lr_min_ratio"])
+                policy_lr = ppo.set_learning_rate_scale(lr_scale)
+                dynamics_lr = updater.set_learning_rate_scale(lr_scale)
                 rollout=collector.collect(run["horizon"])
+                ppo_started=time.perf_counter()
                 stats=ppo.update(rollout)
+                ppo_seconds=time.perf_counter()-ppo_started
                 ds=None
+                dynamics_seconds=0.0
                 if i%run["dynamics_every"]==0:
+                    dynamics_started=time.perf_counter()
                     ds=updater.update(rollout);collector.on_dynamics_updated()
+                    dynamics_seconds=time.perf_counter()-dynamics_started
                 rollout_terms={key:value.float().mean().item()
                                for key,value in rollout.reward_terms.items()}
                 rollout_terms.update(
@@ -314,7 +341,11 @@ def run_training(config, checkpoint=None):
                      "reward_mean":rollout.reward.mean().item(),"policy_std":rollout.old_std.mean().item(),
                      "course_level":task.scheduler.level,"ppo":asdict(stats),
                      "dynamics":None if ds is None else asdict(ds),
-                     "rollout":rollout_terms}
+                     "rollout":rollout_terms,"ppo_update_seconds":ppo_seconds,
+                     "dynamics_update_seconds":dynamics_seconds,**history_report}
+                row.update(policy_learning_rate=policy_lr,
+                           dynamics_learning_rate=dynamics_lr,
+                           learning_rate_scale=lr_scale)
                 encoded=json.dumps(row,ensure_ascii=False,allow_nan=False)
                 print(encoded,flush=True);log.write(encoded+"\n");log.flush()
         saved={"experiment_schema":1,"config":config,"iteration":i,

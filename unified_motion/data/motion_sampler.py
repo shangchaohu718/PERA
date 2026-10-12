@@ -553,6 +553,20 @@ class MotionLibrary:
         clip = MotionClip.from_named_mjlab_npz(file, robot_id=robot_id)
         return cls(get_robot_contract(robot_id), (clip,), device=device, dtype=dtype)
 
+    @classmethod
+    def from_named_mjlab_files(cls, files: Sequence[str | Path], *, robot_id: str,
+                               device: str | torch.device = 'cpu',
+                               dtype: torch.dtype = torch.float32) -> 'MotionLibrary':
+        """把多条具名 HoloMotion/MJLab NPZ 合成均匀采样动作库。"""
+        paths = tuple(Path(file).expanduser() for file in files)
+        if not paths:
+            raise ValueError('files 必须至少包含一个动作 NPZ')
+        clips = tuple(
+            MotionClip.from_named_mjlab_npz(path, robot_id=robot_id)
+            for path in paths
+        )
+        return cls(get_robot_contract(robot_id), clips, device=device, dtype=dtype)
+
     def _interpolate(self, clip_ids: torch.Tensor,
                      times_s: torch.Tensor) -> tuple[dict[str, torch.Tensor], torch.Tensor]:
         """功能：从多条动作里按指定时间取值，不足一帧时自动插值。
@@ -804,16 +818,22 @@ class MotionSampler:
         time = self.start_times_s[ids] + self.step_counts[ids].to(self.library.dtype) * self.step_dt
         return time.minimum(self.library.clip_durations_s[self.clip_ids[ids]])
 
-    def finished(self, env_ids: Sequence[int] | torch.Tensor | None = None) -> torch.Tensor:
+    def finished(self, env_ids: Sequence[int] | torch.Tensor | None = None, *,
+                 min_remaining_s: float = 0.0) -> torch.Tensor:
         """功能：告诉任务管理器哪些动作已经播放到最后一帧。
 
         输入：env_ids；None 表示全部。
-        输出：[K] 的 bool，True 表示动作结束；训练环境应以此触发终止并换动作。
+        输出：[K] 的 bool，True 表示动作结束，或剩余时间不足
+            ``min_remaining_s``；需未来参考的任务应传入最大预览偏移。
         """
         ids = self._env_ids(env_ids)
         self._check_ready(ids)
+        if (isinstance(min_remaining_s, bool) or not np.isfinite(min_remaining_s)
+                or min_remaining_s < 0):
+            raise ValueError('min_remaining_s 必须是非负有限秒数')
         times = self.start_times_s[ids] + self.step_counts[ids].to(self.library.dtype) * self.step_dt
-        return times >= (self.library.clip_durations_s[self.clip_ids[ids]] - 1e-6)
+        return (times + float(min_remaining_s)
+                >= self.library.clip_durations_s[self.clip_ids[ids]] - 1e-6)
 
     @torch.no_grad()
     def advance(self, steps: int = 1,

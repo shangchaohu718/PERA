@@ -49,6 +49,22 @@ def _load_payload(path: Path, device: torch.device) -> dict:
     return payload
 
 
+@torch.no_grad()
+def _reset_fixed_clip(task: MotionTrackingTask, clip_index: int) -> None:
+    """Reset physics and select one explicit clip for a fair comparison."""
+    task.bridge.reset()
+    data = task.bridge.entity.data
+    clip_ids = torch.full(
+        (task.num_envs,), clip_index, device=task.device, dtype=torch.long)
+    task.sampler.reset(
+        clip_ids=clip_ids,
+        current_root_pos_w=data.root_link_pos_w,
+        current_root_quat_wxyz=data.root_link_quat_w,
+    )
+    if task.reference_state_init:
+        task._initialize_from_reference(None)
+
+
 def _same_training_contract(reference: dict, candidate: dict, path: Path) -> None:
     keys = (
         "asset_root", "motions", "backbone", "d_model", "hidden_dim", "layers",
@@ -64,7 +80,8 @@ def _same_training_contract(reference: dict, candidate: dict, path: Path) -> Non
 
 @torch.no_grad()
 def _evaluate_one(task: MotionTrackingTask, dynamics: DynamicsModel, policy,
-                  checkpoint: Path, payload: dict, max_steps: int) -> CandidateResult:
+                  checkpoint: Path, payload: dict, max_steps: int,
+                  clip_index: int) -> CandidateResult:
     dynamics.load_state_dict(payload["dynamics"]["model"], strict=True)
     policy.load_state_dict(payload["ppo"]["model"], strict=True)
     dynamics.eval(); policy.eval()
@@ -72,7 +89,7 @@ def _evaluate_one(task: MotionTrackingTask, dynamics: DynamicsModel, policy,
     if hasattr(policy, "invalidate_caches"):
         policy.invalidate_caches()
 
-    task.reset()
+    _reset_fixed_clip(task, clip_index)
     memory: DynamicsMemory | None = None
     cache = None
     rewards: list[float] = []
@@ -152,10 +169,12 @@ def main() -> None:
     parser.add_argument("--num-envs", type=int, default=1,
                         help="确定性评测默认单环境，避免复制相同轨迹浪费显存")
     parser.add_argument("--max-steps", type=int, default=600)
+    parser.add_argument("--clip-index", type=int, default=0,
+                        help="固定参考片段编号；所有checkpoint使用同一片段")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.num_envs < 1 or args.max_steps < 1:
-        parser.error("num-envs 和 max-steps 必须为正整数")
+    if args.num_envs < 1 or args.max_steps < 1 or args.clip_index < 0:
+        parser.error("num-envs/max-steps必须为正整数，clip-index必须非负")
     if not torch.cuda.is_available():
         raise RuntimeError("冻结参考动作评测需要真实 MJLab CUDA 环境")
 
@@ -175,6 +194,10 @@ def main() -> None:
         motion_path, robot_id="k1_22dof", device=device)
         if motion_path.is_file() else MotionLibrary.from_project_folder(
             motion_path, robot_id="k1_22dof", device=device))
+    if args.clip_index >= len(library.clip_names):
+        parser.error(
+            f"clip-index越界：动作库有{len(library.clip_names)}段，"
+            f"收到{args.clip_index}")
     cfg = make_k1_physics_cfg(train_args["asset_root"], num_envs=args.num_envs)
     cfg.seed = seed
     cfg.episode_length_s = max(float(cfg.episode_length_s),
@@ -221,7 +244,9 @@ def main() -> None:
         for path in args.checkpoints:
             payload = _load_payload(path, device)
             _same_training_contract(train_args, payload["arguments"], path)
-            result = _evaluate_one(task, dynamics, policy, path, payload, args.max_steps)
+            result = _evaluate_one(
+                task, dynamics, policy, path, payload, args.max_steps,
+                args.clip_index)
             results.append(result.__dict__)
             print(json.dumps(results[-1], ensure_ascii=False, allow_nan=False), flush=True)
         ranking = sorted(results, key=lambda item: (
@@ -230,6 +255,8 @@ def main() -> None:
         report = {
             "schema": 1, "deterministic_actor": True,
             "motion": str(motion_path), "num_envs": args.num_envs,
+            "clip_index": args.clip_index,
+            "clip_name": library.clip_names[args.clip_index],
             "max_steps": args.max_steps, "results": results,
             "ranking": [item["checkpoint"] for item in ranking],
             "recommended": ranking[0]["checkpoint"],

@@ -1,0 +1,10 @@
+# @package _global_
+
+terminations:
+  time_out:
+    time_out: true
+
+  ref_gravity_projection_far:
+    params:
+      threshold: 0.8
+      ref_prefix: ${rewards._config.reward_prefix}

@@ -25,12 +25,13 @@ ppo:
   epochs: 1
   minibatch_envs: 2
   learning_rate: 0.0001
-  entropy_coef: 0.0
-  balance_coef: 0.0
+  entropy_coef: 0.005
+  balance_coef: 0.01
 run:
   updates: 3
   horizon: 16
-  dynamics_every: 2
+  dynamics_every: 1
+  dynamics_epochs: 4
   dynamics_learning_rate: 0.0001
   evaluation_episodes: 2
   evaluation_max_steps: 200

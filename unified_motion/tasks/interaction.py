@@ -523,6 +523,7 @@ class RandomizedTask:
         self.capacity = int(max(d.get("delay_steps", Range(0,0)).high for d in scheduler.domains.values()))+1
         self.queue = torch.zeros(self.num_envs, self.capacity, self.robot.dof, device=self.device)
         self.last_raw = self.queue[:, 0].clone(); self.slot = 0
+        self.last_executed_action = self.last_raw.clone()
         self.delay = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
         self.clock = self.delay.clone(); self.push = self.last_raw.new_zeros((self.num_envs, 3))
         self.applied_parameters = {}; self.domain_names = [None]*self.num_envs
@@ -606,7 +607,8 @@ class RandomizedTask:
         for k,v in physics.items():
             torch.testing.assert_close(readback[k], v, rtol=1e-5, atol=1e-6,
                                        msg=f"{k}实际读回值与要求不一致")
-        self.queue[ids] = 0; self.last_raw[ids] = 0; self.clock[ids] = 0
+        self.queue[ids] = 0; self.last_raw[ids] = 0;self.last_executed_action[ids]=0
+        self.clock[ids] = 0
         self.last_applied_force[ids] = 0
         self.delay[ids] = values.get("delay_steps", torch.zeros(len(ids), device=self.device)).long()
         self.push[ids] = 0
@@ -651,6 +653,7 @@ class RandomizedTask:
             force[active] = self.push[active]
         self.backend.apply_force(force)
         result = self.task.step(executed)
+        self.last_executed_action.copy_(executed)
         self.last_applied_force.copy_(force)
         self.last_raw.copy_(raw_action); self.clock += 1
         done = result.terminated | result.truncated

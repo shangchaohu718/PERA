@@ -4,13 +4,15 @@
 
 - Official upstream: `https://github.com/HorizonRobotics/HoloMotion`
 - Audited upstream commit: `cf2018a`
-- Existing K1 training worktree: `/home/tcl/Desktop/start/holomtion_boosterK1`
-- Existing completed checkpoint: `model_9999.pt`
-- Existing exported actor: `exported/model_9999.onnx`
+- Vendored source: `third_party/HoloMotion/source/holomotion`
+- Completed checkpoint used during local validation: `model_9999.pt` (not redistributed)
+- Exported actor used during local validation: `exported/model_9999.onnx` (not redistributed)
 
-The official source and the K1 training worktree remain separate from this
-package. The current implementation adapts the environment-facing contracts;
-it does not yet duplicate HoloMotion's MoE Transformer or PPO implementation.
+The clean official source snapshot used by this package is vendored under
+`third_party/HoloMotion/source/` at the commit above. The current implementation
+adapts the environment-facing contracts and directly loads HoloMotion's
+original MoE Transformer Actor and Critic; it does not fork or rewrite those
+network implementations. Checkpoints, ONNX exports and datasets remain external.
 
 ## Contract implemented
 
@@ -51,6 +53,31 @@ of `0.8`; the generic absolute root-height termination is disabled.
 The asymmetric critic contract is also available. It assembles the exact
 843-value input expected by the existing `model_9999` critic checkpoint (463
 current-state values plus ten 38-value future-reference frames).
+
+`holomotion_original_algorithm` reconstructs the original trainable
+`PPOTFRefRouterActor` and `PPOCritic` directly from the resolved run config. It
+splits the local flat 506/843 tensors back into the original TensorDict leaves
+and restores both safetensors files with strict key checking. The original
+HoloMotion worktree remains the single owner of the network implementation.
+The optional `holomotion` dependency group documents the extra runtime
+packages needed in the mjlab environment.
+
+`holomotion_mjlab_task` and `holomotion_mjlab_ppo` provide the first trainable
+integration slice. Rollout sampling uses the original Transformer's KV cache;
+update replay preserves complete per-environment sequences and uses the
+original episode-aware causal mask, GAE, clipped PPO objective, clipped value
+loss, entropy bonus, gradient clipping, and AdamW parameter grouping. Updates
+also preserve the original environment-wise mini-batching, multi-epoch replay,
+analytic KL measurement, windowed KL early stopping, and adaptive learning
+rate. The current slice can restore both original AdamW optimizer states. It
+also reproduces the active checkpoint losses: auxiliary body-frame linear
+velocity prediction, ten-body contact classification, six-body reference and
+robot root-relative position prediction, and inactive-expert-to-top-k margin.
+The auxiliary contact labels come from a dedicated ordered MJLab sensor rather
+than the separate 19-body undesired-contact reward sensor. It intentionally
+excludes the inactive configuration branches, curriculum, distributed update,
+and full runner state. Those are the remaining parity items before a long
+training run.
 
 The exported checkpoint metadata contains the episode's randomized default
 joint offsets. A few knee offsets can lie a few milliradians outside the MJCF
@@ -109,6 +136,82 @@ joint-velocity reconstruction reduced initial key-body velocity RMSE from
 is the exact contact-free maximum `13.5`, and no actuator saturation occurs.
 The frozen Isaac Lab actor nevertheless reaches the gravity terminal after 65
 steps (1.3 seconds), so this is a verified sim-to-sim dynamics gap rather than
-a successful policy port. The next implementation gate is connecting the
-official trainable actor/critic and PPO rollout to this mjlab task contract;
-starting a costly PPO run still requires an explicit training decision.
+a successful policy port. A short in-memory PPO smoke command is available at
+`tools/smoke_train_holomotion_k1_mjlab.py`; it performs no checkpoint writes.
+Starting a costly PPO run still requires an explicit training decision.
+
+## Bounded training runner
+
+`tools/train_holomotion_k1_mjlab.py` is the resumable runner. Both
+`--iterations` and `--output-dir` are mandatory; it never silently inherits the
+upstream 10,000-iteration duration. With `--resume-optimizer`, iteration and
+AdamW moments continue from the source checkpoint. Each output contains a
+copied `config.yaml`, JSON runner provenance, JSONL metrics, the two original
+safetensors directories, and the matching optimizer `.pt` file. Existing
+checkpoint targets are never overwritten.
+
+The audited run resolves `sampling_strategy: weighted_bin`, but its training
+data declares exactly one LaFAN dataset root with ratio `1.0`. Therefore the
+effective upstream behavior is uniform sampling within that dataset, not the
+score-driven `curriculum` strategy. Repeat `--motion` to load multiple named
+NPZ clips into one uniformly sampled library. Per-clip sampled steps, mean
+reward, and done count are written into every JSONL iteration record.
+
+The original training manifest is HDF5 v2 and stores only root pose plus joint
+pose. `tools/convert_holomotion_hdf5_dataset.py` reuses the original
+`Hdf5RootDofDataset` and `TrainingReferenceFK` to recreate body poses, body
+velocities, joint velocities, the same 300-frame windows, and the same world
+normalization. Its output is loaded with `--motion-dir`. A one-window test from
+the local LaFAN manifest produced a finite 300-frame, 23-body clip and completed
+a real mjlab PPO iteration.
+
+```bash
+python tools/train_holomotion_k1_mjlab.py \
+  --run-dir /path/to/source/run \
+  --checkpoint-name model_9999 --resume-optimizer \
+  --onnx /path/to/source/run/exported/model_9999.onnx \
+  --asset-root /path/to/booster_k1 \
+  --motion /path/to/named_reference_1.npz \
+  --motion /path/to/named_reference_2.npz \
+  --output-dir /path/to/new/mjlab_run \
+  --iterations 1 --steps-per-env 32 --num-envs 1 --device cuda:0
+```
+
+Enable the physics-student / privileged-Teacher extension explicitly:
+
+```bash
+python tools/train_holomotion_k1_mjlab.py \
+  --run-dir /path/to/source/run --checkpoint-name model_9999 \
+  --onnx /path/to/source/run/exported/model_9999.onnx \
+  --asset-root /path/to/booster_k1 \
+  --motion /path/to/named_reference.npz \
+  --output-dir /path/to/new/physics_teacher_run \
+  --iterations 1 --steps-per-env 32 --num-envs 1 --device cuda:0 \
+  --physics-teacher
+```
+
+The student path never reads the mjlab contact sensor. It receives
+proprioception plus ordered left/right foot link kinematics. The privileged
+Teacher target is deliberately narrow: two normalized, episode-randomized slow
+variables (ground friction and trunk-mass scale). Exact left/right contact
+point, normal, force, slip, and friction utilization remain privileged labels
+for next-state/contact prediction and rewards; they are never Actor inputs.
+The deployable latent defaults to 8 values.
+
+The residual Actor input is ordered as global context, student latent,
+left-foot token, right-foot token; there is no left/right set pooling at this
+boundary. Its residual is gated by both predicted system-identification
+uncertainty and evidence age. Dynamics training accumulates across rollout
+boundaries, uses 64 burn-in frames followed by 128 gradient-carrying frames,
+and recomputes/optimizes that sequence 4 times by default. The Actor consumes
+an EMA copy of DynamicsModel to avoid a moving feature target. These values are
+configurable through the `--physics-*` options.
+Left/right slip and impact weights remain independently configurable. Physics
+checkpoints keep the upstream `actor/model.safetensors` layout and store the
+residual, online DynamicsModel, EMA DynamicsModel, Teacher, uncertainty heads,
+training configuration, and optimizer states in the companion `.pt` file.
+
+The trainable checkpoint loader has already passed a direct parity check: its
+zero-observation Actor mean differs from the exported ONNX graph by at most
+`1.38e-6`, while the restored Actor and Critic produce finite `[1,22]` and
+`[1,1]` outputs respectively.

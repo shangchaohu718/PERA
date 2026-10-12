@@ -259,7 +259,7 @@ def test_lru_exact_ppo_replay_across_updates_and_independent_dynamics(graph):
         stats=ppo.update(r)
         assert stats.old_policy_error<1e-4 and stats.optimizer_steps>0
         assert model_digest(dyn)==before and model_digest(p)!=old_policy
-    DynamicsUpdater(dyn).update(r)
+    DynamicsUpdater(dyn,epochs=1).update(r)
     assert model_digest(dyn)!=before
     c.on_dynamics_updated()
     assert c.collect(3).episode_start[:,0].all()

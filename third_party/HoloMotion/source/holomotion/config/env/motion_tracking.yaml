@@ -1,0 +1,188 @@
+# @package _global_
+
+env:
+  _target_: holomotion.src.env.motion_tracking.MotionTrackingEnv
+  _recursive_: False
+  config:
+    experiment_name: ${experiment_name}
+    num_envs: ${num_envs}
+    env_spacing: 2.5 # meters
+    replicate_physics: true
+    headless: ${headless}
+    num_processes: ${num_processes}
+    main_process: ${main_process}
+    process_id: ${process_id}
+    ckpt_dir: null
+    disable_ref_viz: false
+    eval_log_dir: null
+    save_rendering_dir: null
+
+    robot: ${robot}
+    domain_rand: ${domain_rand}
+    rewards: ${rewards}
+    terrain: ${terrain}
+    obs: ${obs}
+    terminations: ${terminations}
+
+    simulation:
+      episode_length_s: 10 # Long episodes for fluid motion-based termination
+      sim_freq: 200
+      control_decimation: 4
+      physx:
+        bounce_threshold_velocity: 0.5
+        gpu_max_rigid_patch_count: 327680 # 10 * 2**15
+
+    scene:
+      terrain: ${terrain}
+      lighting:
+        distant_light_intensity: 3000.0
+        dome_light_intensity: 1000.0
+      contact_sensor:
+        history_length: 3
+        force_threshold: 10.0
+        track_air_time: true
+        debug_vis: false
+
+    actions:
+      dof_pos:
+        type: joint_position
+        params:
+          asset_name: robot
+          joint_names:
+            - ".*"
+          use_default_offset: true
+          scale: ${robot.actuators.action_scale}
+
+    commands:
+      ref_motion:
+        type: MotionCommandCfg
+        params:
+          command_obs_name: bydmmc_ref_motion
+          motion_lib_cfg: ${robot.motion}
+          urdf_dof_names: ${robot.dof_names}
+          urdf_body_names: ${robot.body_names}
+          arm_dof_names: ${robot.arm_dof_names}
+          waist_dof_names: ${robot.waist_dof_names}
+          leg_dof_names: ${robot.leg_dof_names}
+          arm_body_names: ${robot.arm_body_names}
+          torso_body_names: ${robot.torso_body_names}
+          leg_body_names: ${robot.leg_body_names}
+          anchor_bodylink_name: ${robot.anchor_body}
+          asset_name: robot
+          debug_vis: true
+          root_pose_perturb_range: ${domain_rand.motion_init_perturb.root_pose_perturb_range}
+          root_vel_perturb_range: ${domain_rand.motion_init_perturb.root_vel_perturb_range}
+          dof_pos_perturb_range: ${domain_rand.motion_init_perturb.dof_pos_perturb_range}
+          dof_vel_perturb_range: ${domain_rand.motion_init_perturb.dof_vel_perturb_range}
+          resample_time_interval_s: 100
+          n_fut_frames: ${obs.n_fut_frames}
+          target_fps: 50
+
+    normalization:
+      clip_actions: 100.0
+      clip_observations: 100.0
+
+    resample_motion_when_training: True
+
+    curriculum:
+      enabled: false
+
+      robot_friction_completion_rate:
+        enabled: True
+        func: robot_friction_range_by_completion_rate
+        params:
+          num_updates: 5
+          cr_thresholds: [0.10, 0.20, 0.28, 0.34, 0.40]
+          static_friction_target: [0.3, 1.6]
+          dynamic_friction_target: [0.3, 1.2]
+          body_names: ".*"
+          restitution_range: [0.0, 0.5]
+          num_buckets: 64
+
+      rigid_body_com_completion_rate:
+        enabled: True
+        func: rigid_body_com_by_completion_rate
+        params:
+          num_updates: 5
+          cr_thresholds: [0.10, 0.20, 0.28, 0.34, 0.40]
+          state_prefix: "_cr_curr"
+          asset_name: "robot"
+          body_names: "torso_link"
+          com_range_target:
+            x: [-0.025, 0.025]
+            y: [-0.05, 0.05]
+            z: [-0.05, 0.05]
+
+      default_dof_pos_bias_completion_rate:
+        enabled: True
+        func: default_dof_pos_bias_by_completion_rate
+        params:
+          num_updates: 5
+          cr_thresholds: [0.10, 0.20, 0.28, 0.34, 0.40]
+          state_prefix: "_cr_curr"
+          joint_names:
+            - ".*"
+          pos_distribution_params_target: [-0.01, 0.01]
+          operation: add
+          distribution: uniform
+
+      push_by_setting_velocity_completion_rate:
+        enabled: True
+        func: isaaclab_mdp.modify_term_cfg
+        params:
+          address: "events.push_by_setting_velocity.params"
+          modify_fn: push_by_setting_velocity_range_by_completion_rate
+          modify_params:
+            num_updates: 3
+            cr_thresholds: [0.20, 0.30, 0.40]
+            velocity_range_target:
+              x: [-0.5, 0.5]
+              y: [-0.5, 0.5]
+              z: [-0.2, 0.2]
+              roll: [-0.52, 0.52]
+              pitch: [-0.52, 0.52]
+              yaw: [-0.78, 0.78]
+
+      randomize_actuator_gains_completion_rate:
+        enabled: True
+        func: randomize_actuator_gains_by_completion_rate
+        params:
+          num_updates: 3
+          cr_thresholds: [0.20, 0.30, 0.40]
+          asset_name: "robot"
+          body_names: ".*"
+          stiffness_distribution_params_target: [0.9, 1.1]
+          damping_distribution_params_target: [0.9, 1.1]
+          operation: scale
+          distribution: uniform
+
+      action_rate_l2_completion_rate:
+        enabled: true
+        func: reward_term_weight_by_completion_rate
+        params:
+          reward_term_name: "action_rate_l2"
+          final_weight: -0.1
+          start_scale: 0.1
+          num_updates: 5
+          cr_thresholds: [0.10, 0.20, 0.28, 0.34, 0.40]
+
+      joint_pos_limits_completion_rate:
+        enabled: true
+        func: reward_term_weight_by_completion_rate
+        params:
+          reward_term_name: "joint_pos_limits"
+          final_weight: -10.0
+          start_scale: 0.1
+          num_updates: 5
+          cr_thresholds: [0.10, 0.20, 0.28, 0.34, 0.40]
+
+      undesired_contacts_completion_rate:
+        enabled: true
+        func: reward_term_weight_by_completion_rate
+        params:
+          reward_term_name: "undesired_contacts"
+          final_weight: -0.1
+          start_scale: 0.1
+          num_updates: 5
+          cr_thresholds: [0.10, 0.20, 0.28, 0.34, 0.40]
+

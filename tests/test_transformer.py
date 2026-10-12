@@ -136,9 +136,12 @@ class TransformerTests(unittest.TestCase):
         valid = torch.ones(self.encoded.state_token.shape[:2],dtype=torch.bool)
         starts = torch.zeros_like(valid)
         x = fused.policy_features
+        route = self.m.router_conditioner(torch.cat(
+            (fused.reference_summary, self.encoded.state_token), dim=-1
+        ))
         stats = []
         for layer in self.m.layers:
-            x, m = layer(x,fused.reference_summary,valid_mask=valid,episode_start=starts)
+            x, m = layer(x,route,valid_mask=valid,episode_start=starts)
             stats.append(m.balance_loss)
         x = self.m.final_norm(x)
         torch.testing.assert_close(output.features,x,atol=0,rtol=0)

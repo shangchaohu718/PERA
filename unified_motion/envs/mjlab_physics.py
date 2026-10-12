@@ -76,6 +76,50 @@ class ObjectObservationSpec:
             raise ValueError("size_m 必须是3个正的有限尺寸（米）")
 
 
+@dataclass(frozen=True)
+class PrivilegedFootContactTruth:
+    """Simulator-only foot/terrain contact truth.
+
+    None of these tensors may be routed into a deployable Actor.  They are
+    intended for Teacher/Critic inputs, reward terms, and supervised targets.
+    The foot axis is fixed as ``(left, right)``.
+    """
+
+    point_position_b: torch.Tensor
+    point_velocity_b: torch.Tensor
+    normal_b: torch.Tensor
+    normal_force_n: torch.Tensor
+    contact_found: torch.Tensor
+    tangential_force_n: torch.Tensor
+    slip_speed_m_s: torch.Tensor
+    friction_utilization: torch.Tensor
+
+    @property
+    def teacher_dim(self) -> int:
+        """Per-foot truth width (14) times the fixed left/right slots."""
+        return 28
+
+    def teacher_tensor(self) -> torch.Tensor:
+        """Flatten exact left/right truth without mixing their identities."""
+        values = torch.cat(
+            (
+                self.point_position_b,
+                self.point_velocity_b,
+                self.normal_b,
+                self.normal_force_n.unsqueeze(-1) / 100.0,
+                self.contact_found.unsqueeze(-1).to(self.point_position_b.dtype),
+                self.tangential_force_n.unsqueeze(-1) / 100.0,
+                self.slip_speed_m_s.unsqueeze(-1),
+                self.friction_utilization.clamp_max(5.0).unsqueeze(-1),
+            ),
+            dim=-1,
+        )
+        result = values.flatten(-2)
+        if result.shape[-1] != self.teacher_dim or not torch.isfinite(result).all().item():
+            raise ValueError("privileged foot Teacher tensor is invalid")
+        return result
+
+
 def make_k1_physics_cfg(asset_root: str, *, num_envs: int = 1,
                         physics_dt: float = 0.002, decimation: int = 10):
     """功能：在第11模块的 K1 环境配置上，增加真正的脚地接触测量。
@@ -233,6 +277,78 @@ class K1PhysicsBridge:
         if self._contact_supervision is None:
             raise RuntimeError("读取接触监督前必须先读取当前物理观测")
         return tuple(value.clone() for value in self._contact_supervision)
+
+    @torch.no_grad()
+    def read_deployable(
+        self, contact_estimate: torch.Tensor | None = None
+    ) -> PhysicsObservation:
+        """Build a student observation without reading simulator contact truth.
+
+        Foot position/velocity are link-kinematic quantities derivable from
+        encoders and the robot model.  Exact collision point, surface normal,
+        contact force, slip and root linear velocity are deliberately absent.
+        ``contact_estimate`` may only be supplied by an explicit deployable
+        estimator/sensor adapter; it is never copied from the mjlab sensor here.
+        """
+        body_obs = self.bridge.observation().clone()
+        data = self.entity.data
+        root_pos_w = data.root_link_pos_w
+        root_quat_w = data.root_link_quat_w
+        root_lin_vel_w = data.root_link_vel_w[:, :3]
+        foot_pose = data.body_link_pose_w[:, self.foot_body_ids]
+        foot_velocity = data.body_link_vel_w[:, self.foot_body_ids, :3]
+        foot_position_b = _world_to_body(
+            root_quat_w, foot_pose[..., :3] - root_pos_w[:, None]
+        )
+        # Removing root translation leaves a link-kinematic velocity that can
+        # be reconstructed from proprioception; it is not ground slip truth.
+        foot_velocity_b = _world_to_body(
+            root_quat_w, foot_velocity - root_lin_vel_w[:, None]
+        )
+        contacts = body_obs.new_zeros(self.num_envs, len(FOOT_NAMES), 12)
+        contacts[..., :3] = foot_position_b
+        contacts[..., 3:6] = foot_velocity_b
+        if contact_estimate is not None:
+            if (
+                not isinstance(contact_estimate, torch.Tensor)
+                or contact_estimate.shape != (self.num_envs, len(FOOT_NAMES))
+                or contact_estimate.device != self.device
+                or contact_estimate.dtype not in (torch.bool, body_obs.dtype)
+            ):
+                raise ValueError("contact_estimate must be deployable [B,2] bool/float")
+            estimate = contact_estimate.to(body_obs.dtype)
+            if ((estimate < 0) | (estimate > 1)).any().item():
+                raise ValueError("contact_estimate must be in [0,1]")
+            contacts[..., 10] = estimate
+        contact_mask = torch.ones(
+            self.num_envs, len(FOOT_NAMES), device=self.device, dtype=torch.bool
+        )
+        empty_objects = body_obs.new_zeros(self.num_envs, 0, 16)
+        empty_mask = torch.zeros(self.num_envs, 0, device=self.device, dtype=torch.bool)
+        return PhysicsObservation(
+            body_obs,
+            body_obs.new_zeros(self.num_envs, 3),
+            contacts,
+            contact_mask,
+            empty_objects,
+            empty_mask,
+        )
+
+    @torch.no_grad()
+    def privileged_contact_truth(self) -> PrivilegedFootContactTruth:
+        """Read exact mjlab contacts for non-Actor training channels only."""
+        exact = self.read()
+        tangential, slip, utilization = self.contact_supervision()
+        return PrivilegedFootContactTruth(
+            point_position_b=exact.contact_features[..., :3].clone(),
+            point_velocity_b=exact.contact_features[..., 3:6].clone(),
+            normal_b=exact.contact_features[..., 6:9].clone(),
+            normal_force_n=exact.contact_features[..., 9].clone(),
+            contact_found=exact.contact_features[..., 10].bool().clone(),
+            tangential_force_n=tangential,
+            slip_speed_m_s=slip,
+            friction_utilization=utilization,
+        )
 
     @torch.no_grad()
     def read(self) -> PhysicsObservation:

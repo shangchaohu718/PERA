@@ -103,6 +103,7 @@ class TransformerLayer(nn.Module):
         *,
         valid_mask: torch.Tensor,
         episode_start: torch.Tensor,
+        balance_mask: torch.Tensor | None = None,
     ) -> tuple[torch.Tensor, MoEOutput]:
         """整段训练，可求梯度：x 是 [B,T,D]。"""
         # 第05模块返回的是特征增量，这里加一次残差。
@@ -112,7 +113,8 @@ class TransformerLayer(nn.Module):
         x = torch.where(valid_mask[..., None], x + delta, 0.0)
 
         # MoE 用参考摘要选择专家，但专家真正处理的是当前状态特征。
-        output = self.moe(self.moe_norm(x), router_context, valid_mask=valid_mask)
+        output = self.moe(self.moe_norm(x),router_context,valid_mask=valid_mask,
+                          balance_mask=balance_mask)
         x = torch.where(valid_mask[..., None], x + output.delta, 0.0)
         return x, output
 
@@ -143,7 +145,7 @@ class ReferenceConditionedTransformer(nn.Module):
     * 不直接处理 K1/G1 不同的关节维度，输入编码器先完成统一映射。
     """
 
-    SCHEMA_VERSION = 1
+    SCHEMA_VERSION = 2
 
     def __init__(self, config: TransformerConfig | None = None) -> None:
         super().__init__()
@@ -159,6 +161,11 @@ class ReferenceConditionedTransformer(nn.Module):
             n_kv_heads=config.n_kv_heads,
             check_values=config.check_values,
         )
+        self.router_conditioner = nn.Sequential(
+            nn.Linear(2 * config.d_model, config.d_model),
+            nn.SiLU(),
+            nn.LayerNorm(config.d_model),
+        )
         self.layers = nn.ModuleList([TransformerLayer(config) for _ in range(config.n_layers)])
         self.final_norm = nn.LayerNorm(config.d_model)
         self._cache_owner = object()
@@ -171,7 +178,7 @@ class ReferenceConditionedTransformer(nn.Module):
         return {
             "schema": self.SCHEMA_VERSION,
             "config": config,
-            "pipeline": "one_reference_fusion_then_temporal_attention_moe_per_layer",
+            "pipeline": "goal_and_physics_state_routing_v2",
             "output": "features_not_actions",
         }
 
@@ -233,6 +240,12 @@ class ReferenceConditionedTransformer(nn.Module):
         rm = encoded.reference_mask
         if not isinstance(rm, torch.Tensor) or rm.shape != (*leading, ref.shape[-2]):
             raise ValueError("reference_mask 形状与参考不匹配")
+        rc = encoded.router_context
+        if rc is not None and (
+            not isinstance(rc, torch.Tensor) or rc.shape != state.shape
+            or rc.device != state.device or rc.dtype != state.dtype
+        ):
+            raise ValueError("router_context 必须与 state_token 形状/设备/dtype 一致")
         # dtype / device / 数值 / 参考有效性由 ReferenceFusion 进一步严格验证。
         return leading
 
@@ -257,6 +270,7 @@ class ReferenceConditionedTransformer(nn.Module):
         *,
         valid_mask: torch.Tensor | None = None,
         episode_start: torch.Tensor | None = None,
+        balance_mask: torch.Tensor | None = None,
     ) -> TransformerOutput:
         """完整时间序列训练：[B,T,D] → [B,T,D]。仅在同一个回合内读过去。"""
         leading = self._check_encoded(encoded, 3)
@@ -268,6 +282,11 @@ class ReferenceConditionedTransformer(nn.Module):
             raise ValueError("历史时间补位只能在 T 轴末尾")
         if (starts & ~valid).any().item():
             raise ValueError("补位状态不能标记新回合")
+        balance_valid = (valid if balance_mask is None else self._mask(
+            balance_mask,(b,t),name="balance_mask",device=device,default=False
+        ))
+        if (balance_valid & ~valid).any().item():
+            raise ValueError("balance_mask必须是valid_mask的子集")
 
         # 只做一次参考融合，避免每层重复运行 Cross-Attention。
         fused = self.reference_fusion(
@@ -277,10 +296,16 @@ class ReferenceConditionedTransformer(nn.Module):
             time_mask=valid,
         )
         x = fused.policy_features
+        physical_route = (encoded.state_token if encoded.router_context is None
+                          else encoded.router_context)
+        router_context = self.router_conditioner(torch.cat(
+            (fused.reference_summary, physical_route), dim=-1
+        ))
         outputs: list[MoEOutput] = []
         for layer in self.layers:
-            x, output = layer(x, fused.reference_summary,
-                              valid_mask=valid, episode_start=starts)
+            x, output = layer(x, router_context,
+                              valid_mask=valid,episode_start=starts,
+                              balance_mask=balance_valid)
             outputs.append(output)
         x = torch.where(valid[..., None], self.final_norm(x), 0.0)
         if self.config.check_values and not torch.isfinite(x).all().item():
@@ -327,12 +352,17 @@ class ReferenceConditionedTransformer(nn.Module):
             encoded.state_token, encoded.reference_tokens, encoded.reference_mask,
         )
         x = fused.policy_features
+        physical_route = (encoded.state_token if encoded.router_context is None
+                          else encoded.router_context)
+        router_context = self.router_conditioner(torch.cat(
+            (fused.reference_summary, physical_route), dim=-1
+        ))
         caches: list[AttentionCache] = []
         outputs: list[MoEOutput] = []
         for i, layer in enumerate(self.layers):
             old_cache = cache.layer_caches[i] if cache is not None else None
             x, new_cache, out = layer.step(
-                x, fused.reference_summary, old_cache, episode_start=starts,
+                x, router_context, old_cache, episode_start=starts,
             )
             caches.append(new_cache)
             outputs.append(out)
@@ -344,7 +374,4 @@ class ReferenceConditionedTransformer(nn.Module):
             torch.ones(b, dtype=torch.bool, device=x.device), outputs,
         )
         return output, TransformerCache(encoded.robot_id, ids, caches, self._cache_owner)
-
-
-
 

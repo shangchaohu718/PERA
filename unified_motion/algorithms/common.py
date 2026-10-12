@@ -6,6 +6,19 @@ from dataclasses import dataclass
 import math
 import torch
 
+def learning_rate_scale(progress: float, *, schedule: str = "cosine",
+                        min_ratio: float = 0.1) -> float:
+    """按本次训练进度返回确定性学习率倍率；不需要额外 scheduler 状态。"""
+    _require_number("progress", progress, lower=0, upper=1)
+    _require_number("min_ratio", min_ratio, lower=0, upper=1, strict_lower=True)
+    if schedule == "constant":
+        return 1.0
+    if schedule == "linear":
+        return min_ratio + (1.0 - min_ratio) * (1.0 - progress)
+    if schedule == "cosine":
+        return min_ratio + (1.0 - min_ratio) * 0.5 * (1.0 + math.cos(math.pi * progress))
+    raise ValueError("lr_schedule必须是constant/linear/cosine")
+
 def _require_number(name: str, value: float, *, lower: float | None = None,
                     upper: float | None = None, strict_lower: bool = False) -> None:
     """检查一个训练超参数是否为合理实数。
@@ -27,7 +40,7 @@ class PPOConfig:
     gae_lambda: float = 0.95
     clip_ratio: float = 0.2
     value_coef: float = 1.0
-    entropy_coef: float = 0.0
+    entropy_coef: float = 0.005
     balance_coef: float = 0.0
     value_clip: float | None = 0.2
     learning_rate: float = 3e-4
@@ -118,4 +131,3 @@ def compute_gae(
     if not torch.isfinite(returns).all().item():
         raise ValueError("GAE 输出出现非有限值")
     return advantages, returns
-

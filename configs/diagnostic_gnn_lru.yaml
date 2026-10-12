@@ -89,14 +89,15 @@ plan:
   velocity_tolerance_m_s: 0.1
 ppo:
   balance_coef: 0.0
-  entropy_coef: 0.0
+  entropy_coef: 0.005
   epochs: 1
   learning_rate: 0.0001
   minibatch_envs: 2
 push_interval_steps: 10
 robot_id: k1_22dof
 run:
-  dynamics_every: 2
+  dynamics_every: 1
+  dynamics_epochs: 4
   dynamics_learning_rate: 0.0001
   evaluation_episodes: 2
   evaluation_max_steps: 200

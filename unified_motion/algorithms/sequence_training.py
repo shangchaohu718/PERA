@@ -284,15 +284,12 @@ class MotionTrackingTask:
 
     def read(self) -> PhysicsObservation:
         """输出当前真实物理观测；快照复制由采样器统一负责。"""
-        frame = self.physics_bridge.read()
         if self.actor_observation == "deployable":
-            # 根线速度、接触法线/力和精确接触点速度来自仿真器；实机估计器接通前
-            # 只进入Critic/Teacher，不能经Dynamics旁路泄露给Actor。
-            frame.base_lin_vel_b.zero_()
-            frame.contact_features[..., 3:10] = 0
-            frame.contact_features[..., 11] = 0
-            frame.object_features.zero_(); frame.object_mask.zero_()
-        return frame
+            # This method does not touch the mjlab contact sensor.  In
+            # particular, collision point/normal/force/slip cannot leak through
+            # DynamicsModel into the Actor.
+            return self.physics_bridge.read_deployable()
+        return self.physics_bridge.read()
 
     @property
     def privileged_dim(self) -> int:
@@ -397,6 +394,9 @@ class SequenceRollout:
     dynamics_stamp: tuple[int, ...]
     consumed: bool = False
     previous_interaction_prediction: DynamicsPrediction | None = None
+    # PPO/log-prob always use ``action`` (the sampled command). Dynamics uses
+    # this field when an actuator-delay queue executed a different command.
+    executed_action: torch.Tensor | None = None
 
     @property
     def horizon(self) -> int:
@@ -587,7 +587,7 @@ class PhysicsSequenceCollector:
         prefix = stack_tree(self._history) if self._history else None
         policy_stamp = parameter_stamp(self.policy)
         inputs, next_frames, predictions, prediction_valid = [], [], [], []
-        actions, means, stds, lps, values = [], [], [], [], []
+        actions, executed_actions, means, stds, lps, values = [], [], [], [], [], []
         rewards, next_values, ends, cuts, metrics = [], [], [], [], []
         initial_hidden = None
         interaction_predictions = []
@@ -621,16 +621,6 @@ class PhysicsSequenceCollector:
                 if not torch.isfinite(pending_next_value).all().item():
                     raise FloatingPointError("下一状态价值非有限")
                 pending_next_value = pending_continue = None
-            predicted = self.dynamics.predict_next(
-                frame, action, dyn.latent, physics_encoding=dyn.physics_encoding())
-            if self.dynamics.interaction_feedback:
-                old_interaction = None if before is None else before.interaction_prediction
-                if old_interaction is None:
-                    old_interaction = clone_tree(predicted)
-                    for field_name in ("contact_mask", "object_mask"):
-                        getattr(old_interaction, field_name).zero_()
-                interaction_predictions.append(clone_tree(old_interaction))
-            after_action = self.dynamics.remember_prediction(memory, predicted)
             # 从这里以后，环境里的旧 view 可能被覆盖，以上输入已经全部做了独立快照。
             transition = self.task.step(action)
             if not isinstance(transition, TaskTransition):
@@ -644,6 +634,21 @@ class PhysicsSequenceCollector:
                 raise FloatingPointError("环境奖励含非有限值")
             if (transition.terminated & transition.truncated).any().item():
                 raise ValueError("真正终止和时间截断不能同时为真")
+            executed = getattr(self.task, "last_executed_action", action)
+            if (not isinstance(executed, torch.Tensor) or executed.shape != action.shape
+                    or executed.device != action.device or executed.dtype != action.dtype):
+                raise ValueError("last_executed_action必须与策略动作同形状、同设备、同类型")
+            executed = clone_tree(executed)
+            predicted = self.dynamics.predict_next(
+                frame, executed, dyn.latent, physics_encoding=dyn.physics_encoding())
+            if self.dynamics.interaction_feedback:
+                old_interaction = None if before is None else before.interaction_prediction
+                if old_interaction is None:
+                    old_interaction = clone_tree(predicted)
+                    for field_name in ("contact_mask", "object_mask"):
+                        getattr(old_interaction, field_name).zero_()
+                interaction_predictions.append(clone_tree(old_interaction))
+            after_action = self.dynamics.remember_prediction(memory, predicted)
             next_frame = clone_tree(self.task.read())
             if isinstance(self.policy, PhysicsMLPActorCritic):
                 continuing = ~(transition.terminated | transition.truncated)
@@ -676,7 +681,8 @@ class PhysicsSequenceCollector:
                 raise FloatingPointError("最终状态价值非有限")
             inputs.append(inp); next_frames.append(next_frame)
             predictions.append(clone_tree(pre_prediction)); prediction_valid.append(clone_tree(pre_valid))
-            actions.append(clone_tree(action)); means.append(clone_tree(output.mean)); stds.append(clone_tree(output.std))
+            actions.append(clone_tree(action));executed_actions.append(executed)
+            means.append(clone_tree(output.mean)); stds.append(clone_tree(output.std))
             lps.append(clone_tree(lp)); values.append(clone_tree(output.value))
             rewards.append(clone_tree(transition.reward)); next_values.append(clone_tree(next_v))
             if isinstance(self.policy, PhysicsMLPActorCritic) and step_index < horizon - 1:
@@ -723,6 +729,7 @@ class PhysicsSequenceCollector:
         )
         if interaction_predictions:
             result.previous_interaction_prediction = stack_tree(interaction_predictions)
+        result.executed_action = torch.stack(executed_actions, 1)
         return result
 
 
@@ -754,7 +761,17 @@ class PhysicsSequencePPO:
         if not isinstance(self.config, PPOConfig):
             raise TypeError("config 必须是 PPOConfig")
         self.optimizer = torch.optim.Adam(policy.parameters(), lr=self.config.learning_rate, eps=self.config.adam_eps)
+        self.base_learning_rate = self.config.learning_rate
         self.total_updates = 0
+
+    def set_learning_rate_scale(self, scale: float) -> float:
+        """按外层训练进度设置 PPO 学习率，返回实际学习率。"""
+        if isinstance(scale, bool) or not isinstance(scale, (int, float)) or not 0 < scale <= 1:
+            raise ValueError("学习率倍率必须在(0,1]")
+        value = self.base_learning_rate * float(scale)
+        for group in self.optimizer.param_groups:
+            group["lr"] = value
+        return value
 
     def _evaluate(self, rollout: SequenceRollout, ids: torch.Tensor):
         """用当前权重与真实前缀重算动作分布，返回当前批的输出（不含前缀）。
@@ -774,8 +791,11 @@ class PhysicsSequencePPO:
             mean, std, values = output.mean, output.std, output.value
             balance = mean.new_zeros(())
         else:
+            balance_mask = torch.zeros_like(seq.starts)
+            balance_mask[:, prefix_len:] = True
             output = self.policy.forward_sequence(rollout.robot_id, seq.physics, seq.dynamics(), seq.goal,
-                     episode_start=seq.starts, privileged=seq.privileged, require_fresh_start=False)
+                     episode_start=seq.starts, router_balance_mask=balance_mask,
+                     privileged=seq.privileged, require_fresh_start=False)
             mean, std, values = (x[:, prefix_len:] for x in (output.mean, output.std, output.values))
             balance = output.balance_loss
         distribution = torch.distributions.Independent(torch.distributions.Normal(mean, std), 1)
@@ -814,9 +834,6 @@ class PhysicsSequencePPO:
             raise ValueError("rollout 的关节顺序与策略不一致")
         if parameter_stamp(self.policy) != rollout.policy_stamp:
             raise RuntimeError("rollout 来自旧策略或其他模型，不允许重复 on-policy 更新")
-        prefix_len = 0 if rollout.prefix is None else rollout.prefix.starts.shape[1]
-        if prefix_len and self.config.balance_coef:
-            raise ValueError("现有 MoE 辅助项按整段统计；有前缀时须设 balance_coef=0")
         self.policy.eval()
         error = self.verify_old_policy(rollout) if self.config.verify_old_policy else 0.0
         adv, ret = compute_gae(rollout.reward, rollout.old_value.transpose(0, 1), rollout.next_value,
@@ -936,7 +953,8 @@ class DynamicsUpdater:
                  teacher_distillation_weight: float = 0.0,
                  teacher_reconstruction_weight: float = 0.0,
                  multi_step_weight: float = 0.0,
-                 latent_slow_weight: float = 0.0) -> None:
+                 latent_slow_weight: float = 0.0,
+                 epochs: int = 4) -> None:
         """建立独立 Adam。输入模型和正数超参数；输出无。"""
         import math
         if not isinstance(model, DynamicsModel):
@@ -944,6 +962,8 @@ class DynamicsUpdater:
         if any(isinstance(x, bool) or not isinstance(x, (float, int)) or not math.isfinite(x) or x <= 0
                for x in (learning_rate, max_grad_norm)):
             raise ValueError("学习率和梯度上限必须是正的有限数")
+        if type(epochs) is not int or epochs < 1:
+            raise ValueError("Dynamics epochs必须是正整数")
         if (isinstance(system_id_weight, bool) or not isinstance(system_id_weight, (float, int))
                 or not math.isfinite(system_id_weight) or system_id_weight < 0):
             raise ValueError("system_id_weight必须是非负有限数")
@@ -967,17 +987,47 @@ class DynamicsUpdater:
         self.teacher_reconstruction_weight=float(teacher_reconstruction_weight)
         self.multi_step_weight=float(multi_step_weight)
         self.latent_slow_weight=float(latent_slow_weight)
+        self.epochs=epochs
         self.optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+        self.base_learning_rate = float(learning_rate)
         self.steps = 0
 
+    def set_learning_rate_scale(self, scale: float) -> float:
+        """按外层训练进度设置动力学学习率，返回实际学习率。"""
+        if isinstance(scale, bool) or not isinstance(scale, (int, float)) or not 0 < scale <= 1:
+            raise ValueError("学习率倍率必须在(0,1]")
+        value = self.base_learning_rate * float(scale)
+        for group in self.optimizer.param_groups:
+            group["lr"] = value
+        return value
+
     def update(self, rollout: SequenceRollout) -> DynamicsUpdateStats:
+        """在同一批真实序列上复习 ``epochs`` 次，并返回各步平均损失。"""
+        if (not isinstance(rollout, SequenceRollout)
+                or parameter_stamp(self.model) != rollout.dynamics_stamp):
+            raise RuntimeError("动力学监督需要对应当前模型的采样历史；旧 hidden 不能冒充新模型状态")
+        if self.epochs > 1 and not rollout.episode_start[:,0].all().item():
+            raise ValueError(
+                "Dynamics多轮复习要求序列从真实回合起点开始；"
+                "请把dynamics_every设为1或把epochs设为1"
+            )
+        results = [self._update_once(rollout) for _ in range(self.epochs)]
+        keys = set(results[0].terms)
+        if any(set(item.terms) != keys for item in results):
+            raise RuntimeError("Dynamics多轮复习的损失项发生变化")
+        return DynamicsUpdateStats(
+            sum(item.loss for item in results) / self.epochs,
+            sum(item.grad_norm for item in results) / self.epochs,
+            self.steps,
+            {key: sum(item.terms[key] for item in results) / self.epochs for key in keys},
+        )
+
+    def _update_once(self, rollout: SequenceRollout) -> DynamicsUpdateStats:
         """更新物理模型一次，使用采样前的真实 GRU 状态进行截断反向传播。
 
         输入：未因动力学权重改变而过期的 rollout。输出监督损失和梯度统计。
         下一状态必须是 reset 之前读到的那一帧；终止转移仍可用于物理监督。
         """
-        if not isinstance(rollout, SequenceRollout) or parameter_stamp(self.model) != rollout.dynamics_stamp:
-            raise RuntimeError("动力学监督需要对应当前模型的采样历史；旧 hidden 不能冒充新模型状态")
         self.model.train()
         try:
             encoding = self.model.forward_sequence(rollout.observation,
@@ -986,7 +1036,10 @@ class DynamicsUpdater:
                 previous_prediction_valid=rollout.previous_prediction_valid,
                 previous_interaction_prediction=rollout.previous_interaction_prediction)
             prediction = self.model.predict_next(
-                rollout.observation, rollout.action.detach(), encoding.latent,
+                rollout.observation,
+                (rollout.action if rollout.executed_action is None
+                 else rollout.executed_action).detach(),
+                encoding.latent,
                 physics_encoding=encoding.physics_encoding())
             loss = self.model.prediction_loss(prediction, rollout.next_observation,
                                               valid_transition=rollout.valid_transition)
@@ -1004,8 +1057,10 @@ class DynamicsUpdater:
                         continue
                     source = slice_time(rollout.observation,0,length)
                     target_future = slice_time(rollout.observation,horizon,horizon+length)
+                    dynamics_action=(rollout.action if rollout.executed_action is None
+                                     else rollout.executed_action)
                     action_sequence = torch.stack(
-                        [rollout.action[:,offset:offset+length]
+                        [dynamics_action[:,offset:offset+length]
                          for offset in range(horizon)], dim=2).detach()
                     source_physics = PhysicsEncoding(
                         encoded_physics.context[:,:length],
@@ -1070,8 +1125,9 @@ class DynamicsUpdater:
 
     def state_dict(self) -> dict:
         """输出物理模型/优化器/计数快照；不包含运行时 GRU。"""
-        return dict(schema=3, model=copy.deepcopy(self.model.state_dict()),
+        return dict(schema=4, model=copy.deepcopy(self.model.state_dict()),
                     optimizer=copy.deepcopy(self.optimizer.state_dict()), steps=self.steps,
+                    epochs=self.epochs,
                     max_grad_norm=self.max_grad_norm, system_id_weight=self.system_id_weight,
                     teacher_distillation_weight=self.teacher_distillation_weight,
                     teacher_reconstruction_weight=self.teacher_reconstruction_weight,
@@ -1080,7 +1136,8 @@ class DynamicsUpdater:
 
     def load_state_dict(self, state: dict) -> None:
         """输入保存的监督 checkpoint；验证并恢复，废弃任何旧记忆。"""
-        if (not isinstance(state, dict) or state.get("schema") != 3
+        if (not isinstance(state, dict) or state.get("schema") != 4
+                or state.get("epochs") != self.epochs
                 or state.get("max_grad_norm") != self.max_grad_norm
                 or state.get("system_id_weight") != self.system_id_weight
                 or state.get("teacher_distillation_weight") != self.teacher_distillation_weight

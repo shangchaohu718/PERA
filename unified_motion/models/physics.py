@@ -31,6 +31,16 @@ from torch.nn import functional as F
 from ..robot_contract import RobotContract
 from ..reference_observations import ReferenceObservation
 from .encoder import EncodedMotion
+from .fixed_normalization import (
+    SCHEMA as NORMALIZATION_SCHEMA,
+    LINEAR_VELOCITY_M_S,
+    body_observation,
+    contact_goal,
+    contact_observation,
+    object_goal,
+    object_observation,
+    reference_observation,
+)
 
 # 下面这些常量是统一接口中的固定列数，不能随意改而不更新数据管线。
 CONTACT_DIM = 12
@@ -238,6 +248,8 @@ class DynamicsPrediction:
     # 预测时存在的槽位。下一帧只比较前后都有效、身份稳定的槽位。
     contact_mask: torch.Tensor | None = None
     object_mask: torch.Tensor | None = None
+    # Optional log variance for normalized core-state prediction error.
+    next_core_logvar: torch.Tensor | None = None
 
 
 @dataclass
@@ -477,7 +489,10 @@ class PhysicsEncoder(nn.Module):
         """
         w = self.body_net[0].weight
         lead = _check_observation(obs, self.robot, w.device, w.dtype, self.check_values)
-        body = self.body_net(torch.cat((obs.body_obs, obs.base_lin_vel_b), dim=-1))
+        body = self.body_net(torch.cat((
+            body_observation(obs.body_obs, self.robot),
+            obs.base_lin_vel_b / LINEAR_VELOCITY_M_S,
+        ), dim=-1))
         contact_input = torch.where(obs.contact_mask.unsqueeze(-1), obs.contact_features, 0.0)
         object_input = torch.where(obs.object_mask.unsqueeze(-1), obs.object_features, 0.0)
         # q 与 -q 是同一个方向。用绝对值最大分量的符号统一表示，
@@ -485,8 +500,8 @@ class PhysicsEncoder(nn.Module):
         quat = _canonical_quaternion(object_input[..., 3:7])
         object_input = torch.cat((object_input[..., :3], quat, object_input[..., 7:]), dim=-1)
         object_input = torch.where(obs.object_mask.unsqueeze(-1), object_input, 0.0)
-        contact = self.contact_net(contact_input)
-        objects = self.object_net(object_input)
+        contact = self.contact_net(contact_observation(contact_input, self.robot))
+        objects = self.object_net(object_observation(object_input))
         contact = torch.where(obs.contact_mask.unsqueeze(-1), contact, 0.0)
         objects = torch.where(obs.object_mask.unsqueeze(-1), objects, 0.0)
         if self.graph is not None:
@@ -524,7 +539,8 @@ class DynamicsModel(nn.Module):
                  scene_encoder: str = "set", graph_layers: int = 2,
                  contact_object_indices: Sequence[int] | None = None,
                  system_id_dim: int = 0, teacher_student: bool = False,
-                 prediction_horizons: Sequence[int] = (1,)) -> None:
+                 prediction_horizons: Sequence[int] = (1,),
+                 uncertainty: bool = False) -> None:
         """功能：创建物理编码器、历史记忆和下一状态预测网络。
 
         输入：robot 关节合同；physics_width 物理特征宽度；
@@ -550,6 +566,9 @@ class DynamicsModel(nn.Module):
             raise ValueError("teacher_student必须是bool，且需要非零system_id_dim")
         self.system_id_dim = system_id_dim
         self.teacher_student = teacher_student
+        if type(uncertainty) is not bool:
+            raise TypeError("uncertainty必须是bool")
+        self.uncertainty = uncertainty
         horizons = tuple(prediction_horizons)
         if (not horizons or horizons[0] != 1 or tuple(sorted(set(horizons))) != horizons
                 or any(type(value) is not int or value < 1 for value in horizons)):
@@ -565,6 +584,10 @@ class DynamicsModel(nn.Module):
         self.latent_head = _mlp(memory_width, hidden_dim, latent_width)
         self.system_id_head = (_mlp(latent_width, hidden_dim, system_id_dim)
                                if system_id_dim else None)
+        self.system_id_logvar_head = (
+            _mlp(latent_width, hidden_dim, system_id_dim)
+            if uncertainty and system_id_dim else None
+        )
         self.teacher_encoder = (_mlp(system_id_dim, hidden_dim, latent_width)
                                 if teacher_student else None)
         self.teacher_decoder = (_mlp(latent_width, hidden_dim, system_id_dim)
@@ -573,6 +596,9 @@ class DynamicsModel(nn.Module):
         self.action_net = _mlp(robot.dof, hidden_dim, physics_width)
         predict_in = (9 + 2*robot.dof) + latent_width + physics_width + physics_width
         self.state_predictor = _mlp(predict_in, hidden_dim, 9 + 2*robot.dof)
+        self.state_logvar_predictor = (
+            _mlp(predict_in, hidden_dim, 9 + 2*robot.dof) if uncertainty else None
+        )
         self.future_state_predictors = nn.ModuleDict({
             str(horizon): _mlp(predict_in, hidden_dim, 9 + 2*robot.dof)
             for horizon in horizons if horizon > 1
@@ -612,6 +638,9 @@ class DynamicsModel(nn.Module):
             state["system_id_dim"] = self.system_id_dim
         if self.teacher_student:
             state["teacher_student"] = True
+        if self.uncertainty:
+            state["uncertainty"] = True
+        state["input_normalization"] = NORMALIZATION_SCHEMA
         if self.prediction_horizons != (1,):
             state["prediction_horizons"] = self.prediction_horizons
         return state
@@ -626,6 +655,18 @@ class DynamicsModel(nn.Module):
         if self.check_values and not torch.isfinite(prediction).all().item():
             raise ValueError("系统辨识输出包含NaN/Inf")
         return prediction
+
+    def identify_privileged_distribution(
+        self, latent: torch.Tensor
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        """Return privileged mean and calibrated log variance for confidence gating."""
+        mean = self.identify_privileged(latent)
+        if self.system_id_logvar_head is None:
+            raise RuntimeError("DynamicsModel未开启不确定度头")
+        logvar = self.system_id_logvar_head(latent).clamp(-6.0, 3.0)
+        if self.check_values and not torch.isfinite(logvar).all().item():
+            raise ValueError("系统辨识不确定度包含NaN/Inf")
+        return mean, logvar
 
     def encode_privileged_teacher(self, privileged: torch.Tensor) -> torch.Tensor:
         """训练期Teacher：把仿真真值编码为z_priv；调用方负责阻断到学生的梯度。"""
@@ -914,8 +955,11 @@ class DynamicsModel(nn.Module):
         if self.interaction_feedback:
             if prediction.contact_mask is None or prediction.object_mask is None:
                 raise ValueError("交互预测缺少预测时有效性mask")
-            saved = DynamicsPrediction(**{f.name: getattr(prediction, f.name).detach().clone()
-                                          for f in fields(prediction)})
+            saved = DynamicsPrediction(**{
+                f.name: (None if getattr(prediction, f.name) is None
+                         else getattr(prediction, f.name).detach().clone())
+                for f in fields(prediction)
+            })
         return DynamicsMemory(memory.hidden, memory.env_ids, self._owner,
                               prediction.next_core.detach().clone(), valid.clone(), saved)
 
@@ -957,6 +1001,10 @@ class DynamicsModel(nn.Module):
         core = _core_state(obs, self.robot)
         net_input = torch.cat((core, latent, physics.context, action_code), dim=-1)
         delta = self.state_predictor(net_input)
+        core_logvar = (
+            None if self.state_logvar_predictor is None
+            else self.state_logvar_predictor(net_input).clamp(-6.0, 3.0)
+        )
         next_core = core + delta
         # 重力方向是单位向量。这里防止预测器产生无穷大的长度。
         gravity = _safe_unit(next_core[...,6:9], core[...,6:9])
@@ -980,7 +1028,8 @@ class DynamicsModel(nn.Module):
         object_quat = _canonical_quaternion(_safe_unit(quat_raw, old_quat))
         return DynamicsPrediction(next_core, contact_logits, object_pos,
                                   object_vel, object_ang_vel, object_quat,
-                                  obs.contact_mask.clone(), obs.object_mask.clone())
+                                  obs.contact_mask.clone(), obs.object_mask.clone(),
+                                  core_logvar)
 
     def predict_future_core(self, obs: PhysicsObservation, action_sequence: torch.Tensor,
                             latent: torch.Tensor, *, horizon: int,
@@ -1045,6 +1094,10 @@ class DynamicsModel(nn.Module):
         expected_core = (*lead,9 + 2*self.robot.dof)
         _check_tensor("prediction.next_core",prediction.next_core,expected_core,w.device,w.dtype,
                       check_values=self.check_values)
+        if prediction.next_core_logvar is not None:
+            _check_tensor("prediction.next_core_logvar", prediction.next_core_logvar,
+                          expected_core, w.device, w.dtype,
+                          check_values=self.check_values)
         c = next_observation.contact_features.shape[-2]
         m = next_observation.object_features.shape[-2]
         _check_tensor("prediction.next_contact_logits",prediction.next_contact_logits,
@@ -1071,8 +1124,13 @@ class DynamicsModel(nn.Module):
             ("joint_position", 9,9+n,0.3),
             ("joint_velocity", 9+n,9+2*n,3.0),
         ):
-            sq = ((prediction.next_core[...,begin:end]-true[...,begin:end])/unit_scale).square().mean(-1)
-            terms[key] = (sq*active).sum()/count
+            normalized = (prediction.next_core[...,begin:end]-true[...,begin:end])/unit_scale
+            if prediction.next_core_logvar is None:
+                error = normalized.square().mean(-1)
+            else:
+                logvar = prediction.next_core_logvar[...,begin:end]
+                error = 0.5 * (normalized.square()*torch.exp(-logvar)+logvar).mean(-1)
+            terms[key] = (error*active).sum()/count
         if c > 0:
             cmask = next_observation.contact_mask & valid_transition.unsqueeze(-1)
             labels = next_observation.contact_features[...,10]
@@ -1157,7 +1215,8 @@ class GoalEncoder(nn.Module):
             _check_tensor("motion.features",ref.features,(*lead,h,16+2*self.robot.dof),
                           dev,dtype,check_values=self.check_values)
             _check_tensor("motion.valid_mask",ref.valid_mask,(*lead,h),dev,dtype,boolean=True)
-            encoded = self.motion_net(torch.where(ref.valid_mask.unsqueeze(-1),ref.features,0.0))
+            normalized=reference_observation(ref.features,self.robot)
+            encoded = self.motion_net(torch.where(ref.valid_mask.unsqueeze(-1),normalized,0.0))
             values.append(_masked_mean(encoded,ref.valid_mask))
             flags.append(ref.valid_mask.any(dim=-1).to(dtype))
         if goal.contact_features is None:
@@ -1171,11 +1230,12 @@ class GoalEncoder(nn.Module):
             _check_tensor("contact_goal_mask",goal.contact_mask,(*lead,c),dev,dtype,boolean=True)
             if (goal.contact_mask & ~physics.contact_mask).any().item():
                 raise ValueError("不能给不存在的接触槽位布置目标")
-            desired = goal.contact_features
-            errors = torch.cat((desired[...,:3]-physics.contact_features[...,:3],
-                                desired[...,3:6]-physics.contact_features[...,3:6],
+            desired = contact_goal(goal.contact_features)
+            real = contact_observation(physics.contact_features,self.robot)
+            errors = torch.cat((desired[...,:3]-real[...,:3],
+                                desired[...,3:6]-real[...,3:6],
                                 torch.where(desired[...,6:7] < 0, 0.0,
-                                            desired[...,6:7]-physics.contact_features[...,10:11])),dim=-1)
+                                            desired[...,6:7]-real[...,10:11])),dim=-1)
             parts = torch.cat((desired,errors),dim=-1)
             encoded = self.contact_net(torch.where(goal.contact_mask.unsqueeze(-1),parts,0.0))
             values.append(_masked_mean(encoded,goal.contact_mask))
@@ -1191,9 +1251,10 @@ class GoalEncoder(nn.Module):
             _check_tensor("object_goal_mask",goal.object_mask,(*lead,m),dev,dtype,boolean=True)
             if (goal.object_mask & ~physics.object_mask).any().item():
                 raise ValueError("物体目标指向不可观察的物体，请先由规划器处理")
-            desired=goal.object_features
-            errors=torch.cat((desired[...,:3]-physics.object_features[...,:3],
-                              desired[...,3:]-physics.object_features[...,7:10]),dim=-1)
+            desired=object_goal(goal.object_features)
+            real=object_observation(physics.object_features)
+            errors=torch.cat((desired[...,:3]-real[...,:3],
+                              desired[...,3:]-real[...,7:10]),dim=-1)
             encoded=self.object_net(torch.where(goal.object_mask.unsqueeze(-1),
                                                  torch.cat((desired,errors),dim=-1),0.0))
             values.append(_masked_mean(encoded,goal.object_mask))
@@ -1258,9 +1319,10 @@ class PhysicsMLPActorCritic(nn.Module):
 
         输入：无。输出：随 state_dict 保存的字典；旧版缺此字段必须显式迁移。
         """
-        return dict(schema=2, robot=(self.robot.root_name, self.robot.joint_names),
+        return dict(schema=3, robot=(self.robot.root_name, self.robot.joint_names),
                     widths=(self.physics_width, self.latent_width, self.hidden_dim),
-                    privileged_dim=self.privileged_dim, goal="motion_contact_object_v1")
+                    privileged_dim=self.privileged_dim, goal="motion_contact_object_v1",
+                    input_normalization=NORMALIZATION_SCHEMA)
 
     def set_extra_state(self, state: dict) -> None:
         """核对载入权重所属的机器人和特征接口；不一致就拒绝。
@@ -1350,4 +1412,5 @@ class PhysicsMoEConditioner(nn.Module):
             raise ValueError("EncodedMotion 的隐藏维数与 Conditioner 不一致")
         residual=self.map(torch.cat((dynamics.context,dynamics.latent),dim=-1))
         return EncodedMotion(encoded.robot_id,x+residual,
-                             encoded.reference_tokens,encoded.reference_mask)
+                             encoded.reference_tokens,encoded.reference_mask,
+                             encoded.router_context)

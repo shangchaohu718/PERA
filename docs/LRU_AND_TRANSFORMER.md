@@ -124,6 +124,12 @@ GNN组合分别在 `diagnostic_gnn_lru.yaml`、`diagnostic_gnn_transformer.yaml`
 LRU与GRU/LSTM一样有无限历史形式的记忆。谱衰减不能用来假装某个截断长度已经“完全无影响”。
 本项目先保留严格方案：PPO更新权重后，从每个环境可追溯的真实回合起点重放，并且前缀不参与本批主PPO损失。
 `max_replay_steps`限制保留历史，不会静默伪造reset。超限会报错，需要用户配置合理上限或另行设计明确的近似训练算法。
+
+主干对比必须同时报告可见历史。训练日志中的
+`actor_history_mode`/`actor_visible_history_steps`会明确记录：MLP 为1帧，
+Transformer 为`n_layers * (context_len - 1) + 1`帧，GRU/LSTM/LRU 为从真实
+回合起点开始的`episode`模式。有限窗口与整回合记忆不是严格等预算对照，结果表
+不得只按主干名称归因。
 并行扫描只加速同一公式计算，不取消这个历史一致性要求。
 LRU的运行时记忆为 `2*n_layers*state_dim` 个实数/环境；“32复数状态”不能只计32个float。
 

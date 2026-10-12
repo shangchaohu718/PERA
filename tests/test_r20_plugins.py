@@ -260,7 +260,7 @@ def test_recurrent_collector_retains_history_and_updates_policy_and_dynamics(kin
         stat=ppo.update(roll)
         assert stat.optimizer_steps>0 and stat.old_policy_error<1e-4
         assert model_digest(pol)!=before
-    loss=DynamicsUpdater(dyn).update(roll)
+    loss=DynamicsUpdater(dyn,epochs=1).update(roll)
     assert loss.loss>=0
     if graph:assert dyn.encoder.graph.gnn.layers[0].message[0].weight.grad.abs().sum()>0
     collector.on_dynamics_updated();assert collector.collect(2).episode_start[:,0].all()

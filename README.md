@@ -3,6 +3,45 @@
 本版本在用户提供的R20工程上继续修改，**不另起项目、不重复写PPO或动力学模型**。
 新增LRU（Linear Recurrent Unit）Actor插口；`transformer`是原`dense`的易读别名，真实结构没有MoE/Router。
 
+## 当前开发状态（2026-10-12）
+
+项目已经完成原版 HoloMotion K1 Actor、Critic、MoE Transformer 和 PPO 到 mjlab
+任务接口的第一阶段迁移，并接入了可选的 Physics residual、DynamicsModel 与
+privileged Teacher。当前代码通过 **665 项测试（另有 18 项按环境跳过）**，也完成了
+真实 mjlab/CUDA 的短程冒烟；这些结果只证明代码链路可执行，**尚不代表已经具备正式
+长训练条件或机器人步态已经收敛**。
+
+### 已完成
+
+- HoloMotion K1 的 506 维 Actor、843 维 Critic 观测合同和 22 关节映射。
+- 原版 HoloMotion Actor/Critic 权重严格加载，以及 mjlab 上的 PPO 采样、更新和断点保存。
+- 左右脚独立物理特征、8 维学生物理 latent、privileged Teacher、预测不确定度和置信度门控。
+- 固定物理量归一化、实际执行动作监督、Dynamics 多 epoch 更新、学习率调度和 MoE 物理路由接口。
+- 可复现的 CPU 回归测试、GPU 冒烟记录和预检报告：
+  `reports/holomotion_physics_preflight_20261012.md`。
+- 官方 HoloMotion commit `cf2018a282249a04df1db4fa639760884f97b41b` 中本项目实际使用的
+  源码与配置已固化到 `third_party/HoloMotion/source/`，不再依赖某台机器上的相邻源码目录。
+
+### 正式训练前必须修复
+
+1. **禁止 Dynamics 更新重置物理环境。** Unified 默认每个 32 步 rollout 更新一次
+   Dynamics，当前更新后会触发全环境 reset；Physics-HoloMotion 路径也会在累计
+   192 步后重启机器人。需要保留环境状态，仅用历史 burn-in 重建新 Dynamics/EMA
+   权重对应的隐状态。
+2. **统一 Transformer 的采样与 PPO 重算历史。** 当前 HoloMotion 采样 KV cache 会跨
+   rollout 保留，而 PPO 只重算当前 rollout。近期修复应与原版一致，在每个 rollout
+   开头清空 cache；未来若保留长历史，则必须保存并重放真实历史前缀。
+3. **区分 `terminated` 与 `truncated`。** timeout 应中断 GAE 链，但应使用截断时的
+   terminal observation value 做 bootstrap；只有真实终止关闭 bootstrap。
+4. **补全 Physics checkpoint 的冻结评测与部署加载器。** `.pt` 已包含 residual、在线
+   Dynamics 和 EMA Dynamics，可恢复训练；普通 `actor/model.safetensors` 仍只有基础
+   Actor，直接用普通评测器会漏掉整个物理分支。
+5. **建立零训练基线。** 修完上述训练语义后，先在当前 mjlab 中冻结评测原始 HoloMotion
+   checkpoint，确认基础策略表现，再比较 Physics residual 和 Teacher，最后才扩大训练轮次。
+
+在这些阻塞项完成之前，不建议启动正式长训练。`runs/`、模型权重和本地数据集均被
+`.gitignore` 排除，不随源码仓库发布。
+
 ## 1. 现在可以怎样组合
 
 ```text
@@ -106,13 +145,13 @@ R21完成的是本轮要求的网络选项与训练接口，不是对整个通�
 
 新增的 `unified_motion.holomotion_mjlab` 不再近似重写 HoloMotion Actor，而是读取
 官方 K1 导出 ONNX 的元数据合同，构造其真实 506 维观测、维护 22 关节名字映射，
-并为 mjlab 生成与训练时一致的 PD/action-scale 配置。真实评测入口是：
+并为 mjlab 生成与训练时一致的 PD/action-scale 配置。训练时使用的原版网络源码位于
+`third_party/HoloMotion/source/holomotion/`。真实评测入口是：
 
 ```bash
 python tools/evaluate_holomotion_k1_mjlab.py --help
 ```
 
-参考轨迹转换、四元数顺序以及当前运行门禁见 `docs/HOLOMOTION_MJLAB.md`。现有
-`model_9999.onnx` 已完成 CPU ONNX 前向合同验证；本机当前没有同时包含 mjlab 与
-HoloMotion Runtime 的可用环境，且 CUDA 驱动不可见，因此不能把接口验证描述成
-已完成的 mjlab 策略 rollout。
+参考轨迹转换、四元数顺序、短程 GPU 预检以及当前正式训练门禁见
+`docs/HOLOMOTION_MJLAB.md` 和本 README 顶部的“当前开发状态”。模型与数据因体积及
+许可边界不进入 Git，需要由运行者通过命令行参数提供。

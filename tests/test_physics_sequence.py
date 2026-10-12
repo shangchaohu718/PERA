@@ -150,6 +150,19 @@ class PhysicsSequenceTests(unittest.TestCase):
                 batch=PhysicsSequenceCollector(task,d,p).collect(4)
                 stats=PhysicsSequencePPO(p,self.config()).update(batch)
                 self.assertGreater(stats.optimizer_steps,0)
+    def test_moe_router_context_directly_depends_on_dynamics(self):
+        task,d,p=make_models('moe',endings=False)
+        batch=PhysicsSequenceCollector(task,d,p).collect(3)
+        valid=torch.ones(2,3,dtype=torch.bool)
+        one=batch.inputs.dynamics()
+        two=DynamicsEncoding(one.latent+1.0,one.context-1.0,one.hidden,
+                             one.prediction_error)
+        a=p._build_encoded(task.robot_id,batch.inputs.physics,one,batch.inputs.goal,valid)
+        b=p._build_encoded(task.robot_id,batch.inputs.physics,two,batch.inputs.goal,valid)
+        self.assertIsNotNone(a.router_context)
+        self.assertGreater((a.router_context-b.router_context).abs().max().item(),1e-5)
+        # Expert 输入和 Router 物理条件是两条明确通路。
+        self.assertEqual(a.router_context.shape,a.state_token.shape)
     def test_motion_only_old_policy_agrees_all_robots(self):
         for rid in ('k1_22dof','g1_23dof','g1_29dof'):
             for kind in ('mlp','dense','moe'):
@@ -237,10 +250,12 @@ class PhysicsSequenceTests(unittest.TestCase):
         task,d,p=make_models(endings=False);c=PhysicsSequenceCollector(task,d,p)
         c.collect(6);batch=c.collect(2);batch.prefix=None
         with self.assertRaises(ValueError):PhysicsSequencePPO(p,self.config()).update(batch)
-    def test_balance_prefix_rejected_not_silently_misweighted(self):
+    def test_balance_prefix_uses_only_current_rollout(self):
         task,d,p=make_models('moe',endings=False);c=PhysicsSequenceCollector(task,d,p)
         c.collect(6);batch=c.collect(2)
-        with self.assertRaises(ValueError):PhysicsSequencePPO(p,self.config(balance_coef=.01)).update(batch)
+        self.assertGreater(
+            PhysicsSequencePPO(p,self.config(balance_coef=.01)).update(batch).optimizer_steps,0
+        )
     def test_no_prefix_balance_supported(self):
         task,d,p=make_models('moe');batch=PhysicsSequenceCollector(task,d,p).collect(4)
         self.assertGreater(PhysicsSequencePPO(p,self.config(balance_coef=.01)).update(batch).optimizer_steps,0)
@@ -259,6 +274,11 @@ class PhysicsSequenceTests(unittest.TestCase):
         _,e,_=make_models();v=DynamicsUpdater(e);v.load_state_dict(state)
         self.assertEqual(v.steps,u.steps)
         for a,b in zip(d.parameters(),e.parameters()):torch.testing.assert_close(a,b,rtol=0,atol=0)
+    def test_dynamics_epochs_repeat_the_same_sequence(self):
+        task,d,p=make_models();batch=PhysicsSequenceCollector(task,d,p).collect(3)
+        updater=DynamicsUpdater(d,epochs=4);stats=updater.update(batch)
+        self.assertEqual(updater.steps,4)
+        self.assertEqual(stats.optimizer_steps,4)
     def test_value_does_not_consume_random_numbers_or_cache(self):
         task,d,p=make_models();d.eval();p.eval();f=task.read();enc,_=d.step(f,episode_start=task.episode_start,env_ids=task.env_ids)
         output,_,_,cache=p.step(task.robot_id,f,enc,task.goal(),env_ids=task.env_ids,episode_start=task.episode_start)
@@ -302,7 +322,7 @@ class PhysicsSequenceTests(unittest.TestCase):
             u=PhysicsSequencePPO(p,self.config());du=DynamicsUpdater(d)
             for _ in range(2):
                 batch=c.collect(8);u.update(batch);du.update(batch);c.on_dynamics_updated()
-            self.assertEqual(du.steps,2)
+            self.assertEqual(du.steps,8)
 
 if __name__=='__main__':
     torch.set_num_threads(2);unittest.main(verbosity=2)

@@ -1,0 +1,91 @@
+# @package _global_
+
+obs:
+  context_length: 8
+  n_fut_frames: 0
+  target_fps: 50
+
+  obs_groups:
+    unified:
+      atomic_obs_list:
+        # Actor terms (sequence-style; flatten at serializer)
+        - actor_velocity_command:
+            func: velocity_command
+            history_length: ${obs.context_length}
+            flatten_history_dim: false
+            mirror_func: mirror_velocity_command
+            mirror_config: {}
+        - actor_projected_gravity:
+            func: projected_gravity
+            history_length: ${obs.context_length}
+            flatten_history_dim: false
+            noise:
+              type: AdditiveUniformNoiseCfg
+              params:
+                n_min: -0.1
+                n_max: 0.1
+            mirror_func: mirror_vec3
+            mirror_config: {}
+        - actor_rel_robot_root_ang_vel:
+            func: rel_robot_root_ang_vel
+            history_length: ${obs.context_length}
+            flatten_history_dim: false
+            noise:
+              type: AdditiveUniformNoiseCfg
+              params:
+                n_min: -0.2
+                n_max: 0.2
+            mirror_func: mirror_axial_vec3
+            mirror_config: {}
+        - actor_dof_pos:
+            func: dof_pos
+            history_length: ${obs.context_length}
+            flatten_history_dim: false
+            noise:
+              type: AdditiveUniformNoiseCfg
+              params:
+                n_min: -0.01
+                n_max: 0.01
+            mirror_func: mirror_dof
+            mirror_config: {}
+        - actor_dof_vel:
+            func: dof_vel
+            history_length: ${obs.context_length}
+            flatten_history_dim: false
+            noise:
+              type: AdditiveUniformNoiseCfg
+              params:
+                n_min: -0.5
+                n_max: 0.5
+            mirror_func: mirror_dof
+            mirror_config: {}
+        - actor_last_action:
+            func: last_action
+            history_length: ${obs.context_length}
+            flatten_history_dim: false
+            mirror_func: mirror_dof
+            mirror_config: {}
+
+        # Critic terms
+        - critic_velocity_command:
+            func: velocity_command
+        - critic_rel_robot_root_lin_vel:
+            func: rel_robot_root_lin_vel
+        - critic_rel_robot_root_ang_vel:
+            func: rel_robot_root_ang_vel
+        - critic_root_rel_robot_bodylink_pos_flat:
+            func: root_rel_robot_bodylink_pos_flat
+            params:
+              keybody_names: ${robot.key_bodies}
+        - critic_root_rel_robot_bodylink_rot_mat_flat:
+            func: root_rel_robot_bodylink_rot_mat_flat
+            params:
+              keybody_names: ${robot.key_bodies}
+        - critic_dof_pos:
+            func: dof_pos
+        - critic_dof_vel:
+            func: dof_vel
+        - critic_last_action:
+            func: last_action
+      enable_corruption: true
+      concatenate_terms: false
