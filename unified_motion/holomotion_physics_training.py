@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import math
 from dataclasses import dataclass
 from typing import Any
 
@@ -10,11 +11,16 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from .algorithms.sequence_training import parameter_stamp
+from .algorithms.sequence_training import parameter_stamp, replay_dynamics_inputs
+from .algorithms.dynamics_history import DynamicsHistory, snapshot_physics
+from .algorithms.common import diagonal_gaussian_kl
+from .algorithms.dynamics_objective import identification_loss, validate_teacher_weights
 from .holomotion_mjlab_ppo import (
     HoloMotionMJLabPPO,
     HoloMotionPPORollout,
     generalized_advantage_estimate,
+    normalize_advantages,
+    build_episode_causal_mask,
 )
 from .holomotion_original_algorithm import flat_observations_to_tensordict
 from .holomotion_physics_actor import (
@@ -23,33 +29,10 @@ from .holomotion_physics_actor import (
     dynamics_actor_features,
 )
 from .models.physics import DynamicsModel, PhysicsObservation
-
-
-def _stack_physics(items: list[PhysicsObservation]) -> PhysicsObservation:
-    if not items:
-        raise ValueError("cannot stack an empty physics rollout")
-    return PhysicsObservation(
-        *(torch.stack([getattr(item, name) for item in items], dim=1) for name in (
-            "body_obs", "base_lin_vel_b", "contact_features", "contact_mask",
-            "object_features", "object_mask",
-        ))
-    )
-
-
-def _concat_physics(items: list[PhysicsObservation]) -> PhysicsObservation:
-    return PhysicsObservation(
-        *(torch.cat([getattr(item, name) for item in items], dim=1) for name in (
-            "body_obs", "base_lin_vel_b", "contact_features", "contact_mask",
-            "object_features", "object_mask",
-        ))
-    )
-
-
-def _slice_physics(value: PhysicsObservation, begin: int, end: int) -> PhysicsObservation:
-    return PhysicsObservation(*(getattr(value, name)[:, begin:end] for name in (
-        "body_obs", "base_lin_vel_b", "contact_features", "contact_mask",
-        "object_features", "object_mask",
-    )))
+from .holomotion_physics_runtime import physics_policy_inputs
+from .physics_data import stack_physics as _stack_physics, concat_physics as _concat_physics, slice_physics as _slice_physics
+from .physics_confidence import PhysicsConfidence, PhysicsConfidenceConfig
+from .physics_update import PhysicsUpdateConfig
 
 
 @dataclass(frozen=True)
@@ -65,6 +48,12 @@ class HoloMotionDynamicsMetrics:
     mean_system_id_std: float
     mean_state_std: float
     optimizer_steps: int
+    deployment_update_accepted: bool
+    deployment_mean_kl: float
+    deployment_max_kl: float
+    calibration_samples: int
+    calibration_skill: float
+    ema_decay: float
 
 
 class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
@@ -80,13 +69,18 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         physics_actor_config: HoloMotionPhysicsActorConfig | None = None,
         dynamics_learning_rate: float = 1.0e-4,
         system_identification_weight: float = 0.1,
-        teacher_reconstruction_weight: float = 0.1,
-        teacher_distillation_weight: float = 0.05,
+        teacher_reconstruction_weight: float | None = None,
+        teacher_distillation_weight: float | None = None,
         dynamics_burn_in_steps: int = 64,
         dynamics_train_steps: int = 128,
         confidence_warmup_steps: int = 128,
-        dynamics_ema_decay: float = 0.99,
+        dynamics_ema_decay: float | None = None,
         dynamics_epochs: int = 4,
+        dynamics_history_steps: int = 16384,
+        dynamics_history_bytes: int = 512*1024**2,
+        policy_rollout_steps: int = 32,
+        confidence_config: PhysicsConfidenceConfig | None = None,
+        update_config: PhysicsUpdateConfig | None = None,
     ) -> None:
         if not isinstance(dynamics, DynamicsModel):
             raise TypeError("dynamics must be a DynamicsModel")
@@ -94,15 +88,23 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             raise ValueError("HoloMotion task and dynamics robot contracts differ")
         if dynamics.interaction_feedback:
             raise ValueError("first HoloMotion integration does not replay interaction feedback")
-        if not dynamics.teacher_student or dynamics.system_id_dim != task.physics_teacher_dim:
-            raise ValueError("dynamics Teacher width must match slow-physics target")
+        if dynamics.system_id_dim != task.physics_teacher_dim or not dynamics.system_id_dim:
+            raise ValueError("dynamics identification width must match slow-physics target")
         if not dynamics.uncertainty:
             raise ValueError("HoloMotion physics dynamics must enable uncertainty heads")
+        if not dynamics.mask_unobserved_core:
+            raise ValueError("legacy unmasked Dynamics are inference-only")
         super().__init__(algorithm, task, config=config)
+        self.update_config = update_config or PhysicsUpdateConfig()
+        self.confidence = PhysicsConfidence(dynamics.system_id_dim, confidence_config).to(task.device)
+        if self.confidence.config.mode == "legacy":
+            raise ValueError("legacy confidence is inference-only")
         actor_cfg = physics_actor_config or HoloMotionPhysicsActorConfig(
             physics_feature_dim=3 * dynamics.physics_width + dynamics.latent_width
         )
         self.actor = HoloMotionPhysicsActor(self.actor, actor_cfg).to(task.device)
+        if self.update_config.freeze_base_actor:
+            self.actor.base_actor.requires_grad_(False)
         # Rebuild the optimizer so the new residual head participates in PPO.
         decay, no_decay = [], []
         for name, parameter in self.actor.named_parameters():
@@ -128,31 +130,61 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             self.dynamics.parameters(), lr=dynamics_learning_rate
         )
         self.system_identification_weight = float(system_identification_weight)
-        self.teacher_reconstruction_weight = float(teacher_reconstruction_weight)
-        self.teacher_distillation_weight = float(teacher_distillation_weight)
-        for value in (
-            self.system_identification_weight,
-            self.teacher_reconstruction_weight,
-            self.teacher_distillation_weight,
-        ):
-            if value <= 0:
-                raise ValueError("all physics/Teacher loss weights must be positive")
+        self.teacher_reconstruction_weight = float((.1 if dynamics.teacher_student else 0.)
+            if teacher_reconstruction_weight is None else teacher_reconstruction_weight)
+        self.teacher_distillation_weight = float((.05 if dynamics.teacher_student else 0.)
+            if teacher_distillation_weight is None else teacher_distillation_weight)
+        if not math.isfinite(self.system_identification_weight) or self.system_identification_weight <= 0:
+            raise ValueError("system identification weight must be positive")
+        validate_teacher_weights(dynamics, self.teacher_reconstruction_weight, self.teacher_distillation_weight)
         if any(type(value) is not int or value < 1 for value in (
             dynamics_burn_in_steps, dynamics_train_steps, confidence_warmup_steps,
-            dynamics_epochs,
+            dynamics_epochs, policy_rollout_steps,
         )):
             raise ValueError("burn-in, train, and confidence warmup steps must be positive")
-        if not 0.0 < dynamics_ema_decay < 1.0:
+        if dynamics_ema_decay is not None and not 0.0 < dynamics_ema_decay < 1.0:
             raise ValueError("dynamics_ema_decay must be in (0,1)")
         self.dynamics_burn_in_steps = dynamics_burn_in_steps
         self.dynamics_train_steps = dynamics_train_steps
         self.confidence_warmup_steps = confidence_warmup_steps
-        self.dynamics_ema_decay = float(dynamics_ema_decay)
+        self.dynamics_ema_decay = dynamics_ema_decay
         self.dynamics_epochs = dynamics_epochs
+        if dynamics_train_steps <= math.ceil(dynamics_train_steps*self.update_config.calibration_fraction):
+            raise ValueError("Dynamics window needs separate training and calibration transitions")
         self._dynamics_rollouts: list[HoloMotionPPORollout] = []
         self._physics_memory = None
         self._physics_episode_start = None
         self._physics_age = None
+        self._dynamics_history = DynamicsHistory(dynamics_history_steps, max_bytes=dynamics_history_bytes)
+        self._policy_rollout_steps = policy_rollout_steps
+
+    @classmethod
+    def from_checkpoint(cls, checkpoint, task, *, holomotion_root=None,
+                        dynamics_history_steps=16384, dynamics_history_bytes=512*1024**2):
+        """Resume every model branch and optimizer using checkpoint configuration."""
+        from .holomotion_physics_runtime import load_physics_checkpoint, validate_task_contract
+        from .holomotion_mjlab_ppo import HoloMotionPPOConfig
+        from .holomotion_original_algorithm import OriginalHoloMotionK1Algorithm
+        from pathlib import Path
+        loaded = load_physics_checkpoint(checkpoint, device=task.device,
+                                         holomotion_root=holomotion_root)
+        payload = loaded.payload
+        if payload["physics_schema"] != 5:
+            raise ValueError("legacy Physics checkpoints support frozen evaluation; initialize a new schema 5 training run")
+        validate_task_contract(payload["physics_runtime_config"], task)
+        algorithm = OriginalHoloMotionK1Algorithm(loaded.actor.base_actor, loaded.critic,
+            None, Path(checkpoint).parent, payload["physics_runtime_config"]["network_config"])
+        result = cls(algorithm, task, loaded.dynamics,
+            config=HoloMotionPPOConfig(**payload["ppo_config"]),
+            physics_actor_config=loaded.actor.config,
+            policy_rollout_steps=payload["physics_runtime_config"]["rollout_steps"],
+            dynamics_history_steps=dynamics_history_steps,
+            dynamics_history_bytes=dynamics_history_bytes,
+            confidence_config=loaded.calibration.config,
+            update_config=PhysicsUpdateConfig(**payload["physics_update_config"]),
+            **payload["physics_training_config"], **payload["physics_loss_weights"])
+        result.load_optimizer_checkpoint(checkpoint, _validated_physics=loaded)
+        return result
 
     @torch.no_grad()
     def reset(self, *, random_start: bool = False, min_remaining_s: float = 0.0):
@@ -160,6 +192,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             random_start=random_start, min_remaining_s=min_remaining_s
         )
         self._physics_memory = None
+        self._dynamics_history.clear()
+        self._dynamics_rollouts.clear()
         self._physics_episode_start = torch.ones(
             self.task.num_envs, dtype=torch.bool, device=self.task.device
         )
@@ -174,6 +208,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             raise ValueError("num_steps must be positive")
         if self._observation is None:
             self.reset()
+        self.actor.reset_kv_cache(self.task.num_envs, self.task.device)
         self.actor_dynamics.eval()
         if self._physics_episode_start is None:
             raise RuntimeError("physics episode state was not initialized")
@@ -182,18 +217,25 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             raise RuntimeError("physics evidence age was not initialized")
         actor_obs=[];critic_obs=[];actions=[];log_probs=[];means=[];sigmas=[];values=[]
         rewards=[];dones=[];clip_ids=[];features=[];confidences=[];frames=[];next_frames=[];starts=[]
+        truncated=[];timeout_values=[]
         reward_terms: dict[str,list[torch.Tensor]]={}
         previous_core=[];previous_valid=[];teacher_targets=[]
         aux_base=[];aux_contacts=[];aux_ref=[];aux_robot=[]
         initial_hidden = None
         stamp = parameter_stamp(self.dynamics)
         env_ids = tuple(range(self.task.num_envs))
+        dynamics_prefix = self._dynamics_history.snapshot()
+        executed_actions = []
+        ages = []
+        self._policy_rollout_steps = num_steps
 
         for _ in range(num_steps):
             observation = self._observation
             assert observation is not None
-            frame = self.task.deployable_physics()
+            frame = snapshot_physics(self.task.deployable_physics())
             start = self._physics_episode_start.clone()
+            ages.append(self._physics_age.clone())
+            self._dynamics_history.check_capacity(start, frame)
             before = self._physics_memory
             pre_hidden = (
                 frame.body_obs.new_zeros(self.task.num_envs, self.actor_dynamics.memory_width)
@@ -211,24 +253,10 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 if before is None or before.prediction_valid is None
                 else before.prediction_valid.clone()
             )
-            encoding, memory = self.actor_dynamics.step(
-                frame, episode_start=start, env_ids=env_ids, memory=before
-            )
-            feature = dynamics_actor_features(
-                encoding.context, encoding.latent, encoding.contact_tokens
-            )
+            encoding, memory, feature, confidence = physics_policy_inputs(
+                self.actor_dynamics, frame, start, env_ids, before,
+                self._physics_age, self.confidence_warmup_steps, self.confidence)
             teacher_target = self.task.physics_teacher_target()
-            _, logvar = self.actor_dynamics.identify_privileged_distribution(
-                encoding.latent
-            )
-            uncertainty_confidence = torch.exp(
-                -0.5 * torch.exp(logvar).mean(dim=-1, keepdim=True)
-            )
-            evidence_confidence = (
-                (self._physics_age + 1).to(frame.body_obs.dtype)
-                / float(self.confidence_warmup_steps)
-            ).clamp(max=1.0).unsqueeze(-1)
-            confidence = (uncertainty_confidence * evidence_confidence).clamp(0.0, 1.0)
             data = flat_observations_to_tensordict(observation.actor, observation.critic)
             actor_out = self._actor_forward(
                 data, mode="sampling", update_obs_norm=False,
@@ -236,13 +264,16 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             )
             critic_out = self.critic(data, update_obs_norm=False)
             action = actor_out.get("actions")
+            transition = self.task.step(action)
+            executed = getattr(self.task, "last_executed_action", action).detach().clone()
+            executed_actions.append(executed)
+            self._dynamics_history.append(frame, start, executed)
             prediction = self.actor_dynamics.predict_next(
-                frame, action, encoding.latent,
+                frame, executed, encoding.latent,
                 physics_encoding=encoding.physics_encoding(),
             )
             self._physics_memory = self.actor_dynamics.remember_prediction(memory, prediction)
-            transition = self.task.step(action)
-            next_frame = self.task.privileged_physics_observation()
+            next_frame = snapshot_physics(self.task.privileged_physics_observation())
             done = transition.terminated | transition.truncated
 
             actor_obs.append(observation.actor);critic_obs.append(observation.critic)
@@ -250,6 +281,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             means.append(actor_out.get("mu"));sigmas.append(actor_out.get("sigma"))
             values.append(critic_out.get("values").reshape(-1,1));rewards.append(transition.reward.reshape(-1,1))
             dones.append(done.reshape(-1,1));clip_ids.append(self.task.sampler.clip_ids.clone())
+            truncated.append(transition.truncated.reshape(-1,1))
             for name,value in transition.terms.items():
                 reward_terms.setdefault(name,[]).append(value.detach().clone())
             features.append(feature);confidences.append(confidence)
@@ -260,15 +292,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             aux_ref.append(observation.auxiliary.ref_keybody_rel_pos)
             aux_robot.append(observation.auxiliary.robot_keybody_rel_pos)
 
-            if done.any().item():
-                ids = done.nonzero(as_tuple=False).flatten()
-                self.actor.clear_env_cache(ids)
-                self._observation = self.task.reset(
-                    ids, random_start=True,
-                    min_remaining_s=float(self.task.sampler.offsets_s[-1]),
-                )
-            else:
-                self._observation = self.task.observe()
+            timeout_values.append(self._finish_transition(transition))
             self._physics_episode_start = done
             self._physics_age = torch.where(done, 0, self._physics_age + 1)
 
@@ -280,9 +304,10 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         advantage,returns=generalized_advantage_estimate(
             reward_tensor,value_tensor,done_tensor,bootstrap,
             gamma=self.config.gamma,lam=self.config.lam,
+            truncated=stack(truncated),timeout_values=stack(timeout_values),
         )
         if self.config.normalize_advantage:
-            advantage=(advantage-advantage.mean())/advantage.std().clamp_min(1e-8)
+            advantage=normalize_advantages(advantage)
         return HoloMotionPPORollout(
             stack(actor_obs),stack(critic_obs),stack(actions),stack(log_probs),stack(means),
             stack(sigmas),value_tensor,returns,advantage,done_tensor,reward_tensor,
@@ -294,6 +319,9 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             previous_predicted_core=stack(previous_core),previous_prediction_valid=stack(previous_valid),
             physics_teacher_target=stack(teacher_targets),dynamics_stamp=stamp,
             reward_terms={name:stack(values) for name,values in reward_terms.items()},
+            truncated=stack(truncated),timeout_values=stack(timeout_values),
+            executed_actions=stack(executed_actions),dynamics_prefix=dynamics_prefix,
+            physics_age=stack(ages),
         )
 
     def update_dynamics(
@@ -302,9 +330,10 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         required=(rollout.physics_observation,rollout.next_physics_observation,
                   rollout.physics_episode_start,rollout.physics_initial_hidden,
                   rollout.previous_predicted_core,rollout.previous_prediction_valid,
-                  rollout.physics_teacher_target,rollout.dynamics_stamp)
+                  rollout.physics_teacher_target,rollout.dynamics_stamp,
+                  rollout.physics_features,rollout.physics_confidence,rollout.physics_age)
         if any(value is None for value in required):
-            raise ValueError("rollout does not contain physics/Teacher supervision")
+            raise ValueError("rollout requires Physics supervision, features, confidence and evidence age")
         if parameter_stamp(self.dynamics) != rollout.dynamics_stamp:
             raise RuntimeError("dynamics changed after rollout collection")
         self._dynamics_rollouts.append(rollout)
@@ -321,20 +350,32 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         previous_core = torch.cat([item.previous_predicted_core for item in batches], dim=1)
         previous_valid = torch.cat([item.previous_prediction_valid for item in batches], dim=1)
         teacher_target = torch.cat([item.physics_teacher_target for item in batches], dim=1)
-        actions = torch.cat([item.actions for item in batches], dim=1)
+        actions = torch.cat([item.actions if item.executed_actions is None
+                             else item.executed_actions for item in batches], dim=1)
         burn = self.dynamics_burn_in_steps
-        end = required_steps
+        # Keep all accumulated transitions, including a final partial rollout.
+        end = available_steps
+        calibration_steps = max(1, math.ceil((end-burn)*self.update_config.calibration_fraction))
+        train_end = end-calibration_steps
+        if train_end <= burn:
+            raise ValueError("Dynamics window needs separate training and calibration transitions")
         self.dynamics.train()
         try:
-            train_observation=_slice_physics(observation,burn,end)
-            train_next=_slice_physics(next_observation,burn,end)
-            target=teacher_target[:,burn:end].detach()
+            train_observation=_slice_physics(observation,burn,train_end)
+            train_next=_slice_physics(next_observation,burn,train_end)
+            target=teacher_target[:,burn:train_end].detach()
             # The randomized parameters exist from the first frame of every
             # episode; prediction validity is unrelated to Teacher labels.
-            mask=torch.ones_like(previous_valid[:,burn:end])
-            count=mask.sum().clamp_min(1)
             totals=[]
             for _ in range(self.dynamics_epochs):
+                prefix = batches[0].dynamics_prefix
+                if prefix is None:
+                    if not episode_start[:, 0].all().item():
+                        raise ValueError("Dynamics update requires a real history prefix")
+                    prefix = DynamicsHistory()
+                initial_hidden, previous_core, previous_valid, _ = replay_dynamics_inputs(
+                    self.dynamics, prefix, observation, episode_start, actions)
+                self.dynamics.train()
                 # Recompute both burn-in and the differentiable window after
                 # every optimizer step; no activation graph is reused with
                 # changed Dynamics weights.
@@ -342,33 +383,32 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                     burn_encoding=self.dynamics.forward_sequence(
                         _slice_physics(observation,0,burn),
                         episode_start=episode_start[:,:burn],
-                        initial_hidden=batches[0].physics_initial_hidden.detach(),
+                        initial_hidden=initial_hidden.detach(),
                         previous_predicted_core=previous_core[:,:burn].detach(),
                         previous_prediction_valid=previous_valid[:,:burn],
                     )
                 encoding=self.dynamics.forward_sequence(
                     train_observation,
-                    episode_start=episode_start[:,burn:end],
+                    episode_start=episode_start[:,burn:train_end],
                     initial_hidden=burn_encoding.hidden.detach(),
-                    previous_predicted_core=previous_core[:,burn:end].detach(),
-                    previous_prediction_valid=previous_valid[:,burn:end],
+                    previous_predicted_core=previous_core[:,burn:train_end].detach(),
+                    previous_prediction_valid=previous_valid[:,burn:train_end],
                 )
                 prediction=self.dynamics.predict_next(
-                    train_observation,actions[:,burn:end].detach(),encoding.latent,
+                    train_observation,actions[:,burn:train_end].detach(),encoding.latent,
                     physics_encoding=encoding.physics_encoding(),
                 )
-                valid=torch.ones_like(episode_start[:,burn:end])
+                valid=torch.ones_like(episode_start[:,burn:train_end])
                 prediction_loss=self.dynamics.prediction_loss(
                     prediction,train_next,valid_transition=valid
                 )
-                identified,id_logvar=self.dynamics.identify_privileged_distribution(
-                    encoding.latent
-                )
-                id_nll=0.5*((identified-target).square()*torch.exp(-id_logvar)+id_logvar).mean(-1)
-                system_id=(id_nll*mask).sum()/count
-                teacher=self.dynamics.encode_privileged_teacher(target)
-                reconstruction=(self.dynamics.reconstruct_privileged(teacher)-target).square().mean()
-                distillation=((encoding.latent-teacher.detach()).square().mean(-1)*mask).sum()/count
+                mask = previous_valid[:,burn:train_end] & ~episode_start[:,burn:train_end]
+                auxiliary, _, id_logvar = identification_loss(self.dynamics, encoding.latent, target, mask,
+                    reconstruction_weight=self.teacher_reconstruction_weight,
+                    distillation_weight=self.teacher_distillation_weight, teacher_valid=valid)
+                system_id=auxiliary["system_identification"]
+                reconstruction=auxiliary["teacher_reconstruction"]
+                distillation=auxiliary["teacher_distillation"]
                 contact_labels=train_next.contact_features[...,10]
                 contact_bce=F.binary_cross_entropy_with_logits(
                     prediction.next_contact_logits,contact_labels,reduction="none"
@@ -387,24 +427,75 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                     reconstruction.detach(),distillation.detach(),
                     torch.exp(0.5*id_logvar).mean().detach(),
                     torch.exp(0.5*prediction.next_core_logvar).mean().detach()))
-            with torch.no_grad():
-                decay=self.dynamics_ema_decay
-                for ema,online in zip(
-                    self.actor_dynamics.parameters(),self.dynamics.parameters(),strict=True
-                ):
-                    ema.mul_(decay).add_(online,alpha=1.0-decay)
-                for ema,online in zip(
-                    self.actor_dynamics.buffers(),self.dynamics.buffers(),strict=True
-                ):
-                    ema.copy_(online)
+            deployment = self._publish_dynamics(batches, observation, episode_start, actions,
+                                                teacher_target, train_end)
             averaged=[float(torch.stack([row[i] for row in totals]).mean())
                       for i in range(len(totals[0]))]
-            return HoloMotionDynamicsMetrics(*averaged,self.dynamics_epochs)
+            return HoloMotionDynamicsMetrics(*averaged,self.dynamics_epochs, **deployment)
         finally:
             self._dynamics_rollouts.clear()
             self.dynamics.invalidate_memories();self.dynamics.eval()
             self.actor_dynamics.invalidate_memories();self.actor_dynamics.eval()
-            # New weights invalidate the online GRU state.  The next collect
-            # performs an explicit environment reset rather than inventing history.
-            self._observation=None;self._physics_memory=None;self._physics_episode_start=None
-            self._physics_age=None
+            # Rebuild the EMA student's live memory from observed states and
+            # executed actions. Observation, episode age, and simulator stay put.
+            self._physics_memory, _ = self._dynamics_history.rebuild(
+                self.actor_dynamics, tuple(range(self.task.num_envs)))
+
+    @torch.no_grad()
+    def _publish_dynamics(self, batches, observation, starts, actions, target, calibration_begin):
+        """Stage EMA and calibration, measure the complete policy, then commit or reject.
+
+        The Actor is held at its current (post-PPO) weights on both sides. PPO's
+        own change and this deployment change therefore have separate KL signals.
+        Rejection leaves the online learner free to improve on the next window.
+        """
+        decay = (self.update_config.ema_decay(actions.shape[1]) if self.dynamics_ema_decay is None
+                 else self.dynamics_ema_decay)
+        candidate = copy.deepcopy(self.actor_dynamics).eval()
+        for ema, online in zip(candidate.parameters(), self.dynamics.parameters(), strict=True):
+            ema.lerp_(online, 1-decay)
+        for ema, online in zip(candidate.buffers(), self.dynamics.buffers(), strict=True):
+            ema.copy_(online)
+        prefix = batches[0].dynamics_prefix or DynamicsHistory()
+        hidden, cores, valid, _ = replay_dynamics_inputs(candidate, prefix, observation, starts, actions)
+        encoding = candidate.forward_sequence(observation, episode_start=starts,
+            initial_hidden=hidden, previous_predicted_core=cores, previous_prediction_valid=valid)
+        mean, logvar = candidate.identify_privileged_distribution(encoding.latent)
+        calibration = copy.deepcopy(self.confidence)
+        heldout = torch.zeros_like(starts)
+        heldout[:, calibration_begin:] = True
+        # Retain no-response frames in calibration too: prior-only predictions
+        # must be penalized, even when these labels cannot support identification.
+        calibration.update(mean, logvar, target, heldout)
+        features = dynamics_actor_features(encoding.context, encoding.latent, encoding.contact_tokens)
+        kl_values, offset = [], 0
+        self.actor.eval()
+        for batch in batches:
+            length = batch.actions.shape[1]
+            if batch.physics_age is None or batch.physics_confidence is None:
+                raise ValueError("deployment KL needs collected evidence ages and confidences")
+            data = flat_observations_to_tensordict(batch.actor_observation, batch.critic_observation)
+            mask = build_episode_causal_mask(batch.dones.squeeze(-1))
+            old = self._actor_forward(data, mode="sequence_logp", actions=batch.actions,
+                attn_mask=mask, update_obs_norm=False, physics_features=batch.physics_features,
+                physics_confidence=batch.physics_confidence)
+            old_mu, old_sigma = old.get("mu").clone(), old.get("sigma").clone()
+            confidence = calibration(logvar[:, offset:offset+length], batch.physics_age,
+                                      self.confidence_warmup_steps)
+            new = self._actor_forward(data, mode="sequence_logp", actions=batch.actions,
+                attn_mask=mask, update_obs_norm=False, physics_features=features[:, offset:offset+length],
+                physics_confidence=confidence)
+            kl_values.append(diagonal_gaussian_kl(old_mu, old_sigma, new.get("mu"), new.get("sigma")))
+            offset += length
+        kls = torch.cat(kl_values, dim=1).clamp_min(0)
+        mean_kl, max_kl = float(kls.mean()), float(kls.max())
+        accepted = (math.isfinite(mean_kl) and math.isfinite(max_kl)
+                    and mean_kl <= self.update_config.maximum_mean_kl
+                    and max_kl <= self.update_config.maximum_token_kl)
+        if accepted:
+            self.actor_dynamics.load_state_dict(candidate.state_dict(), strict=True)
+            self.confidence.load_state_dict(calibration.state_dict(), strict=True)
+        return dict(deployment_update_accepted=accepted, deployment_mean_kl=mean_kl,
+            deployment_max_kl=max_kl, calibration_samples=int(calibration.samples),
+            calibration_skill=float((1-calibration.mse/calibration.config.prior_variance).amin()),
+            ema_decay=decay)

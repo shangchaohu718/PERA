@@ -145,7 +145,7 @@ def audit_k1_assets(asset_root: str | Path) -> dict[str, Any]:
             path = (base / directory / node.attrib["file"]).resolve()
             if not path.is_relative_to(base):
                 raise ValueError("资产引用越过模型目录，无法生成可移植的完整资产指纹")
-            relative = str(path.relative_to(base))
+            relative = path.relative_to(base).as_posix()
             if not path.is_file() or path.stat().st_size == 0:
                 missing.append(relative)
             else:

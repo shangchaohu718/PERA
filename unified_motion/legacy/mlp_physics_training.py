@@ -110,7 +110,7 @@ def _stack_frames(frames: list[PhysicsObservation]) -> PhysicsObservation:
         torch.stack([getattr(x, name) for x in frames], dim=1)
         for name in (
             "body_obs", "base_lin_vel_b", "contact_features", "contact_mask",
-            "object_features", "object_mask",
+            "object_features", "object_mask", "core_valid",
         )
     ))
 
@@ -126,7 +126,7 @@ def _choose_envs(frame: PhysicsObservation, ids: torch.Tensor) -> PhysicsObserva
         getattr(frame, name).index_select(0, ids)
         for name in (
             "body_obs", "base_lin_vel_b", "contact_features", "contact_mask",
-            "object_features", "object_mask",
+            "object_features", "object_mask", "core_valid",
         )
     ))
 

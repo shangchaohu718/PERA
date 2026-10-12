@@ -232,7 +232,11 @@ class PhysicsSequenceTests(unittest.TestCase):
         self.assertFalse(torch.equal(before,d.state_predictor[-1].weight))
         for a,b in zip(old,p.parameters()):torch.testing.assert_close(a,b,atol=0,rtol=0)
         with self.assertRaises(RuntimeError):c.collect(2)
-        c.on_dynamics_updated();again=c.collect(2);self.assertTrue(again.episode_start[:,0].all())
+        ticks=task.ticks.clone();resets=task.reset_calls
+        c.on_dynamics_updated()
+        torch.testing.assert_close(task.ticks,ticks)
+        self.assertEqual(task.reset_calls,resets)
+        again=c.collect(2);self.assertFalse(again.episode_start[:,0].any())
     def test_same_rollout_cannot_be_consumed_twice(self):
         task,d,p=make_models();batch=PhysicsSequenceCollector(task,d,p).collect(3);u=PhysicsSequencePPO(p,self.config())
         u.update(batch)

@@ -6,6 +6,14 @@ from dataclasses import dataclass
 import math
 import torch
 
+
+def diagonal_gaussian_kl(old_mu, old_sigma, new_mu, new_sigma):
+    """Differentiable KL(old || new), summed over the action axis."""
+    old_mu, old_sigma = old_mu.detach(), old_sigma.detach()
+    return (torch.log(new_sigma / old_sigma)
+            + (old_sigma.square() + (old_mu-new_mu).square())/(2*new_sigma.square())
+            - .5).sum(dim=-1)
+
 def learning_rate_scale(progress: float, *, schedule: str = "cosine",
                         min_ratio: float = 0.1) -> float:
     """按本次训练进度返回确定性学习率倍率；不需要额外 scheduler 状态。"""

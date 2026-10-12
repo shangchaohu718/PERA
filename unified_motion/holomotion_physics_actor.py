@@ -33,8 +33,11 @@ class HoloMotionPhysicsActorConfig:
     hidden_dim: int = 128
     action_dim: int = 22
     residual_limit: float = 0.25
+    condition_on_base_action: bool = True
 
     def __post_init__(self) -> None:
+        if type(self.condition_on_base_action) is not bool:
+            raise TypeError("condition_on_base_action must be bool")
         if any(
             type(value) is not int or value < 1
             for value in (self.physics_feature_dim, self.hidden_dim, self.action_dim)
@@ -60,12 +63,15 @@ class PhysicsActionResidual(nn.Module):
             nn.SiLU(),
             nn.Linear(config.hidden_dim, config.action_dim),
         )
+        self.action_condition = (nn.Linear(config.action_dim, config.hidden_dim, bias=False)
+                                 if config.condition_on_base_action else None)
         # Exact checkpoint compatibility at initialization: both weight and
         # bias must be zero, not merely small.
         nn.init.zeros_(self.net[-1].weight)
         nn.init.zeros_(self.net[-1].bias)
 
-    def forward(self, physics_features: torch.Tensor) -> torch.Tensor:
+    def forward(self, physics_features: torch.Tensor,
+                base_action: torch.Tensor | None = None) -> torch.Tensor:
         if (
             not isinstance(physics_features, torch.Tensor)
             or physics_features.ndim not in (2, 3)
@@ -77,7 +83,14 @@ class PhysicsActionResidual(nn.Module):
             )
         if not torch.isfinite(physics_features).all().item():
             raise ValueError("physics_features contains NaN/Inf")
-        return float(self.config.residual_limit) * torch.tanh(self.net(physics_features))
+        hidden = self.net[1](self.net[0](physics_features))
+        if self.action_condition is not None:
+            if base_action is None or base_action.shape != physics_features.shape[:-1] + (self.config.action_dim,):
+                raise ValueError("goal-conditioned residual requires matching base_action")
+            if not torch.isfinite(base_action).all().item():
+                raise ValueError("base_action contains NaN/Inf")
+            hidden = hidden + self.action_condition(base_action)
+        return float(self.config.residual_limit) * torch.tanh(self.net[3](self.net[2](hidden)))
 
 
 class HoloMotionPhysicsActor(nn.Module):
@@ -133,12 +146,13 @@ class HoloMotionPhysicsActor(nn.Module):
         )
         mu = output.get("mu")
         sigma = output.get("sigma")
-        residual = self.physics_residual(physics_features)
+        residual = self.physics_residual(physics_features, mu)
         if physics_confidence is not None:
             expected = residual.shape[:-1] + (1,)
             if physics_confidence.shape != expected:
                 raise ValueError(f"physics_confidence must have shape {expected}")
-            if ((physics_confidence < 0) | (physics_confidence > 1)).any().item():
+            if (not torch.isfinite(physics_confidence).all().item()
+                    or ((physics_confidence < 0) | (physics_confidence > 1)).any().item()):
                 raise ValueError("physics_confidence must be in [0,1]")
             residual = residual * physics_confidence
         if residual.shape != mu.shape:

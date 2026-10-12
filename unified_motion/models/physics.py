@@ -88,6 +88,15 @@ class PhysicsObservation:
     contact_mask: torch.Tensor
     object_features: torch.Tensor
     object_mask: torch.Tensor
+    # Per-component availability in core order (velocity, angular velocity,
+    # gravity, joint position, joint velocity). A zero value is not availability.
+    core_valid: torch.Tensor | None = None
+
+    def __post_init__(self):
+        if self.core_valid is None:
+            dof = (self.body_obs.shape[-1] - 6) // 3
+            self.core_valid = torch.ones((*self.body_obs.shape[:-1], 9 + 2*dof),
+                                         dtype=torch.bool, device=self.body_obs.device)
 
     @classmethod
     def from_k1_bridge(
@@ -130,6 +139,7 @@ class PhysicsObservation:
             self.body_obs[:, t], self.base_lin_vel_b[:, t],
             self.contact_features[:, t], self.contact_mask[:, t],
             self.object_features[:, t], self.object_mask[:, t],
+            self.core_valid[:, t],
         )
 
 
@@ -368,6 +378,8 @@ def _check_observation(obs: PhysicsObservation, robot: RobotContract,
                   check_values=check_values)
     _check_tensor("base_lin_vel_b", obs.base_lin_vel_b, (*leading, 3), device, dtype,
                   check_values=check_values)
+    _check_tensor("core_valid", obs.core_valid, (*leading, 9+2*robot.dof), device, dtype,
+                  boolean=True)
     for name, x, expected_last in (
         ("contact_features", obs.contact_features, CONTACT_DIM),
         ("object_features", obs.object_features, OBJECT_DIM),
@@ -449,7 +461,8 @@ class PhysicsEncoder(nn.Module):
     def __init__(self, robot: RobotContract, *, width: int = 128,
                  hidden_dim: int = 256, check_values: bool = True,
                  scene_encoder: str = "set", graph_layers: int = 2,
-                 contact_object_indices: Sequence[int] | None = None) -> None:
+                 contact_object_indices: Sequence[int] | None = None,
+                 use_availability: bool = True) -> None:
         """功能：创建可训练的身体、接触和物体编码器。
 
         输入：robot 关节合同；width 特征宽度；hidden_dim MLP 宽度。
@@ -465,6 +478,9 @@ class PhysicsEncoder(nn.Module):
         self.contact_net = _mlp(CONTACT_DIM, hidden_dim, width)
         self.object_net = _mlp(OBJECT_DIM, hidden_dim, width)
         self.merge = nn.Sequential(nn.Linear(width*5, width), nn.LayerNorm(width))
+        self.availability = nn.Linear(9+2*robot.dof, width, bias=False) if use_availability else None
+        if self.availability is not None:
+            nn.init.zeros_(self.availability.weight)
         if scene_encoder not in ("set", "gnn"):
             raise ValueError("scene_encoder 必须是 set 或 gnn")
         if type(graph_layers) is not int or graph_layers < 1:
@@ -489,10 +505,18 @@ class PhysicsEncoder(nn.Module):
         """
         w = self.body_net[0].weight
         lead = _check_observation(obs, self.robot, w.device, w.dtype, self.check_values)
+        body_obs, velocity = obs.body_obs, obs.base_lin_vel_b
+        if self.availability is not None:
+            n = 6+2*self.robot.dof
+            body_obs = torch.cat((torch.where(obs.core_valid[..., 3:], body_obs[..., :n], 0.),
+                                  body_obs[..., n:]), dim=-1)
+            velocity = torch.where(obs.core_valid[..., :3], velocity, 0.)
         body = self.body_net(torch.cat((
-            body_observation(obs.body_obs, self.robot),
-            obs.base_lin_vel_b / LINEAR_VELOCITY_M_S,
+            body_observation(body_obs, self.robot),
+            velocity / LINEAR_VELOCITY_M_S,
         ), dim=-1))
+        if self.availability is not None:
+            body = body + self.availability((~obs.core_valid).to(body.dtype))
         contact_input = torch.where(obs.contact_mask.unsqueeze(-1), obs.contact_features, 0.0)
         object_input = torch.where(obs.object_mask.unsqueeze(-1), obs.object_features, 0.0)
         # q 与 -q 是同一个方向。用绝对值最大分量的符号统一表示，
@@ -540,7 +564,7 @@ class DynamicsModel(nn.Module):
                  contact_object_indices: Sequence[int] | None = None,
                  system_id_dim: int = 0, teacher_student: bool = False,
                  prediction_horizons: Sequence[int] = (1,),
-                 uncertainty: bool = False) -> None:
+                 uncertainty: bool = False, mask_unobserved_core: bool = True) -> None:
         """功能：创建物理编码器、历史记忆和下一状态预测网络。
 
         输入：robot 关节合同；physics_width 物理特征宽度；
@@ -569,6 +593,9 @@ class DynamicsModel(nn.Module):
         if type(uncertainty) is not bool:
             raise TypeError("uncertainty必须是bool")
         self.uncertainty = uncertainty
+        if type(mask_unobserved_core) is not bool:
+            raise TypeError("mask_unobserved_core must be bool")
+        self.mask_unobserved_core = mask_unobserved_core
         horizons = tuple(prediction_horizons)
         if (not horizons or horizons[0] != 1 or tuple(sorted(set(horizons))) != horizons
                 or any(type(value) is not int or value < 1 for value in horizons)):
@@ -577,7 +604,8 @@ class DynamicsModel(nn.Module):
         self.encoder = PhysicsEncoder(robot, width=physics_width,
                                       hidden_dim=hidden_dim, check_values=check_values,
                                       scene_encoder=scene_encoder, graph_layers=graph_layers,
-                                      contact_object_indices=contact_object_indices)
+                                      contact_object_indices=contact_object_indices,
+                                      use_availability=mask_unobserved_core)
         # 当前物理特征 + 上一原始动作 + 上次预测误差。
         # 预测误差能帮助策略知道：同一个动作在当前环境下为何有偏差。
         self.gru = nn.GRUCell(physics_width + robot.dof + (9+2*robot.dof), memory_width)
@@ -641,6 +669,8 @@ class DynamicsModel(nn.Module):
         if self.uncertainty:
             state["uncertainty"] = True
         state["input_normalization"] = NORMALIZATION_SCHEMA
+        if self.mask_unobserved_core:
+            state["innovation_schema"] = "observed_components_v1"
         if self.prediction_horizons != (1,):
             state["prediction_horizons"] = self.prediction_horizons
         return state
@@ -659,7 +689,7 @@ class DynamicsModel(nn.Module):
     def identify_privileged_distribution(
         self, latent: torch.Tensor
     ) -> tuple[torch.Tensor, torch.Tensor]:
-        """Return privileged mean and calibrated log variance for confidence gating."""
+        """Return privileged mean and predicted log variance; runtime calibrates it."""
         mean = self.identify_privileged(latent)
         if self.system_id_logvar_head is None:
             raise RuntimeError("DynamicsModel未开启不确定度头")
@@ -849,6 +879,8 @@ class DynamicsModel(nn.Module):
                 available = (previous_prediction_valid[:,step] & valid_mask[:,step]
                              & ~episode_start[:,step])
                 error = _core_state(obs.at(step),self.robot) - previous_predicted_core[:,step]
+                if self.mask_unobserved_core:
+                    error = torch.where(obs.core_valid[:, step], error, 0.0)
                 error = torch.where(available.unsqueeze(-1),error,0.0)
             hidden = self._advance_hidden(contexts[:,step], previous_action,
                                           error, hidden, episode_start[:,step], valid_mask[:,step])
@@ -863,6 +895,7 @@ class DynamicsModel(nn.Module):
     @torch.no_grad()
     def step(self, obs: PhysicsObservation, *, episode_start: torch.Tensor,
              env_ids: Sequence[int], memory: DynamicsMemory | None = None,
+             physics_encoding: PhysicsEncoding | None = None,
              ) -> tuple[DynamicsEncoding, DynamicsMemory]:
         """功能：在实时采样时处理一帧，保留各环境的物理记忆。
 
@@ -910,7 +943,9 @@ class DynamicsModel(nn.Module):
             available = memory.prediction_valid & ~episode_start
             error = torch.where(available.unsqueeze(-1),
                                 _core_state(obs,self.robot)-memory.predicted_core,0.0)
-        enc = self.encoder(obs)
+            if self.mask_unobserved_core:
+                error = torch.where(obs.core_valid, error, 0.0)
+        enc = self.encoder(obs) if physics_encoding is None else physics_encoding
         context = enc.context
         if self.interaction_feedback:
             available = (torch.zeros_like(episode_start) if memory is None or memory.prediction_valid is None
@@ -999,6 +1034,8 @@ class DynamicsModel(nn.Module):
                       check_values=self.check_values)
         action_code = self.action_net(action)
         core = _core_state(obs, self.robot)
+        if self.mask_unobserved_core:
+            core = torch.where(obs.core_valid, core, 0.)
         net_input = torch.cat((core, latent, physics.context, action_code), dim=-1)
         delta = self.state_predictor(net_input)
         core_logvar = (
@@ -1067,6 +1104,8 @@ class DynamicsModel(nn.Module):
         action_code = self.future_action_nets[str(horizon)](
             action_sequence.reshape(*lead,horizon*self.robot.dof))
         core = _core_state(obs, self.robot)
+        if self.mask_unobserved_core:
+            core = torch.where(obs.core_valid, core, 0.)
         delta = self.future_state_predictors[str(horizon)](
             torch.cat((core, latent, physics.context, action_code), dim=-1))
         predicted = core + delta
@@ -1126,11 +1165,12 @@ class DynamicsModel(nn.Module):
         ):
             normalized = (prediction.next_core[...,begin:end]-true[...,begin:end])/unit_scale
             if prediction.next_core_logvar is None:
-                error = normalized.square().mean(-1)
+                error = normalized.square()
             else:
                 logvar = prediction.next_core_logvar[...,begin:end]
-                error = 0.5 * (normalized.square()*torch.exp(-logvar)+logvar).mean(-1)
-            terms[key] = (error*active).sum()/count
+                error = 0.5 * (normalized.square()*torch.exp(-logvar)+logvar)
+            component_mask = next_observation.core_valid[..., begin:end] & valid_transition.unsqueeze(-1)
+            terms[key] = torch.where(component_mask, error, 0.).sum()/component_mask.sum().clamp_min(1)
         if c > 0:
             cmask = next_observation.contact_mask & valid_transition.unsqueeze(-1)
             labels = next_observation.contact_features[...,10]

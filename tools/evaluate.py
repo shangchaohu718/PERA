@@ -43,7 +43,7 @@ def main() -> int:
         completed = subprocess.run([sys.executable, '-m', 'pytest', '-q',
             '-p', 'tools._pytest_report', str(ROOT/'tests')], cwd=ROOT, env=env,
             stdout=stream, stderr=subprocess.STDOUT)
-    report = (json.loads(raw.read_text()) if raw.exists() else
+    report = (json.loads(raw.read_text(encoding='utf-8')) if raw.exists() else
               dict(total=0, passed=0, failed=1, skipped=0,
                    collection_errors=['pytest未生成本次报告'], tests=[]))
     import torch

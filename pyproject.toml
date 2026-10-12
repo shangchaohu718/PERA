@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "torch>=2.10,<2.11", "packaging>=23", "PyYAML>=6.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "safetensors>=0.6", "tensordict>=0.11,<0.13", "loguru>=0.7"]
 sim = ["mjlab==1.6.0", "mujoco~=3.11.0", "mujoco-warp~=3.11.0", "warp-lang>=1.14.0"]
 holomotion = [
   "accelerate>=1.0",

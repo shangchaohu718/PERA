@@ -57,7 +57,7 @@ class ProjectContractTests(unittest.TestCase):
 
     def test_production_has_no_embedded_selftests(self):
         for path in (ROOT/'unified_motion').rglob('*.py'):
-            tree=ast.parse(path.read_text())
+            tree=ast.parse(path.read_text(encoding='utf-8'))
             self.assertFalse(any(isinstance(x,ast.FunctionDef) and x.name=='_self_test' for x in ast.walk(tree)),str(path))
 
     def test_cli_help_needs_no_cuda(self):

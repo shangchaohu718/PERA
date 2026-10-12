@@ -263,7 +263,13 @@ def test_recurrent_collector_retains_history_and_updates_policy_and_dynamics(kin
     loss=DynamicsUpdater(dyn,epochs=1).update(roll)
     assert loss.loss>=0
     if graph:assert dyn.encoder.graph.gnn.layers[0].message[0].weight.grad.abs().sum()>0
-    collector.on_dynamics_updated();assert collector.collect(2).episode_start[:,0].all()
+    ticks=task.ticks.clone();resets=task.reset_calls
+    collector.on_dynamics_updated()
+    torch.testing.assert_close(task.ticks,ticks)
+    assert task.reset_calls==resets
+    again=collector.collect(2)
+    assert not again.episode_start[:,0].any()
+    assert ppo.verify_old_policy(again)<1e-4
 
 
 @pytest.mark.parametrize('kind',['gru','lstm'])

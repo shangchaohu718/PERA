@@ -1,4 +1,5 @@
 import copy
+from types import SimpleNamespace
 
 import torch
 
@@ -7,6 +8,7 @@ from unified_motion.holomotion_physics_training import HoloMotionPhysicsMJLabPPO
 from unified_motion.holomotion_mjlab_task import HoloMotionFootRewardConfig
 from unified_motion.models.physics import DynamicsModel, PhysicsObservation
 from unified_motion.robot_contract import get_robot_contract
+from unified_motion.algorithms.dynamics_history import DynamicsHistory
 
 
 def _physics(batch=2, steps=3, *, exact_next=False):
@@ -45,39 +47,30 @@ def _rollout(model):
     )
 
 
-def test_physics_update_trains_prediction_and_teacher_with_separate_feet():
-    model=DynamicsModel(
-        get_robot_contract("k1_22dof"),physics_width=8,memory_width=8,
-        latent_width=4,hidden_dim=16,system_id_dim=2,teacher_student=True,
-        uncertainty=True,
-    )
-    trainer=HoloMotionPhysicsMJLabPPO.__new__(HoloMotionPhysicsMJLabPPO)
-    trainer.dynamics=model
-    trainer.actor_dynamics=copy.deepcopy(model)
-    trainer.dynamics_optimizer=torch.optim.Adam(model.parameters(),lr=1e-4)
-    trainer.system_identification_weight=.1
-    trainer.teacher_reconstruction_weight=.1
-    trainer.teacher_distillation_weight=.05
+def test_physics_update_trains_prediction_and_teacher_with_separate_feet(monkeypatch):
+    from test_holomotion_rollout_boundaries import _real_trainer
+    trainer = _real_trainer(True, monkeypatch, boundaries=False)
+    model = trainer.dynamics
     trainer.dynamics_burn_in_steps=2
     trainer.dynamics_train_steps=4
     trainer.dynamics_ema_decay=.99
     trainer.dynamics_epochs=2
-    trainer._dynamics_rollouts=[]
-    trainer._observation=object();trainer._physics_memory=object();trainer._physics_episode_start=object()
-    trainer._physics_age=object()
     # A 6-step physics window is deliberately assembled from two independent
     # 3-step PPO rollouts, while Dynamics weights remain frozen between them.
-    assert trainer.update_dynamics(_rollout(model)) is None
+    assert trainer.update_dynamics(trainer.collect(3)) is None
     assert len(trainer._dynamics_rollouts)==1
-    metrics=trainer.update_dynamics(_rollout(model))
+    second = trainer.collect(3)
+    second.next_physics_observation.contact_features[..., 0, 10] = 1.
+    observation=trainer._observation;age=trainer._physics_age;starts=trainer._physics_episode_start
+    metrics=trainer.update_dynamics(second)
     assert torch.isfinite(torch.tensor(metrics.total_loss))
     assert metrics.left_contact_loss>0 and metrics.right_contact_loss>0
     assert metrics.teacher_reconstruction_loss>0
     assert metrics.mean_system_id_std>0 and metrics.mean_state_std>0
     assert metrics.optimizer_steps==2
     assert model.teacher_encoder[0].weight.grad is not None
-    assert trainer._observation is None and trainer._physics_memory is None
-    assert trainer._physics_age is None
+    assert trainer._observation is observation
+    assert trainer._physics_age is age and trainer._physics_episode_start is starts
 
 
 def test_left_and_right_foot_reward_weights_are_independent():

@@ -14,6 +14,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
+import json
 
 import torch
 
@@ -118,6 +119,22 @@ class HoloMotionOnnxContract:
             obs_dim=obs_dim,
             future_frames=future_frames,
         )
+
+    @classmethod
+    def from_json(cls, path: str | Path) -> HoloMotionOnnxContract:
+        """Read the exact joint/PD contract without requiring an ONNX model."""
+        values = json.loads(Path(path).read_text(encoding="utf-8"))
+        if not isinstance(values, dict):
+            raise ValueError("task contract JSON must be a mapping")
+        for name in ("joint_names", "joint_stiffness", "joint_damping", "default_joint_pos", "action_scale"):
+            if name not in values or not isinstance(values[name], list):
+                raise ValueError(f"task contract requires the list {name}")
+            values[name] = tuple(values[name])
+        result = cls(**values)
+        for field in (result.joint_stiffness, result.joint_damping, result.default_joint_pos, result.action_scale):
+            if not torch.isfinite(torch.tensor(field)).all():
+                raise ValueError("task contract values must be finite")
+        return result
 
     @classmethod
     def from_onnx(cls, path: str | Path) -> HoloMotionOnnxContract:

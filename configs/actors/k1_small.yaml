@@ -1,0 +1,8 @@
+# Actor-only settings for tools/train_k1_mjlab.py --actor-config this-file.
+# The backend comes from --actor, so the same file can compare all six cores.
+d_model: 64
+hidden_dim: 128
+n_layers: 2
+context_len: 32
+num_experts: 4
+init_std: 0.5

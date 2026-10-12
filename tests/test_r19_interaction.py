@@ -69,9 +69,8 @@ def test_closed_loop_with_interaction_feedback(kind):
     task=build_task(c);dyn,pol=build_models(c,task)
     collector=PhysicsSequenceCollector(task,dyn,pol)
     ppo=PhysicsSequencePPO(pol,PPOConfig(epochs=1,minibatch_envs=2))
-    # This test intentionally waits for a second mid-episode rollout; use one
-    # truncated-BPTT step rather than the production reset-per-update schedule.
-    update=DynamicsUpdater(dyn,epochs=1)
+    # Multi-epoch updates now rebuild feedback from a real mid-episode prefix.
+    update=DynamicsUpdater(dyn,epochs=2)
     rollout=collector.collect(6)
     assert rollout.previous_interaction_prediction is not None
     first=model_digest(pol)
@@ -86,7 +85,9 @@ def test_closed_loop_with_interaction_feedback(kind):
     assert dyn.feedback_net[0].weight.grad is not None
     assert torch.isfinite(dyn.feedback_net[0].weight.grad).all()
     collector.on_dynamics_updated()
-    assert collector.collect(2).episode_start[:,0].all()
+    again=collector.collect(2)
+    assert not again.episode_start[:,0].any()
+    assert ppo.verify_old_policy(again)<1e-4
 
 
 def test_sequence_replay_matches_interaction_memory():
@@ -270,6 +271,8 @@ def test_asymmetric_online_identification_has_no_actor_privileged_path():
     assert task.privileged_dim==len(task.privileged_names)>0
     # 精确根线速度、接触法线和力不进入Actor观测。
     assert (frame.base_lin_vel_b==0).all()
+    assert not frame.core_valid[..., :3].any()
+    assert frame.core_valid[..., 3:].all()
     assert (frame.contact_features[...,3:10]==0).all()
     assert (frame.contact_features[...,11]==0).all()
     assert not frame.object_mask.any() and (frame.object_features==0).all()
@@ -399,9 +402,9 @@ def test_randomization_seed_is_reproducible():
 
 def test_yaml_duplicate_and_unknown_rejected():
     with tempfile.TemporaryDirectory() as td:
-        p=Path(td)/'x.yaml';p.write_text('schema: 1\nschema: 1\n')
+        p=Path(td)/'x.yaml';p.write_text('schema: 1\nschema: 1\n',encoding='utf-8')
         with pytest.raises(ValueError):load_config(p)
-        p.write_text((ROOT/'configs/diagnostic.yaml').read_text()+'\naccidental_typo: 42\n')
+        p.write_text((ROOT/'configs/diagnostic.yaml').read_text(encoding='utf-8')+'\naccidental_typo: 42\n',encoding='utf-8')
         with pytest.raises(ValueError):load_config(p)
 
 

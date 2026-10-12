@@ -1,5 +1,15 @@
 # Official HoloMotion K1 → mjlab adapter
 
+The shared K1 task now supports HoloMotion and six custom Actor backends through
+`tools/train_k1_mjlab.py --actor ...`, with common Physics residual, checkpoint
+resume and frozen evaluation. See [Actor switching](K1_ACTOR_SWITCHING.md).
+
+The 2026-10-12 follow-up adds continuous Dynamics updates and standalone schema 5
+Physics checkpoints with calibrated, frozen EMA/residual evaluation. Schema 4 retains
+legacy inference semantics. See [algorithm corrections](ALGORITHM_CORRECTIONS_20261012.md) and
+[runtime and continuity](PHYSICS_RUNTIME_AND_CONTINUITY.md) for loading, migration,
+CPU verification evidence and the remaining real-simulation validation gate.
+
 ## Provenance
 
 - Official upstream: `https://github.com/HorizonRobotics/HoloMotion`

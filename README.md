@@ -5,11 +5,30 @@
 
 ## 当前开发状态（2026-10-12）
 
+**先读 [当前算法结构与物理反馈研究路线](docs/ARCHITECTURE_AND_RESEARCH_20261012.md)**：
+包含运行与训练结构图、Actor/Physics 的分工、信息泄露边界、本轮改动，以及太空步、滑板、舞蹈
+和 sim2real 榜单所需的后续验证。文档明确区分已实现功能与尚未验证的研究设想。
+
 项目已经完成原版 HoloMotion K1 Actor、Critic、MoE Transformer 和 PPO 到 mjlab
 任务接口的第一阶段迁移，并接入了可选的 Physics residual、DynamicsModel 与
-privileged Teacher。当前代码通过 **665 项测试（另有 18 项按环境跳过）**，也完成了
+privileged Teacher。仓库此前记录 **665 项测试通过（另有 18 项按环境跳过）**，也完成了
 真实 mjlab/CUDA 的短程冒烟；这些结果只证明代码链路可执行，**尚不代表已经具备正式
 长训练条件或机器人步态已经收敛**。
+
+本地正确性审查及结构调整见 `docs/CORRECTNESS_REVIEW_20261012.md`。
+本轮已修复 HoloMotion 的 rollout 缓存边界、timeout bootstrap、单样本优势归一化，
+并统一资产清单的跨平台路径格式；本轮验证使用 CPU，不替代历史 CUDA/真实仿真验收。
+后续已修复 Dynamics 更新的环境连续性，补齐完整 Physics 策略加载和冻结评测。
+实现与使用方式见 [Physics 运行时说明](docs/PHYSICS_RUNTIME_AND_CONTINUITY.md)。
+随后已修复缺失测量反馈、KL 梯度、残差目标条件、校准门控与 Dynamics 发布约束，
+默认直接 ID、冻结基础 Actor，Teacher 改为显式可选。见 [算法修复和实验证据](docs/ALGORITHM_CORRECTIONS_20261012.md)。
+最新发布回归为 **752 项通过、0 失败、18 项 CUDA 跳过**，另有 445 个子测试通过。
+已补齐 Windows UTF-8 报告读取和独立 Actor YAML 校验，见 [发布验证摘要](reports/local_validation_20261012.json)。
+
+HoloMotion 和六种自定义 Actor 现可在同一个 K1 训练入口切换：
+`tools/train_k1_mjlab.py --actor holomotion/mlp/transformer/moe/gru/lstm/lru`（选择其中一个值），
+加 `--physics` 开启统一物理残差，`--resume` 完整恢复，`tools/evaluate_k1_mjlab.py` 冻结评测。
+完整命令、配置、原接口与新输入适配器的区别见 [Actor 切换指南](docs/K1_ACTOR_SWITCHING.md)。
 
 ### 已完成
 
@@ -22,27 +41,32 @@ privileged Teacher。当前代码通过 **665 项测试（另有 18 项按环境
 - 官方 HoloMotion commit `cf2018a282249a04df1db4fa639760884f97b41b` 中本项目实际使用的
   源码与配置已固化到 `third_party/HoloMotion/source/`，不再依赖某台机器上的相邻源码目录。
 
-### 正式训练前必须修复
+### 正式训练前的验证门槛
 
-1. **禁止 Dynamics 更新重置物理环境。** Unified 默认每个 32 步 rollout 更新一次
-   Dynamics，当前更新后会触发全环境 reset；Physics-HoloMotion 路径也会在累计
-   192 步后重启机器人。需要保留环境状态，仅用历史 burn-in 重建新 Dynamics/EMA
-   权重对应的隐状态。
-2. **统一 Transformer 的采样与 PPO 重算历史。** 当前 HoloMotion 采样 KV cache 会跨
-   rollout 保留，而 PPO 只重算当前 rollout。近期修复应与原版一致，在每个 rollout
-   开头清空 cache；未来若保留长历史，则必须保存并重放真实历史前缀。
-3. **区分 `terminated` 与 `truncated`。** timeout 应中断 GAE 链，但应使用截断时的
-   terminal observation value 做 bootstrap；只有真实终止关闭 bootstrap。
-4. **补全 Physics checkpoint 的冻结评测与部署加载器。** `.pt` 已包含 residual、在线
-   Dynamics 和 EMA Dynamics，可恢复训练；普通 `actor/model.safetensors` 仍只有基础
-   Actor，直接用普通评测器会漏掉整个物理分支。
+1. **Dynamics 更新连续性已修复并通过 CPU 回归。** 两条采样路径保留环境状态，
+   用当前回合的真实观测和执行动作，在新 Dynamics/EMA 权重下重算记忆和预测反馈。
+   历史容量不足会在推进环境前报错，不会隐式截断或 reset；真实 CUDA 仿真仍需复验。
+2. **复验已修复的 Transformer rollout 边界。** 两条 HoloMotion 采样路径现已在每个
+   rollout 开头清空 Actor cache；缩小宽度的原版网络通过连续采样/PPO 重算测试。
+   正式 checkpoint 和 CUDA 仿真仍需复验；未来若保留长历史，必须保存并重放真实历史前缀。
+3. **复验已修复的 timeout bootstrap。** 两条 HoloMotion 路径已保留 reset 前的
+   timeout Critic 值，共用 GAE；timeout 中断优势链但允许 bootstrap，真正终止关闭
+   bootstrap。CPU 混合终止/截断用例通过，实际 mjlab timeout 仍需验收。
+4. **完整 Physics 加载和冻结评测已补齐。** 新 schema 5 `.pt` 独立包含完整配置、
+   基础 Actor/Critic、residual、online/EMA Dynamics、校准和优化器；冻结推理使用 EMA。
+   schema 4 保留原算法语义用于冻结评测，新算法训练恢复要求 schema 5。
+   保存加载一致性、权重冻结和错误合同拒绝均通过 CPU 回归。正式权重需用
+   `tools/evaluate_physics_holomotion_k1_mjlab.py` 验收；普通 Actor safetensors 不含完整物理分支。
 5. **建立零训练基线。** 修完上述训练语义后，先在当前 mjlab 中冻结评测原始 HoloMotion
    checkpoint，确认基础策略表现，再比较 Physics residual 和 Teacher，最后才扩大训练轮次。
 
-在这些阻塞项完成之前，不建议启动正式长训练。`runs/`、模型权重和本地数据集均被
+在真实仿真复验及零训练基线完成之前，不建议启动正式长训练。`runs/`、模型权重和本地数据集均被
 `.gitignore` 排除，不随源码仓库发布。
 
-## 1. 现在可以怎样组合
+## 1. 原通用入口的网络组合
+
+本节对应 `api.build_policy()` / `experiment.py` 的原生特征融合路线。
+统一 `train_k1_mjlab.py` 入口采用七选一 Actor 加可选动作残差，见上方结构说明与切换指南。
 
 ```text
 身体/接触/物体 → set或GNN空间编码 → 独立动力学GRU及预测误差反馈
@@ -60,7 +84,7 @@ LRU仍复用当前目标交叉注意力输入，不是说整个Actor完全没有
 
 ```bash
 cd unified_motion_release21
-python -m pip install PyYAML pytest
+python -m pip install PyYAML packaging pytest safetensors loguru "tensordict>=0.11,<0.13"
 python -m pip install --no-build-isolation --no-deps -e .
 
 # 查看真实网络参数和MoE层数，不运行物理。

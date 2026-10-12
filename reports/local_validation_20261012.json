@@ -1,0 +1,48 @@
+{
+  "evaluated_at": "2026-10-12T06:27:00.106009+00:00",
+  "python": "3.12.13",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.5.4",
+  "cuda_available": false,
+  "total": 770,
+  "passed": 752,
+  "failed": 0,
+  "skipped": 18,
+  "subtests": {
+    "passed": 445,
+    "failed": 0,
+    "skipped": 0
+  },
+  "collection_errors": [],
+  "process_returncode": 0,
+  "elapsed_seconds": 41.376534099996206,
+  "core_suite_status": "PASS",
+  "optional_dependencies": {
+    "mujoco": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mujoco'"
+    },
+    "mjlab": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mjlab'"
+    },
+    "warp": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'warp'"
+    }
+  },
+  "actual_mjlab_training": "NOT_RUN: tensor/analytic/mock tests are not a robot contact solver",
+  "evaluated_at_asia_shanghai": "2026-10-12T14:27:00.106009+08:00",
+  "command": "python tools/evaluate.py --output runs/local_validation/github_publish_20261012",
+  "scope": "CPU tensor, analytic and mocked integration regression; no real mjlab/CUDA training, robot skill improvement, or leaderboard score validated.",
+  "checks": [
+    "Seven Actor backends with and without Physics; PPO, Dynamics continuity, checkpoint resume and frozen evaluation",
+    "Shipped configs/actors/k1_small.yaml constructs and runs all six custom backends",
+    "Windows UTF-8 report/source/config reading; documentation local links; git diff whitespace check"
+  ],
+  "source_snapshot": {
+    "file_count": 263,
+    "sha256": "558a9787622706ac8d4409bf03474965fb2d90c1875aa154b16ff962c94797d7",
+    "definition": "Sorted repository-relative paths plus NUL plus SHA256 of LF-normalized contents plus newline; published .py/.yaml/.yml/.toml files in unified_motion, tools, tests, configs, third_party/HoloMotion/source, and pyproject.toml. Documentation and reports excluded."
+  }
+}

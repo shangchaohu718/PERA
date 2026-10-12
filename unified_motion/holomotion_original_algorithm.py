@@ -138,6 +138,28 @@ class OriginalHoloMotionK1Algorithm:
     critic: torch.nn.Module
     config: Any
     run_dir: Path
+    network_config: dict | None = None
+
+
+def build_original_holomotion_networks(network_config, *, device="cpu", holomotion_root=None):
+    """Reconstruct the audited network classes from resolved, inert metadata."""
+    root = (Path(holomotion_root) if holomotion_root is not None else
+            Path(__file__).resolve().parents[1] / "third_party/HoloMotion/source")
+    if not (root / "holomotion/src/modules/agent_modules.py").is_file():
+        raise FileNotFoundError(root)
+    if str(root.resolve()) not in sys.path:
+        sys.path.insert(0, str(root.resolve()))
+    from holomotion.src.modules.agent_modules import PPOCritic, PPOTFRefRouterActor
+    actor_cfg, critic_cfg = network_config["actor"], network_config["critic"]
+    if (actor_cfg["type"] != "ReferenceRoutedGroupedMoETransformerPolicy"
+            or critic_cfg["type"] != "MLP"):
+        raise ValueError("unsupported HoloMotion checkpoint network types")
+    sample = flat_observations_to_tensordict(
+        torch.zeros(1, 506, device=device), torch.zeros(1, 843, device=device))
+    actor = PPOTFRefRouterActor(actor_cfg["obs_schema"], actor_cfg, 22,
+        float(network_config["init_noise_std"]), obs_example=sample).to(device)
+    critic = PPOCritic(critic_cfg["obs_schema"], critic_cfg, obs_example=sample).to(device)
+    return actor, critic
 
 
 def load_original_holomotion_k1_algorithm(
@@ -165,10 +187,6 @@ def load_original_holomotion_k1_algorithm(
         sys.path.insert(0, str(root))
 
     try:
-        from holomotion.src.modules.agent_modules import (
-            PPOCritic,
-            PPOTFRefRouterActor,
-        )
         from omegaconf import OmegaConf
         from safetensors.torch import load_file
     except ImportError as error:
@@ -193,19 +211,10 @@ def load_original_holomotion_k1_algorithm(
         actor_cfg[name] = algo_cfg[name]
 
     target = torch.device(device)
-    actor_flat = torch.zeros(1, 506, device=target)
-    critic_flat = torch.zeros(1, 843, device=target)
-    sample = flat_observations_to_tensordict(actor_flat, critic_flat)
-    actor = PPOTFRefRouterActor(
-        actor_cfg["obs_schema"],
-        actor_cfg,
-        22,
-        float(algo_cfg["init_noise_std"]),
-        obs_example=sample,
-    ).to(target)
-    critic = PPOCritic(critic_cfg["obs_schema"], critic_cfg, obs_example=sample).to(
-        target
-    )
+    network_config = dict(actor=actor_cfg, critic=critic_cfg,
+                          init_noise_std=float(algo_cfg["init_noise_std"]))
+    actor, critic = build_original_holomotion_networks(
+        network_config, device=target, holomotion_root=root)
 
     for name, module in (("actor", actor), ("critic", critic)):
         state = load_file(
@@ -213,4 +222,4 @@ def load_original_holomotion_k1_algorithm(
         )
         state = {key.removeprefix("_orig_mod."): value for key, value in state.items()}
         module.load_state_dict(state, strict=True)
-    return OriginalHoloMotionK1Algorithm(actor, critic, config, run)
+    return OriginalHoloMotionK1Algorithm(actor, critic, config, run, network_config)

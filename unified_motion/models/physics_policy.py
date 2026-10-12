@@ -372,6 +372,20 @@ class DenseReferenceTransformer(nn.Module):
                 TransformerCache(encoded.robot_id, env_ids, caches, self._cache_owner))
 
 
+def build_reference_backbone(cfg: PhysicsPolicyConfig):
+    """Shared temporal-core factory for ControlGoal and K1 observation adapters."""
+    if cfg.backbone == "moe":
+        return ReferenceConditionedTransformer(TransformerConfig(
+            d_model=cfg.d_model, n_layers=cfg.n_layers,
+            n_heads=cfg.n_heads, n_kv_heads=cfg.n_kv_heads, context_len=cfg.context_len,
+            num_fine_experts=cfg.num_fine_experts, num_shared_experts=cfg.num_shared_experts,
+            top_k=cfg.top_k, expert_hidden_dim=cfg.expert_hidden_dim,
+            router_hidden_dim=cfg.router_hidden_dim, check_values=cfg.check_values))
+    if cfg.backbone == "dense":
+        return DenseReferenceTransformer(cfg)
+    return RecurrentReferenceBackbone(cfg)
+
+
 # ------------------------ 多模态目标 tokens + 物理条件化 Actor ------------------------
 
 
@@ -457,23 +471,7 @@ class PhysicsConditionedActorCritic(nn.Module):
                 nn.Linear(self.cfg.input_hidden_dim, self.cfg.d_model),
                 nn.LayerNorm(self.cfg.d_model),
             )
-        if self.cfg.backbone == "moe":
-            transformer_cfg = TransformerConfig(
-                d_model=self.cfg.d_model, n_layers=self.cfg.n_layers,
-                n_heads=self.cfg.n_heads, n_kv_heads=self.cfg.n_kv_heads,
-                context_len=self.cfg.context_len,
-                num_fine_experts=self.cfg.num_fine_experts,
-                num_shared_experts=self.cfg.num_shared_experts,
-                top_k=self.cfg.top_k,
-                expert_hidden_dim=self.cfg.expert_hidden_dim,
-                router_hidden_dim=self.cfg.router_hidden_dim,
-                check_values=self.cfg.check_values,
-            )
-            self.backbone = ReferenceConditionedTransformer(transformer_cfg)
-        elif self.cfg.backbone == "dense":
-            self.backbone = DenseReferenceTransformer(self.cfg)
-        else:
-            self.backbone = RecurrentReferenceBackbone(self.cfg)
+        self.backbone = build_reference_backbone(self.cfg)
         self.action_heads = nn.ModuleDict({
             self._keys[rid]: GaussianActionHead(
                 self.cfg.d_model, contract.dof,

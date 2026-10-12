@@ -11,19 +11,20 @@
 历史约定：
     Transformer 每层读取 C 帧、共 L 层，保留至少 L*(C-1) 个原始输入前缀。
     PPO 只打乱环境，不打乱时间；前缀参与计算，但不参与策略/价值损失。
-    更新策略后重建 K/V。更新动力学后显式重新开始环境，不能沿用旧 GRU 隐状态。
+    更新策略后重建 K/V；更新动力学后重放真实历史，重建 GRU 和预测，不重置环境。
     这是正确性优先的实现；没有宣称完成 GPU 吞吐优化或机器人控制验收。
 """
 from __future__ import annotations
 
 import copy
-from dataclasses import asdict, dataclass, fields, is_dataclass
+from dataclasses import asdict, dataclass, fields, is_dataclass, replace
 from typing import Any, Protocol, Sequence
 
 import torch
 from torch import nn
 
 from .common import PPOConfig, compute_gae
+from .dynamics_history import DynamicsHistory
 from ..robot_contract import RobotContract
 from ..reference_observations import ReferenceObservation
 from ..models.physics import (
@@ -397,6 +398,7 @@ class SequenceRollout:
     # PPO/log-prob always use ``action`` (the sampled command). Dynamics uses
     # this field when an actuator-delay queue executed a different command.
     executed_action: torch.Tensor | None = None
+    dynamics_prefix: DynamicsHistory | None = None
 
     @property
     def horizon(self) -> int:
@@ -474,7 +476,8 @@ class PhysicsSequenceCollector:
     输入：task、独立 dynamics、policy。输出：collect(horizon) 得到 SequenceRollout。
     更新策略后自动用前缀重建缓存；更新动力学后需显式 on_dynamics_updated()。
     """
-    def __init__(self, task: PhysicsTask, dynamics: DynamicsModel, policy: Policy) -> None:
+    def __init__(self, task: PhysicsTask, dynamics: DynamicsModel, policy: Policy,
+                 *, dynamics_history_steps: int = 16384, dynamics_history_bytes: int = 512*1024**2) -> None:
         """核对环境接口和模型宽度，不自动开始训练。
 
         输入：任务实例与两套网络。输出：可反复采样的对象。
@@ -501,6 +504,7 @@ class PhysicsSequenceCollector:
         self._cache = None
         self._history: list[PolicyInput] = []
         self._dynamics_stamp: tuple[int, ...] | None = None
+        self._dynamics_history = DynamicsHistory(dynamics_history_steps, max_bytes=dynamics_history_bytes)
 
     @torch.no_grad()
     def reset_all(self) -> None:
@@ -514,19 +518,31 @@ class PhysicsSequenceCollector:
             raise ValueError("reset_all 后所有环境必须标记新回合")
         self._memory, self._cache = None, None
         self._history.clear()
+        self._dynamics_history.clear()
         self._dynamics_stamp = parameter_stamp(self.dynamics)
         self._ready = True
 
+    @torch.no_grad()
     def on_dynamics_updated(self) -> None:
-        """声明动力学权重已变，下一次 collect 重新 reset，不能混用旧 GRU。
-
-        输入/输出：无。这个版本选择显式重新开始任务，不声称做到无缝动力学更新。
-        策略单独更新不需要此操作；它会利用真实前缀重建 K/V。
-        """
+        """用新参数重放真实观测和执行动作；不改变任务状态或回合边界。"""
         self.dynamics.invalidate_memories()
-        self._ready = False
-        self._memory, self._cache = None, None
-        self._history.clear()
+        if not self._ready:
+            return
+        # Old Actor inputs may precede resets that are already irrelevant to
+        # every live row. Keep only the suffix covered by Dynamics replay.
+        keep = min(len(self._history), len(self._dynamics_history.steps))
+        history = self._history[-keep:] if keep else []
+        memory, encodings = self._dynamics_history.rebuild(
+            self.dynamics, self.env_ids, capture_last=keep)
+        rebuilt = []
+        for item, encoding in zip(history, encodings, strict=True):
+            actor_dyn = (self.task.policy_dynamics(encoding, item.privileged)
+                         if hasattr(self.task, "policy_dynamics") else encoding)
+            rebuilt.append(replace(item, context=clone_tree(actor_dyn.context),
+                latent=clone_tree(actor_dyn.latent),
+                prediction_error=clone_tree(actor_dyn.prediction_error)))
+        self._memory, self._history, self._cache = memory, rebuilt, None
+        self._dynamics_stamp = parameter_stamp(self.dynamics)
 
     def _privileged(self) -> torch.Tensor | None:
         """无输入；从任务可选接口取得 Critic 专属 [B,Q] 状态并复制。"""
@@ -584,6 +600,7 @@ class PhysicsSequenceCollector:
         if tuple(self.task.env_ids) != self.env_ids:
             raise ValueError("环境行身份改变，禁止串用记忆")
         self._rebuild_cache()
+        dynamics_prefix = self._dynamics_history.snapshot()
         prefix = stack_tree(self._history) if self._history else None
         policy_stamp = parameter_stamp(self.policy)
         inputs, next_frames, predictions, prediction_valid = [], [], [], []
@@ -598,6 +615,7 @@ class PhysicsSequenceCollector:
             starts = clone_tree(self.task.episode_start)
             if starts.shape != (self.num_envs,) or starts.dtype != torch.bool:
                 raise ValueError("episode_start 必须是 [B] bool")
+            self._dynamics_history.check_capacity(starts, frame)
             before = self._memory
             pre_hidden = frame.body_obs.new_zeros((self.num_envs, self.dynamics.memory_width)) if before is None else before.hidden
             pre_prediction = frame.body_obs.new_zeros((self.num_envs, 9+2*self.robot.dof)) if before is None or before.predicted_core is None else before.predicted_core
@@ -639,6 +657,7 @@ class PhysicsSequenceCollector:
                     or executed.device != action.device or executed.dtype != action.dtype):
                 raise ValueError("last_executed_action必须与策略动作同形状、同设备、同类型")
             executed = clone_tree(executed)
+            self._dynamics_history.append(frame, starts, executed)
             predicted = self.dynamics.predict_next(
                 frame, executed, dyn.latent, physics_encoding=dyn.physics_encoding())
             if self.dynamics.interaction_feedback:
@@ -730,6 +749,7 @@ class PhysicsSequenceCollector:
         if interaction_predictions:
             result.previous_interaction_prediction = stack_tree(interaction_predictions)
         result.executed_action = torch.stack(executed_actions, 1)
+        result.dynamics_prefix = dynamics_prefix
         return result
 
 
@@ -926,8 +946,6 @@ def _core_prediction_terms(predicted: torch.Tensor, target: PhysicsObservation,
     true = _core_state(target, robot)
     if predicted.shape != true.shape or valid.shape != true.shape[:-1]:
         raise ValueError("多步预测、目标和有效mask形状不一致")
-    active = valid.to(predicted.dtype)
-    count = active.sum().clamp_min(1)
     n = robot.dof
     result = {}
     for name, begin, end, scale in (
@@ -937,9 +955,44 @@ def _core_prediction_terms(predicted: torch.Tensor, target: PhysicsObservation,
         ("joint_position",9,9+n,0.3),
         ("joint_velocity",9+n,9+2*n,3.0),
     ):
-        error = ((predicted[...,begin:end]-true[...,begin:end])/scale).square().mean(-1)
-        result[f"{prefix}_{name}"] = (error*active).sum()/count
+        error = ((predicted[...,begin:end]-true[...,begin:end])/scale).square()
+        mask = target.core_valid[..., begin:end] & valid.unsqueeze(-1)
+        result[f"{prefix}_{name}"] = torch.where(mask, error, 0.).sum()/mask.sum().clamp_min(1)
     return result
+
+
+@torch.no_grad()
+def replay_dynamics_inputs(model, prefix, observation, episode_start, actions):
+    """Refresh truncated-BPTT inputs under current weights before every epoch."""
+    ids = tuple(range(actions.shape[0]))
+    memory, _ = prefix.rebuild(model, ids)
+    initial = (actions.new_zeros((actions.shape[0], model.memory_width))
+               if memory is None else memory.hidden.clone())
+    cores, valid, interactions = [], [], []
+    from ..models.physics import PhysicsEncoding
+    physics = model.encoder(observation)
+    for step in range(actions.shape[1]):
+        frame = at_time(observation, step)
+        starts = episode_start[:, step]
+        cores.append(actions.new_zeros((actions.shape[0], 9+2*model.robot.dof))
+                     if memory is None else memory.predicted_core.clone())
+        valid.append(torch.zeros_like(starts) if memory is None else memory.prediction_valid.clone())
+        before = memory
+        encoded = PhysicsEncoding(physics.context[:, step], physics.contact_tokens[:, step],
+                                   physics.object_tokens[:, step])
+        encoding, memory = model.step(frame, episode_start=starts, env_ids=ids, memory=memory,
+                                      physics_encoding=encoded)
+        prediction = model.predict_next(frame, actions[:, step], encoding.latent,
+                                        physics_encoding=encoding.physics_encoding())
+        if model.interaction_feedback:
+            previous = None if before is None else before.interaction_prediction
+            if previous is None:
+                previous = clone_tree(prediction)
+                previous.contact_mask.zero_(); previous.object_mask.zero_()
+            interactions.append(previous)
+        memory = model.remember_prediction(memory, prediction)
+    return (initial, torch.stack(cores, 1), torch.stack(valid, 1),
+            stack_tree(interactions) if interactions else None)
 
 
 class DynamicsUpdater:
@@ -976,9 +1029,8 @@ class DynamicsUpdater:
             if (isinstance(value,bool) or not isinstance(value,(float,int))
                     or not math.isfinite(value) or value<0):
                 raise ValueError(f"{name}必须是非负有限数")
-        enabled=bool(teacher_distillation_weight or teacher_reconstruction_weight)
-        if enabled != model.teacher_student or bool(teacher_distillation_weight) != bool(teacher_reconstruction_weight):
-            raise ValueError("Teacher模型、蒸馏权重和重建权重必须同时开启或关闭")
+        from .dynamics_objective import validate_teacher_weights
+        validate_teacher_weights(model, teacher_reconstruction_weight, teacher_distillation_weight)
         if bool(multi_step_weight) != (len(model.prediction_horizons) > 1):
             raise ValueError("多步预测头和multi_step_weight必须同时开启或关闭")
         self.model, self.max_grad_norm = model, float(max_grad_norm)
@@ -1006,12 +1058,26 @@ class DynamicsUpdater:
         if (not isinstance(rollout, SequenceRollout)
                 or parameter_stamp(self.model) != rollout.dynamics_stamp):
             raise RuntimeError("动力学监督需要对应当前模型的采样历史；旧 hidden 不能冒充新模型状态")
-        if self.epochs > 1 and not rollout.episode_start[:,0].all().item():
+        if (self.epochs > 1 and rollout.dynamics_prefix is None
+                and not rollout.episode_start[:,0].all().item()):
             raise ValueError(
                 "Dynamics多轮复习要求序列从真实回合起点开始；"
                 "请把dynamics_every设为1或把epochs设为1"
             )
-        results = [self._update_once(rollout) for _ in range(self.epochs)]
+        results = []
+        for _ in range(self.epochs):
+            if rollout.dynamics_prefix is not None or rollout.episode_start[:, 0].all().item():
+                prefix = rollout.dynamics_prefix or DynamicsHistory()
+                initial, core, valid, interaction = replay_dynamics_inputs(
+                    self.model, prefix, rollout.observation,
+                    rollout.episode_start,
+                    rollout.action if rollout.executed_action is None else rollout.executed_action)
+                current = replace(rollout, initial_hidden=initial,
+                    previous_predicted_core=core, previous_prediction_valid=valid,
+                    previous_interaction_prediction=interaction)
+            else:
+                current = rollout
+            results.append(self._update_once(current))
         keys = set(results[0].terms)
         if any(set(item.terms) != keys for item in results):
             raise RuntimeError("Dynamics多轮复习的损失项发生变化")
@@ -1096,22 +1162,16 @@ class DynamicsUpdater:
                 if target is None or target.shape != (*encoding.latent.shape[:-1], self.model.system_id_dim):
                     raise ValueError("系统辨识需要与latent时间轴对齐的privileged目标")
                 # 至少观察过一次动作响应后才监督；回合首帧不能凭空辨识物理参数。
-                mask = rollout.previous_prediction_valid & rollout.valid_transition
-                error = (self.model.identify_privileged(encoding.latent)-target.detach()).square().mean(-1)
-                id_loss = (error*mask).sum()/mask.sum().clamp_min(1)
-                terms["system_identification"] = id_loss
-                total = total + self.system_id_weight*id_loss
-                if self.teacher_distillation_weight:
-                    z_priv=self.model.encode_privileged_teacher(target.detach())
-                    reconstruction=(self.model.reconstruct_privileged(z_priv)-target.detach()).square().mean(-1)
-                    reconstruction_loss=(reconstruction*rollout.valid_transition).sum()/rollout.valid_transition.sum().clamp_min(1)
-                    # Teacher由重建目标训练；学生对齐时显式stop-gradient，不能反向拖动Teacher。
-                    distillation=(encoding.latent-z_priv.detach()).square().mean(-1)
-                    distillation_loss=(distillation*mask).sum()/mask.sum().clamp_min(1)
-                    terms["teacher_reconstruction"] = reconstruction_loss
-                    terms["teacher_distillation"] = distillation_loss
-                    total = (total + self.teacher_reconstruction_weight*reconstruction_loss
-                             + self.teacher_distillation_weight*distillation_loss)
+                from .dynamics_objective import identification_loss
+                mask = rollout.previous_prediction_valid & rollout.valid_transition & ~rollout.episode_start
+                identified, _, _ = identification_loss(self.model, encoding.latent, target, mask,
+                    reconstruction_weight=self.teacher_reconstruction_weight,
+                    distillation_weight=self.teacher_distillation_weight,
+                    teacher_valid=rollout.valid_transition)
+                terms.update(identified)
+                total = (total + self.system_id_weight*identified["system_identification"]
+                         + self.teacher_reconstruction_weight*identified["teacher_reconstruction"]
+                         + self.teacher_distillation_weight*identified["teacher_distillation"])
             if not torch.isfinite(total).item():
                 raise FloatingPointError("动力学损失非有限")
             self.optimizer.zero_grad(set_to_none=True)

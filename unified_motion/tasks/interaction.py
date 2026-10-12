@@ -629,6 +629,7 @@ class RandomizedTask:
             # 位置可由关节编码器做FK估计，接触开关可由实机接触估计器提供。
             # 相对地面速度仍含仿真器精确根平移速度，因此也必须屏蔽。
             frame.base_lin_vel_b.zero_()
+            frame.core_valid[..., :3] = False
             frame.contact_features[..., 3:10] = 0
             frame.contact_features[..., 11] = 0
             # 当前后端的物体状态直接来自仿真真值；接入真实视觉/状态估计器前

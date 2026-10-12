@@ -262,7 +262,9 @@ def test_lru_exact_ppo_replay_across_updates_and_independent_dynamics(graph):
     DynamicsUpdater(dyn,epochs=1).update(r)
     assert model_digest(dyn)!=before
     c.on_dynamics_updated()
-    assert c.collect(3).episode_start[:,0].all()
+    again=c.collect(3)
+    assert not again.episode_start[:,0].any()
+    assert ppo.verify_old_policy(again)<1e-4
 
 
 @pytest.mark.parametrize('robot',['k1_22dof','g1_23dof','g1_29dof'])

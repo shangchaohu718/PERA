@@ -224,7 +224,7 @@ class ValidationFlowTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             output=Path(folder)/'report.json'
             code=v.main(['--phase','assets','--asset-root',str(Path(folder)/'absent'),'--output',str(output)])
-            report=json.loads(output.read_text())
+            report=json.loads(output.read_text(encoding='utf-8'))
             self.assertEqual(code,2);self.assertEqual(report['status'],'BLOCKED')
             self.assertFalse(output.with_suffix('.json.tmp').exists())
 

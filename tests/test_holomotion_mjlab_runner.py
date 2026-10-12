@@ -48,31 +48,15 @@ def test_checkpoint_refuses_to_overwrite_existing_target(tmp_path: Path):
         trainer.save_checkpoint(target, iteration=1)
 
 
-def test_physics_checkpoint_keeps_original_actor_layout_and_extra_state(tmp_path: Path):
-    trainer = _minimal_trainer()
-    base_actor = trainer.actor
-    trainer.actor = HoloMotionPhysicsActor(
-        base_actor,
-        HoloMotionPhysicsActorConfig(physics_feature_dim=6,hidden_dim=8,action_dim=2),
-    )
-    trainer.dynamics = DynamicsModel(
-        get_robot_contract("k1_22dof"),physics_width=4,memory_width=4,
-        latent_width=2,hidden_dim=8,system_id_dim=2,teacher_student=True,
-        uncertainty=True,
-    )
-    trainer.actor_dynamics=copy.deepcopy(trainer.dynamics)
-    trainer.dynamics_burn_in_steps=64
-    trainer.dynamics_train_steps=128
-    trainer.confidence_warmup_steps=128
-    trainer.dynamics_ema_decay=.99
-    trainer.dynamics_epochs=4
-    trainer.actor_optimizer = torch.optim.AdamW(trainer.actor.parameters())
-    trainer.dynamics_optimizer = torch.optim.Adam(trainer.dynamics.parameters())
+def test_physics_checkpoint_keeps_original_actor_layout_and_extra_state(tmp_path: Path, monkeypatch):
+    from test_holomotion_rollout_boundaries import _real_trainer
+    trainer = _real_trainer(True, monkeypatch)
+    base_actor = trainer.actor.base_actor
     checkpoint = trainer.save_checkpoint(tmp_path / "model_2.pt", iteration=2)
     actor = load_file(str(tmp_path / "model_2" / "actor" / "model.safetensors"))
     payload = torch.load(checkpoint,map_location="cpu",weights_only=True)
     assert set(actor)==set(base_actor.state_dict())
-    assert payload["physics_schema"]==3
+    assert payload["physics_schema"]==5
     assert "physics_residual_state_dict" in payload
     assert "dynamics_state_dict" in payload
     assert "actor_dynamics_state_dict" in payload

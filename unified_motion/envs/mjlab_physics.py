@@ -325,6 +325,9 @@ class K1PhysicsBridge:
         )
         empty_objects = body_obs.new_zeros(self.num_envs, 0, 16)
         empty_mask = torch.zeros(self.num_envs, 0, device=self.device, dtype=torch.bool)
+        core_valid = torch.ones(self.num_envs, 9 + 2*((body_obs.shape[-1]-6)//3),
+                                device=self.device, dtype=torch.bool)
+        core_valid[:, :3] = False
         return PhysicsObservation(
             body_obs,
             body_obs.new_zeros(self.num_envs, 3),
@@ -332,6 +335,7 @@ class K1PhysicsBridge:
             contact_mask,
             empty_objects,
             empty_mask,
+            core_valid,
         )
 
     @torch.no_grad()

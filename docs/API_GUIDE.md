@@ -6,12 +6,12 @@
 
 ### build_policy
 
-创建三种策略之一，统一后面的采样与 PPO 调用方式。
+创建六种策略之一，统一后面的采样与 PPO 调用方式。
 
 输入：
     robots：{机器人ID: 关节合同}。MLP 当前一次只注册一款机器人；
             Dense/MoE 可注册多款，但每次采样批次仍只包含一种机器人。
-    backbone：'mlp'、'dense'、'moe'。
+    backbone：'mlp'、'transformer'（别名'dense'）、'moe'、'gru'、'lstm'、'lru'。
     d_model：时序策略的隐藏宽度，当前工厂固定 Q=4头/KV=2头，宽度须能被8整除。
     hidden_dim：输入编码器/MLP 的中间宽度，不是关节数量。
     n_layers/context_len：时序层数/每层历史窗口；MLP 不使用这两个设置。
@@ -20,6 +20,15 @@
     init_std：原始动作高斯分布的初始标准差；不是关节角范围。
 输出：PhysicsMLPActorCritic 或 PhysicsConditionedActorCritic，可交给统一 Collector/PPO。
 注意：这只是创建网络，随机权重没有运动技能；仿真动作缩放在环境中另行定义。
+
+### 同一 K1 任务切换 HoloMotion / 自定义 Actor
+
+`k1_policy_backends.build_k1_networks` 按保存的网络类型重建七种 Actor；
+`k1_training.create_k1_trainer` 接入同一 PPO 和可选 Physics 残差。
+`k1_policy_runtime.load_k1_checkpoint`、`resume_k1_trainer`、`frozen_k1_policy` 分别用于加载、
+恢复、冻结推理，`evaluate_k1_policy` 运行有界评测。
+此路线接收完整506/843维 K1观测，旧 `build_policy` 的 `ControlGoal` 接口继续保留。
+详见 [Actor切换与权重兼容](K1_ACTOR_SWITCHING.md)。
 
 ## models/physics.py
 
@@ -48,12 +57,20 @@
         10:13 物体相对机身的角速度，弧度/秒，身体坐标。
         13:16 物体外形尺寸（长宽高），米。
     object_mask: [...,M]，True=该槽位有实际可见/可估计物体。
+    core_valid: [...,9+2N] 布尔张量，依次对应线速度、角速度、重力、关节角、关节速度。
+        省略时默认全部可测；不可测分量必须为 False，不能靠填0表示缺失。
+        deployable 适配器将根线速度前三列标为 False；特权监督目标独立保留真实有效性。
 
 输出：本对象自己不做网络计算；交给 PhysicsEncoder / DynamicsModel。
 
 重要：同一环境的 C/M 槽位身份必须在一次回合中保持稳定。
 暂时没有接触点或物体时，C/M 可以为0；不要把不存在的数据伪造为真。
 这不是相机识别模块，外部适配器负责把真实传感器结果整理到这里。
+
+新 Dynamics 按 core_valid 屏蔽输入占位值、预测创新和目标损失，并编码可测性。
+完整历史默认在 CPU 按64帧分块编码，活跃原始张量预算512 MiB、步数上限16384。
+超预算在世界推进前报错；预算不含其他 rollout 引用、激活和进程开销。
+参见 [修复合同与运行时配置](ALGORITHM_CORRECTIONS_20261012.md)。
 
 **from_k1_bridge**
 
@@ -714,10 +731,13 @@ Critic 特权信息由可选 task.privileged() 返回，未配置时为 None。
 
 **on_dynamics_updated**
 
-声明动力学权重已变，下一次 collect 重新 reset，不能混用旧 GRU。
+声明动力学权重已变，立即重放已保存的真实回合历史，重建 GRU、预测反馈和 Actor 前缀。
+不会 reset 或推进物理环境，也不会复用旧权重的 GRU 状态。
 
-输入/输出：无。这个版本选择显式重新开始任务，不声称做到无缝动力学更新。
+输入/输出：无。构造 collector 时可指定 `dynamics_history_steps`（默认 16384）；
+只能丢弃所有环境最近真实 reset 之前的公共前缀，超出容量在 step 前显式报错。
 策略单独更新不需要此操作；它会利用真实前缀重建 K/V。
+完整 Physics checkpoint 与冻结评测见 [运行时说明](PHYSICS_RUNTIME_AND_CONTINUITY.md)。
 
 **collect**
 

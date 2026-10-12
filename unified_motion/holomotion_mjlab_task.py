@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, fields, replace
 import math
 from typing import Any
 
@@ -356,6 +356,24 @@ class HoloMotionK1MJLabTask:
         self._pending_reference = None
         self._pending_body_reference = None
         return self.observe()
+
+    @torch.no_grad()
+    def critic_observation(self, env_ids: Sequence[int] | torch.Tensor) -> torch.Tensor:
+        """Read selected final states without touching actor or pending references."""
+        ids = self._ids(env_ids)
+        action = self.adapter.last_action_onnx
+        state = HoloMotionMJLabState.from_adapter(
+            self.adapter, action=action, previous_action=action
+        )
+        state = replace(state, **{
+            field.name: getattr(state, field.name).index_select(0, ids)
+            for field in fields(state)
+            if isinstance(getattr(state, field.name), torch.Tensor)
+        })
+        return self.critic_builder(
+            state, self.sampler.reference_window(ids),
+            self.sampler.body_reference_window(ids),
+        )
 
     @torch.no_grad()
     def observe(self) -> HoloMotionMJLabObservation:

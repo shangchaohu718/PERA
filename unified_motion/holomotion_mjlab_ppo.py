@@ -9,12 +9,13 @@ optimizer grouping match the original implementation.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
 import torch
 
+from .algorithms.common import compute_gae, diagonal_gaussian_kl
 from .holomotion_mjlab_task import (
     HoloMotionK1MJLabTask,
     HoloMotionMJLabObservation,
@@ -143,6 +144,11 @@ class HoloMotionPPORollout:
     physics_teacher_target: torch.Tensor | None = None
     dynamics_stamp: tuple[int, ...] | None = None
     reward_terms: dict[str, torch.Tensor] | None = None
+    truncated: torch.Tensor | None = None
+    timeout_values: torch.Tensor | None = None
+    executed_actions: torch.Tensor | None = None
+    dynamics_prefix: Any | None = None
+    physics_age: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -196,24 +202,52 @@ def generalized_advantage_estimate(
     *,
     gamma: float,
     lam: float,
+    truncated: torch.Tensor | None = None,
+    timeout_values: torch.Tensor | None = None,
 ) -> tuple[torch.Tensor, torch.Tensor]:
-    """Compute GAE for tensors shaped [B,T,1] and bootstrap [B,1]."""
+    """Adapt [B,T,1] rollouts to the shared terminal-aware GAE implementation.
+
+    ``dones`` cuts the advantage chain for both kinds of episode boundary.
+    Timeouts bootstrap from their pre-reset critic values, never the next
+    episode's observation. Legacy callers without timeouts keep their behavior.
+    """
     if rewards.shape != values.shape or rewards.shape != dones.shape:
         raise ValueError("rewards, values, and dones must have identical shapes")
     if rewards.ndim != 3 or rewards.shape[-1] != 1:
         raise ValueError("rollout tensors must have shape [B,T,1]")
     if bootstrap_value.shape != rewards.shape[:1] + (1,):
         raise ValueError("bootstrap_value must have shape [B,1]")
-    advantage = torch.zeros_like(rewards)
-    running = torch.zeros_like(bootstrap_value)
-    next_value = bootstrap_value
-    for step in range(rewards.shape[1] - 1, -1, -1):
-        not_done = (~dones[:, step]).to(rewards.dtype)
-        delta = rewards[:, step] + gamma * next_value * not_done - values[:, step]
-        running = delta + gamma * lam * not_done * running
-        advantage[:, step] = running
-        next_value = values[:, step]
-    return advantage, advantage + values
+    if dones.dtype != torch.bool:
+        raise ValueError("dones must be boolean")
+    if (truncated is None) != (timeout_values is None):
+        raise ValueError("truncated and timeout_values must be supplied together")
+    next_values = torch.cat((values[:, 1:], bootstrap_value[:, None]), dim=1)
+    if truncated is None:
+        truncated = torch.zeros_like(dones)
+    else:
+        if (truncated.shape != dones.shape or truncated.dtype != torch.bool
+                or truncated.device != dones.device):
+            raise ValueError("truncated must match dones shape, device, and boolean dtype")
+        if (truncated & ~dones).any().item():
+            raise ValueError("every truncated transition must also be done")
+        if (timeout_values.shape != values.shape or timeout_values.dtype != values.dtype
+                or timeout_values.device != values.device):
+            raise ValueError("timeout_values must match values shape, device, and dtype")
+        next_values = torch.where(truncated, timeout_values, next_values)
+    advantage, returns = compute_gae(
+        rewards.squeeze(-1).T, values.squeeze(-1).T, next_values.squeeze(-1).T,
+        (dones & ~truncated).squeeze(-1).T, truncated.squeeze(-1).T,
+        gamma=gamma, gae_lambda=lam,
+    )
+    return advantage.T.unsqueeze(-1), returns.T.unsqueeze(-1)
+
+
+def normalize_advantages(advantages: torch.Tensor) -> torch.Tensor:
+    """Keep sample-std normalization, including finite singleton smoke batches."""
+    correction = 1 if advantages.numel() > 1 else 0
+    return (advantages - advantages.mean()) / advantages.std(
+        correction=correction
+    ).clamp_min(1.0e-8)
 
 
 class HoloMotionMJLabPPO:
@@ -227,6 +261,7 @@ class HoloMotionMJLabPPO:
         config: HoloMotionPPOConfig | None = None,
     ) -> None:
         self.actor = algorithm.actor
+        self._network_config = getattr(algorithm, "network_config", None)
         self.critic = algorithm.critic
         self.task = task
         self.config = config or HoloMotionPPOConfig.from_original(algorithm.config)
@@ -264,6 +299,7 @@ class HoloMotionMJLabPPO:
             betas=(self.config.critic_beta1, self.config.critic_beta2),
         )
         self._observation: HoloMotionMJLabObservation | None = None
+        self._policy_rollout_steps = 32
 
     def _actor_forward(
         self,
@@ -307,10 +343,12 @@ class HoloMotionMJLabPPO:
         iteration: int,
         infos: dict[str, Any] | None = None,
     ) -> Path:
-        """Write the original HoloMotion actor/critic/.pt directory layout."""
+        """Keep the original directory layout and bundle full Physics state in .pt."""
         from safetensors.torch import save_file
 
         target = Path(path).expanduser().resolve()
+        if hasattr(self, "dynamics") and getattr(self, "_network_config", None) is None:
+            raise ValueError("complete Physics checkpoint requires resolved network_config")
         if target.suffix != ".pt":
             raise ValueError("checkpoint path must end in .pt")
         model_dir = target.with_suffix("")
@@ -325,6 +363,7 @@ class HoloMotionMJLabPPO:
             return {
                 key.removeprefix("_orig_mod."): value.detach().cpu().contiguous()
                 for key, value in module.state_dict().items()
+                if isinstance(value, torch.Tensor)
             }
 
         try:
@@ -337,6 +376,17 @@ class HoloMotionMJLabPPO:
                 "iter": int(iteration),
                 "infos": infos,
             }
+            if getattr(self, "_network_config", None) is not None:
+                contract = getattr(getattr(self.task, "adapter", None), "contract", None)
+                foot = getattr(self.task, "foot_reward_config", None)
+                randomization = getattr(self.task, "physics_randomization", None)
+                payload.update(policy_schema=1, network_config=self._network_config,
+                    base_actor_state_dict=checkpoint_actor.state_dict(),
+                    critic_state_dict=self.critic.state_dict(), ppo_config=asdict(self.config),
+                    policy_runtime_config=dict(rollout_steps=self._policy_rollout_steps,
+                        task_contract=None if contract is None else asdict(contract),
+                        foot_reward=None if foot is None else asdict(foot),
+                        physics_randomization=None if randomization is None else asdict(randomization)))
             if hasattr(self, "dynamics"):
                 payload.update(
                     physics_schema=3,
@@ -352,6 +402,32 @@ class HoloMotionMJLabPPO:
                         "dynamics_epochs": self.dynamics_epochs,
                     },
                 )
+                if getattr(self, "_network_config", None) is not None:
+                    from .holomotion_physics_runtime import dynamics_configuration
+                    contract = getattr(getattr(self.task, "adapter", None), "contract", None)
+                    foot = getattr(self.task, "foot_reward_config", None)
+                    randomization = getattr(self.task, "physics_randomization", None)
+                    payload.update(
+                        physics_schema=5,
+                        base_actor_state_dict=checkpoint_actor.state_dict(),
+                        critic_state_dict=self.critic.state_dict(),
+                        ppo_config=asdict(self.config),
+                        physics_update_config=asdict(self.update_config),
+                        confidence_state_dict=self.confidence.state_dict(),
+                        physics_runtime_config=dict(schema=2, network_config=self._network_config,
+                            physics_actor_config=asdict(self.actor.config),
+                            dynamics_config=dynamics_configuration(self.dynamics),
+                            confidence_config=asdict(self.confidence.config),
+                            confidence_warmup_steps=self.confidence_warmup_steps,
+                            rollout_steps=getattr(self, "_policy_rollout_steps", 32),
+                            task_contract=None if contract is None else asdict(contract),
+                            foot_reward=None if foot is None else asdict(foot),
+                            physics_randomization=None if randomization is None else asdict(randomization)),
+                        physics_loss_weights=dict(
+                            system_identification_weight=self.system_identification_weight,
+                            teacher_reconstruction_weight=self.teacher_reconstruction_weight,
+                            teacher_distillation_weight=self.teacher_distillation_weight),
+                    )
             torch.save(self._checkpoint_state_to_cpu(payload), target)
         except Exception:
             # Leave an obviously incomplete directory rather than publishing a
@@ -362,13 +438,14 @@ class HoloMotionMJLabPPO:
         return target
 
     def load_optimizer_checkpoint(
-        self, checkpoint: str | Path
+        self, checkpoint: str | Path, *, _validated_physics=None
     ) -> HoloMotionPPOResumeState:
         """Restore the two original AdamW states from a HoloMotion .pt file."""
         path = Path(checkpoint).expanduser().resolve()
         if not path.is_file():
             raise FileNotFoundError(path)
-        payload = torch.load(path, map_location=self.task.device, weights_only=True)
+        payload = (_validated_physics.payload if _validated_physics is not None else
+                   torch.load(path, map_location=self.task.device, weights_only=True))
         if not isinstance(payload, dict):
             raise ValueError("optimizer checkpoint must contain a dictionary")
         required = {"actor_optimizer_state_dict", "critic_optimizer_state_dict"}
@@ -376,14 +453,15 @@ class HoloMotionMJLabPPO:
         if missing:
             raise ValueError(f"optimizer checkpoint is missing keys: {sorted(missing)}")
         if hasattr(self, "dynamics"):
-            if payload.get("physics_schema") != 3:
-                raise ValueError("physics checkpoint schema must be 3")
+            if payload.get("physics_schema") != 5:
+                raise ValueError("training resume requires physics schema 5; legacy schema 4 is frozen-evaluation only")
             physics_required = {
                 "physics_residual_state_dict",
                 "dynamics_state_dict",
                 "actor_dynamics_state_dict",
                 "dynamics_optimizer_state_dict",
                 "physics_training_config",
+                "physics_update_config", "confidence_state_dict",
             }
             missing_physics = physics_required.difference(payload)
             if missing_physics:
@@ -391,6 +469,58 @@ class HoloMotionMJLabPPO:
                     "physics trainer cannot resume a checkpoint without physics state: "
                     f"{sorted(missing_physics)}"
                 )
+        iteration = payload.get("iter", -1)
+        if type(iteration) is not int or iteration < 0:
+            raise ValueError("optimizer checkpoint has no valid iteration")
+        if not hasattr(self, "dynamics") and payload.get("physics_schema") is not None:
+            raise ValueError("a Physics checkpoint requires a Physics trainer")
+        if not hasattr(self, "dynamics") and payload.get("policy_schema") == 1:
+            from .k1_policy_runtime import load_k1_checkpoint
+            from .holomotion_physics_runtime import validate_task_contract
+            loaded = load_k1_checkpoint(path, device=self.task.device)
+            validate_task_contract(payload["policy_runtime_config"], self.task)
+            if self._observation is not None:
+                raise ValueError("load a checkpoint before starting environment collection")
+            if payload["network_config"] != self._network_config or payload["ppo_config"] != asdict(self.config):
+                raise ValueError("checkpoint model or PPO configuration differs from this run")
+            self.actor.load_state_dict(loaded.actor.state_dict(), strict=True)
+            self.critic.load_state_dict(loaded.critic.state_dict(), strict=True)
+            self._policy_rollout_steps = payload["policy_runtime_config"]["rollout_steps"]
+        if hasattr(self, "dynamics"):
+            expected_physics_config = {
+                "dynamics_burn_in_steps": self.dynamics_burn_in_steps,
+                "dynamics_train_steps": self.dynamics_train_steps,
+                "confidence_warmup_steps": self.confidence_warmup_steps,
+                "dynamics_ema_decay": self.dynamics_ema_decay,
+                "dynamics_epochs": self.dynamics_epochs,
+            }
+            if payload["physics_training_config"] != expected_physics_config:
+                raise ValueError("physics checkpoint training configuration differs from this run")
+            if getattr(self, "_observation", None) is not None:
+                raise ValueError("load a checkpoint before starting environment collection")
+            if payload["physics_schema"] == 5:
+                from .holomotion_physics_runtime import (
+                    load_physics_checkpoint, dynamics_configuration, validate_task_contract,
+                )
+                loaded = (_validated_physics if _validated_physics is not None else
+                          load_physics_checkpoint(path, device=self.task.device))
+                runtime = payload["physics_runtime_config"]
+                validate_task_contract(runtime, self.task)
+                expected_losses = dict(system_identification_weight=self.system_identification_weight,
+                    teacher_reconstruction_weight=self.teacher_reconstruction_weight,
+                    teacher_distillation_weight=self.teacher_distillation_weight)
+                if payload["ppo_config"] != asdict(self.config) or payload["physics_loss_weights"] != expected_losses:
+                    raise ValueError("physics checkpoint optimization configuration differs from this run")
+                if (payload["physics_update_config"] != asdict(self.update_config)
+                        or runtime["confidence_config"] != asdict(self.confidence.config)):
+                    raise ValueError("physics update/confidence configuration differs from this run")
+                if (runtime["physics_actor_config"] != asdict(self.actor.config)
+                        or runtime["dynamics_config"] != dynamics_configuration(self.dynamics)
+                        or runtime["network_config"] != self._network_config):
+                    raise ValueError("physics checkpoint model configuration differs from this run")
+                self.actor.load_state_dict(loaded.actor.state_dict(), strict=True)
+                self.critic.load_state_dict(loaded.critic.state_dict(), strict=True)
+                self.confidence.load_state_dict(loaded.calibration.state_dict(), strict=True)
         self.actor_optimizer.load_state_dict(payload["actor_optimizer_state_dict"])
         self.critic_optimizer.load_state_dict(payload["critic_optimizer_state_dict"])
         if hasattr(self, "dynamics"):
@@ -404,23 +534,9 @@ class HoloMotionMJLabPPO:
             self.dynamics_optimizer.load_state_dict(
                 payload["dynamics_optimizer_state_dict"]
             )
-            expected_physics_config = {
-                "dynamics_burn_in_steps": self.dynamics_burn_in_steps,
-                "dynamics_train_steps": self.dynamics_train_steps,
-                "confidence_warmup_steps": self.confidence_warmup_steps,
-                "dynamics_ema_decay": self.dynamics_ema_decay,
-                "dynamics_epochs": self.dynamics_epochs,
-            }
-            if payload["physics_training_config"] != expected_physics_config:
-                raise ValueError(
-                    "physics checkpoint training configuration differs from this run"
-                )
             self.dynamics.invalidate_memories()
             self.actor_dynamics.invalidate_memories()
             self._dynamics_rollouts.clear()
-        iteration = int(payload.get("iter", -1))
-        if iteration < 0:
-            raise ValueError("optimizer checkpoint has no valid iteration")
         return HoloMotionPPOResumeState(iteration=iteration, checkpoint=path)
 
     @torch.no_grad()
@@ -440,12 +556,15 @@ class HoloMotionMJLabPPO:
     def collect(self, num_steps: int) -> HoloMotionPPORollout:
         if num_steps < 1:
             raise ValueError("num_steps must be positive")
+        self._policy_rollout_steps = num_steps
         if self._observation is None:
             self.reset()
+        # PPO sequence_logp replays only this rollout, without a history prefix.
+        self.actor.reset_kv_cache(self.task.num_envs, self.task.device)
 
         actor_obs, critic_obs = [], []
         actions, log_probs, means, sigmas, values = [], [], [], [], []
-        rewards, dones = [], []
+        rewards, dones, truncated, timeout_values = [], [], [], []
         reward_terms: dict[str, list[torch.Tensor]] = {}
         clip_ids = []
         aux_base_vel, aux_contacts, aux_ref_pos, aux_robot_pos = [], [], [], []
@@ -473,6 +592,7 @@ class HoloMotionMJLabPPO:
             values.append(critic_out.get("values").reshape(-1, 1))
             rewards.append(transition.reward.reshape(-1, 1))
             dones.append(done.reshape(-1, 1))
+            truncated.append(transition.truncated.reshape(-1, 1))
             for name, value in transition.terms.items():
                 reward_terms.setdefault(name, []).append(value.detach().clone())
             aux_base_vel.append(observation.auxiliary.base_lin_vel_b)
@@ -480,15 +600,7 @@ class HoloMotionMJLabPPO:
             aux_ref_pos.append(observation.auxiliary.ref_keybody_rel_pos)
             aux_robot_pos.append(observation.auxiliary.robot_keybody_rel_pos)
 
-            if done.any().item():
-                env_ids = done.nonzero(as_tuple=False).flatten()
-                self.actor.clear_env_cache(env_ids)
-                self._observation = self.task.reset(
-                    env_ids, random_start=True,
-                    min_remaining_s=float(self.task.sampler.offsets_s[-1]),
-                )
-            else:
-                self._observation = self.task.observe()
+            timeout_values.append(self._finish_transition(transition))
 
         final = self._observation
         assert final is not None
@@ -509,11 +621,11 @@ class HoloMotionMJLabPPO:
             bootstrap,
             gamma=self.config.gamma,
             lam=self.config.lam,
+            truncated=stack(truncated),
+            timeout_values=stack(timeout_values),
         )
         if self.config.normalize_advantage:
-            advantage = (advantage - advantage.mean()) / advantage.std().clamp_min(
-                1.0e-8
-            )
+            advantage = normalize_advantages(advantage)
         return HoloMotionPPORollout(
             actor_observation=stack(actor_obs),
             critic_observation=stack(critic_obs),
@@ -532,7 +644,41 @@ class HoloMotionMJLabPPO:
             gt_robot_keybody_rel_pos=stack(aux_robot_pos),
             clip_ids=stack(clip_ids),
             reward_terms={name: stack(values) for name, values in reward_terms.items()},
+            truncated=stack(truncated),
+            timeout_values=stack(timeout_values),
         )
+
+    @torch.no_grad()
+    def _finish_transition(self, transition) -> torch.Tensor:
+        """Read timeout values before reset, then prepare exactly one observation.
+
+        Only timeout rows are read: other rows may already have exhausted their
+        reference clip. The critic-only task read must not advance actor history
+        or the task's observe/step handshake.
+        """
+        timeout_values = transition.reward.new_zeros((self.task.num_envs, 1))
+        if (transition.terminated & transition.truncated).any().item():
+            raise ValueError("terminated and truncated must be disjoint")
+        if transition.truncated.any().item():
+            ids = transition.truncated.nonzero(as_tuple=False).flatten()
+            critic_obs = self.task.critic_observation(ids)
+            data = flat_observations_to_tensordict(
+                critic_obs.new_zeros((len(ids), 506)), critic_obs
+            )
+            timeout_values[ids] = self.critic(
+                data, update_obs_norm=False
+            ).get("values").reshape(-1, 1)
+        done = transition.terminated | transition.truncated
+        if done.any().item():
+            ids = done.nonzero(as_tuple=False).flatten()
+            self.actor.clear_env_cache(ids)
+            self._observation = self.task.reset(
+                ids, random_start=True,
+                min_remaining_s=float(self.task.sampler.offsets_s[-1]),
+            )
+        else:
+            self._observation = self.task.observe()
+        return timeout_values
 
     @staticmethod
     def _analytic_kl(
@@ -613,7 +759,7 @@ class HoloMotionMJLabPPO:
                 old_log_prob = rollout.old_log_prob[ids]
                 advantages = rollout.advantages[ids]
                 if cfg.normalize_advantage_per_mini_batch:
-                    advantages = (advantages - advantages.mean()) / advantages.std().clamp_min(1.0e-8)
+                    advantages = normalize_advantages(advantages)
                 mask = build_episode_causal_mask(
                     rollout.dones[ids].squeeze(-1)
                 )
@@ -686,6 +832,9 @@ class HoloMotionMJLabPPO:
                 else:
                     value_loss = (value - returns).square().mean()
                 actor_loss = surrogate_loss - cfg.entropy_coef * entropy.mean()
+                custom_aux = actor_out.get("actor_aux_loss", None)
+                if custom_aux is not None:
+                    actor_loss = actor_loss + custom_aux.mean()
                 aux_base_loss = actor_loss.new_zeros(())
                 aux_contact_loss = actor_loss.new_zeros(())
                 aux_ref_loss = actor_loss.new_zeros(())
@@ -741,9 +890,9 @@ class HoloMotionMJLabPPO:
                             cfg.inactive_expert_margin_weight * inactive_margin_loss
                         )
                 if cfg.kl_coef > 0.0:
-                    actor_loss = actor_loss + cfg.kl_coef * (
-                        ratio.detach() * (new_log_prob - old_log_prob)
-                    ).mean()
+                    actor_loss = actor_loss + cfg.kl_coef * diagonal_gaussian_kl(
+                        rollout.old_mu[ids].float(), rollout.old_sigma[ids].float(),
+                        actor_out.get("mu").float(), actor_out.get("sigma").float()).mean()
                 critic_loss = cfg.value_loss_coef * value_loss
 
                 self.actor_optimizer.zero_grad()
