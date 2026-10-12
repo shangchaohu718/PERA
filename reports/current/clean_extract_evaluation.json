@@ -1,0 +1,3184 @@
+{
+  "total": 625,
+  "pytest_exit_code": 0,
+  "subtests": {
+    "passed": 427,
+    "failed": 0,
+    "skipped": 0
+  },
+  "collection_errors": [],
+  "tests": [
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_action_step_rejects_train_mode",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_bad_network_configuration_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_cache_invalidation_after_weights_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_cpu_autocast_logprob_float32",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_critic_can_bootstrap_single_step",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_critic_direct_rejects_reference_holes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_critic_direct_rejects_time_holes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_critic_masked_reference_gradient_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_critic_reference_padding_does_not_affect_value",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_cuda_all_robots",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_actor_critic.py', 516, 'Skipped: 需要 CUDA GPU')"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_cuda_mixed_precision",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_actor_critic.py', 526, 'Skipped: 需要 CUDA GPU')"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_deterministic_stream_equal_sequence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_distribution_log_prob_is_sum_over_joint_axis",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_entire_padded_batch_returns_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_entropy_is_sum_over_joint_axis",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_episode_reset_prevents_past_leak",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_episode_start_on_padding_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_evaluate_recalculates_stored_raw_actions",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_float64_model",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_fully_padded_tail_returns_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_future_true_obs_and_reference_not_leak",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_gaussian_head_initial_mean_near_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_invalid_initial_std",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_invalid_padding_is_immune_to_large_values",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_invalid_std_stops_instead_of_clipping",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_joint_action_logprob_not_componentwise",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_k1_and_g1_shapes_and_joint_order",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_log_std_is_trainable_and_no_silent_cap",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_new_robot_contract",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_nonfinite_action_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_nonfinite_observation_and_ref_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_observation_and_reference_wrong_dims_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_optimizer_updates_actor_and_critic_parameters",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_policy_mean_is_not_action_clipped",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_ppo_ratio_matches_one_before_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_privileged_bad_dims_configuration",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_privileged_changes_critic_not_actor",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_privileged_contract_requires_correct_shape",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_privileged_dims_checkpoint_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_real_data_builders_to_actor_critic_three_robots",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_ref_mask_missing_on_valid_time_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_save_load_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_step_cache_rejects_other_robot_and_env_order",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_step_sampling_has_no_grad",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_stochastic_rollout_action_and_logprob_recompute",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_trainable_gradient_actor_critic_and_router",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_valid_mask_holes_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_value_actor_input_not_contaminated_by_privileged",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_value_only_loss_does_not_update_actor",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_wrong_action_shape_and_types_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_wrong_joint_order_same_shape_checkpoint_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_actor_critic.py::ActorCriticTests::test_wrong_robot_names_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_all_attention_parameters_receive_finite_gradient",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_all_padding_has_finite_zero_forward_and_backward",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_all_robot_builders_encoder_shared_attention_pipeline",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_autocast_backward_finite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_cache_bad_shape_dtype_device_slot",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_cache_invalidated_on_checkpoint_load",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_cache_storage_constant_and_has_only_kv_heads",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_caches_not_shared_between_layers",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_check_values_false_matches_valid_path",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_consecutive_episode_starts",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_cpu_autocast_and_encoder_autocast_input",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_cuda_autocast",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_attention.py', 490, 'Skipped: 当前环境没有 CUDA')"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_cuda_float32_and_stream",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_attention.py', 482, 'Skipped: 当前环境没有 CUDA')"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_default_parameter_count_and_minimum_even_head",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_episode_reset_blocks_old_history",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_explicit_cache_invalidation_after_optimizer_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_full_equals_stream_with_window_and_resets",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_independent_mathematical_oracle",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_input_dtype_and_device_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_invalid_constructor_values",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_invalid_input_types_shapes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_large_batch",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_masks_shapes_types_devices",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_no_cross_environment_leakage",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_no_future_gradient_leakage",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_no_future_value_leakage",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_no_input_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_noncontiguous_sequence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_nonfinite_inputs_rejected_even_in_padding",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_output_nonfinite_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_padding_hole_and_start_in_padding_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_padding_zero_no_value_or_gradient_effect",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_parameter_gradients_against_independent_oracle",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_pipeline_batch_vs_frame_all_robots",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_reset_cache_is_per_environment",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_rope_pair_norm_and_position_sensitivity",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_rope_relative_shift_invariance",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_shape_mha_gqa_mqa_and_gate_variants",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_state_dict_round_trip_and_config_guard",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_step_no_grad_and_eval_required",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_train_eval_forward_same_without_dropout",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_window_excludes_distant_history",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_attention.py::AttentionTests::test_window_one_is_memoryless",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_bad_clip_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_body_missing_rejected_and_builder_compatible",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_body_reorder_duplicates_and_presence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_failed_reset_is_atomic",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_joint_order_and_distinct_clips_not_mixed",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_native_npz_requires_exact_names_and_fps",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_npz_reject_bad_metadata_and_pickle",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_npz_roundtrip_all_robots_and_bodies",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_partial_reset_keeps_other_clocks",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_random_reset_chooses_eligible_clips",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_resample_30_50_60_and_boundaries",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_reset_alignment_rotates_velocity_but_preserves_height",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_slerp_shortest_path_sign_and_unit",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_terminal_mask_not_looping",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::MotionDataTests::test_unready_unknown_and_duplicate_envs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_body_tracks_named_parts_not_order",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_joint_and_root_error_decrease_score",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_missing_data_and_invalid_state_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_per_site_metrics_preserve_one_sided_error",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_perfect_score_is_sum_weights",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_reward_uses_current_not_future",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_site_names_and_phase_required",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_slide_not_punished_as_anchor",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_state_order_and_quaternion_sign_invariance",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_transition_and_unknown_do_not_get_free_score",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::RewardTests::test_velocity_fallback_matches_measured",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_actual_bridge_sampler_reward_collector_ppo_connection",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_first_partial_reset_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_no_contact_uses_body_point_not_fake_force",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_object_state_orientation_and_size",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_point_velocity_accounts_for_angular_motion_and_ground",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_reordered_contacts_force_and_snapshot",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_wrong_sensor_semantics_and_specs_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_data_rewards_bridge.py::PhysicsBridgeTests::test_xml_wrong_joint_type_gear_and_root_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_check_values_false_preserves_structure_and_valid_outputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_checkpoint_metadata_and_missing_metadata_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_checkpoint_same_dimensions_wrong_joint_order_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_cpu_autocast_forward_backward",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_cuda_amp_forward_backward",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_encoder.py', 378, 'Skipped: 当前运行环境没有 CUDA GPU')"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_default_parameter_count",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_device_mismatch_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_dimensions_match_original_builders",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_dtype_mismatch_and_half_weights_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_empty_or_nonprefix_valid_mask_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_flatten_contains_mask_and_preserves_all_reference_points",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_float64_and_module_dtype_conversion",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_future_state_does_not_change_past_encoding",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_gradient_flows_to_inputs_and_zero_for_padding",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_h_one_and_variable_h",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_invalid_argument_types",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_invalid_constructor_options",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_large_sequence_batch_all_robots_small_width",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_mask_zero_after_nonzero_bias",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_new_robot_without_core_changes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_no_batch_mixing",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_no_input_or_mask_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_no_trainable_weights_are_shared_between_robot_adapters",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_noncontiguous_sequence_inputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_nonfinite_inputs_including_padding_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_nonfinite_network_output_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_only_selected_branch_receives_gradients",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_padding_length_does_not_change_existing_tokens",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_padding_values_do_not_change_valid_outputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_shared_dummy_backbone_and_robot_heads_optimizer_step",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_state_dict_roundtrip_and_input_mapping_order",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_three_robots_body_reference_integration",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_train_eval_deterministic_same_input",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_unknown_robot_and_wrong_robot_width",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_wrong_leading_shapes_and_width",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_encoder.py::EncoderTests::test_wrong_mask_shape_or_type",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1XmlTests::test_gain_families_are_explicit",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1XmlTests::test_reject_missing_wrong_duplicate_or_invalid_actuators",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1XmlTests::test_wrong_folder_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1XmlTests::test_xml_parsing_and_order_set",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_action_mapping_done_terminal_read_reset",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_actor_critic_uses_real_bridge_contract",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_close",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_invalid_physics_state_stops_smoke",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_malformed_policy_action_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_must_reset_before_reading",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_reference_is_static_probe_from_true_reset_pose",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_reset_and_joint_observation_reordering",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_mjlab_k1.py::K1BridgeTests::test_wrong_auto_reset_or_joint_list_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_2d_3d_equivalence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_all_padding",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_cpu_autocast_bfloat16",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_cuda_autocast",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_moe.py', 364, 'Skipped: CUDA 不可用，跳过 GPU 测试')"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_cuda_training",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_moe.py', 356, 'Skipped: CUDA 不可用，跳过 GPU 测试')"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_default_parameter_count",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_float64",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_forward_backward_finite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_invalid_configurations",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_invalid_input_shapes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_invalid_masks",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_invalid_values_are_ignored_if_finite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_large_batch",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_mask_padding_has_zero_outputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_mask_zero_gradients",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_mismatched_checkpoint_config_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_new_robot_semantic_independence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_no_input_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_noncontiguous",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_nonfinite_values_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_one_fine_expert",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_output_shapes_and_probs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_router_entropy_vs_policy_entropy",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_router_load_detects_collapse",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_router_probability_changes_with_reference",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_save_load_checkpoint",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_sparse_matches_dense_baseline_gradients",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_swiglu_expert_manual_formula",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_three_robot_end_to_end_integration",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_topk1_and_no_shared",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_topk_equals_number_of_experts",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_train_eval_equal",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_without_mask_all_valid",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_moe.py::MoETests::test_wrong_dtype",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_all_fields_nonfinite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_all_joint_permutations_randomized",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_all_robot_shapes_and_fields",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_autograd",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_changed_joint_order",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_default_cloned_and_detached",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_default_nonfinite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_empty_batch_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_float64_supported",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_gravity_magnitude_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_input_output_storage_independent",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_invalid_state_and_field_types",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_large_batch_all_robots",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_mismatched_leading_dimensions",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_new_robot_without_code_changes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_no_input_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_no_trainable_parameters",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_noncontiguous_inputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_output_arithmetic_overflow_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_tensor_type_conversion_with_module",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_unbatched_and_extra_axis_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_valid_tilt_does_not_get_normalized_away",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_wrong_default_shape_and_dtype",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_wrong_device_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_wrong_dtype",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_wrong_joint_set",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_observations.py::ObservationTests::test_wrong_joint_width",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_empty_slot_dynamics_backward",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_invalid_transitions_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_masked_large_finite_garbage_does_not_break_backward",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_memory_stale_after_load",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_prediction_error_affects_latent_not_future",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_q_sign_invariant_encoder_and_prediction",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_reset_forgets_previous_prediction",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_safe_unit_never_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_sequence_and_step_predictions_agree",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::DynamicsRegressionTests::test_wrong_same_width_robot_checkpoint_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_auto_reset_tasks_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_balance_prefix_rejected_not_silently_misweighted",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_changed_policy_rejected_even_without_numeric_gate",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_checkpoint_roundtrip_with_optimizer",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_collector_snapshots_not_mutated_by_next_reset",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_complete_two_training_cycles",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_dynamics_checkpoint_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_dynamics_update_changes_predictor_not_actor",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_final_value_not_reset_value",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_foreign_robot_dynamics_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_history_reset_equivalence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_ids_reorder_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_motion_only_old_policy_agrees_all_robots",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_multibatch_prefix_replay_after_weight_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_multimodal_partial_masks_all_policy_types",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_nan_reward_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_no_prefix_balance_supported",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_optional_goal_structure_must_stay_consistent",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_ppo_does_not_update_dynamics",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_prefix_missing_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_raw_action_mismatch_gate_rejects",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_same_rollout_cannot_be_consumed_twice",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_value_does_not_consume_random_numbers_or_cache",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_sequence.py::PhysicsSequenceTests::test_window_more_layers_than_single_context",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_boolean_physics_dt_rejected_without_loading_sim",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_child_free_joint_is_not_root",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_control_profile_formula_and_joint_permutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_degree_unit_is_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_disabled_effort_limit_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_disabled_joint_limit_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_empty_mesh_is_not_validated",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_ground_required",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_include_is_not_silently_ignored",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_invalid_initial_pose_fails_not_clamped_silently",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_manifest_and_no_source_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_mesh_change_changes_fingerprint",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_missing_mesh_is_blocked_not_passed",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_no_implicit_angle_unit",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_outside_model_directory_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_unknown_inheritance_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::PhysicsAssetValidationTests::test_zero_action_knee_offset_is_reported",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_assets_phase_does_not_require_or_import_sim",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_blocked_dependencies_do_not_call_solver",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_cli_help_no_physics",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_cli_writes_real_blocked_report_and_exit",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_compatible_version_ranges",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_compile_failure_does_not_run_native",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_cuda_without_device_is_blocked_not_cpu_fallback",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_error_status_not_swallowed",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_incompatible_or_broken_package_is_fail",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_installed_and_importable_only_passes_version_check",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_invalid_phase_or_budget_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_missing_assets_blocked",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::ValidationFlowTests::test_missing_dependencies_blocked",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::CompiledLayoutMathTests::test_actuator_order_is_resolved_by_joint",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::CompiledLayoutMathTests::test_compile_applies_sim_options_not_just_scene_options",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::CompiledLayoutMathTests::test_joint_initial_pose_mismatch_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::CompiledLayoutMathTests::test_unlimited_actuator_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::CompiledLayoutMathTests::test_wrong_compiled_damping_sign_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_physics_validation.py::CompiledLayoutMathTests::test_wrong_compiled_gain_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::GaeTests::test_invalid_gae_data_refused",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::GaeTests::test_regular_nonterminal_bootstrap",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::GaeTests::test_terminal_no_bootstrap",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::GaeTests::test_timelimit_bootstrap_without_leakage",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::GaeTests::test_two_env_independence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_balance_option_no_prefix",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_balance_with_prefix_forbidden",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_baseline_update_exact_old_logprob_and_value",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_buffer_copies_raw_action_not_input_alias",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_buffer_not_full_and_env_id_check",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_buffer_shapes_and_reward_alignment",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_cache_invalidated_after_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_checkpoint_roundtrip_and_cache_invalidated",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_config_checks",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_cross_robot_shared_trainer_fresh_rollouts",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_cuda_training",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_ppo.py', 378, 'Skipped: CUDA unavailable')"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_double_dtype",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_early_stop_kl",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_false_done_reset_alignment_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_mid_episode_needs_prefix",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_old_critic_value_corruption_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_old_logprob_action_clipping_detected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_old_mean_or_std_corruption_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_prefix_excluded_from_loss_and_gradients_work",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_prefix_too_short_without_reset_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_prefix_wrong_env_order_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_privileged_only_critic",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_return_config_recomputes_if_gamma_changes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_single_step_single_env_advantage_normalization",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_stale_policy_weights_detected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_ppo.py::PPOTests::test_wrong_joint_names_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_all_goals_absent_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_all_modules_import_without_simulator",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_cli_help_needs_no_cuda",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_factory_reject_ambiguous_mlp_multi_robot",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_mlp_checkpoint_joint_order_and_metadata_required",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_mlp_critic_nonfinite_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_old_names_are_aliases_not_duplicate_implementations",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_production_cli_refuses_fake_cpu_fallback",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_production_has_no_embedded_selftests",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_public_factory_three_architectures",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_pure_contact_goal_all_policy_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_pure_object_goal_all_policy_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_safe_weights_only_full_checkpoint_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_project_contracts.py::ProjectContractTests::test_trainable_dynamics_can_reduce_a_fixed_cpu_prediction_loss",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_closed_loop_with_interaction_feedback[mlp]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_closed_loop_with_interaction_feedback[dense]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_closed_loop_with_interaction_feedback[moe]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_sequence_replay_matches_interaction_memory",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_object_and_contact_errors_actually_change_context",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_quaternion_sign_does_not_create_feedback_error",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_masked_object_does_not_create_feedback",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_rotating_counterparty_velocity",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_contact_hold_requires_contiguous_frames",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_stage_transition_and_failure_semantics",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_object_local_goal_moves_with_object",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_partial_reset_does_not_reset_other_phase",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_registry_mutation_is_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_curriculum_changes_only_from_training_episode_results",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_readback_mismatch_is_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_delay_queue_preserves_raw_action_in_observation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_split_reports_overlap_honestly",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_randomization_seed_is_reproducible",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_yaml_duplicate_and_unknown_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_frozen_evaluation_preserves_weights_and_counts_endings[mlp]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_frozen_evaluation_preserves_weights_and_counts_endings[dense]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_frozen_evaluation_preserves_weights_and_counts_endings[moe]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_frozen_evaluation_detects_buffer_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_frozen_budget_does_not_claim_completion",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r19_interaction.py::test_real_backend_does_not_fallback_to_diagnostic",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_whole_sequence_matches_steps[dtype0-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_whole_sequence_matches_steps[dtype0-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_whole_sequence_matches_steps[dtype1-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_whole_sequence_matches_steps[dtype1-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_future_does_not_affect_past_and_reset_clears_both_states[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_future_does_not_affect_past_and_reset_clears_both_states[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_masked_recurrent_input_zero_gradient_and_state_preserved[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_masked_recurrent_input_zero_gradient_and_state_preserved[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_serialization_and_input_validation[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_serialization_and_input_validation[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_autocast_is_finite[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_autocast_is_finite[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_message_aggregation_matches_independent_dense_reference",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_node_permutation_equivariance_and_edge_order_invariance",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_masks_block_garbage_and_gradients",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_edges_really_affect_output",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_does_not_mix_environments_or_times",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[negative]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[range]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[self]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[duplicate]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[type]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[mask]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_rejects_bad_data[nan]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_numerical_gradient",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_no_contacts_no_objects_is_valid",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_dynamics_has_supervised_gradients_and_quaternion_invariance",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_bad_mapping_and_checkpoint_semantics",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_collector_retains_history_and_updates_policy_and_dynamics[False-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_collector_retains_history_and_updates_policy_and_dynamics[False-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_collector_retains_history_and_updates_policy_and_dynamics[True-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_collector_retains_history_and_updates_policy_and_dynamics[True-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_all_robot_interfaces_and_checkpoint[k1_22dof-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_all_robot_interfaces_and_checkpoint[k1_22dof-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_all_robot_interfaces_and_checkpoint[g1_23dof-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_all_robot_interfaces_and_checkpoint[g1_23dof-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_all_robot_interfaces_and_checkpoint[g1_29dof-gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_all_robot_interfaces_and_checkpoint[g1_29dof-lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_missing_history_and_cap_are_not_silently_ignored[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_missing_history_and_cap_are_not_silently_ignored[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_cache_rejects_environment_and_weight_changes[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_cache_rejects_environment_and_weight_changes[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_partial_resets_replay_exactly[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_partial_resets_replay_exactly[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_yaml_task_graph_and_frozen_eval_all_choices[mlp]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_yaml_task_graph_and_frozen_eval_all_choices[dense]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_yaml_task_graph_and_frozen_eval_all_choices[moe]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_yaml_task_graph_and_frozen_eval_all_choices[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_yaml_task_graph_and_frozen_eval_all_choices[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_cuda_recurrent_core[gru]",
+      "status": "skipped",
+      "phase": "setup",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_r20_plugins.py', 327, 'Skipped: CUDA unavailable')"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_cuda_recurrent_core[lstm]",
+      "status": "skipped",
+      "phase": "setup",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_r20_plugins.py', 327, 'Skipped: CUDA unavailable')"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_cuda_message_passing",
+      "status": "skipped",
+      "phase": "setup",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_r20_plugins.py', 335, 'Skipped: CUDA unavailable')"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_invalid_graph_yaml_rejected[scene_encoder-typo]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_invalid_graph_yaml_rejected[graph_layers-0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_invalid_graph_yaml_rejected[contact_object_indices-value2]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_mapping_checked_against_named_environment_slots",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_all_yaml_configs_validate_and_inspect_without_simulator",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_padding_in_full_actor[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_recurrent_padding_in_full_actor[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_graph_parameters_change_only_in_dynamics_update",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_full_rnn_checkpoint_safe_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_one_recurrent_policy_instance_serves_k1_and_g1_without_cache_mix[gru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r20_plugins.py::test_one_recurrent_policy_instance_serves_k1_and_g1_without_cache_mix[lstm]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-1]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-2]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-3]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-5]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-8]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-11]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-32]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[parallel-65]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-1]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-2]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-3]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-5]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-8]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-11]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-32]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_matches_independent_complex_formula[sequential-65]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_layer_is_linear_even_though_full_network_has_nonlinearity",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_hand_computed_impulse_response",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_parallel_gradients_match_independent_serial_complex",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_finite_difference_gradcheck_inputs_initial_state_and_parameters",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_full_core_whole_sequence_steps_and_input_projection[parallel-dtype0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_full_core_whole_sequence_steps_and_input_projection[parallel-dtype1]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_full_core_whole_sequence_steps_and_input_projection[sequential-dtype0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_full_core_whole_sequence_steps_and_input_projection[sequential-dtype1]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_no_future_or_cross_environment_or_cross_episode_information",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_padding_large_finite_numbers_no_output_or_gradient_pollution",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_all_padding_holds_nonzero_state_and_zero_output",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs1]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs2]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs3]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs4]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs5]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs6]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs7]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs8]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_bad_parameters_rejected[kwargs9]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_bad_state_masks_and_precision_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_coefficient_spectrum_initialization_and_invalid_parameters",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_long_sequence_stable_and_parallel_matches_serial",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_outer_cpu_autocast_keeps_lru_memory_float32_and_gradients_finite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_exact_ppo_replay_across_updates_and_independent_dynamics[False]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_exact_ppo_replay_across_updates_and_independent_dynamics[True]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_multi_robot_shapes_restore_and_partial_resets[k1_22dof]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_multi_robot_shapes_restore_and_partial_resets[g1_23dof]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_multi_robot_shapes_restore_and_partial_resets[g1_29dof]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_prefix_must_not_be_dropped_and_cap_is_not_truncation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_cache_rejects_wrong_env_robot_weights_and_state_kind",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_lru_full_optimizer_checkpoint_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_transformer_alias_is_same_weights_and_contains_no_moe_or_recurrent_actor",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_new_yaml_full_frozen_path_and_structure_counts[False-transformer]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_new_yaml_full_frozen_path_and_structure_counts[False-lru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_new_yaml_full_frozen_path_and_structure_counts[True-transformer]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_new_yaml_full_frozen_path_and_structure_counts[True-lru]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_bad_lru_yaml_rejected[lru_state_dim-0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_bad_lru_yaml_rejected[lru_r_min--0.1]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_bad_lru_yaml_rejected[lru_r_max-1.0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_bad_lru_yaml_rejected[lru_max_phase-0.0]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_bad_lru_yaml_rejected[lru_scan-bad]",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_other_models_reject_misplaced_lru_options",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_checkpoint_semantics_cannot_swap_lru_and_gru",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_cuda_lru_scan_and_gradients[parallel]",
+      "status": "skipped",
+      "phase": "setup",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_r21_lru_transformer.py', 369, 'Skipped: CUDA unavailable')"
+    },
+    {
+      "test": "tests/test_r21_lru_transformer.py::test_cuda_lru_scan_and_gradients[sequential]",
+      "status": "skipped",
+      "phase": "setup",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_r21_lru_transformer.py', 369, 'Skipped: CUDA unavailable')"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_all_existing_modules_three_robots_trainable",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_all_padding_batch_finite_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_config_errors",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_cpu_autocast_float_and_encoded_inputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_cuda_autocast",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_reference_fusion.py', 415, 'Skipped: 当前没有CUDA设备')"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_cuda_forward_backward_and_cpu_parity",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_reference_fusion.py', 406, 'Skipped: 当前没有CUDA设备')"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_dtype_and_device_errors",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_empty_dimensions",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_extra_padding_not_change_result",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_fast_check_mode_equivalence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_fusion_does_not_mix_timesteps_or_environments",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_half_model_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_holes_in_reference_or_time_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_independent_math_forward_float64",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_independent_math_gradients",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_invalid_tensor_types",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_large_batched_input_without_full_robot_training",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_last_future_target_is_visible",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_masked_reference_garbage_cannot_change_output",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_masked_reference_gradient_is_zero",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_mismatched_dimensions",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_missing_metadata_checkpoint_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_nan_and_inf_rejected_even_in_padding",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_new_robot_contract_no_fusion_changes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_no_input_mutation_and_mask_ownership",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_no_reference_real_frame_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_noncontiguous_inputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_nonfinite_output_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_numerical_autograd_gradcheck",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_odd_head_dimension_allowed_without_rope",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_parameter_count_default",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_reference_permutation_preserving_time_features",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_reference_summary_only_depends_on_reference",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_same_shapes_different_heads_checkpoint_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_shapes_mha_gqa_mqa",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_single_reference_residual_equation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_single_step_and_sequence_equivalence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_temporal_attention_fusion_streaming_reset_and_future_isolation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_time_padding_zero_outputs_and_gradients",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_train_eval_deterministic_equal",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_valid_reference_changes_output",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_fusion.py::ReferenceFusionTests::test_weight_serialization_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_all_float_fields_shape_dtype_device_and_type_checks",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_all_robots_and_sequence_axes",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_both_builders_to_dummy_mlp_backward",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_common_translation_and_yaw_invariance",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_constructor_rejects_bad_contract_names_defaults",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_cuda_matches_cpu",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_reference_observations.py', 364, 'Skipped: 当前环境无 CUDA；未验证 GPU 执行')"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_default_clone_and_no_input_or_output_aliasing",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_fast_mode_matches_strict_on_valid_inputs",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_gradient_flow_with_padding",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_independent_joint_permutations",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_invalid_padding_is_zero_before_and_after_arithmetic",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_known_relative_rotation6d_columns",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_known_roll_uses_full_body_frame",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_known_yaw_rotation_and_velocity",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_large_sequence_batch",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_layout_covers_every_column_exactly",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_mask_shape_type_and_prefix_validation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_mlp_flatten_contains_mask_and_preserves_history",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_negative_and_duplicate_and_decreasing_times_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_new_robot_and_fixed_base",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_no_input_mutation_and_noncontiguous_sequences",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_nonfinite_all_fields_even_masked",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_outer_cpu_autocast_does_not_change_geometry",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_output_overflow_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_quaternion_matrix_against_rodrigues",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_quaternion_sign_invariance",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_rejects_invalid_valid_quaternions",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_rejects_wrong_rank_and_empty_axes_and_width",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_root_joint_names_and_reference_type_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_single_timepoint_and_per_environment_times",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_small_quaternion_norm_error_normalized",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_state_dict_roundtrip_and_schema_rejection",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_reference_observations.py::ReferenceTests::test_zero_parameters_device_dtype_movement",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_all_padding_one_environment_zero_and_finite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_backward_all_major_components",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_bad_bool_masks_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_balance_loss_is_not_automatically_applied",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_batched_large_sequence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cache_checkpoint_loading_invalidation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cache_env_order_guard",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cache_instance_guard",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cache_manual_invalidation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cache_robot_guard",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cache_train_transition_invalidation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_checkpoint_incompatible_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_checkpoint_metadata_missing_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_checkpoint_roundtrip",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cpu_autocast",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cuda_batched_forward_backward",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_transformer.py', 460, 'Skipped: 当前容器没有 CUDA')"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_cuda_cache_vs_sequence",
+      "status": "skipped",
+      "phase": "call",
+      "detail": "('/mnt/data/_r21_independent/unified_motion_release21/tests/test_transformer.py', 471, 'Skipped: 当前容器没有 CUDA')"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_debug_value_check_switch_can_load_same_weights",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_episode_reset_isolation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_extra_state_round_trip_layout",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_float64_supported",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_forward_shapes_and_diagnostics",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_full_batch_all_padding_finite",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_invalid_config",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_manual_forward_pipeline_no_double_residual",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_many_reference_points",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_new_robot_not_hardcoded",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_no_future_real_state_leak",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_no_future_reference_window_leak",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_no_input_mutation",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_numerical_nonfinite_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_one_layer_and_more_layers",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_padding_holes_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_padding_zero_and_immunity",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_reference_fusion_called_once_for_multiple_layers",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_reset_on_padding_rejected",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_robot_sharing_all_three_and_autograd",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_robust_bad_robot_id",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_step_mask_and_env_id_checks",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_step_requires_eval",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_stream_context_len_one",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_stream_long_ring_rollover",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_streaming_equals_sequence",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_train_eval_no_dropout",
+      "status": "passed",
+      "phase": "setup"
+    },
+    {
+      "test": "tests/test_transformer.py::TransformerTests::test_wrong_input_rank_and_width",
+      "status": "passed",
+      "phase": "setup"
+    }
+  ],
+  "passed": 607,
+  "failed": 0,
+  "skipped": 18,
+  "project": "0.21.0",
+  "evaluated_at": "2026-10-10T09:23:21.800895+00:00",
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.3.5",
+  "cuda_available": false,
+  "runner": "pytest; includes unittest and pytest functions",
+  "process_returncode": 0,
+  "elapsed_seconds": 30.95159618499997,
+  "optional_dependencies": {
+    "mujoco": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mujoco'"
+    },
+    "mjlab": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mjlab'"
+    },
+    "warp": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'warp'"
+    }
+  },
+  "core_suite_status": "PASS",
+  "actual_mjlab_training": "NOT_RUN: tensor/analytic/mock tests are not a robot contact solver",
+  "scope_note": "通过代码测试不等于真实机器人仿真、GPU性能、零样本能力通过。"
+}

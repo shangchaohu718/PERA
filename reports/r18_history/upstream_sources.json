@@ -1,0 +1,19 @@
+{
+  "audit_type": "upstream source read, not package installation or physical execution",
+  "mjlab": {
+    "version": "1.6.0",
+    "commit": "0fb8a681136be94ffc636a3dd423cabb97d91f10",
+    "pyproject_blob": "918f875537afe88c4702fcda3c00a20340088df1",
+    "contact_sensor_blob": "80ff0ac01fbe7b58eb8d7c6f75c31cb7ac2d8721",
+    "scene_blob": "68e0643ff602d9bc33005dda24eb98ec9e18a8af"
+  },
+  "booster_assets": {
+    "reference_commit": "38a0ae84b17743a8aa21511f69ed38e7d22d1664",
+    "xml_path": "robots/K1/K1_22dof.xml",
+    "xml_blob": "6f5e7c9b3834477974dccd7af6eb38d068480b88",
+    "local_mesh_downloaded": false,
+    "local_full_xml_compiled": false
+  },
+  "raw_asset_path_exists": false,
+  "actual_simulator_imported": false
+}

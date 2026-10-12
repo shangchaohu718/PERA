@@ -1,0 +1,14 @@
+{
+  "backbone": "lru",
+  "scene_encoder": "set",
+  "policy_parameters": 34541,
+  "dynamics_parameters": 22459,
+  "graph_parameters": 0,
+  "total_parameters": 57000,
+  "note": "参数统计，不是速度/显存/动作质量评测",
+  "canonical_backbone": "lru",
+  "moe_layer_count": 0,
+  "actor_memory_floats_per_env": 128,
+  "lru_scan": "parallel",
+  "replay_policy": "真实回合历史重放；并行扫描不等于可以截断历史"
+}

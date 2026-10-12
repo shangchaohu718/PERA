@@ -1,0 +1,105 @@
+# R21完整诊断配置：这是CPU解析质点场景，不是机器人仿真。
+# backbone=transformer等于旧dense，无MoE/Router；lru为线性循环单元。
+# LRU的state_dim是复数宽度，实际记忆实数数量要乘2。
+# parallel是可反传配对扫描，sequential是逐帧对照；不保证某种实现一定更快。
+# max_replay_steps是回放保护上限，不是偷偷清空记忆的窗口。
+# 独立动力学仍保留自己的GRU，scene_encoder可在set/gnn之间选。
+backend: diagnostic
+curriculum:
+  level: 0.3
+  promote_threshold: 0.8
+  window: 20
+device: cpu
+domains:
+  familiar:
+    delay_steps:
+    - 0
+    - 1
+    friction:
+    - 0.3
+    - 0.8
+    mass_scale:
+    - 0.8
+    - 1.2
+    push_force_n:
+    - 0.0
+    - 0.2
+    support_speed_m_s:
+    - 0.0
+    - 0.05
+  heldout_low_friction:
+    delay_steps:
+    - 0
+    - 1
+    friction:
+    - 0.1
+    - 0.2
+    mass_scale:
+    - 0.8
+    - 1.2
+    push_force_n:
+    - 0.0
+    - 0.2
+    support_speed_m_s:
+    - 0.0
+    - 0.05
+dynamics:
+  hidden_dim: 32
+  interaction_feedback: true
+  latent_width: 8
+  memory_width: 16
+  physics_width: 16
+evaluation_domains:
+- heldout_low_friction
+model:
+  backbone: lru
+  context_len: 4
+  d_model: 32
+  hidden_dim: 32
+  init_std: 0.15
+  n_layers: 2
+  max_replay_steps: 512
+  lru_state_dim: 32
+  lru_r_min: 0.9
+  lru_r_max: 0.999
+  lru_max_phase: 6.283185307179586
+  lru_scan: parallel
+num_envs: 2
+output: runs/diagnostic_lru
+plan:
+- hold_steps: 3
+  max_steps: 40
+  name: reach_then_hold
+  position_tolerance_m: 0.03
+  targets:
+  - contact: 1
+    pair: probe_surface
+    position:
+    - 0.12
+    - 0.0
+    - 0.01
+    velocity:
+    - 0.0
+    - 0.0
+    - 0.0
+  velocity_tolerance_m_s: 0.1
+ppo:
+  balance_coef: 0.0
+  entropy_coef: 0.0
+  epochs: 1
+  learning_rate: 0.0001
+  minibatch_envs: 2
+push_interval_steps: 10
+robot_id: k1_22dof
+run:
+  dynamics_every: 2
+  dynamics_learning_rate: 0.0001
+  evaluation_episodes: 2
+  evaluation_max_steps: 200
+  horizon: 16
+  updates: 3
+schema: 1
+seed: 42
+step_dt: 0.02
+train_domains:
+- familiar

@@ -1,0 +1,95 @@
+# 解析CPU闭环诊断，不是人形机器人物理。
+schema: 1
+seed: 42
+backend: diagnostic
+output: runs/diagnostic_dense
+robot_id: k1_22dof
+num_envs: 2
+device: cpu
+step_dt: 0.02
+model:
+  backbone: dense
+  d_model: 32
+  hidden_dim: 32
+  n_layers: 2
+  context_len: 4
+  num_experts: 4
+  init_std: 0.15
+dynamics:
+  physics_width: 16
+  memory_width: 16
+  latent_width: 8
+  hidden_dim: 32
+  interaction_feedback: true
+ppo:
+  epochs: 1
+  minibatch_envs: 2
+  learning_rate: 0.0001
+  entropy_coef: 0.0
+  balance_coef: 0.0
+run:
+  updates: 3
+  horizon: 16
+  dynamics_every: 2
+  dynamics_learning_rate: 0.0001
+  evaluation_episodes: 2
+  evaluation_max_steps: 200
+curriculum:
+  level: 0.3
+  promote_threshold: 0.8
+  window: 20
+push_interval_steps: 10
+domains:
+  familiar:
+    friction:
+    - 0.3
+    - 0.8
+    mass_scale:
+    - 0.8
+    - 1.2
+    delay_steps:
+    - 0
+    - 1
+    push_force_n:
+    - 0.0
+    - 0.2
+    support_speed_m_s:
+    - 0.0
+    - 0.05
+  heldout_low_friction:
+    friction:
+    - 0.1
+    - 0.2
+    mass_scale:
+    - 0.8
+    - 1.2
+    delay_steps:
+    - 0
+    - 1
+    push_force_n:
+    - 0.0
+    - 0.2
+    support_speed_m_s:
+    - 0.0
+    - 0.05
+train_domains:
+- familiar
+evaluation_domains:
+- heldout_low_friction
+plan:
+- name: reach_then_hold
+  targets:
+  - pair: probe_surface
+    position:
+    - 0.12
+    - 0.0
+    - 0.01
+    velocity:
+    - 0.0
+    - 0.0
+    - 0.0
+    contact: 1
+  position_tolerance_m: 0.03
+  velocity_tolerance_m_s: 0.1
+  hold_steps: 3
+  max_steps: 40

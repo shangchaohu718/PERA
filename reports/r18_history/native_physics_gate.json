@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "evaluated_at": "2026-10-10T05:39:02.715748+00:00",
+  "python": "3.13.5",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "phase": "native",
+  "status": "BLOCKED",
+  "exit_code": 2,
+  "results": [
+    {
+      "phase": "dependencies",
+      "status": "BLOCKED",
+      "reason": "缺失=['mjlab', 'mujoco', 'mujoco-warp', 'warp-lang']；不相容/导入失败=[]",
+      "packages": {
+        "mjlab": {
+          "installed": false
+        },
+        "mujoco": {
+          "installed": false
+        },
+        "mujoco-warp": {
+          "installed": false
+        },
+        "warp-lang": {
+          "installed": false
+        }
+      },
+      "mjlab_source_commit": "0fb8a681136be94ffc636a3dd423cabb97d91f10"
+    },
+    {
+      "phase": "assets",
+      "status": "BLOCKED",
+      "reason": "未提供真实资产路径"
+    },
+    {
+      "phase": "compile",
+      "status": "BLOCKED",
+      "reason": "前置检查未通过，没有执行此物理阶段"
+    },
+    {
+      "phase": "native",
+      "status": "BLOCKED",
+      "reason": "前置检查未通过，没有执行此物理阶段"
+    }
+  ],
+  "not_requested": [
+    "cuda"
+  ],
+  "scope": "仅所选项目；不代表学习效果、足部精度、G1适配或实机安全"
+}

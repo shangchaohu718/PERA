@@ -1,0 +1,69 @@
+# 能在CPU运行的闭环诊断，不是K1真实物理，不用于宣称机器人已学会动作。
+schema: 1
+seed: 42
+backend: diagnostic
+output: runs/diagnostic
+robot_id: k1_22dof  # 只用于网络关节列数
+num_envs: 2
+device: cpu
+step_dt: 0.02
+model:
+  backbone: mlp  # 可改dense或moe，三种共用一个PPO。
+  d_model: 32
+  hidden_dim: 32
+  n_layers: 2
+  context_len: 4
+  num_experts: 4
+  init_std: 0.15
+dynamics:
+  physics_width: 16
+  memory_width: 16
+  latent_width: 8
+  hidden_dim: 32
+  interaction_feedback: true  # 接触和物体误差真正回到记忆。
+ppo:
+  epochs: 1
+  minibatch_envs: 2
+  learning_rate: 0.0001
+  entropy_coef: 0.0
+  balance_coef: 0.0  # 有时序前缀时仍保留R18的约束。
+run:
+  updates: 3
+  horizon: 16
+  dynamics_every: 2
+  dynamics_learning_rate: 0.0001
+  evaluation_episodes: 2
+  evaluation_max_steps: 200
+curriculum:
+  level: 0.3
+  promote_threshold: 0.8
+  window: 20
+push_interval_steps: 10
+# 全部参数由后端写入并读回；延迟由真实动作队列实现。
+domains:
+  familiar:
+    friction: [0.3, 0.8]
+    mass_scale: [0.8, 1.2]
+    delay_steps: [0, 1]
+    push_force_n: [0.0, 0.2]
+    support_speed_m_s: [0.0, 0.05]
+  heldout_low_friction:
+    friction: [0.10, 0.20]  # 与训练区间分离，不只是换一个名字。
+    mass_scale: [0.8, 1.2]
+    delay_steps: [0, 1]
+    push_force_n: [0.0, 0.2]
+    support_speed_m_s: [0.0, 0.05]
+train_domains: [familiar]
+evaluation_domains: [heldout_low_friction]
+# position、velocity在surface对象自己的坐标系中，不是世界位置。
+plan:
+  - name: reach_then_hold
+    targets:
+      - pair: probe_surface
+        position: [0.12, 0.0, 0.01]
+        velocity: [0.0, 0.0, 0.0]
+        contact: 1
+    position_tolerance_m: 0.03
+    velocity_tolerance_m_s: 0.10
+    hold_steps: 3
+    max_steps: 40

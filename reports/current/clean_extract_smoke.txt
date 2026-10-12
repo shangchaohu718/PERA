@@ -1,0 +1,4 @@
+lru: train=3 old_policy_error=2.38e-06 frozen=True success_rate=0.0
+transformer: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+gnn_lru: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+gnn_transformer: train=3 old_policy_error=2.38e-06 frozen=True success_rate=0.0

@@ -1,0 +1,12 @@
+mlp: train=3 old_policy_error=0 frozen=True success_rate=0.0
+transformer: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+moe: train=3 old_policy_error=2.15e-06 frozen=True success_rate=0.0
+gru: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+lstm: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+lru: train=3 old_policy_error=2.38e-06 frozen=True success_rate=0.0
+gnn_mlp: train=3 old_policy_error=0 frozen=True success_rate=0.0
+gnn_transformer: train=3 old_policy_error=2.38e-06 frozen=True success_rate=0.0
+gnn_moe: train=3 old_policy_error=3.81e-06 frozen=True success_rate=0.0
+gnn_gru: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+gnn_lstm: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0
+gnn_lru: train=3 old_policy_error=1.91e-06 frozen=True success_rate=0.0

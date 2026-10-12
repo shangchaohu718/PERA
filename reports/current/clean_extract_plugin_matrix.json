@@ -1,0 +1,184 @@
+[
+  {
+    "case": "lru",
+    "parameters": {
+      "backbone": "lru",
+      "scene_encoder": "set",
+      "policy_parameters": 34541,
+      "dynamics_parameters": 22459,
+      "graph_parameters": 0,
+      "total_parameters": 57000,
+      "note": "参数统计，不是速度/显存/动作质量评测",
+      "canonical_backbone": "lru",
+      "moe_layer_count": 0,
+      "actor_memory_floats_per_env": 128,
+      "lru_scan": "parallel",
+      "replay_policy": "真实回合历史重放；并行扫描不等于可以截断历史"
+    },
+    "training_updates": 3,
+    "old_policy_max_error": 2.384185791015625e-06,
+    "evaluation": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.13437693435698747,
+      "mean_relative_speed_error_m_s": 0.07412387588992715,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "9f7d3b9197c176b7aed7b5c2414d6f9ad3f57c2922d0f4c3d1736dcc40ab8686",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    },
+    "checkpoint": "runs/diagnostic_lru/checkpoint.pt",
+    "log": "smoke_lru.txt"
+  },
+  {
+    "case": "transformer",
+    "parameters": {
+      "backbone": "transformer",
+      "scene_encoder": "set",
+      "policy_parameters": 36333,
+      "dynamics_parameters": 22459,
+      "graph_parameters": 0,
+      "total_parameters": 58792,
+      "note": "参数统计，不是速度/显存/动作质量评测",
+      "canonical_backbone": "dense",
+      "moe_layer_count": 0
+    },
+    "training_updates": 3,
+    "old_policy_max_error": 1.9073486328125e-06,
+    "evaluation": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.17755671655759214,
+      "mean_relative_speed_error_m_s": 0.24529848694801332,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "bfd9f00f462ffa794e4b05677f089d7cd437366fbd3fab0b95faf185a93440d3",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    },
+    "checkpoint": "runs/diagnostic_transformer/checkpoint.pt",
+    "log": "smoke_transformer.txt"
+  },
+  {
+    "case": "gnn_lru",
+    "parameters": {
+      "backbone": "lru",
+      "scene_encoder": "gnn",
+      "policy_parameters": 34541,
+      "dynamics_parameters": 26379,
+      "graph_parameters": 3920,
+      "total_parameters": 60920,
+      "note": "参数统计，不是速度/显存/动作质量评测",
+      "canonical_backbone": "lru",
+      "moe_layer_count": 0,
+      "actor_memory_floats_per_env": 128,
+      "lru_scan": "parallel",
+      "replay_policy": "真实回合历史重放；并行扫描不等于可以截断历史"
+    },
+    "training_updates": 3,
+    "old_policy_max_error": 1.9073486328125e-06,
+    "evaluation": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.23088924959301949,
+      "mean_relative_speed_error_m_s": 0.4348226136062294,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "4d4686d1c5387299bbeaf326f67bec772281ca41503edda9e6ca7a14109a61ad",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    },
+    "checkpoint": "runs/diagnostic_gnn_lru/checkpoint.pt",
+    "log": "smoke_gnn_lru.txt"
+  },
+  {
+    "case": "gnn_transformer",
+    "parameters": {
+      "backbone": "transformer",
+      "scene_encoder": "gnn",
+      "policy_parameters": 36333,
+      "dynamics_parameters": 26379,
+      "graph_parameters": 3920,
+      "total_parameters": 62712,
+      "note": "参数统计，不是速度/显存/动作质量评测",
+      "canonical_backbone": "dense",
+      "moe_layer_count": 0
+    },
+    "training_updates": 3,
+    "old_policy_max_error": 2.384185791015625e-06,
+    "evaluation": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.18478562198579312,
+      "mean_relative_speed_error_m_s": 0.3436190170701593,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "ed0fdfb16917a6f45b861b0261469522131882fc40a5612353dcf6992328d9cb",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    },
+    "checkpoint": "runs/diagnostic_gnn_transformer/checkpoint.pt",
+    "log": "smoke_gnn_transformer.txt"
+  }
+]

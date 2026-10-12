@@ -1,0 +1,32 @@
+{
+  "base_archive_sha256": "3a771491efb99a3691091a51f398b407115d34e8cda15f96abd72da8e39e9ed6",
+  "changed": [
+    {
+      "path": "tests/test_mjlab_k1.py",
+      "status": "modified"
+    },
+    {
+      "path": "tools/check_static_model.py",
+      "status": "modified"
+    },
+    {
+      "path": "unified_motion/__init__.py",
+      "status": "modified"
+    },
+    {
+      "path": "unified_motion/envs/mjlab_k1.py",
+      "status": "modified"
+    },
+    {
+      "path": "unified_motion/train.py",
+      "status": "modified"
+    }
+  ],
+  "new_python": [
+    "unified_motion/envs/physics_validation.py",
+    "tests/test_physics_validation.py",
+    "tools/verify_physics.py"
+  ],
+  "unchanged_count": 45,
+  "all_models_and_algorithms_unchanged": true
+}

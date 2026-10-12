@@ -1,0 +1,14 @@
+WARNING: The directory '/home/oai/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Obtaining file:///mnt/data/unified_motion_release20
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: unified-motion-research
+  Building editable for unified-motion-research (pyproject.toml): started
+  Building editable for unified-motion-research (pyproject.toml): finished with status 'done'
+  Created wheel for unified-motion-research: filename=unified_motion_research-0.20.0-0.editable-py3-none-any.whl size=4458 sha256=bd8445b14c8e2d61839d243d8e5a4c827d9c2b6fa82559725c0911973568ec77
+  Stored in directory: /tmp/pip-ephem-wheel-cache-a7scev1q/wheels/a3/42/c3/9520ca2df96557916017dd11f16ab64f1bc8d21debae97f3b8
+Successfully built unified-motion-research
+Installing collected packages: unified-motion-research
+Successfully installed unified-motion-research-0.20.0

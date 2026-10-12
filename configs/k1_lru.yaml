@@ -1,0 +1,127 @@
+# 真实K1配置，需实际资产和CUDA/mjlab；本轮未完成机器人物理验收。
+schema: 1
+seed: 42
+backend: mjlab_contact
+asset_root: ~/booster_assets_r18
+output: runs/k1_lru
+robot_id: k1_22dof
+num_envs: 2
+device: cuda:0
+step_dt: 0.02
+model:
+  backbone: lru
+  d_model: 128
+  hidden_dim: 128
+  n_layers: 2
+  context_len: 16
+  init_std: 0.15
+  lru_state_dim: 128
+  lru_r_min: 0.9
+  lru_r_max: 0.999
+  lru_scan: parallel
+  max_replay_steps: 4096
+dynamics:
+  physics_width: 64
+  memory_width: 64
+  latent_width: 32
+  hidden_dim: 128
+  interaction_feedback: true
+ppo:
+  epochs: 1
+  minibatch_envs: 2
+  learning_rate: 0.0001
+  entropy_coef: 0.0
+  balance_coef: 0.0
+run:
+  updates: 2
+  horizon: 16
+  dynamics_every: 2
+  dynamics_learning_rate: 0.0001
+  evaluation_episodes: 2
+  evaluation_max_steps: 500
+curriculum:
+  level: 0.0
+  promote_threshold: 0.8
+  window: 20
+push_interval_steps: 50
+domains:
+  nominal:
+    friction:
+    - 0.5
+    - 0.7
+    mass_scale:
+    - 0.95
+    - 1.05
+    delay_steps:
+    - 0
+    - 1
+    push_force_n:
+    - 0.0
+    - 1.0
+    support_speed_m_s:
+    - 0.0
+    - 0.0
+  heldout:
+    friction:
+    - 0.3
+    - 0.4
+    mass_scale:
+    - 0.95
+    - 1.05
+    delay_steps:
+    - 0
+    - 1
+    push_force_n:
+    - 0.0
+    - 1.0
+    support_speed_m_s:
+    - 0.0
+    - 0.0
+train_domains:
+- nominal
+evaluation_domains:
+- heldout
+contacts:
+- name: left_ground
+  body: left_ankle_roll_link
+  object: terrain
+  object_body: terrain
+  point_local_m:
+  - 0.026
+  - 0.0
+  - -0.038
+- name: right_ground
+  body: right_ankle_roll_link
+  object: terrain
+  object_body: terrain
+  point_local_m:
+  - 0.026
+  - 0.0
+  - -0.038
+plan:
+- name: two_contact_hold
+  targets:
+  - pair: left_ground
+    position:
+    - 0.026
+    - 0.096
+    - 0.0
+    velocity:
+    - 0.0
+    - 0.0
+    - 0.0
+    contact: 1
+  - pair: right_ground
+    position:
+    - 0.026
+    - -0.096
+    - 0.0
+    velocity:
+    - 0.0
+    - 0.0
+    - 0.0
+    contact: 1
+  hold_steps: 20
+  max_steps: 200
+  position_tolerance_m: 0.06
+  velocity_tolerance_m_s: 0.12

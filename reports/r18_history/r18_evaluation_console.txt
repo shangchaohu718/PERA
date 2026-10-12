@@ -1,0 +1,33 @@
+{"phase": "assets", "status": "BLOCKED", "report": "/tmp/tmp73vy5eyu/report.json", "exit_code": 2}
+{
+  "evaluated_at": "2026-10-10T05:38:33.158560+00:00",
+  "python": "3.13.5",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.3.5",
+  "cuda_available": false,
+  "total": 474,
+  "passed": 461,
+  "skipped": 13,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 15.345467764999967,
+  "core_suite_status": "PASS",
+  "optional_dependencies": {
+    "mujoco": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mujoco'"
+    },
+    "mjlab": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mjlab'"
+    },
+    "warp": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'warp'"
+    }
+  },
+  "actual_mjlab_training": "NOT_RUN: unit tests use tensor/mock tasks, not a contact solver",
+  "native_mujoco_model_compile": "BLOCKED: dependencies missing mujoco, mjlab, warp",
+  "scope_note": "通过的CPU用例不代表全部非CUDA物理运行已验证；静态模型与真实环境必须另验收。"
+}

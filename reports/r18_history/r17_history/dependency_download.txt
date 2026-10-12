@@ -1,0 +1,7 @@
+依赖安装尝试的实际错误摘录。未成功安装，因此不宣称真实模型编译通过。
+
+WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7facd097b110>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/ruff/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7facd097b390>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/ruff/
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7facd097b610>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/ruff/
+ERROR: Could not find a version that satisfies the requirement ruff (from versions: none)
+ERROR: No matching distribution found for ruff

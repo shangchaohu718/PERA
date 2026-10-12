@@ -1,0 +1,436 @@
+{
+  "schema": 1,
+  "evaluated_at": "2026-10-10T10:15:05.407779+00:00",
+  "python": "3.13.5",
+  "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+  "phase": "cuda",
+  "status": "FAIL",
+  "exit_code": 1,
+  "results": [
+    {
+      "phase": "dependencies",
+      "status": "FAIL",
+      "reason": "缺失=[]；不相容/导入失败=['mjlab', 'mujoco', 'mujoco-warp', 'warp-lang']",
+      "packages": {
+        "mjlab": {
+          "installed": true,
+          "version": "1.3.0",
+          "compatible": false,
+          "importable": true
+        },
+        "mujoco": {
+          "installed": true,
+          "version": "3.7.1.dev902675331",
+          "compatible": false,
+          "importable": true
+        },
+        "mujoco-warp": {
+          "installed": true,
+          "version": "3.7.0.1",
+          "compatible": false,
+          "importable": true
+        },
+        "warp-lang": {
+          "installed": true,
+          "version": "1.12.1",
+          "compatible": false,
+          "importable": true
+        }
+      },
+      "mjlab_source_commit": "0fb8a681136be94ffc636a3dd423cabb97d91f10"
+    },
+    {
+      "phase": "assets",
+      "status": "PASS",
+      "reason": "仅资产文件及 XML 合同通过；尚未编译",
+      "xml": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/upstream/booster_assets/robots/K1/K1_22dof.xml",
+      "files": {
+        "K1_22dof.xml": {
+          "size_bytes": 18722,
+          "sha256": "1f1a1cdd451f777600c66fc30ad8d7537198ee7bc51f8ed20d67a51b5001a651"
+        },
+        "meshes/Trunk.STL": {
+          "size_bytes": 356484,
+          "sha256": "6c2fc1adb1d3d23c081b6cebab1a4d1da57adbd726d6e72c143281ba696ddd5d"
+        },
+        "meshes/K1logo.STL": {
+          "size_bytes": 150584,
+          "sha256": "93aab425a2e953fdd1c704ce9d9a4fb8d8431da9cc0cc4d2648838b11c47b487"
+        },
+        "meshes/Head_1.STL": {
+          "size_bytes": 509184,
+          "sha256": "9ab00ca2c2ae9b27cdd54cdbbe7d9e50b1873f5815163aef5d719beceb445c96"
+        },
+        "meshes/Head_2.STL": {
+          "size_bytes": 1502334,
+          "sha256": "ae8f81b864fd0f16efaab6b0ee697a0fd80e54c2bd38f48526a326bc03085020"
+        },
+        "meshes/Left_Arm_1.STL": {
+          "size_bytes": 142584,
+          "sha256": "e1a6de4b34f17260daa09b81aa3bc115d450787b808190aca286073b45540775"
+        },
+        "meshes/Left_Arm_2.STL": {
+          "size_bytes": 1258184,
+          "sha256": "b5861bc9f6119baf50f131bbc4f6420867e63c7c1de31792d1e788cac70ad8ae"
+        },
+        "meshes/Left_Arm_3.STL": {
+          "size_bytes": 147484,
+          "sha256": "5424bdfedad4e70edc2dab6587bf0062c44489768c6e53ba4c2e58d700267f78"
+        },
+        "meshes/Left_Arm_4.STL": {
+          "size_bytes": 117584,
+          "sha256": "e7de1dc79b85b23792eaf8d49688891876f46b4eab7234f2513ae9e241a72b14"
+        },
+        "meshes/Right_Arm_1.STL": {
+          "size_bytes": 142084,
+          "sha256": "1dc1518437d0b2de09d7c559d13f620ee4910b985ca0b70cb387f29fad67a7d6"
+        },
+        "meshes/Right_Arm_2.STL": {
+          "size_bytes": 1222784,
+          "sha256": "2f7f4bf14aac5fdb06974c2336be24b5f5577b069a6e0a36e98a443779bb15cc"
+        },
+        "meshes/Right_Arm_3.STL": {
+          "size_bytes": 216234,
+          "sha256": "e3ae9cbd20736f4c3b29b2a455b07d8a59e6c093258d467fc20ecd4dc4b7486d"
+        },
+        "meshes/Right_Arm_4.STL": {
+          "size_bytes": 117884,
+          "sha256": "4a70e0006cc89bfeacb9b825821cdf715113b9cf7d267de6fe4b64ad3e5b9aad"
+        },
+        "meshes/Left_Hip_Pitch.STL": {
+          "size_bytes": 132784,
+          "sha256": "ca604e643aaf41ec4d05c8a13ff66ce39587f9d80be7268376c2a6368decd55f"
+        },
+        "meshes/Left_Hip_Roll.STL": {
+          "size_bytes": 37584,
+          "sha256": "aa278205ca751295c3d073ca3ddf682762a66218e6e5f239a22109b1d8f5ecf9"
+        },
+        "meshes/Left_Hip_Yaw.STL": {
+          "size_bytes": 211384,
+          "sha256": "2d8ed37c3a7c954937d5e3b462869f93292e4c4b76047fd4667380fedd3d66d2"
+        },
+        "meshes/Left_Shank.STL": {
+          "size_bytes": 314184,
+          "sha256": "0e99f5850ba752492a7d5fa0fb066efae03823cb4020e7e57a38e652a34be85c"
+        },
+        "meshes/Left_Ankle_Cross.STL": {
+          "size_bytes": 105984,
+          "sha256": "1798cb3b9721d82c913ce4b0080da9c0eaa69749445bc4a8d6f13dc6a69da232"
+        },
+        "meshes/Left_Foot.STL": {
+          "size_bytes": 2244834,
+          "sha256": "1a391f4b3b87a27726e09f15f6d2ce7795c702c13c0d76307d4756d8aeaadde3"
+        },
+        "meshes/Right_Hip_Pitch.STL": {
+          "size_bytes": 132784,
+          "sha256": "ab6052ca8f6a2ddf75ad536e3daf51024cbd8f6b9fa5ca36a8ac966347d850ac"
+        },
+        "meshes/Right_Hip_Roll.STL": {
+          "size_bytes": 37584,
+          "sha256": "9655e49b0ae12366eb8dba28dcc9593d63d6ec7a8431d90dc692041c8bb74765"
+        },
+        "meshes/Right_Hip_Yaw.STL": {
+          "size_bytes": 211284,
+          "sha256": "dd54f3cd1cdbaead210692a4cd4e131a1b696ceefd9715ab1eb6a8e9f44d88aa"
+        },
+        "meshes/Right_Shank.STL": {
+          "size_bytes": 314284,
+          "sha256": "6a7e831055148894ba623bf8d2eca27f2cef32e324819566c39e33cb12c0b4f9"
+        },
+        "meshes/Right_Ankle_Cross.STL": {
+          "size_bytes": 105984,
+          "sha256": "fd59798e9b4b55661372b601db3dbec9ef5567256b631c3d679a2e3446638256"
+        },
+        "meshes/Right_Foot.STL": {
+          "size_bytes": 2245984,
+          "sha256": "059b969922a9a31eb40828206070731d3612453f3aa3c2559702c566abb4b0fd"
+        }
+      },
+      "missing_files": [],
+      "fingerprint": "74b7974c613d24675aed51d766a1f152a4832f296225892ddf9cde1270320751",
+      "controls": [
+        {
+          "name": "aahead_yaw_joint",
+          "kp": 7.895683520871486,
+          "kd": 0.5026548245743669,
+          "effort": 6.0,
+          "armature": 0.002,
+          "action_scale": 0.18997721932938333,
+          "default_pos": 0.0,
+          "soft_lower": -0.9108,
+          "soft_upper": 0.9108,
+          "zero_target": 0.0
+        },
+        {
+          "name": "aahead_pitch_joint",
+          "kp": 7.895683520871486,
+          "kd": 0.5026548245743669,
+          "effort": 6.0,
+          "armature": 0.002,
+          "action_scale": 0.18997721932938333,
+          "default_pos": 0.0,
+          "soft_lower": -0.2586,
+          "soft_upper": 0.7386,
+          "zero_target": 0.0
+        },
+        {
+          "name": "aaleft_shoulder_pitch_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 0.0,
+          "soft_lower": -2.7256,
+          "soft_upper": 0.9895999999999999,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_shoulder_roll_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": -1.3,
+          "soft_lower": -1.4784499999999998,
+          "soft_upper": 1.46545,
+          "zero_target": -1.3
+        },
+        {
+          "name": "left_elbow_pitch_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 0.0,
+          "soft_lower": -1.6965,
+          "soft_upper": 1.6965,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_elbow_yaw_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 0.0,
+          "soft_lower": -2.0891,
+          "soft_upper": 0.6630999999999999,
+          "zero_target": 0.0
+        },
+        {
+          "name": "aaright_shoulder_pitch_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 0.0,
+          "soft_lower": -2.7256,
+          "soft_upper": 0.9895999999999999,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_shoulder_roll_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 1.3,
+          "soft_lower": -1.4784499999999998,
+          "soft_upper": 1.46545,
+          "zero_target": 1.3
+        },
+        {
+          "name": "right_elbow_pitch_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 0.0,
+          "soft_lower": -1.6965,
+          "soft_upper": 1.6965,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_elbow_yaw_joint",
+          "kp": 3.947841760435743,
+          "kd": 0.25132741228718347,
+          "effort": 14.0,
+          "armature": 0.001,
+          "action_scale": 0.8865603568704555,
+          "default_pos": 0.0,
+          "soft_lower": -0.6630999999999999,
+          "soft_upper": 2.0891,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_hip_pitch_joint",
+          "kp": 30.200989467333436,
+          "kd": 3.6049775699942876,
+          "effort": 68.0,
+          "armature": 0.0478125,
+          "action_scale": 0.5628954646796543,
+          "default_pos": 0.0,
+          "soft_lower": -2.6988000000000003,
+          "soft_upper": 1.9667999999999999,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_hip_roll_joint",
+          "kp": 21.447961047031637,
+          "kd": 2.5601617649081314,
+          "effort": 43.0,
+          "armature": 0.0339552,
+          "action_scale": 0.5012131445234876,
+          "default_pos": 0.0,
+          "soft_lower": -0.27945,
+          "soft_upper": 1.44045,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_hip_yaw_joint",
+          "kp": 17.846013390278234,
+          "kd": 2.130210934160201,
+          "effort": 38.3,
+          "armature": 0.0282528,
+          "action_scale": 0.5365343951392562,
+          "default_pos": 0.0,
+          "soft_lower": -0.9108,
+          "soft_upper": 0.9108,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_knee_pitch_joint",
+          "kp": 60.40197893466687,
+          "kd": 4.806636759992384,
+          "effort": 112.0,
+          "armature": 0.095625,
+          "action_scale": 0.46356097091265647,
+          "default_pos": 0.0,
+          "soft_lower": 0.0,
+          "soft_upper": 2.20495,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_ankle_pitch_joint",
+          "kp": 35.68848951433912,
+          "kd": 4.25999963826776,
+          "effort": 38.3,
+          "armature": 0.0565,
+          "action_scale": 0.26829378688478545,
+          "default_pos": 0.0,
+          "soft_lower": -0.80925,
+          "soft_upper": 0.28425,
+          "zero_target": 0.0
+        },
+        {
+          "name": "left_ankle_roll_joint",
+          "kp": 35.68848951433912,
+          "kd": 4.25999963826776,
+          "effort": 38.3,
+          "armature": 0.0565,
+          "action_scale": 0.26829378688478545,
+          "default_pos": 0.0,
+          "soft_lower": -0.3105,
+          "soft_upper": 0.3105,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_hip_pitch_joint",
+          "kp": 30.200989467333436,
+          "kd": 3.6049775699942876,
+          "effort": 68.0,
+          "armature": 0.0478125,
+          "action_scale": 0.5628954646796543,
+          "default_pos": 0.0,
+          "soft_lower": -2.6988000000000003,
+          "soft_upper": 1.9667999999999999,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_hip_roll_joint",
+          "kp": 21.447961047031637,
+          "kd": 2.5601617649081314,
+          "effort": 43.0,
+          "armature": 0.0339552,
+          "action_scale": 0.5012131445234876,
+          "default_pos": 0.0,
+          "soft_lower": -1.44045,
+          "soft_upper": 0.27945,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_hip_yaw_joint",
+          "kp": 17.846013390278234,
+          "kd": 2.130210934160201,
+          "effort": 38.3,
+          "armature": 0.0282528,
+          "action_scale": 0.5365343951392562,
+          "default_pos": 0.0,
+          "soft_lower": -0.9108,
+          "soft_upper": 0.9108,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_knee_pitch_joint",
+          "kp": 60.40197893466687,
+          "kd": 4.806636759992384,
+          "effort": 112.0,
+          "armature": 0.095625,
+          "action_scale": 0.46356097091265647,
+          "default_pos": 0.0,
+          "soft_lower": 0.0,
+          "soft_upper": 2.20495,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_ankle_pitch_joint",
+          "kp": 35.68848951433912,
+          "kd": 4.25999963826776,
+          "effort": 38.3,
+          "armature": 0.0565,
+          "action_scale": 0.26829378688478545,
+          "default_pos": 0.0,
+          "soft_lower": -0.80925,
+          "soft_upper": 0.28425,
+          "zero_target": 0.0
+        },
+        {
+          "name": "right_ankle_roll_joint",
+          "kp": 35.68848951433912,
+          "kd": 4.25999963826776,
+          "effort": 38.3,
+          "armature": 0.0565,
+          "action_scale": 0.26829378688478545,
+          "default_pos": 0.0,
+          "soft_lower": -0.3105,
+          "soft_upper": 0.3105,
+          "zero_target": 0.0
+        }
+      ],
+      "zero_action_changes": [],
+      "control_profile": "xml_nominal_pd_r17_preserved",
+      "warnings": []
+    },
+    {
+      "phase": "compile",
+      "status": "BLOCKED",
+      "reason": "前置检查未通过，没有执行此物理阶段"
+    },
+    {
+      "phase": "cuda",
+      "status": "BLOCKED",
+      "reason": "前置检查未通过，没有执行此物理阶段"
+    }
+  ],
+  "not_requested": [
+    "native"
+  ],
+  "scope": "仅所选项目；不代表学习效果、足部精度、G1适配或实机安全"
+}

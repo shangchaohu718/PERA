@@ -1,0 +1,39 @@
+{
+  "total": 625,
+  "pytest_exit_code": 0,
+  "subtests": {
+    "passed": 427,
+    "failed": 0,
+    "skipped": 0
+  },
+  "collection_errors": [],
+  "passed": 607,
+  "failed": 0,
+  "skipped": 18,
+  "project": "0.21.0",
+  "evaluated_at": "2026-10-10T09:20:50.838193+00:00",
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.3.5",
+  "cuda_available": false,
+  "runner": "pytest; includes unittest and pytest functions",
+  "process_returncode": 0,
+  "elapsed_seconds": 31.17276817300001,
+  "optional_dependencies": {
+    "mujoco": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mujoco'"
+    },
+    "mjlab": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mjlab'"
+    },
+    "warp": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'warp'"
+    }
+  },
+  "core_suite_status": "PASS",
+  "actual_mjlab_training": "NOT_RUN: tensor/analytic/mock tests are not a robot contact solver",
+  "scope_note": "通过代码测试不等于真实机器人仿真、GPU性能、零样本能力通过。"
+}

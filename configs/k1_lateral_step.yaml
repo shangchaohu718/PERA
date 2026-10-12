@@ -1,0 +1,125 @@
+# K1 动态接触任务：稳定站立→左脚抬起→向外落脚→稳定新站姿。
+# 用于检验接触切换和低摩擦下的物理反馈，不代表已获得通用行走能力。
+schema: 1
+seed: 42
+backend: mjlab_contact
+asset_root: ~/booster_assets_r18
+output: runs/k1_lateral_step
+robot_id: k1_22dof
+num_envs: 128
+device: cuda:0
+step_dt: 0.02
+model:
+  backbone: mlp
+  d_model: 128
+  hidden_dim: 128
+  n_layers: 2
+  context_len: 16
+  num_experts: 4
+  init_std: 0.15
+dynamics:
+  physics_width: 64
+  memory_width: 64
+  latent_width: 32
+  hidden_dim: 128
+  interaction_feedback: true
+adaptation:
+  # Actor只读取可部署观测；归一化仿真真值仅进入Critic和系统辨识监督。
+  actor_observation: deployable
+  actor_dynamics: online
+  privileged_critic: true
+  system_identification_weight: 0.1
+  teacher_distillation_weight: 0.05
+  teacher_reconstruction_weight: 0.1
+task_reward:
+  # HoloMotion式密集物理反馈，但目标按K1接触任务重写；均可单独设为0做消融。
+  support_weight: 0.3
+  upright_weight: 0.2
+  com_transfer_weight: 0.2
+  action_rate_weight: 0.02
+  joint_limit_weight: 0.1
+  undesired_contact_weight: 0.1
+  root_ang_vel_weight: 0.05
+  foot_slide_weight: 0.05
+  support_force_scale_n: 25.0
+  upright_sigma_rad: 0.35
+  com_sigma_m: 0.08
+ppo:
+  epochs: 1
+  minibatch_envs: 32
+  learning_rate: 0.0001
+  entropy_coef: 0.0
+  balance_coef: 0.0
+run:
+  updates: 200
+  horizon: 16
+  dynamics_every: 2
+  dynamics_learning_rate: 0.0001
+  evaluation_episodes: 3
+  evaluation_max_steps: 1200
+curriculum:
+  level: 0.0
+  promote_threshold: 0.8
+  window: 20
+push_interval_steps: 20
+domains:
+  nominal:
+    friction: [0.5, 0.8]
+    mass_scale: [0.95, 1.05]
+    delay_steps: [0, 1]
+    push_force_n: [20.0, 60.0]
+    support_speed_m_s: [0.0, 0.0]
+  heldout_low_friction:
+    friction: [0.15, 0.3]
+    mass_scale: [0.95, 1.05]
+    delay_steps: [0, 1]
+    push_force_n: [60.0, 100.0]
+    support_speed_m_s: [0.0, 0.0]
+train_domains: [nominal]
+evaluation_domains: [heldout_low_friction]
+contacts:
+  - name: left_ground
+    body: left_ankle_roll_link
+    object: terrain
+    object_body: terrain
+    point_local_m: [0.026, 0.0, -0.038]
+  - name: right_ground
+    body: right_ankle_roll_link
+    object: terrain
+    object_body: terrain
+    point_local_m: [0.026, 0.0, -0.038]
+plan:
+  - name: settle
+    targets:
+      - {pair: left_ground, position: [0.026, 0.096, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+      - {pair: right_ground, position: [0.026, -0.096, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+    hold_steps: 8
+    max_steps: 60
+    position_tolerance_m: 0.06
+    velocity_tolerance_m_s: 0.15
+  - name: lift_left
+    targets:
+      - {pair: left_ground, position: [0.026, 0.110, 0.09], velocity: [0.0, 0.0, 0.0], contact: 0}
+      - {pair: right_ground, position: [0.026, -0.096, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+    hold_steps: 5
+    max_steps: 100
+    position_tolerance_m: 0.08
+    velocity_tolerance_m_s: 0.25
+    unload_reward_weight: 0.25
+    unload_force_scale_n: 25.0
+  - name: place_left_out
+    targets:
+      - {pair: left_ground, position: [0.026, 0.165, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+      - {pair: right_ground, position: [0.026, -0.096, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+    hold_steps: 8
+    max_steps: 120
+    position_tolerance_m: 0.07
+    velocity_tolerance_m_s: 0.20
+  - name: stabilize_wide
+    targets:
+      - {pair: left_ground, position: [0.026, 0.165, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+      - {pair: right_ground, position: [0.026, -0.096, 0.0], velocity: [0.0, 0.0, 0.0], contact: 1}
+    hold_steps: 20
+    max_steps: 160
+    position_tolerance_m: 0.07
+    velocity_tolerance_m_s: 0.15

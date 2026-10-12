@@ -1,0 +1,16 @@
+{
+  "configuration": "PASS",
+  "split": {
+    "domain_names_disjoint": true,
+    "all_parameter_supports_disjoint": true,
+    "pairs": [
+      {
+        "train": "familiar",
+        "evaluation": "heldout_low_friction",
+        "disjoint_parameters": [
+          "friction"
+        ]
+      }
+    ]
+  }
+}

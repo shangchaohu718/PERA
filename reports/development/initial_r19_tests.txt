@@ -1,0 +1,74 @@
+....F....................                                                [100%]
+=================================== FAILURES ===================================
+____________ test_object_and_contact_errors_actually_change_context ____________
+
+    def test_object_and_contact_errors_actually_change_context():
+        b=DiagnosticBackend(num_envs=2)
+        dyn=DynamicsModel(b.robot,physics_width=8,memory_width=8,latent_width=4,
+                          hidden_dim=16,interaction_feedback=True).eval()
+        o=b.read();enc,mem=dyn.step(o,episode_start=torch.ones(2,dtype=torch.bool),env_ids=b.env_ids)
+        pred=dyn.predict_next(o,torch.zeros(2,b.robot.dof),enc.latent)
+        mem=dyn.remember_prediction(mem,pred)
+        altered=clone_tree(mem);altered.interaction_prediction.next_object_pos+=.2
+        a,_=dyn.step(o,episode_start=torch.zeros(2,dtype=torch.bool),env_ids=b.env_ids,memory=mem)
+>       z,_=dyn.step(o,episode_start=torch.zeros(2,dtype=torch.bool),env_ids=b.env_ids,memory=altered)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_r19_interaction.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/pyvenv/lib/python3.13/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = DynamicsModel(
+  (encoder): PhysicsEncoder(
+    (body_net): Sequential(
+      (0): Linear(in_features=75, out_features...atures=14, out_features=16, bias=True)
+    (1): SiLU()
+    (2): Linear(in_features=16, out_features=8, bias=True)
+  )
+)
+obs = PhysicsObservation(body_obs=tensor([[ 0.,  0.,  0.,  0.,  0., -1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+          0...    [[0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 1.]]]), object_mask=tensor([[True],
+        [True]]))
+
+    @torch.no_grad()
+    def step(self, obs: PhysicsObservation, *, episode_start: torch.Tensor,
+             env_ids: Sequence[int], memory: DynamicsMemory | None = None,
+             ) -> tuple[DynamicsEncoding, DynamicsMemory]:
+        """功能：在实时采样时处理一帧，保留各环境的物理记忆。
+    
+        输入：
+            obs：形状 [B,...] 的物理观测。
+            episode_start：[B]，本次观测是否已经进入新回合。
+            env_ids：B 个环境的固定编号；顺序必须始终相同。
+            memory：上次调用返回的记忆，首次调用时传 None。
+        输出：DynamicsEncoding 的 latent [B,Z]、context [B,D]；以及新 memory。
+        限制：必须 .eval()；如果首次没有记忆，所有环境必须从新回合开始。
+              更新模型权重后调用 invalidate_memories() 并重建记忆。
+        """
+        if self.training:
+            raise RuntimeError("DynamicsModel.step 只用于 eval 模式采样")
+        w = self.gru.weight_ih
+        leading = _check_observation(obs, self.robot, w.device, w.dtype, self.check_values)
+        if len(leading) != 1:
+            raise ValueError("step 只接受 [B,...] 的单帧数据")
+        b = leading[0]
+        env_ids = tuple(env_ids)
+        if len(env_ids) != b or len(set(env_ids)) != b or any(type(i) is not int for i in env_ids):
+            raise ValueError("env_ids 必须是 B 个不重复的整数")
+        _check_tensor("episode_start", episode_start, (b,), w.device, w.dtype, boolean=True)
+        if memory is None:
+            if not episode_start.all().item():
+                raise ValueError("第一帧必须是回合起点；中途采样请提供真实历史")
+            hidden = w.new_zeros((b,self.memory_width))
+        else:
+            if not isinstance(memory, DynamicsMemory) or memory.owner is not self._owner:
+>               raise ValueError("动力学历史记忆属于其他模型或者已经过期")
+E               ValueError: 动力学历史记忆属于其他模型或者已经过期
+
+unified_motion/models/physics.py:745: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_r19_interaction.py::test_object_and_contact_errors_actually_change_context - ValueError: 动力学历史记忆属于其他模型或者已经过期
+1 failed, 24 passed in 5.12s

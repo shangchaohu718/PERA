@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/data/unified_motion_release19/unified_motion/experiment.py", line 303, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/mnt/data/unified_motion_release19/unified_motion/experiment.py", line 298, in main
+    elif args.mode=="train": run_training(config,args.checkpoint)
+                             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/unified_motion_release19/unified_motion/experiment.py", line 172, in run_training
+    task=build_task(config)
+  File "/mnt/data/unified_motion_release19/unified_motion/experiment.py", line 113, in build_task
+    raise RuntimeError("真实mjlab需要CUDA；未启动物理环境，也没有降级为诊断后端")
+RuntimeError: 真实mjlab需要CUDA；未启动物理环境，也没有降级为诊断后端

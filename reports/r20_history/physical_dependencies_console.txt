@@ -1,0 +1,1 @@
+{"phase": "dependencies", "status": "BLOCKED", "report": "reports/current/physical_dependencies.json", "exit_code": 2}

@@ -1,0 +1,105 @@
+{
+  "project_version": "0.21.0",
+  "scope": "LRU Actor plus transformer alias of the existing no-MoE dense backbone",
+  "input_archive": "unified_motion_r20_network_plugins.zip",
+  "definition": "ICML 2023 Linear Recurrent Unit, not cache eviction or RG-LRU",
+  "regression": {
+    "total": 625,
+    "passed": 607,
+    "failed": 0,
+    "skipped": 18,
+    "process_returncode": 0,
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "numpy": "2.3.5"
+  },
+  "new_tests": {
+    "passed_cpu": 61,
+    "cuda_skipped": 2
+  },
+  "clean_extract": {
+    "total": 625,
+    "passed": 607,
+    "failed": 0,
+    "skipped": 18,
+    "process_returncode": 0
+  },
+  "clean_extract_import": {
+    "file": "/mnt/data/_r21_independent/unified_motion_release21/unified_motion/__init__.py",
+    "isolated": true
+  },
+  "old_test_files_preserved_unchanged": 17,
+  "verified_source_and_configuration_files": 84,
+  "editable_install": true,
+  "pure_transformer": {
+    "canonical_name": "dense",
+    "alias": "transformer",
+    "same_parameters_and_metadata_tested": true,
+    "moe_layers": 0
+  },
+  "lru": {
+    "parameter_representation": "real-pair implementation of complex diagonal recurrence",
+    "learned_input_normalization": true,
+    "parallel_scan_autograd": true,
+    "scan_checks": [
+      "independent complex recurrence",
+      "parallel vs sequential parameter/input gradients",
+      "finite-difference gradcheck",
+      "episode reset",
+      "padding",
+      "513-step sequence",
+      "PPO history replay"
+    ],
+    "core_state_shape": "[layers,batch,complex_state_dim,2]",
+    "changes_independent_dynamics_gru": false
+  },
+  "diagnostic_matrix": {
+    "cases": 12,
+    "updates_per_case": 3,
+    "episodes_per_case": 4,
+    "all_completed": true,
+    "all_weights_unchanged": true,
+    "success_rates": {
+      "mlp": 0.0,
+      "transformer": 0.0,
+      "moe": 0.0,
+      "gru": 0.0,
+      "lstm": 0.0,
+      "lru": 0.0,
+      "gnn_mlp": 0.0,
+      "gnn_transformer": 0.0,
+      "gnn_moe": 0.0,
+      "gnn_gru": 0.0,
+      "gnn_lstm": 0.0,
+      "gnn_lru": 0.0
+    },
+    "backend": "analytic_diagnostic_not_humanoid",
+    "robot_skill_verified": false,
+    "report": "plugin_matrix.json"
+  },
+  "r20_strict_model_and_dynamics_restoration": 10,
+  "cuda_available": false,
+  "optional_dependencies": {
+    "mujoco": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mujoco'"
+    },
+    "mjlab": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mjlab'"
+    },
+    "warp": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'warp'"
+    }
+  },
+  "actual_mjlab_physics": "NOT_RUN; missing runtime/asset/GPU validation is not a passing result",
+  "performance": "parameter counts only; no CUDA throughput, memory or speedup claim",
+  "known_limits": [
+    "real moving platform/skateboard mechanism/G1 scene not implemented in this change",
+    "MoCap/interaction joint-task scheduling not added",
+    "recurrent PPO replays true episode prefixes, max_replay_steps is a fail-closed guard",
+    "existing prefix MoE balance restriction retained",
+    "diagnostic models are not trained robot controllers"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "backend": "analytic_diagnostic_not_humanoid",
+  "completed": true,
+  "episodes": 4,
+  "successes": 0,
+  "success_rate": 0.0,
+  "mean_position_error_m": 0.1749949368648231,
+  "mean_relative_speed_error_m_s": 0.23438709331676363,
+  "control_steps": 80,
+  "weights_unchanged": true,
+  "weight_sha256": "0dd65f2e2d9b46efeb922e53f4381112c842cc269b082d82960966cc026b8b31",
+  "holdout": {
+    "domain_names_disjoint": true,
+    "all_parameter_supports_disjoint": true,
+    "pairs": [
+      {
+        "train": "familiar",
+        "evaluation": "heldout_low_friction",
+        "disjoint_parameters": [
+          "friction"
+        ]
+      }
+    ]
+  },
+  "robot_skill_verified": false
+}

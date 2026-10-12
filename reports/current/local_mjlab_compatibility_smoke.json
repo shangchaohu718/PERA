@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "evaluated_at": "2026-10-10",
+  "scope": "local existing-environment compatibility smoke; no dependency installation",
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.11.0+cu130",
+    "mjlab": "1.3.0",
+    "mujoco": "3.7.1.dev902675331",
+    "mujoco_warp": "3.7.0.1",
+    "warp": "1.12.1",
+    "gpu": "NVIDIA GeForce RTX 5080"
+  },
+  "locked_dependency_gate": {
+    "status": "FAIL",
+    "reason": "installed simulation versions do not satisfy the declared mjlab 1.6 target set"
+  },
+  "native_zero_action": {
+    "status": "PASS",
+    "completed_steps": 100,
+    "minimum_root_height_m": 0.54927
+  },
+  "mjlab_cuda_zero_action": {
+    "status": "PASS",
+    "completed_steps": 20,
+    "minimum_root_height_m": 0.5499768853187561,
+    "detected_foot_contacts": 34,
+    "body_obs_shape": [1, 72]
+  },
+  "real_training_smoke": {
+    "status": "PASS",
+    "backend": "mjlab_k1_real",
+    "control_steps": 4,
+    "friction_readback": [0.6000000238418579],
+    "mass_scale_readback": [1.0],
+    "reward_mean": 0.19490374624729156,
+    "policy_loss": -8.046627044677734e-7,
+    "dynamics_loss": 0.9719196557998657,
+    "all_reported_values_finite": true
+  },
+  "cpu_regression": {
+    "passed": 608,
+    "skipped": 18,
+    "subtests_passed": 427,
+    "failed": 0
+  },
+  "claims_not_established": [
+    "trained K1 skill",
+    "physical-feedback adaptation benefit",
+    "mjlab 1.6 locked-environment compatibility",
+    "real-robot safety"
+  ]
+}

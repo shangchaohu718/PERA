@@ -1,0 +1,17 @@
+[
+  {
+    "backbone": "mlp",
+    "r19_checkpoint_strict_load": "PASS",
+    "source_member": "unified_motion_release19/runs/diagnostic/checkpoint.pt"
+  },
+  {
+    "backbone": "dense",
+    "r19_checkpoint_strict_load": "PASS",
+    "source_member": "unified_motion_release19/runs/diagnostic_dense/checkpoint.pt"
+  },
+  {
+    "backbone": "moe",
+    "r19_checkpoint_strict_load": "PASS",
+    "source_member": "unified_motion_release19/runs/diagnostic_moe/checkpoint.pt"
+  }
+]

@@ -1,0 +1,102 @@
+# R20接口诊断配置：这是解析质点，不是K1/G1物理模型。
+# 可先跑inspect查看参数，再跑train和evaluate检查代码连接。
+# backbone只选一种时间主干；GNN独立开关，不会把全部网络叠在一起。
+# GNN的[0]表示唯一接触probe_surface关联第0个物体surface，不是机器人骨架。
+backend: diagnostic
+curriculum:
+  level: 0.3
+  promote_threshold: 0.8
+  window: 20
+device: cpu
+domains:
+  familiar:
+    delay_steps:
+    - 0
+    - 1
+    friction:
+    - 0.3
+    - 0.8
+    mass_scale:
+    - 0.8
+    - 1.2
+    push_force_n:
+    - 0.0
+    - 0.2
+    support_speed_m_s:
+    - 0.0
+    - 0.05
+  heldout_low_friction:
+    delay_steps:
+    - 0
+    - 1
+    friction:
+    - 0.1
+    - 0.2
+    mass_scale:
+    - 0.8
+    - 1.2
+    push_force_n:
+    - 0.0
+    - 0.2
+    support_speed_m_s:
+    - 0.0
+    - 0.05
+dynamics:
+  hidden_dim: 32
+  interaction_feedback: true
+  latent_width: 8
+  memory_width: 16
+  physics_width: 16
+  scene_encoder: gnn
+  graph_layers: 2
+  contact_object_indices:
+  - 0
+evaluation_domains:
+- heldout_low_friction
+model:
+  backbone: dense
+  context_len: 4
+  d_model: 32
+  hidden_dim: 32
+  init_std: 0.15
+  n_layers: 2
+  num_experts: 4
+num_envs: 2
+output: runs/diagnostic_gnn_dense
+plan:
+- hold_steps: 3
+  max_steps: 40
+  name: reach_then_hold
+  position_tolerance_m: 0.03
+  targets:
+  - contact: 1
+    pair: probe_surface
+    position:
+    - 0.12
+    - 0.0
+    - 0.01
+    velocity:
+    - 0.0
+    - 0.0
+    - 0.0
+  velocity_tolerance_m_s: 0.1
+ppo:
+  balance_coef: 0.0
+  entropy_coef: 0.0
+  epochs: 1
+  learning_rate: 0.0001
+  minibatch_envs: 2
+push_interval_steps: 10
+robot_id: k1_22dof
+run:
+  dynamics_every: 2
+  dynamics_learning_rate: 0.0001
+  evaluation_episodes: 2
+  evaluation_max_steps: 200
+  horizon: 16
+  updates: 3
+schema: 1
+seed: 42
+step_dt: 0.02
+train_domains:
+- familiar

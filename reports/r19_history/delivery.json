@@ -1,0 +1,106 @@
+{
+  "project_version": "0.19.0",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.3.5",
+  "pyyaml": "6.0.3",
+  "pytest": "9.0.2",
+  "cuda_available": false,
+  "regression": {
+    "passed": 486,
+    "skipped_cuda": 13,
+    "failed": 0,
+    "log": "full_pytest.txt"
+  },
+  "diagnostic_runs": {
+    "mlp": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.13315033819526434,
+      "mean_relative_speed_error_m_s": 0.03389642648398876,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "d1f465cd317b91d836e6c5302ca3a34c6825409bb1251394c4d3f320c6a0463f",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    },
+    "dense": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.1749949368648231,
+      "mean_relative_speed_error_m_s": 0.23438709331676363,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "0dd65f2e2d9b46efeb922e53f4381112c842cc269b082d82960966cc026b8b31",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    },
+    "moe": {
+      "backend": "analytic_diagnostic_not_humanoid",
+      "completed": true,
+      "episodes": 4,
+      "successes": 0,
+      "success_rate": 0.0,
+      "mean_position_error_m": 0.1747534044086933,
+      "mean_relative_speed_error_m_s": 0.33661468802019956,
+      "control_steps": 80,
+      "weights_unchanged": true,
+      "weight_sha256": "ad7cf69cc00c02e839f0a46253eaeff0551cb3904f0d92d0802c2379760a3dbe",
+      "holdout": {
+        "domain_names_disjoint": true,
+        "all_parameter_supports_disjoint": true,
+        "pairs": [
+          {
+            "train": "familiar",
+            "evaluation": "heldout_low_friction",
+            "disjoint_parameters": [
+              "friction"
+            ]
+          }
+        ]
+      },
+      "robot_skill_verified": false
+    }
+  },
+  "real_mjlab_physics": "NOT_EXECUTED: mjlab/MuJoCo/Warp/CUDA unavailable",
+  "moving_support": "analytic diagnostic supports prescribed moving surface; default real K1 scene rejects nonzero speed",
+  "autonomous_contact_planner": false,
+  "pretrained_robot_skill": false,
+  "clean_extract": {
+    "passed": 486,
+    "skipped_cuda": 13,
+    "failed": 0,
+    "log": "clean_extract_pytest.txt",
+    "import_from": "/mnt/data/_r19_independent/unified_motion_release19/unified_motion/__init__.py"
+  }
+}

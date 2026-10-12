@@ -1,0 +1,7 @@
+# R18 仿真候选约束：依据 mjlab v1.6.0 的公开 pyproject.toml。
+# 尚未在本交付环境完成安装或真实物理验收；不是完整的传递依赖锁文件。
+# 不固定/替换用户已有的 CUDA torch；项目核心要求 torch 2.10 系列。
+mjlab==1.6.0
+mujoco==3.11.0
+mujoco-warp==3.11.0
+warp-lang==1.14.0

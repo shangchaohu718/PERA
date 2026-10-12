@@ -1,0 +1,66 @@
+{
+  "project_version": "0.20.0",
+  "input_r19_sha256": "287fa2f20b981a6725adb094196d5a579bebed70cf9cb0c85805f8840cc44510",
+  "regression": {
+    "total": 562,
+    "passed": 546,
+    "failed": 0,
+    "skipped": 16,
+    "subtests": {
+      "passed": 426,
+      "failed": 0,
+      "skipped": 0
+    },
+    "process_returncode": 0,
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "numpy": "2.3.5",
+    "cuda_available": false
+  },
+  "independent_extract": {
+    "process_returncode": 0,
+    "source_and_config_byte_identical": true,
+    "frozen_checkpoint_evaluation_exit_code": 0
+  },
+  "training_matrix": {
+    "combinations": 10,
+    "updates_per_case": 3,
+    "max_old_policy_error": 2.86102294921875e-06,
+    "all_weights_frozen": true,
+    "success_rates": {
+      "mlp": 0.0,
+      "dense": 0.0,
+      "moe": 0.0,
+      "gru": 0.0,
+      "lstm": 0.0,
+      "gnn_mlp": 0.0,
+      "gnn_dense": 0.0,
+      "gnn_moe": 0.0,
+      "gnn_gru": 0.0,
+      "gnn_lstm": 0.0
+    },
+    "backend": "analytic_diagnostic_not_humanoid"
+  },
+  "editable_install_exit_code": 0,
+  "r19_existing_weights": "mlp/dense/moe model+Dynamics strict load verified; not an exact resume proof",
+  "real_physics": {
+    "status": "BLOCKED",
+    "missing": [
+      "mjlab",
+      "mujoco",
+      "warp",
+      "CUDA"
+    ],
+    "robot_skill_verified": false
+  },
+  "scope": "Network plug-ins and training integration. Not a claim that all R19 physical/interaction requirements are finished.",
+  "not_implemented_in_r20": [
+    "real moving platforms/skateboard model",
+    "G1 physical scene",
+    "mixed MoCap/contact task scheduler",
+    "automatic skeleton/contact graph discovery",
+    "LSTM replacing DynamicsModel GRU",
+    "prefix-masked MoE balance loss",
+    "AMP"
+  ]
+}

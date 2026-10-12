@@ -1,0 +1,29 @@
+{"iteration": 1, "backend": "analytic_diagnostic_not_humanoid", "reward_mean": 6.8890755322570385e-09, "policy_std": 0.14999999105930328, "course_level": 0.3, "ppo": {"optimizer_steps": 1, "early_stopped": false, "policy_loss": 7.450580596923828e-09, "value_loss": 9.188421245198697e-06, "entropy": -10.519989967346191, "kl": 0.0, "clip_fraction": 0.0, "grad_norm": 26.888227462768555, "old_policy_error": 1.9073486328125e-06}, "dynamics": null}
+{"iteration": 2, "backend": "analytic_diagnostic_not_humanoid", "reward_mean": 5.8964325103398056e-27, "policy_std": 0.14999593794345856, "course_level": 0.3, "ppo": {"optimizer_steps": 1, "early_stopped": false, "policy_loss": -1.434236764907837e-07, "value_loss": 1.0570200174697675e-05, "entropy": -10.520585060119629, "kl": 0.0, "clip_fraction": 0.0, "grad_norm": 31.610811233520508, "old_policy_error": 1.9073486328125e-06}, "dynamics": {"loss": 0.9159393310546875, "grad_norm": 2.135443687438965, "optimizer_steps": 1, "terms": {"base_linear_velocity": 0.010195106267929077, "base_angular_velocity": 0.0018470833310857415, "gravity_direction": 0.00034933091956190765, "joint_position": 0.15090861916542053, "joint_velocity": 0.0013230922631919384, "contact": 0.5576972365379333, "object_position": 0.04873216152191162, "object_velocity": 0.026018109172582626, "object_ang_velocity": 0.08107902854681015, "object_orientation": 0.03778967261314392}}}
+{"iteration": 3, "backend": "analytic_diagnostic_not_humanoid", "reward_mean": 1.2116996295219451e-08, "policy_std": 0.14999741315841675, "course_level": 0.3, "ppo": {"optimizer_steps": 1, "early_stopped": false, "policy_loss": -2.9802322387695312e-08, "value_loss": 1.628373320272658e-05, "entropy": -10.520371437072754, "kl": 0.0, "clip_fraction": 0.0, "grad_norm": 31.622533798217773, "old_policy_error": 1.9073486328125e-06}, "dynamics": null}
+{
+  "backend": "analytic_diagnostic_not_humanoid",
+  "completed": true,
+  "episodes": 4,
+  "successes": 0,
+  "success_rate": 0.0,
+  "mean_position_error_m": 0.23088924959301949,
+  "mean_relative_speed_error_m_s": 0.4348226136062294,
+  "control_steps": 80,
+  "weights_unchanged": true,
+  "weight_sha256": "4d4686d1c5387299bbeaf326f67bec772281ca41503edda9e6ca7a14109a61ad",
+  "holdout": {
+    "domain_names_disjoint": true,
+    "all_parameter_supports_disjoint": true,
+    "pairs": [
+      {
+        "train": "familiar",
+        "evaluation": "heldout_low_friction",
+        "disjoint_parameters": [
+          "friction"
+        ]
+      }
+    ]
+  },
+  "robot_skill_verified": false
+}

@@ -1,0 +1,49 @@
+usage: train.py [-h] --asset-root ASSET_ROOT --motions MOTIONS
+                [--backbone {mlp,transformer,dense,moe,gru,lstm,lru}]
+                [--device DEVICE] [--num-envs NUM_ENVS] [--horizon HORIZON]
+                [--updates UPDATES] [--epochs EPOCHS]
+                [--minibatch-envs MINIBATCH_ENVS]
+                [--learning-rate LEARNING_RATE] [--dynamics-lr DYNAMICS_LR]
+                [--dynamics-every DYNAMICS_EVERY] [--seed SEED]
+                [--d-model D_MODEL] [--hidden-dim HIDDEN_DIM]
+                [--layers LAYERS] [--context-len CONTEXT_LEN]
+                [--recurrent-hidden-dim RECURRENT_HIDDEN_DIM]
+                [--max-replay-steps MAX_REPLAY_STEPS] [--experts EXPERTS]
+                [--init-std INIT_STD] [--save-every SAVE_EVERY]
+                [--output OUTPUT] [--resume RESUME]
+
+唯一正式训练命令：公开动作文件 → K1 mjlab → 物理策略 PPO + 独立动力学。 使用 python -m
+unified_motion.train --help 查看参数。 不会偷偷在 CPU 上用假物理替代 mjlab；CPU 集成测评独立放在 tests/。
+此入口目前只创建 K1 环境。G1 网络接口通过 CPU 测试，不代表 G1 实体环境已适配。
+
+options:
+  -h, --help            show this help message and exit
+  --asset-root ASSET_ROOT
+                        booster_assets 仓库根目录
+  --motions MOTIONS     已重定向且带元数据的项目 NPZ 文件目录
+  --backbone {mlp,transformer,dense,moe,gru,lstm,lru}
+  --device DEVICE       mjlab 使用的 NVIDIA GPU
+  --num-envs NUM_ENVS
+  --horizon HORIZON     每轮采样控制步数
+  --updates UPDATES     本次追加多少轮采样/优化
+  --epochs EPOCHS
+  --minibatch-envs MINIBATCH_ENVS
+  --learning-rate LEARNING_RATE
+  --dynamics-lr DYNAMICS_LR
+  --dynamics-every DYNAMICS_EVERY
+                        每多少轮更新一次动力学；更新后重新开始环境和记忆
+  --seed SEED
+  --d-model D_MODEL
+  --hidden-dim HIDDEN_DIM
+  --layers LAYERS
+  --context-len CONTEXT_LEN
+                        仅Transformer的注意力窗口
+  --recurrent-hidden-dim RECURRENT_HIDDEN_DIM
+                        GRU/LSTM Actor记忆宽度
+  --max-replay-steps MAX_REPLAY_STEPS
+                        循环Actor完整历史重放的保护上限
+  --experts EXPERTS
+  --init-std INIT_STD
+  --save-every SAVE_EVERY
+  --output OUTPUT
+  --resume RESUME       本项目 checkpoint；恢复权重/优化器，不恢复物理场景

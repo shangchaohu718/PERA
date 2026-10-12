@@ -1,0 +1,29 @@
+{"iteration": 1, "backend": "analytic_diagnostic_not_humanoid", "reward_mean": 5.139862082614854e-07, "policy_std": 0.14999999105930328, "course_level": 0.3, "ppo": {"optimizer_steps": 1, "early_stopped": false, "policy_loss": 3.725290298461914e-08, "value_loss": 1.7464021766500082e-06, "entropy": -10.519989967346191, "kl": 0.0, "clip_fraction": 0.0, "grad_norm": 7.4139814376831055, "old_policy_error": 0.0}, "dynamics": null}
+{"iteration": 2, "backend": "analytic_diagnostic_not_humanoid", "reward_mean": 0.00017160763673018664, "policy_std": 0.14999455213546753, "course_level": 0.3, "ppo": {"optimizer_steps": 1, "early_stopped": false, "policy_loss": 8.195638656616211e-08, "value_loss": 4.221796643832931e-06, "entropy": -10.520791053771973, "kl": 0.0, "clip_fraction": 0.0, "grad_norm": 6.124216556549072, "old_policy_error": 0.0}, "dynamics": {"loss": 0.9824001789093018, "grad_norm": 1.9845794439315796, "optimizer_steps": 1, "terms": {"base_linear_velocity": 0.014902688562870026, "base_angular_velocity": 0.0033837654627859592, "gravity_direction": 0.011368385516107082, "joint_position": 0.16825145483016968, "joint_velocity": 0.0014682529726997018, "contact": 0.7297502160072327, "object_position": 0.0005153918173164129, "object_velocity": 0.00351717765443027, "object_ang_velocity": 0.005503058899194002, "object_orientation": 0.043739818036556244}}}
+{"iteration": 3, "backend": "analytic_diagnostic_not_humanoid", "reward_mean": 9.314312876540498e-08, "policy_std": 0.14999398589134216, "course_level": 0.3, "ppo": {"optimizer_steps": 1, "early_stopped": false, "policy_loss": 1.0244548320770264e-08, "value_loss": 1.5155525261434377e-06, "entropy": -10.520874977111816, "kl": 0.0, "clip_fraction": 0.0, "grad_norm": 4.521692752838135, "old_policy_error": 0.0}, "dynamics": null}
+{
+  "backend": "analytic_diagnostic_not_humanoid",
+  "completed": true,
+  "episodes": 4,
+  "successes": 0,
+  "success_rate": 0.0,
+  "mean_position_error_m": 0.13315033987164498,
+  "mean_relative_speed_error_m_s": 0.03389643293339759,
+  "control_steps": 80,
+  "weights_unchanged": true,
+  "weight_sha256": "002973af9996718fa06e471252f0710e9352cc74f5a006531f1775f889a11de3",
+  "holdout": {
+    "domain_names_disjoint": true,
+    "all_parameter_supports_disjoint": true,
+    "pairs": [
+      {
+        "train": "familiar",
+        "evaluation": "heldout_low_friction",
+        "disjoint_parameters": [
+          "friction"
+        ]
+      }
+    ]
+  },
+  "robot_skill_verified": false
+}

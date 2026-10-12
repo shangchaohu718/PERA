@@ -1,0 +1,72 @@
+[
+  {
+    "source": "runs/diagnostic/checkpoint.pt",
+    "backbone": "mlp",
+    "scene_encoder": "set",
+    "strict_load": true,
+    "model_fingerprint": "002973af9996718fa06e471252f0710e9352cc74f5a006531f1775f889a11de3"
+  },
+  {
+    "source": "runs/diagnostic_dense/checkpoint.pt",
+    "backbone": "dense",
+    "scene_encoder": "set",
+    "strict_load": true,
+    "model_fingerprint": "87b0ef107e2d7441b59585117d164ab44e9cabb99f754795962e101dd3528a65"
+  },
+  {
+    "source": "runs/diagnostic_gnn_dense/checkpoint.pt",
+    "backbone": "dense",
+    "scene_encoder": "gnn",
+    "strict_load": true,
+    "model_fingerprint": "4b880d1f26db5537ba12cccf5bcc0139883cc2129ed41067284bff0e34dc0c75"
+  },
+  {
+    "source": "runs/diagnostic_gnn_gru/checkpoint.pt",
+    "backbone": "gru",
+    "scene_encoder": "gnn",
+    "strict_load": true,
+    "model_fingerprint": "807660276604b7471e9b5431648ba60d8e98f2a0844fb887d119b7f760e87566"
+  },
+  {
+    "source": "runs/diagnostic_gnn_lstm/checkpoint.pt",
+    "backbone": "lstm",
+    "scene_encoder": "gnn",
+    "strict_load": true,
+    "model_fingerprint": "61b7ac4e54955b91a5838d4fb0f207de7a04d6319e9b9c19543589961f32d897"
+  },
+  {
+    "source": "runs/diagnostic_gnn_mlp/checkpoint.pt",
+    "backbone": "mlp",
+    "scene_encoder": "gnn",
+    "strict_load": true,
+    "model_fingerprint": "9de79be4b586e079b9c05bd2cffbad5087ed5279bd9a8b22424b2da92b46945a"
+  },
+  {
+    "source": "runs/diagnostic_gnn_moe/checkpoint.pt",
+    "backbone": "moe",
+    "scene_encoder": "gnn",
+    "strict_load": true,
+    "model_fingerprint": "16f30534e85b281e6d15b6c04f5a69de1143848c6015b9b3fecb56ebd5f80bf0"
+  },
+  {
+    "source": "runs/diagnostic_gru/checkpoint.pt",
+    "backbone": "gru",
+    "scene_encoder": "set",
+    "strict_load": true,
+    "model_fingerprint": "543244b88a679ff0279df04cd6648a9e431cfa4c4748fcb6deffa1e865ce7e4e"
+  },
+  {
+    "source": "runs/diagnostic_lstm/checkpoint.pt",
+    "backbone": "lstm",
+    "scene_encoder": "set",
+    "strict_load": true,
+    "model_fingerprint": "4e956ae022804c0fa01fdea9dc92a0c6b92bee82020f7a71c73a65c4d7e00427"
+  },
+  {
+    "source": "runs/diagnostic_moe/checkpoint.pt",
+    "backbone": "moe",
+    "scene_encoder": "set",
+    "strict_load": true,
+    "model_fingerprint": "287849f6a54b3e0733dc11729f9309381d90f0716469d8bf927db8159ff398d3"
+  }
+]

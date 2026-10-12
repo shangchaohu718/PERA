@@ -1,0 +1,11 @@
+{
+  "backbone": "lstm",
+  "scene_encoder": "gnn",
+  "policy_parameters": 39693,
+  "dynamics_parameters": 26379,
+  "graph_parameters": 3920,
+  "total_parameters": 66072,
+  "note": "参数统计，不是速度/显存/动作质量评测",
+  "actor_memory_floats_per_env": 128,
+  "replay_policy": "真实回合历史重放；上限不是隐式截断窗口"
+}

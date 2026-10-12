@@ -1,0 +1,14 @@
+usage: experiment.py [-h] --config CONFIG [--mode {train,evaluate,validate}]
+                     [--checkpoint CHECKPOINT]
+
+YAML研究入口：配置→课程任务→独立动力学→MLP/Dense/MoE→训练或冻结评测。 运行示例： python -m
+unified_motion.experiment --config configs/diagnostic.yaml --mode train python
+-m unified_motion.experiment --config configs/diagnostic.yaml --mode evaluate
+--checkpoint runs/diagnostic/checkpoint.pt
+默认diagnostic是解析数学场景，不是机器人；真实mjlab必须显式选择，不会自动降级。
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG
+  --mode {train,evaluate,validate}
+  --checkpoint CHECKPOINT
