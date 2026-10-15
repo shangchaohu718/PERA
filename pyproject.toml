@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "unified-motion-research"
+name = "pera-robot-control"
 version = "0.21.0"
-description = "Physics-conditioned humanoid policies and audited sequence PPO research scaffold"
+description = "Physics Estimation for Real-time Adaptation in Generalist Robot Control"
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "torch>=2.10,<2.11", "packaging>=23", "PyYAML>=6.0"]
 

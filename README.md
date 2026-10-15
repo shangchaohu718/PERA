@@ -1,7 +1,11 @@
-# Unified Motion R21 · LRU与无MoE Transformer
+# PERA
 
-本版本在用户提供的R20工程上继续修改，**不另起项目、不重复写PPO或动力学模型**。
+**Physics Estimation for Real-time Adaptation in Generalist Robot Control**
+
+本项目现名 **PERA**，面向通用机器人控制中的物理估计与实时自适应。
+当前版本在用户提供的 R20 工程上继续修改，**不另起项目、不重复写 PPO 或动力学模型**。
 新增LRU（Linear Recurrent Unit）Actor插口；`transformer`是原`dense`的易读别名，真实结构没有MoE/Router。
+为保持现有 checkpoint、脚本和下游代码兼容，Python 包名仍保留为 `unified_motion`。
 
 ## 当前开发状态（2026-10-13）
 
