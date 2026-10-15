@@ -1,4 +1,4 @@
-"""Launch the matched from-scratch HoloMotion baseline and full-Physics run."""
+"""Launch a matched from-scratch K1 Actor baseline and full-Physics run."""
 
 from __future__ import annotations
 
@@ -12,8 +12,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_ACTOR_CONFIG = ROOT / "configs/actors/holomotion_k1_16e.yaml"
+DEFAULT_HOLOMOTION_CONFIG = ROOT / "configs/actors/holomotion_k1_16e.yaml"
+DEFAULT_CUSTOM_ACTOR_CONFIG = ROOT / "configs/actors/k1_small.yaml"
 TRAINER = ROOT / "tools/train_holomotion_k1_mjlab.py"
+ACTORS = ("holomotion", "mlp", "transformer", "moe", "gru", "lstm", "lru")
 
 
 def parse_args() -> argparse.Namespace:
@@ -26,7 +28,9 @@ def parse_args() -> argparse.Namespace:
     contract.add_argument("--onnx", type=Path)
     contract.add_argument("--task-contract", type=Path)
     parser.add_argument("--output-root", type=Path, required=True)
-    parser.add_argument("--holomotion-config", type=Path, default=DEFAULT_ACTOR_CONFIG)
+    parser.add_argument("--actor", choices=ACTORS, default="holomotion")
+    parser.add_argument("--holomotion-config", type=Path, default=DEFAULT_HOLOMOTION_CONFIG)
+    parser.add_argument("--actor-config", type=Path, default=DEFAULT_CUSTOM_ACTOR_CONFIG)
     parser.add_argument("--iterations", type=int, required=True)
     parser.add_argument("--steps-per-env", type=int, default=32)
     parser.add_argument("--num-envs", type=int, default=512)
@@ -42,8 +46,7 @@ def build_commands(args: argparse.Namespace) -> dict[str, list[str]]:
     common = [
         sys.executable,
         str(TRAINER),
-        "--actor", "holomotion",
-        "--holomotion-config", str(args.holomotion_config),
+        "--actor", args.actor,
         "--asset-root", str(args.asset_root),
         "--iterations", str(args.iterations),
         "--steps-per-env", str(args.steps_per_env),
@@ -53,6 +56,10 @@ def build_commands(args: argparse.Namespace) -> dict[str, list[str]]:
         "--device", args.device,
         "--seed", str(args.seed),
     ]
+    if args.actor == "holomotion":
+        common.extend(("--holomotion-config", str(args.holomotion_config)))
+    else:
+        common.extend(("--actor-config", str(args.actor_config)))
     if args.onnx is not None:
         common.extend(("--onnx", str(args.onnx)))
     else:
@@ -72,7 +79,7 @@ def build_commands(args: argparse.Namespace) -> dict[str, list[str]]:
         "physics": [
             *common,
             "--physics",
-            "--finetune-base-actor",
+            *(["--finetune-base-actor"] if args.actor == "holomotion" else []),
             "--output-dir", str(root / "physics_full"),
         ],
     }
@@ -96,10 +103,12 @@ def main() -> None:
         )
     commands = build_commands(args)
     plan = {
-        "comparison": "matched HoloMotion from-scratch baseline vs full Physics",
+        "comparison": f"matched {args.actor} from-scratch baseline vs full Physics",
         "same_initialization": True,
         "seed": args.seed,
-        "actor_config": str(args.holomotion_config.expanduser().resolve()),
+        "actor": args.actor,
+        "actor_config": str((args.holomotion_config if args.actor == "holomotion"
+                             else args.actor_config).expanduser().resolve()),
         "physics": {
             "scene_encoder": "set",
             "physics_width": 64,

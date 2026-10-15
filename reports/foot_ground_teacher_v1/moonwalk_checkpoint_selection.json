@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "status": "FROZEN_ROLLOUT_COMPLETE_AND_POST_HASH_VERIFIED",
+  "source_project": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk",
+  "target_implementation_project": "/home/tcl/Desktop/start/HoloMotion-UM",
+  "compatibility": {
+    "source_runtime": "Isaac Lab / RSL-RL checkpoint family",
+    "target_runtime": "MJLab standalone K1 checkpoint family",
+    "direct_loader_compatible": false,
+    "action_required": "Use unified_motion.rsl_k1_policy in the matching source Isaac task. Never load these files through load_k1_checkpoint() and never synthesize the 125-D observation from the 506-D MJLab contract.",
+    "adapter_status": "IMPLEMENTED_AND_HISTORICALLY_REPLAY_VERIFIED",
+    "adapter_verification": "v17 model_549, 500 frames, max absolute Actor error 9.5367431640625e-07"
+  },
+  "reference_warning": "The source manifest says the user-selected human candidates were not retargeted; later v13 is a kinematic contact-corrected synthetic candidate, not an accepted human-reference moonwalk. Preserve the exact reference ID on every trajectory.",
+  "freeze_protocol": "Record SHA-256 before rollout, call eval()/requires_grad_(False), disable every optimizer, then re-hash and state-fingerprint after rollout. A matching pre-rollout hash alone is not completion evidence.",
+  "selected": [
+    {
+      "checkpoint_id": "f3a_model99",
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_f3/2026-09-22_17-30-05_f3a_alternation_relearning_first100/model_99.pt",
+      "sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+      "selection_basis": "Completed 500 frames, but right slide distance barely improved and measured anchor speeds were high; useful anchor-slip/under-motion candidate.",
+      "split_recommendation": "train"
+    },
+    {
+      "checkpoint_id": "f3e_update5_preserved",
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_f3h1/f3e_update5_complete_source/model_3.pt",
+      "sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+      "selection_basis": "Preserved viable source that completed the deterministic 500-frame motion; supplies comparatively stable full-episode behavior.",
+      "split_recommendation": "train"
+    },
+    {
+      "checkpoint_id": "v13_direction_model999",
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_direction_gate/2026-09-29_16-58-36_fresh_direction_gated_pelvis_progress_heel_toe_1000/model_999.pt",
+      "sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+      "selection_basis": "One-sided prototype: left foot often lifted, right foot reversed frequently, while contact duty was high; covers active-slide and brief no-contact behavior.",
+      "split_recommendation": "train"
+    },
+    {
+      "checkpoint_id": "v13_grounded_model499",
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_direction_grounded/2026-09-29_17-57-10_fresh_direction_grounded_pelvis_progress_heel_toe_500/model_499.pt",
+      "sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+      "selection_basis": "Grounded but both slide ratios fell to about 0.44 and reversal increased; useful sliding-insufficient/stable-contact candidate.",
+      "split_recommendation": "validation"
+    },
+    {
+      "checkpoint_id": "v13_f2r1_model2929",
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_f2r1/2026-09-28_16-11-52_pelvis_relative_slide_progress_model929_plus2000/model_2929.pt",
+      "sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+      "selection_basis": "Documented root-motion shortcut and asymmetric foot mechanism; useful policy-behavior generalization source.",
+      "split_recommendation": "train"
+    },
+    {
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_f2r1/2026-09-29_09-07-17_model2929_stability_guardrails_remaining24950_to_plus25000/model_12929.pt",
+      "sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+      "selection_basis": "Later stability-guardrail policy from a distinct training phase; reserve the entire checkpoint as unseen-policy test data.",
+      "split_recommendation": "test_heldout"
+    }
+  ]
+}

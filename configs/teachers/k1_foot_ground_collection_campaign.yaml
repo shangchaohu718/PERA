@@ -1,0 +1,43 @@
+schema: 1
+source_root: /home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk
+bundle_root: /home/tcl/Desktop/start/HoloMotion-UM
+launcher: scripts/run_isaac51_k1.sh
+collector: /home/tcl/Desktop/start/HoloMotion-UM/tools/collect_foot_ground_isaac.py
+phase_labels: motions/phase_labels_61_64_50hz_v2.npz
+output_dir: /home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1
+seeds: [730201, 730202, 730203]
+friction_conditions:
+  - {name: low, static: 0.4, dynamic: 0.3}
+  - {name: nominal, static: 0.6, dynamic: 0.5}
+  - {name: high, static: 0.8, dynamic: 0.7}
+checkpoints:
+  - id: f3a_model99
+    path: logs/rsl_rl/k1_moonwalk_f3/2026-09-22_17-30-05_f3a_alternation_relearning_first100/model_99.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/f3a_model99.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkF3AEnvCfg
+    split: train
+  - id: f3e_update5_preserved
+    path: logs/rsl_rl/k1_moonwalk_f3h1/f3e_update5_complete_source/model_3.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/f3e_update5_preserved.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkF3DNoActionRateEnvCfg
+    split: train
+  - id: v13_direction_model999
+    path: logs/rsl_rl/k1_moonwalk_v13_direction_gate/2026-09-29_16-58-36_fresh_direction_gated_pelvis_progress_heel_toe_1000/model_999.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/v13_direction_model999.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkV13DirectionGateHeelToeEnvCfg
+    split: train
+  - id: v13_grounded_model499
+    path: logs/rsl_rl/k1_moonwalk_v13_direction_grounded/2026-09-29_17-57-10_fresh_direction_grounded_pelvis_progress_heel_toe_500/model_499.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/v13_grounded_model499.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkV13DirectionGroundedHeelToeEnvCfg
+    split: validation
+  - id: v13_f2r1_model2929
+    path: logs/rsl_rl/k1_moonwalk_v13_f2r1/2026-09-28_16-11-52_pelvis_relative_slide_progress_model929_plus2000/model_2929.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/v13_f2r1_model2929.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkV13F2R1PelvisProgressEnvCfg
+    split: train
+  - id: v13_f2r1_model12929_heldout
+    path: logs/rsl_rl/k1_moonwalk_v13_f2r1/2026-09-29_09-07-17_model2929_stability_guardrails_remaining24950_to_plus25000/model_12929.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/v13_f2r1_model12929_heldout.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkV13F2R1StabilityLongEnvCfg
+    split: test_heldout

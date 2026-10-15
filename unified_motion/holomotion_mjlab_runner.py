@@ -19,7 +19,9 @@ class HoloMotionRunnerConfig:
     start_iteration: int = 0
     save_interval: int = 1000
     log_interval: int = 1
+    progress_interval: int = 10
     random_start: bool = True
+    teacher_only: bool = False
 
     def __post_init__(self) -> None:
         for name in (
@@ -27,11 +29,14 @@ class HoloMotionRunnerConfig:
             "steps_per_env",
             "save_interval",
             "log_interval",
+            "progress_interval",
         ):
             if getattr(self, name) < 1:
                 raise ValueError(f"{name} must be positive")
         if self.start_iteration < 0:
             raise ValueError("start_iteration must be non-negative")
+        if type(self.teacher_only) is not bool:
+            raise TypeError("teacher_only must be boolean")
 
 
 class HoloMotionMJLabRunner:
@@ -75,18 +80,21 @@ class HoloMotionMJLabRunner:
         self.trainer.training_transitions = 0
         last_checkpoint_iteration = None
         stop = cfg.start_iteration + cfg.num_iterations
+        run_started = time.perf_counter()
+        wall_started = time.time()
         for iteration in range(cfg.start_iteration, stop):
             collection_start = time.perf_counter()
             rollout = self.trainer.collect(cfg.steps_per_env)
             collection_seconds = time.perf_counter() - collection_start
             update_start = time.perf_counter()
-            metrics = self.trainer.update(rollout)
-            ppo_update_seconds = time.perf_counter() - update_start
+            metrics = None if cfg.teacher_only else self.trainer.update(rollout)
+            ppo_update_seconds = 0.0 if cfg.teacher_only else time.perf_counter() - update_start
             physics_metrics = None
             physics_update_seconds = 0.0
             if rollout.physics_observation is not None:
                 physics_start = time.perf_counter()
-                physics_metrics = self.trainer.update_dynamics(rollout)
+                physics_metrics = (self.trainer.update_teacher_only(rollout)
+                                   if cfg.teacher_only else self.trainer.update_dynamics(rollout))
                 physics_update_seconds = time.perf_counter() - physics_start
             update_seconds = ppo_update_seconds + physics_update_seconds
             self.trainer.training_compute_seconds += collection_seconds+update_seconds
@@ -125,7 +133,7 @@ class HoloMotionMJLabRunner:
                 "physics_update_seconds": physics_update_seconds,
                 "clips": clip_statistics,
                 "training_tuning": tuning_snapshot(self.trainer),
-                **asdict(metrics),
+                **({} if metrics is None else asdict(metrics)),
             }
             if rollout.physics_confidence is not None:
                 record["physics_confidence_mean"] = float(
@@ -143,11 +151,28 @@ class HoloMotionMJLabRunner:
             if physics_metrics is not None:
                 record.update({
                     f"physics_{key}": value
-                    for key, value in asdict(physics_metrics).items()
+                    for key, value in (physics_metrics.items() if isinstance(physics_metrics, dict)
+                                       else asdict(physics_metrics).items())
                 })
             records.append(record)
             if iteration % cfg.log_interval == 0:
                 self._log(record)
+            completed = iteration - cfg.start_iteration + 1
+            if completed % cfg.progress_interval == 0 or iteration == stop - 1:
+                elapsed = time.perf_counter() - run_started
+                seconds_per_iteration = elapsed / completed
+                remaining_seconds = seconds_per_iteration * (stop - iteration - 1)
+                finish = time.strftime(
+                    "%Y-%m-%d %H:%M:%S",
+                    time.localtime(time.time() + remaining_seconds),
+                )
+                print(
+                    f"[progress] {completed}/{cfg.num_iterations} "
+                    f"iter={iteration} reward={record['reward_mean']:.4f} "
+                    f"sec/iter={seconds_per_iteration:.2f} "
+                    f"ETA={remaining_seconds / 60:.1f}min finish={finish}",
+                    flush=True,
+                )
             if self.advisor is not None:
                 self.advisor.on_iteration(record, self.trainer)
             if iteration % cfg.save_interval == 0:
@@ -165,4 +190,28 @@ class HoloMotionMJLabRunner:
                 iteration=final_iteration,
                 infos=records[-1],
             )
+        wall_finished = time.time()
+        wall_seconds = wall_finished - wall_started
+        summary = {
+            "schema": 1,
+            "started_at": time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(wall_started)),
+            "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(wall_finished)),
+            "wall_seconds": wall_seconds,
+            "compute_seconds": self.trainer.training_compute_seconds,
+            "iterations": cfg.num_iterations,
+            "start_iteration": cfg.start_iteration,
+            "final_iteration": final_iteration,
+            "transitions": self.trainer.training_transitions,
+            "transitions_per_second": self.trainer.training_transitions / max(wall_seconds, 1e-12),
+            "seconds_per_iteration": wall_seconds / cfg.num_iterations,
+            "final_reward_mean": records[-1]["reward_mean"],
+        }
+        (self.output_dir / "training_summary.json").write_text(
+            json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(
+            f"[complete] wall={wall_seconds / 60:.1f}min "
+            f"throughput={summary['transitions_per_second']:.0f} transitions/s "
+            f"final_reward={summary['final_reward_mean']:.4f}",
+            flush=True,
+        )
         return records

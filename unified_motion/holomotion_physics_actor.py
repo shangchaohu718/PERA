@@ -144,6 +144,25 @@ class HoloMotionPhysicsActor(nn.Module):
             attn_mask=attn_mask,
             **kwargs,
         )
+        return self.apply_physics(output, physics_features, physics_confidence,
+                                  mode=mode, actions=actions)
+
+    def apply_physics(
+        self,
+        output: Any,
+        physics_features: torch.Tensor,
+        physics_confidence: torch.Tensor | None = None,
+        *,
+        mode: str = "sampling",
+        actions: torch.Tensor | None = None,
+    ) -> Any:
+        """Shift an already evaluated base-policy distribution.
+
+        Separating this operation lets a privileged Teacher predict the
+        consequence of the base policy's candidate action before the residual
+        is applied.  The ordinary deployable Student path still calls
+        :meth:`forward` and is unchanged.
+        """
         mu = output.get("mu")
         sigma = output.get("sigma")
         residual = self.physics_residual(physics_features, mu)
@@ -205,3 +224,26 @@ def dynamics_actor_features(
     # Flattening a fixed slot axis is intentional here: unlike set mean/max,
     # weights connected to the left token are independent of right-token weights.
     return torch.cat((context, latent, contact_tokens.flatten(-2)), dim=-1)
+
+
+def teacher_actor_features(output: dict[str, torch.Tensor], *, dof: int,
+                           contact_slots: int = 2) -> torch.Tensor:
+    """Physical Teacher outputs consumed by a Teacher-controlled residual.
+
+    Only predictions that a deployable Student can later reproduce are used:
+    normalized next-state core and contact probabilities.  Privileged inputs
+    and the Teacher's private latent are deliberately excluded.
+    """
+    required = {"next_core", "contact_logits"}
+    if not isinstance(output, dict) or required - output.keys():
+        raise ValueError("Teacher output requires next_core and contact_logits")
+    core = output["next_core"]
+    contacts = output["contact_logits"]
+    if core.shape[-1] != 9 + 2*dof:
+        raise ValueError("Teacher next_core width disagrees with robot DoF")
+    if contacts.shape[:-1] != core.shape[:-1] or contacts.shape[-1] < contact_slots:
+        raise ValueError("Teacher contact output has incompatible shape")
+    result = torch.cat((core, contacts[..., :contact_slots].sigmoid()), -1)
+    if not torch.isfinite(result).all().item():
+        raise ValueError("Teacher residual features contain NaN/Inf")
+    return result

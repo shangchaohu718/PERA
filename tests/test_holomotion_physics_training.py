@@ -5,7 +5,6 @@ import torch
 
 from unified_motion.holomotion_mjlab_ppo import HoloMotionPPORollout
 from unified_motion.holomotion_physics_training import HoloMotionPhysicsMJLabPPO
-from unified_motion.holomotion_mjlab_task import HoloMotionFootRewardConfig
 from unified_motion.models.physics import DynamicsModel, PhysicsObservation
 from unified_motion.robot_contract import get_robot_contract
 from unified_motion.algorithms.dynamics_history import DynamicsHistory
@@ -71,12 +70,3 @@ def test_physics_update_trains_prediction_and_teacher_with_separate_feet(monkeyp
     assert model.teacher_encoder[0].weight.grad is not None
     assert trainer._observation is observation
     assert trainer._physics_age is age and trainer._physics_episode_start is starts
-
-
-def test_left_and_right_foot_reward_weights_are_independent():
-    cfg=HoloMotionFootRewardConfig(
-        left_slip_weight=.1,right_slip_weight=.2,
-        left_impact_weight=.3,right_impact_weight=.4,
-    )
-    assert cfg.left_slip_weight!=cfg.right_slip_weight
-    assert cfg.left_impact_weight!=cfg.right_impact_weight

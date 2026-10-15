@@ -17,7 +17,12 @@ import xml.etree.ElementTree as ET
 
 import numpy as np
 from unified_motion.envs import physics_validation as v
-from unified_motion.envs.mjlab_k1 import read_k1_joint_specs, k1_control_profile, make_k1_mjlab_cfg
+from unified_motion.envs.mjlab_k1 import (
+    configure_k1_scene_capacity,
+    k1_control_profile,
+    make_k1_mjlab_cfg,
+    read_k1_joint_specs,
+)
 from test_mjlab_k1 import create_fixture_xml, ROBOT
 
 
@@ -151,6 +156,15 @@ class PhysicsAssetValidationTests(unittest.TestCase):
     def test_boolean_physics_dt_rejected_without_loading_sim(self):
         with self.assertRaises(ValueError):
             make_k1_mjlab_cfg(self.base, physics_dt=True)
+
+    def test_scene_capacity_prevents_constraint_overflow(self):
+        default = SimpleNamespace(njmax=-1, nconmax=-1)
+        configure_k1_scene_capacity(default)
+        self.assertEqual((default.njmax, default.nconmax), (500, 100))
+
+        larger = SimpleNamespace(njmax=800, nconmax=200)
+        configure_k1_scene_capacity(larger)
+        self.assertEqual((larger.njmax, larger.nconmax), (800, 200))
 
 
 class ValidationFlowTests(unittest.TestCase):

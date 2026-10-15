@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import math
+from collections.abc import Mapping, Sequence
 
 import torch
 from torch import nn
@@ -30,9 +31,14 @@ class PrivilegedTeacherConfig:
     minimum_validation_samples: int = 16
     minimum_prediction_gain: float = .05
     minimum_action_gain: float = .01
+    prediction_horizons: tuple[int, ...] = (1, 4, 8)
+    multistep_weight: float = .5
+    delta_whitening: bool = False
+    delta_whitening_std_floor: float = 1e-3
+    delta_whitening_statistics: dict | None = None
 
     def __post_init__(self):
-        if type(self.objective_version) is not int or self.objective_version not in (1, 2):
+        if type(self.objective_version) is not int or self.objective_version not in (1, 2, 3):
             raise ValueError('unsupported Teacher objective version')
         for name in ('critic_dim', 'contact_slots', 'width', 'heads', 'layers',
                      'context_steps', 'train_envs', 'warmup_updates', 'minimum_validation_samples'):
@@ -50,6 +56,46 @@ class PrivilegedTeacherConfig:
             value = getattr(self, name)
             if type(value) not in (int, float) or not math.isfinite(value) or not 0 < value < .5:
                 raise ValueError(f'{name} must be in (0,.5)')
+        horizons = tuple(self.prediction_horizons)
+        if (not horizons or horizons[0] != 1 or any(type(v) is not int or v < 1 for v in horizons)
+                or tuple(sorted(set(horizons))) != horizons):
+            raise ValueError('prediction_horizons must be unique increasing positive integers starting at 1')
+        object.__setattr__(self, 'prediction_horizons', horizons)
+        if (isinstance(self.multistep_weight, bool) or not isinstance(self.multistep_weight, (int, float))
+                or not math.isfinite(self.multistep_weight) or self.multistep_weight < 0):
+            raise ValueError('multistep_weight must be finite and non-negative')
+        if self.objective_version < 3 and horizons != (1, 4, 8):
+            raise ValueError('custom prediction horizons require Teacher objective v3')
+        if type(self.delta_whitening) is not bool:
+            raise TypeError('delta_whitening must be boolean')
+        if (isinstance(self.delta_whitening_std_floor, bool)
+                or not isinstance(self.delta_whitening_std_floor, (int, float))
+                or not math.isfinite(self.delta_whitening_std_floor)
+                or self.delta_whitening_std_floor <= 0):
+            raise ValueError('delta_whitening_std_floor must be positive and finite')
+        if not self.delta_whitening:
+            if self.delta_whitening_statistics is not None:
+                raise ValueError('delta whitening statistics require delta_whitening=true')
+            return
+        statistics = self.delta_whitening_statistics
+        if not isinstance(statistics, Mapping) or set(statistics) != {str(h) for h in horizons}:
+            raise ValueError('delta whitening statistics must exactly cover prediction_horizons')
+        canonical = {}
+        for horizon in horizons:
+            value = statistics[str(horizon)]
+            if not isinstance(value, Mapping) or set(value) != {'mean', 'std'}:
+                raise ValueError('each delta whitening statistic needs mean and std')
+            mean, std = value['mean'], value['std']
+            if (not isinstance(mean, Sequence) or isinstance(mean, (str, bytes))
+                    or not isinstance(std, Sequence) or isinstance(std, (str, bytes))
+                    or not mean or len(mean) != len(std)):
+                raise ValueError('delta whitening mean/std must be equal non-empty sequences')
+            mean, std = tuple(float(v) for v in mean), tuple(float(v) for v in std)
+            if (not all(math.isfinite(v) for v in mean + std)
+                    or any(v < self.delta_whitening_std_floor for v in std)):
+                raise ValueError('delta whitening statistics must be finite and respect std floor')
+            canonical[str(horizon)] = {'mean': mean, 'std': std}
+        object.__setattr__(self, 'delta_whitening_statistics', canonical)
 
     @classmethod
     def from_saved(cls, values):
@@ -123,7 +169,41 @@ class PrivilegedTransformerTeacher(nn.Module):
         core_dim = 9+2*robot.dof
         self.transition = nn.Sequential(nn.Linear(core_dim+latent_width+robot.dof, cfg.width),
                                         nn.SiLU(), nn.Linear(cfg.width, core_dim+cfg.contact_slots))
+        self.future_transitions = nn.ModuleDict()
+        if cfg.objective_version >= 3:
+            for horizon in cfg.prediction_horizons:
+                if horizon > 1:
+                    self.future_transitions[str(horizon)] = nn.Sequential(
+                        nn.Linear(core_dim+latent_width+horizon*robot.dof, cfg.width),
+                        nn.SiLU(), nn.Linear(cfg.width, core_dim))
         self.identification = nn.Linear(latent_width, system_id_dim)
+        self._delta_horizon_index = {}
+        if cfg.delta_whitening:
+            means, stds = [], []
+            for index, horizon in enumerate(cfg.prediction_horizons):
+                statistics = cfg.delta_whitening_statistics[str(horizon)]
+                if len(statistics['mean']) != core_dim:
+                    raise ValueError('delta whitening statistic width disagrees with robot contract')
+                self._delta_horizon_index[horizon] = index
+                means.append(statistics['mean']); stds.append(statistics['std'])
+            self.register_buffer('delta_whitening_mean', torch.tensor(means, dtype=torch.float32))
+            self.register_buffer('delta_whitening_std', torch.tensor(stds, dtype=torch.float32))
+
+    def delta_statistics(self, horizon, like):
+        """Return fixed train-split statistics in normalized-core units."""
+        if not self.config.delta_whitening:
+            return torch.zeros_like(like), torch.ones_like(like)
+        if horizon not in self._delta_horizon_index:
+            raise ValueError('missing delta whitening horizon')
+        index = self._delta_horizon_index[horizon]
+        return (self.delta_whitening_mean[index].to(like),
+                self.delta_whitening_std[index].to(like))
+
+    def decode_standardized_delta(self, value, *, horizon):
+        if not self.config.delta_whitening:
+            return value
+        mean, std = self.delta_statistics(horizon, value)
+        return mean + std * value
 
     def forward(self, inputs, episode_start, actions, current_core):
         if inputs.ndim != 3 or episode_start.shape != inputs.shape[:2] or episode_start.dtype != torch.bool:
@@ -154,23 +234,51 @@ class PrivilegedTransformerTeacher(nn.Module):
         """Reuse a causal latent to test the effect of changing executed actions."""
         output = self.transition(torch.cat((current_core.detach(), latent, actions.detach()), -1))
         core_dim = current_core.shape[-1]
-        next_core = current_core.detach()+output[..., :core_dim]
+        predicted_delta = self.decode_standardized_delta(output[..., :core_dim], horizon=1)
+        next_core = current_core.detach()+predicted_delta
         if self.config.objective_version >= 2:
             # Match the deployable Student's physical output manifold, including
             # its finite fallback for a degenerate direction. V1 stays compatible.
             gravity = _safe_unit(next_core[..., 6:9], current_core[..., 6:9].detach())
             next_core = torch.cat((next_core[..., :6], gravity, next_core[..., 9:]), -1)
-        return dict(latent=latent, next_core=next_core,
+        delta_core = next_core-current_core.detach()
+        return dict(latent=latent, next_core=next_core, delta_core=delta_core,
                     contact_logits=output[..., core_dim:], system_id=self.identification(latent))
 
+    def predict_future_core(self, latent, action_window, current_core, *, horizon):
+        """Predict a state delta after an observed sequence of executed actions."""
+        if horizon not in self.config.prediction_horizons or horizon <= 1:
+            raise ValueError('future Teacher prediction requires a configured horizon > 1')
+        if action_window.shape != latent.shape[:-1] + (horizon, self.robot.dof):
+            raise ValueError('Teacher future action window has incompatible shape')
+        if current_core.shape != latent.shape[:-1] + (9+2*self.robot.dof,):
+            raise ValueError('Teacher future current_core has incompatible shape')
+        standardized_delta = self.future_transitions[str(horizon)](torch.cat(
+            (current_core.detach(), latent, action_window.detach().flatten(-2)), -1))
+        delta = self.decode_standardized_delta(standardized_delta, horizon=horizon)
+        result = current_core.detach()+delta
+        gravity = _safe_unit(result[..., 6:9], current_core[..., 6:9].detach())
+        return torch.cat((result[..., :6], gravity, result[..., 9:]), -1)
 
-def teacher_supervision(output, next_core, core_valid, contacts, contact_mask, parameters, valid, config=None):
+
+def teacher_supervision(output, next_core, core_valid, contacts, contact_mask, parameters, valid,
+                        config=None, *, current_core=None):
     """Measured transition targets train the Teacher, independently of the Student."""
     def masked(value, mask):
         return torch.where(mask, value, 0.).sum()/mask.sum().clamp_min(1)
     config = config or PrivilegedTeacherConfig()
     mask = core_valid & valid.unsqueeze(-1)
-    error = torch.where(mask, output['next_core']-next_core.detach(), 0.).square()
+    if config.objective_version >= 3:
+        if current_core is None or current_core.shape != next_core.shape:
+            raise ValueError('Teacher objective v3 requires matching current_core')
+        target = next_core.detach()-current_core.detach()
+        delta_error = output['delta_core']-target
+        if config.delta_whitening:
+            std = next_core.new_tensor(config.delta_whitening_statistics['1']['std'])
+            delta_error = delta_error/std
+        error = torch.where(mask, delta_error, 0.).square()
+    else:
+        error = torch.where(mask, output['next_core']-next_core.detach(), 0.).square()
     if config.objective_version == 1:
         core = masked(error, mask)
     else:

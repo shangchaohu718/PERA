@@ -1,0 +1,726 @@
+{
+  "schema": 1,
+  "purpose": "counterfactual training readiness only",
+  "coverage": {
+    "attempted": 14,
+    "valid": 8,
+    "checkpoint_ids": [
+      "f3e_update5_preserved",
+      "v13_f2r1_model12929_heldout"
+    ],
+    "seeds": [
+      730201
+    ],
+    "delta_rad_levels": [
+      0.01,
+      0.02
+    ],
+    "dynamic_friction_levels": [
+      0.3,
+      0.5
+    ],
+    "valid_by_joint_side": {
+      "left": 5,
+      "right": 3
+    },
+    "valid_by_selected_joint_role": {
+      "active_slide": 5,
+      "planned_anchor": 3,
+      "neutral": 0
+    },
+    "tangent_material_by_role": {
+      "active_slide": 2,
+      "planned_anchor": 1
+    },
+    "force_material_by_role": {
+      "active_slide": 1,
+      "planned_anchor": 0
+    },
+    "base_contact_mode_counts": {
+      "0": 9,
+      "1": 2,
+      "2": 5,
+      "3": 0
+    },
+    "heldout_checkpoint_ids": [
+      "v13_f2r1_model12929_heldout"
+    ]
+  },
+  "checks": [
+    {
+      "name": "valid probes",
+      "value": 8,
+      "minimum": 200,
+      "passed": false
+    },
+    {
+      "name": "checkpoint sources",
+      "value": 2,
+      "minimum": 3,
+      "passed": false
+    },
+    {
+      "name": "simulator seeds",
+      "value": 1,
+      "minimum": 3,
+      "passed": false
+    },
+    {
+      "name": "delta levels",
+      "value": 2,
+      "minimum": 3,
+      "passed": false
+    },
+    {
+      "name": "friction levels",
+      "value": 2,
+      "minimum": 3,
+      "passed": false
+    },
+    {
+      "name": "heldout checkpoint sources",
+      "value": 1,
+      "minimum": 1,
+      "passed": true
+    },
+    {
+      "name": "left joint probes",
+      "value": 5,
+      "minimum": 20,
+      "passed": false
+    },
+    {
+      "name": "right joint probes",
+      "value": 3,
+      "minimum": 20,
+      "passed": false
+    },
+    {
+      "name": "tangent material active_slide",
+      "value": 2,
+      "minimum": 20,
+      "passed": false
+    },
+    {
+      "name": "force material active_slide",
+      "value": 1,
+      "minimum": 20,
+      "passed": false
+    },
+    {
+      "name": "tangent material planned_anchor",
+      "value": 1,
+      "minimum": 20,
+      "passed": false
+    },
+    {
+      "name": "force material planned_anchor",
+      "value": 0,
+      "minimum": 20,
+      "passed": false
+    },
+    {
+      "name": "base contact mode separation",
+      "value": 9,
+      "minimum": 10,
+      "passed": false
+    },
+    {
+      "name": "base contact mode stable",
+      "value": 2,
+      "minimum": 10,
+      "passed": false
+    },
+    {
+      "name": "base contact mode sliding",
+      "value": 5,
+      "minimum": 10,
+      "passed": false
+    },
+    {
+      "name": "base contact mode impact",
+      "value": 0,
+      "minimum": 10,
+      "passed": false
+    }
+  ],
+  "training_ready": false,
+  "records": [
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame005_left_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 5,
+      "joint_side": "left",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        0,
+        1
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 1.1175870895385742e-08,
+        "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 9.121250332100317e-05,
+        "null_normal_force_noise_rmse_n": 0.0028646369464695454,
+        "tangent_response_above_noise_rate": 0.0,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame005_right_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 5,
+      "joint_side": "right",
+      "selected_joint_role": "planned_anchor",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        0,
+        1
+      ],
+      "tangent_material": true,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 1.1175870895385742e-08,
+        "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 9.121250332100317e-05,
+        "null_normal_force_noise_rmse_n": 0.0028646369464695454,
+        "tangent_response_above_noise_rate": 1.0,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 1.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame015_right_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": false,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": false,
+        "null_force": false
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 15,
+      "joint_side": "right",
+      "selected_joint_role": "neutral",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        3,
+        1
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 1.862645149230957e-08,
+        "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.0072990949265658855,
+        "null_normal_force_noise_rmse_n": 0.42485159635543823,
+        "tangent_response_above_noise_rate": 0.0,
+        "force_response_above_noise_rate": 0.75,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 2,
+        "force_response_eligible_foot_samples": 2
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame025_left_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 25,
+      "joint_side": "left",
+      "selected_joint_role": "planned_anchor",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        0,
+        2
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 1.1175870895385742e-08,
+        "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.0003951173566747457,
+        "null_normal_force_noise_rmse_n": 0.005460883025079966,
+        "tangent_response_above_noise_rate": 0.0,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame025_right_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 25,
+      "joint_side": "right",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        0,
+        2
+      ],
+      "tangent_material": true,
+      "force_material": true,
+      "quality": {
+        "processed_plus_abs_error_rad": 3.725290298461914e-09,
+        "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.0003951173566747457,
+        "null_normal_force_noise_rmse_n": 0.005460883025079966,
+        "tangent_response_above_noise_rate": 1.0,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 1.0,
+        "force_informative_response_rate": 0.5,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame037_right_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": false,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": false,
+        "null_force": false
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 37,
+      "joint_side": "right",
+      "selected_joint_role": "neutral",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        1,
+        0
+      ],
+      "tangent_material": true,
+      "force_material": true,
+      "quality": {
+        "processed_plus_abs_error_rad": 3.725290298461914e-09,
+        "processed_minus_abs_error_rad": 3.725290298461914e-09,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.001750619849190116,
+        "null_normal_force_noise_rmse_n": 1.8963141441345215,
+        "tangent_response_above_noise_rate": 0.5,
+        "force_response_above_noise_rate": 0.5,
+        "tangent_informative_response_rate": 0.5,
+        "force_informative_response_rate": 0.5,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame049_left_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 49,
+      "joint_side": "left",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        2,
+        0
+      ],
+      "tangent_material": true,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 4.0978193283081055e-08,
+        "processed_minus_abs_error_rad": 1.862645149230957e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 2.5678277779661585e-06,
+        "null_normal_force_noise_rmse_n": 0.0012893563834950328,
+        "tangent_response_above_noise_rate": 1.0,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 1.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame049_right_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 49,
+      "joint_side": "right",
+      "selected_joint_role": "planned_anchor",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        2,
+        0
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 0.0,
+        "processed_minus_abs_error_rad": 5.587935447692871e-09,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 2.5678277779661585e-06,
+        "null_normal_force_noise_rmse_n": 0.0012893563834950328,
+        "tangent_response_above_noise_rate": 1.0,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame075_left_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": false,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": false,
+        "null_force": false
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 75,
+      "joint_side": "left",
+      "selected_joint_role": "planned_anchor",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        2,
+        2
+      ],
+      "tangent_material": true,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 3.725290298461914e-09,
+        "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.0022831179667264223,
+        "null_normal_force_noise_rmse_n": 2.064786434173584,
+        "tangent_response_above_noise_rate": 0.5,
+        "force_response_above_noise_rate": 0.5,
+        "tangent_informative_response_rate": 0.5,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 2,
+        "force_response_eligible_foot_samples": 2
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame075_right_ankle_pitch_delta002_actuator_audit.npz",
+      "valid": false,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": false,
+        "null_force": false
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 75,
+      "joint_side": "right",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.02,
+      "friction": 0.5,
+      "base_contact_modes": [
+        2,
+        2
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 1.1175870895385742e-08,
+        "processed_minus_abs_error_rad": 3.725290298461914e-09,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.0022831179667264223,
+        "null_normal_force_noise_rmse_n": 2.064786434173584,
+        "tangent_response_above_noise_rate": 0.5,
+        "force_response_above_noise_rate": 0.5,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 2,
+        "force_response_eligible_foot_samples": 2
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_campaign/test_heldout/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_f005_left_ankle_pitch_d01_low.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730201,
+      "frame": 5,
+      "joint_side": "left",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.01,
+      "friction": 0.3,
+      "base_contact_modes": [
+        0,
+        0
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 9.313225746154785e-09,
+        "processed_minus_abs_error_rad": 5.587935447692871e-09,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.0,
+        "null_normal_force_noise_rmse_n": 0.0,
+        "tangent_response_above_noise_rate": null,
+        "force_response_above_noise_rate": null,
+        "tangent_informative_response_rate": null,
+        "force_informative_response_rate": null,
+        "tangent_response_eligible_foot_samples": 0,
+        "force_response_eligible_foot_samples": 0
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_campaign/train/f3a_model99/f3a_model99_s730201_f005_left_ankle_pitch_d01_low.npz",
+      "valid": false,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": false,
+        "null_force": false
+      },
+      "checkpoint_id": "f3a_model99",
+      "seed": 730201,
+      "frame": 5,
+      "joint_side": "left",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.01,
+      "friction": 0.3,
+      "base_contact_modes": [
+        0,
+        2
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 9.313225746154785e-09,
+        "processed_minus_abs_error_rad": 2.0489096641540527e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 0.001426860922947526,
+        "null_normal_force_noise_rmse_n": 0.14879928529262543,
+        "tangent_response_above_noise_rate": 0.0,
+        "force_response_above_noise_rate": 0.0,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_campaign/train/f3e_update5_preserved/f3e_update5_preserved_s730201_f005_left_ankle_pitch_d01_low.npz",
+      "valid": true,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": true
+      },
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "frame": 5,
+      "joint_side": "left",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.01,
+      "friction": 0.3,
+      "base_contact_modes": [
+        0,
+        2
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 9.313225746154785e-09,
+        "processed_minus_abs_error_rad": 2.0489096641540527e-08,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 2.018904524447862e-06,
+        "null_normal_force_noise_rmse_n": 0.0005340848583728075,
+        "tangent_response_above_noise_rate": 0.5,
+        "force_response_above_noise_rate": 1.0,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_campaign/validation/v13_grounded_model499/v13_grounded_model499_s730201_f005_left_ankle_pitch_d01_low.npz",
+      "valid": false,
+      "checks": {
+        "state": true,
+        "processed_plus": true,
+        "processed_minus": true,
+        "delayed_plus": true,
+        "delayed_minus": true,
+        "null_contact": true,
+        "null_tangent": true,
+        "null_force": false
+      },
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730201,
+      "frame": 5,
+      "joint_side": "left",
+      "selected_joint_role": "active_slide",
+      "delta_rad": 0.01,
+      "friction": 0.3,
+      "base_contact_modes": [
+        0,
+        3
+      ],
+      "tangent_material": false,
+      "force_material": false,
+      "quality": {
+        "processed_plus_abs_error_rad": 2.0489096641540527e-08,
+        "processed_minus_abs_error_rad": 9.313225746154785e-09,
+        "null_replicate_available": true,
+        "null_contact_match_rate": 1.0,
+        "null_tangent_velocity_noise_rmse": 1.0891702004300896e-05,
+        "null_normal_force_noise_rmse_n": 0.21126022934913635,
+        "tangent_response_above_noise_rate": 0.0,
+        "force_response_above_noise_rate": 0.0,
+        "tangent_informative_response_rate": 0.0,
+        "force_informative_response_rate": 0.0,
+        "tangent_response_eligible_foot_samples": 1,
+        "force_response_eligible_foot_samples": 1
+      }
+    }
+  ],
+  "actor_updates": 0,
+  "ppo_updates": 0
+}

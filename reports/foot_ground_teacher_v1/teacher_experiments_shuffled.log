@@ -1,0 +1,17 @@
+/home/tcl/Desktop/start/eval_campaign/formal_v4/tools/run_isaac51.sh /home/tcl/Desktop/start/HoloMotion-UM/tools/train_foot_ground_teacher.py --manifest reports/foot_ground_teacher_v1/dataset_manifest.json --output-dir runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730201 --epochs 20 --seed 730201 --device cuda:0 --learning-rate 0.0001 --contact-weight 1.0 --replay-updates 1 --gradient-audit-every 100
+{"optimizer_updates": 720, "checkpoint": "/home/tcl/Desktop/start/HoloMotion-UM/runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730201/teacher.pt"}
+/home/tcl/Desktop/start/eval_campaign/formal_v4/tools/run_isaac51.sh /home/tcl/Desktop/start/HoloMotion-UM/tools/evaluate_foot_ground_teacher.py --checkpoint runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730201/teacher.pt --manifest reports/foot_ground_teacher_v1/dataset_manifest.json --split validation --output runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730201/validation.json --device cuda:0
+{
+  "split": "validation",
+  "threshold": 0.5400000214576721,
+  "records": 9
+}
+/home/tcl/Desktop/start/eval_campaign/formal_v4/tools/run_isaac51.sh /home/tcl/Desktop/start/HoloMotion-UM/tools/train_foot_ground_teacher.py --manifest reports/foot_ground_teacher_v1/dataset_manifest.json --output-dir runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730202 --epochs 20 --seed 730202 --device cuda:0 --learning-rate 0.0001 --contact-weight 1.0 --replay-updates 1 --gradient-audit-every 100
+{"optimizer_updates": 720, "checkpoint": "/home/tcl/Desktop/start/HoloMotion-UM/runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730202/teacher.pt"}
+/home/tcl/Desktop/start/eval_campaign/formal_v4/tools/run_isaac51.sh /home/tcl/Desktop/start/HoloMotion-UM/tools/evaluate_foot_ground_teacher.py --checkpoint runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730202/teacher.pt --manifest reports/foot_ground_teacher_v1/dataset_manifest.json --split validation --output runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730202/validation.json --device cuda:0
+{
+  "split": "validation",
+  "threshold": 0.05000000074505806,
+  "records": 9
+}
+/home/tcl/Desktop/start/eval_campaign/formal_v4/tools/run_isaac51.sh /home/tcl/Desktop/start/HoloMotion-UM/tools/train_foot_ground_teacher.py --manifest reports/foot_ground_teacher_v1/dataset_manifest.json --output-dir runs/foot_ground_teacher_v1/formal_20261015_shuffled/contact_1p0/seed_730203 --epochs 20 --seed 730203 --device cuda:0 --learning-rate 0.0001 --contact-weight 1.0 --replay-updates 1 --gradient-audit-every 100

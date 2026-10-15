@@ -42,7 +42,8 @@ python tools/train_k1_mjlab.py --actor lru --actor-config configs/actors/k1_smal
 
 把第二条的 `--actor lru` 改为 `mlp`、`transformer`、`moe`、`gru`、`lstm` 即切换其他自定义主干；
 同时更换输出目录。删除 `--physics` 可训练对应基础 Actor；添加 `--matched-physics-task` 可匹配
-Physics 实验的奖励和随机化。`--physics --physics-scene-encoder gnn` 使用 GNN 物理编码。
+Physics 实验的物理随机化。所有后端始终使用原版 HoloMotion v1.4 奖励，不附加脚滑或冲击奖励。
+`--physics --physics-scene-encoder gnn` 使用 GNN 物理编码。
 
 自定义 Actor 从零初始化，默认参与训练；HoloMotion 从预训练权重初始化，Physics 实验默认冻结
 基础 Actor，`--finetune-base-actor` 可开启微调。对比结果时应明确初始化、冻结策略和训练步数。

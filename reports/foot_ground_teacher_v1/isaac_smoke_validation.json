@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "trajectory_count": 1,
+  "all_verified": true,
+  "records": [
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/smoke/f3a_model99_s730201_20step_v3.npz",
+      "sha256": "ca15210964e3355ef987effaee0a2462ceff102be7a30b6504f6e122cdfcb2d1",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730201,
+      "trajectory_id": "safe_bundle_smoke_20_v3",
+      "termination_reason": "time_out",
+      "frames": 20,
+      "valid_transitions": 20,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        12,
+        15
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          8,
+          5
+        ],
+        "stable": [
+          8,
+          4
+        ],
+        "sliding": [
+          3,
+          10
+        ],
+        "impact": [
+          1,
+          1
+        ]
+      },
+      "normal_force_max_n": 568.646728515625,
+      "tangential_force_max_n": 262.6230163574219,
+      "contact_impulse_max_ns": 7.122654438018799,
+      "slip_speed_max_m_s": 0.7794977426528931,
+      "verified": true,
+      "errors": []
+    }
+  ]
+}

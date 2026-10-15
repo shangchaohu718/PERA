@@ -180,6 +180,28 @@ def test_holomotion_cli_accepts_random_initialization_config(monkeypatch):
     assert config.physics
 
 
+def test_cli_accepts_frozen_teacher_with_fresh_custom_actor(monkeypatch):
+    from tools.train_holomotion_k1_mjlab import parse_args
+    monkeypatch.setattr("sys.argv", ["train_k1_mjlab.py", "--actor", "mlp",
+        "--actor-config", "actor.yaml", "--frozen-teacher-from", "teacher.pt",
+        "--task-contract", "contract.json", "--asset-root", "assets",
+        "--motion", "motion.npz", "--output-dir", "new_run", "--iterations", "2"])
+    config = parse_args()
+    assert config.actor == "mlp"
+    assert config.frozen_teacher_from == Path("teacher.pt")
+    assert config.physics_teacher
+
+
+def test_cli_rejects_frozen_teacher_with_imported_actor(monkeypatch):
+    from tools.train_holomotion_k1_mjlab import parse_args
+    monkeypatch.setattr("sys.argv", ["train_k1_mjlab.py", "--actor", "holomotion",
+        "--run-dir", "old_actor", "--frozen-teacher-from", "teacher.pt",
+        "--task-contract", "contract.json", "--asset-root", "assets",
+        "--motion", "motion.npz", "--output-dir", "new_run", "--iterations", "2"])
+    with pytest.raises(SystemExit):
+        parse_args()
+
+
 def test_shipped_holomotion_config_builds_16_expert_network_metadata(monkeypatch):
     from unified_motion import holomotion_original_algorithm as original
     root = Path(__file__).resolve().parents[1]
@@ -228,10 +250,9 @@ def test_cli_runs_and_resumes_with_explicit_mock_simulator(tmp_path, monkeypatch
     monkeypatch.setattr(cli, "MotionSampler", lambda library, **kwargs: SimpleNamespace(library=library,
         clip_ids=torch.arange(3), offsets_s=[.2], step_dt=.02))
     tasks = []
-    def make_task(adapter, sampler, foot_reward_config, physics_randomization):
+    def make_task(adapter, sampler, physics_randomization):
         result = task()
         result.adapter, result.sampler = adapter, sampler
-        result.foot_reward_config = foot_reward_config or cli.HoloMotionFootRewardConfig()
         result.physics_randomization = physics_randomization
         result.close = lambda: None
         tasks.append(result)

@@ -6,6 +6,7 @@ from unified_motion.holomotion_physics_actor import (
     HoloMotionPhysicsActor,
     HoloMotionPhysicsActorConfig,
     dynamics_actor_features,
+    teacher_actor_features,
 )
 
 
@@ -125,3 +126,14 @@ def test_dynamics_actor_features_concatenates_only_deployable_outputs():
     torch.testing.assert_close(output[..., 5:7], latent)
     torch.testing.assert_close(output[..., 7:12], contacts[...,0,:])
     torch.testing.assert_close(output[..., 12:17], contacts[...,1,:])
+
+
+def test_teacher_actor_features_use_physical_predictions_not_private_latent():
+    core = torch.randn(2, 3, 17)
+    logits = torch.randn(2, 3, 4)
+    output = teacher_actor_features(
+        {"next_core": core, "contact_logits": logits, "latent": torch.randn(2, 3, 99)},
+        dof=4, contact_slots=2)
+    assert output.shape == (2, 3, 19)
+    torch.testing.assert_close(output[..., :17], core)
+    torch.testing.assert_close(output[..., 17:], logits[..., :2].sigmoid())

@@ -36,6 +36,8 @@ from ..reference_observations import (
 from ..robot_contract import get_robot_contract
 
 ROBOT_ID = "k1_22dof"
+K1_NJMAX = 500
+K1_NCONMAX = 100
 
 
 @dataclass(frozen=True)
@@ -173,6 +175,18 @@ def make_k1_entity_spec(xml_file: str | Path):
     if len(spec.actuators) != 0:
         raise RuntimeError("删除 XML 内置 direct-torque actuator 失败")
     return spec
+
+
+def configure_k1_scene_capacity(spec: Any) -> None:
+    """Reserve enough per-world MuJoCo contact/constraint capacity for K1.
+
+    The official K1 XML does not contain a ``<size>`` element, so MuJoCo's
+    inferred ``njmax`` can be only 64.  During policy exploration that drops
+    constraints with ``nefc overflow``.  The limits below match the explicit
+    allocation used by Booster's T1 asset and preserve any larger caller value.
+    """
+    spec.njmax = max(int(spec.njmax), K1_NJMAX)
+    spec.nconmax = max(int(spec.nconmax), K1_NCONMAX)
 
 
 def _joint_hz(name: str) -> tuple[float, float]:
@@ -354,8 +368,16 @@ def make_k1_mjlab_cfg(
             env_spacing=2.0,
             terrain=TerrainEntityCfg(terrain_type="plane"),
             entities={"robot": entity},
+            spec_fn=configure_k1_scene_capacity,
         ),
-        sim=SimulationCfg(mujoco=MujocoCfg(timestep=float(physics_dt))),
+        # MJWarp allocates batched contact/constraint arrays from SimulationCfg,
+        # independently of the compiled MjModel size hints above.  Set both or
+        # policy exploration can silently overflow the default 64 constraints.
+        sim=SimulationCfg(
+            nconmax=K1_NCONMAX,
+            njmax=K1_NJMAX,
+            mujoco=MujocoCfg(timestep=float(physics_dt)),
+        ),
         observations={
             "actor": ObservationGroupCfg(
                 terms=actor_terms,

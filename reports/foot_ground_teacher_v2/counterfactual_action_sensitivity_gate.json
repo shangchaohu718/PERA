@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "status": "failed_for_control_guidance",
+  "scope": "development smoke; one frozen source checkpoint, one simulator seed, ten state/joint probes including a six-probe quality-passed role-paired subset, three Teacher seeds per family",
+  "source_checkpoint": "f3e_update5_preserved",
+  "simulator_seed": 730201,
+  "perturbation_rad": 0.02,
+  "teacher_families": ["v1", "v2_a1"],
+  "teacher_seeds": [730201, 730202, 730203],
+  "collection": {
+    "attempted_probes": 10,
+    "quality_gate_passed": 6,
+    "quality_gate_failed": 4,
+    "failed_probes": ["frame15_right", "frame37_right", "frame75_left", "frame75_right"],
+    "failure_reason": "duplicate-baseline tangent/force divergence above the fixed collection-noise limits",
+    "pre_branch_state_max_abs_error": 0.0,
+    "actuator_time_lag_physics_steps": 2,
+    "requested_and_delayed_target_match_tolerance_rad": 0.0001,
+    "observed_delayed_target_delta_rad": {"plus": 0.02, "minus": -0.02},
+    "observed_selected_joint_torque_delta_nm_range": {
+      "plus": [0.44, 0.531],
+      "minus": [-0.539, -0.44]
+    },
+    "tangent_informative_quality_passed_probes": 3,
+    "force_above_noise_quality_passed_probes": 6,
+    "force_above_5n_quality_passed_probes": 1
+  },
+  "tangent_symmetric_jacobian": {
+    "probe_teacher_pairs": 9,
+    "v1": {
+      "rmse": 0.510347,
+      "cosine_mean": 0.372697,
+      "sign_accuracy": 0.611111,
+      "action_ignored_rate": 1.0,
+      "sensitivity_gain_median": 0.027357
+    },
+    "v2_a1": {
+      "rmse": 0.565107,
+      "cosine_mean": -0.315403,
+      "sign_accuracy": 0.388889,
+      "action_ignored_rate": 0.111111,
+      "sensitivity_gain_median": 0.212303
+    },
+    "probe_diagnosis": {
+      "frame5_right_ankle": "both families predict the wrong direction; V2-A1 has larger wrong-direction gain",
+      "frame25_right_ankle": "V2-A1 has higher gain and correct direction; V1 has correct direction but nearly zero gain",
+      "frame49_left_ankle": "V2-A1 responds more strongly but predicts the opposite direction; V1 direction is mostly correct but gain is about two percent"
+    }
+  },
+  "normal_force_symmetric_jacobian": {
+    "physically_material_probe_teacher_pairs": 3,
+    "material_probe": "frame25_right_ankle",
+    "true_jacobian_n_per_rad": -305.06,
+    "v1": {
+      "rmse": 215.682704,
+      "cosine_mean": 0.333333,
+      "sign_accuracy": 0.666667,
+      "action_ignored_rate": 1.0,
+      "sensitivity_gain_median": 0.000166
+    },
+    "v2_a1": {
+      "rmse": 210.443324,
+      "cosine_mean": 1.0,
+      "sign_accuracy": 1.0,
+      "action_ignored_rate": 1.0,
+      "sensitivity_gain_median": 0.024738
+    }
+  },
+  "decision": {
+    "v1_passed": false,
+    "v2_a1_passed": false,
+    "reason": "V1 nearly ignores action deltas. V2-A1 has larger tangent sensitivity but is directionally inconsistent across feet, and both families ignore almost all normal-force sensitivity.",
+    "next_architecture_action": "Do not promote MoE or Actor integration. Add an explicit actuator-state/action-plan contract and train action-contrastive counterfactual supervision before retrying the gate.",
+    "deployment_claim": false,
+    "actor_updates": 0,
+    "ppo_updates": 0
+  }
+}

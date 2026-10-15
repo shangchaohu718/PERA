@@ -1,0 +1,602 @@
+{
+  "schema": 1,
+  "selected_contact_weight": 1.0,
+  "heldout_accessed": false,
+  "seeds": [
+    730201,
+    730202,
+    730203
+  ],
+  "aggregate_metrics": {
+    "contact_switch": {
+      "count": 1581,
+      "mae_s": 0.040404806257585496,
+      "mae_frames": 2.02024036185942
+    },
+    "mask_audit": {
+      "noncontact_frames": 72.22222222222223,
+      "contact_regression_noncontact_leakage": 0.0,
+      "contact_regression_frames_used": 279.55555555555554
+    },
+    "dynamics": {
+      "persistence": {
+        "count": 104478,
+        "mae": 0.8159420464660876,
+        "rmse": 1.3013742830105826
+      },
+      "simple_physics_baseline": {
+        "count": 103884,
+        "mae": 21.423547898647595,
+        "rmse": 59.68603280762841
+      },
+      "delta_root_angular_velocity": {
+        "count": 14247,
+        "mae": 0.23850326149068046,
+        "rmse": 0.30754392773541706
+      },
+      "delta_joint_velocity_vs_persistence": {
+        "baseline": {
+          "count": 104478,
+          "mae": 0.8159420464660876,
+          "rmse": 1.3013742830105826
+        },
+        "relative_improvement": {
+          "mae": -0.12001133069987407,
+          "rmse": -0.09100737931111054
+        },
+        "model": {
+          "count": 104478,
+          "mae": 0.9055425986964518,
+          "rmse": 1.4090566703125111
+        }
+      },
+      "delta_joint_velocity": {
+        "count": 104478,
+        "mae": 0.9055425986964518,
+        "rmse": 1.4090566703125111
+      },
+      "joint_velocity_residual_vs_simple_physics": {
+        "baseline": {
+          "count": 103884,
+          "mae": 21.423547898647595,
+          "rmse": 59.68603280762841
+        },
+        "relative_improvement": {
+          "mae": 0.0042856984140757426,
+          "rmse": -0.006563224569403461
+        },
+        "model": {
+          "count": 103884,
+          "mae": 21.303445271948846,
+          "rmse": 59.97630691521057
+        }
+      },
+      "joint_velocity_residual": {
+        "count": 103884,
+        "mae": 21.303445271948846,
+        "rmse": 59.97630691521057
+      }
+    },
+    "strata": {
+      "active_sliding": {
+        "tangential_force": {
+          "count": 3582,
+          "mae": 19.629494409864673,
+          "rmse": 34.16549134532936
+        },
+        "slip_speed": {
+          "count": 1791,
+          "mae": 0.16524773803687776,
+          "rmse": 0.26547469582722755
+        },
+        "normal_force": {
+          "count": 1791,
+          "mae": 85.66141754525258,
+          "rmse": 123.19984218004448
+        },
+        "slip_direction": {
+          "count": 1791,
+          "mean_degrees": 79.07043904315687
+        },
+        "contact_impulse": {
+          "count": 1791,
+          "mae": 1.4357066677643027,
+          "rmse": 1.611999727623412
+        },
+        "tangent_velocity": {
+          "count": 3582,
+          "mae": 0.1315016378235178,
+          "rmse": 0.22174330792123711
+        }
+      },
+      "stable_contact": {
+        "tangential_force": {
+          "count": 8934,
+          "mae": 13.793846981782147,
+          "rmse": 18.616904072192213
+        },
+        "slip_speed": {
+          "count": 4467,
+          "mae": 0.07787058635035003,
+          "rmse": 0.08129182091219779
+        },
+        "normal_force": {
+          "count": 4467,
+          "mae": 108.78285098924502,
+          "rmse": 121.34010319065017
+        },
+        "slip_direction": {
+          "count": 4440,
+          "mean_degrees": 93.70674155295433
+        },
+        "contact_impulse": {
+          "count": 4467,
+          "mae": 0.8854931353428552,
+          "rmse": 1.0709251735935716
+        },
+        "tangent_velocity": {
+          "count": 8934,
+          "mae": 0.03995270169112195,
+          "rmse": 0.0552647191531911
+        }
+      },
+      "friction_0.6_inf": {
+        "tangential_force": {
+          "count": 6624,
+          "mae": 18.482935088844116,
+          "rmse": 31.23054069744713
+        },
+        "normal_force": {
+          "count": 3312,
+          "mae": 106.01579813335253,
+          "rmse": 133.00038289026006
+        }
+      },
+      "sliding": {
+        "tangential_force": {
+          "count": 5202,
+          "mae": 17.903641941638142,
+          "rmse": 30.818357460529732
+        },
+        "slip_speed": {
+          "count": 2601,
+          "mae": 0.12145765732740357,
+          "rmse": 0.2011826873983385
+        },
+        "normal_force": {
+          "count": 2601,
+          "mae": 75.21093839904245,
+          "rmse": 101.32810446359608
+        },
+        "slip_direction": {
+          "count": 2601,
+          "mean_degrees": 67.7556102141102
+        },
+        "contact_impulse": {
+          "count": 2601,
+          "mae": 1.5017988582795878,
+          "rmse": 1.683943098998453
+        },
+        "tangent_velocity": {
+          "count": 5202,
+          "mae": 0.1106902201391788,
+          "rmse": 0.17542020558301638
+        }
+      },
+      "friction_0_0.4": {
+        "tangential_force": {
+          "count": 4134,
+          "mae": 13.796616761420276,
+          "rmse": 20.773335737648342
+        },
+        "normal_force": {
+          "count": 2067,
+          "mae": 101.91223763150758,
+          "rmse": 127.06814691308007
+        }
+      },
+      "friction_0.4_0.6": {
+        "tangential_force": {
+          "count": 4338,
+          "mae": 16.32321608434794,
+          "rmse": 25.52938258861933
+        },
+        "normal_force": {
+          "count": 2169,
+          "mae": 98.91832059558607,
+          "rmse": 120.67485115960838
+        }
+      },
+      "impact": {
+        "tangential_force": {
+          "count": 960,
+          "mae": 35.32011884053548,
+          "rmse": 56.22498668960434
+        },
+        "slip_speed": {
+          "count": 480,
+          "mae": 0.20539224155557653,
+          "rmse": 0.34244474180698464
+        },
+        "normal_force": {
+          "count": 480,
+          "mae": 197.44606382052103,
+          "rmse": 254.42598881570422
+        },
+        "slip_direction": {
+          "count": 480,
+          "mean_degrees": 88.50292070706685
+        },
+        "contact_impulse": {
+          "count": 531,
+          "mae": 0.8509944505610708,
+          "rmse": 1.2141025056405954
+        },
+        "tangent_velocity": {
+          "count": 960,
+          "mae": 0.1548239210465302,
+          "rmse": 0.28800008714569286
+        }
+      },
+      "unexpected_slip": {
+        "tangential_force": {
+          "count": 3408,
+          "mae": 17.998883461168674,
+          "rmse": 31.350703716941407
+        },
+        "slip_speed": {
+          "count": 1704,
+          "mae": 0.07816645291419656,
+          "rmse": 0.13861932998191087
+        },
+        "normal_force": {
+          "count": 1704,
+          "mae": 86.77809895707968,
+          "rmse": 119.2325247257845
+        },
+        "slip_direction": {
+          "count": 1704,
+          "mean_degrees": 71.1836533927022
+        },
+        "contact_impulse": {
+          "count": 1704,
+          "mae": 1.3238155173723687,
+          "rmse": 1.5294787944320023
+        },
+        "tangent_velocity": {
+          "count": 3408,
+          "mae": 0.08343227585436593,
+          "rmse": 0.13837239388905612
+        }
+      }
+    },
+    "contact_threshold": 0.38333332538604736,
+    "feet": {
+      "left": {
+        "slip_speed": {
+          "count": 3807,
+          "mae": 0.10707248131457607,
+          "rmse": 0.18405231178585457
+        },
+        "foot_load_ratio": {
+          "count": 4749,
+          "mae": 0.2196479145069578,
+          "rmse": 0.2928977083339557
+        },
+        "normal_velocity": {
+          "count": 3807,
+          "mae": 0.008419755408488995,
+          "rmse": 0.012220525583977583
+        },
+        "tangent_velocity": {
+          "count": 7614,
+          "mae": 0.07536017766458675,
+          "rmse": 0.15179466527511135
+        },
+        "contact_switch": {
+          "count": 750,
+          "mae_s": 0.027386666528880596,
+          "mae_frames": 1.3693333463668824
+        },
+        "tangential_force": {
+          "count": 7614,
+          "mae": 16.089857060858545,
+          "rmse": 25.15743174172157
+        },
+        "contact_impulse": {
+          "count": 4749,
+          "mae": 1.4152038733967733,
+          "rmse": 1.760662574433561
+        },
+        "contact": {
+          "count": 4749,
+          "tp": 3505,
+          "fp": 431,
+          "fn": 302,
+          "bce": 0.40720618205412884,
+          "brier": 0.12320030842091717,
+          "precision": 0.8904979674796748,
+          "recall": 0.9206724454951405,
+          "f1": 0.905333849928968
+        },
+        "normal_force": {
+          "count": 3807,
+          "mae": 105.71188452289522,
+          "rmse": 129.13539283633858
+        },
+        "slip_direction": {
+          "count": 3780,
+          "mean_degrees": 76.5164025826429
+        },
+        "contact_mode": {
+          "count": 4749,
+          "accuracy": 0.5592756271362305,
+          "macro_f1": 0.48125720024108887,
+          "confusion": [
+            [
+              492,
+              199,
+              164,
+              81
+            ],
+            [
+              33,
+              1696,
+              456,
+              14
+            ],
+            [
+              144,
+              832,
+              400,
+              25
+            ],
+            [
+              121,
+              3,
+              21,
+              68
+            ]
+          ]
+        },
+        "contact_normal_angle": {
+          "count": 3807,
+          "mean_degrees": 5.820606544007145,
+          "rmse_degrees": 10.558530720231897
+        },
+        "contact_point_local": {
+          "count": 11421,
+          "mae": 0.02197672909339496,
+          "rmse": 0.032970923821875074
+        }
+      },
+      "right": {
+        "slip_speed": {
+          "count": 3741,
+          "mae": 0.09482026544484949,
+          "rmse": 0.12886048025401853
+        },
+        "foot_load_ratio": {
+          "count": 4749,
+          "mae": 0.22084048365286513,
+          "rmse": 0.2949264875897074
+        },
+        "normal_velocity": {
+          "count": 3741,
+          "mae": 0.008434884363809783,
+          "rmse": 0.011397859818393632
+        },
+        "tangent_velocity": {
+          "count": 7482,
+          "mae": 0.06784102266399945,
+          "rmse": 0.11061706320975057
+        },
+        "contact_switch": {
+          "count": 831,
+          "mae_s": 0.052154029773326345,
+          "mae_frames": 2.6077015714094527
+        },
+        "tangential_force": {
+          "count": 7482,
+          "mae": 17.07673295619366,
+          "rmse": 28.909297986074673
+        },
+        "contact_impulse": {
+          "count": 4749,
+          "mae": 1.4819643688242068,
+          "rmse": 1.7997465571059448
+        },
+        "contact": {
+          "count": 4749,
+          "tp": 3403,
+          "fp": 509,
+          "fn": 338,
+          "bce": 0.45142665554358097,
+          "brier": 0.1404677278215721,
+          "precision": 0.8698875255623721,
+          "recall": 0.9096498262496658,
+          "f1": 0.8893244479289167
+        },
+        "normal_force": {
+          "count": 3741,
+          "mae": 99.9426936129458,
+          "rmse": 126.7078337643929
+        },
+        "slip_direction": {
+          "count": 3741,
+          "mean_degrees": 92.36559209387687
+        },
+        "contact_mode": {
+          "count": 4749,
+          "accuracy": 0.5502210855484009,
+          "macro_f1": 0.476020872592926,
+          "confusion": [
+            [
+              310,
+              213,
+              199,
+              241
+            ],
+            [
+              45,
+              1850,
+              364,
+              9
+            ],
+            [
+              89,
+              845,
+              224,
+              42
+            ],
+            [
+              67,
+              10,
+              12,
+              229
+            ]
+          ]
+        },
+        "contact_normal_angle": {
+          "count": 3741,
+          "mean_degrees": 11.260822880048224,
+          "rmse_degrees": 17.796068470595607
+        },
+        "contact_point_local": {
+          "count": 11223,
+          "mae": 0.020268861413005997,
+          "rmse": 0.02969442816992109
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "name": "validation seeds",
+      "value": 3,
+      "operator": ">=",
+      "limit": 3,
+      "passed": true
+    },
+    {
+      "name": "left contact F1",
+      "value": 0.905333849928968,
+      "operator": ">=",
+      "limit": 0.75,
+      "passed": true
+    },
+    {
+      "name": "left contact Brier",
+      "value": 0.12320030842091717,
+      "operator": "<=",
+      "limit": 0.2,
+      "passed": true
+    },
+    {
+      "name": "left mode macro F1",
+      "value": 0.48125720024108887,
+      "operator": ">=",
+      "limit": 0.4,
+      "passed": true
+    },
+    {
+      "name": "left tangent RMSE",
+      "value": 0.15179466527511135,
+      "operator": "<=",
+      "limit": 0.35,
+      "passed": true
+    },
+    {
+      "name": "left slip-speed RMSE",
+      "value": 0.18405231178585457,
+      "operator": "<=",
+      "limit": 0.25,
+      "passed": true
+    },
+    {
+      "name": "left normal-force RMSE",
+      "value": 129.13539283633858,
+      "operator": "<=",
+      "limit": 250.0,
+      "passed": true
+    },
+    {
+      "name": "left tangential-force RMSE",
+      "value": 25.15743174172157,
+      "operator": "<=",
+      "limit": 175.0,
+      "passed": true
+    },
+    {
+      "name": "right contact F1",
+      "value": 0.8893244479289167,
+      "operator": ">=",
+      "limit": 0.75,
+      "passed": true
+    },
+    {
+      "name": "right contact Brier",
+      "value": 0.1404677278215721,
+      "operator": "<=",
+      "limit": 0.2,
+      "passed": true
+    },
+    {
+      "name": "right mode macro F1",
+      "value": 0.476020872592926,
+      "operator": ">=",
+      "limit": 0.4,
+      "passed": true
+    },
+    {
+      "name": "right tangent RMSE",
+      "value": 0.11061706320975057,
+      "operator": "<=",
+      "limit": 0.35,
+      "passed": true
+    },
+    {
+      "name": "right slip-speed RMSE",
+      "value": 0.12886048025401853,
+      "operator": "<=",
+      "limit": 0.25,
+      "passed": true
+    },
+    {
+      "name": "right normal-force RMSE",
+      "value": 126.7078337643929,
+      "operator": "<=",
+      "limit": 250.0,
+      "passed": true
+    },
+    {
+      "name": "right tangential-force RMSE",
+      "value": 28.909297986074673,
+      "operator": "<=",
+      "limit": 175.0,
+      "passed": true
+    },
+    {
+      "name": "root angular delta RMSE",
+      "value": 0.30754392773541706,
+      "operator": "<=",
+      "limit": 1.0,
+      "passed": true
+    },
+    {
+      "name": "joint delta improvement vs persistence",
+      "value": -0.09100737931111054,
+      "operator": ">=",
+      "limit": 0.0,
+      "passed": false
+    },
+    {
+      "name": "minimum validation stratum support",
+      "value": 177,
+      "operator": ">=",
+      "limit": 1,
+      "passed": true
+    }
+  ],
+  "validation_gate_passed": false
+}

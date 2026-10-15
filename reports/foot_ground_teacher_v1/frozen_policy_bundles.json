@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "campaign": "/home/tcl/Desktop/start/HoloMotion-UM/configs/teachers/k1_foot_ground_collection_campaign.yaml",
+  "checkpoint_count": 6,
+  "all_verified": true,
+  "records": [
+    {
+      "checkpoint_id": "f3a_model99",
+      "split": "train",
+      "source": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_f3/2026-09-22_17-30-05_f3a_alternation_relearning_first100/model_99.pt",
+      "source_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+      "source_iteration": 99,
+      "bundle": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/frozen_policies/f3a_model99.pt",
+      "bundle_sha256": "5784fec6d6011d0f478e6286d25d5032531d8e75f66d6c09ecb267a1fd068133",
+      "safe_weights_only_load": true,
+      "all_parameters_frozen": true,
+      "eval_mode": true,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "checkpoint_id": "f3e_update5_preserved",
+      "split": "train",
+      "source": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_f3h1/f3e_update5_complete_source/model_3.pt",
+      "source_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+      "source_iteration": 3,
+      "bundle": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/frozen_policies/f3e_update5_preserved.pt",
+      "bundle_sha256": "33423d52ed27413243b19ef1543f358b29c160ae38776d9da9743fda31748598",
+      "safe_weights_only_load": true,
+      "all_parameters_frozen": true,
+      "eval_mode": true,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "checkpoint_id": "v13_direction_model999",
+      "split": "train",
+      "source": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_direction_gate/2026-09-29_16-58-36_fresh_direction_gated_pelvis_progress_heel_toe_1000/model_999.pt",
+      "source_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+      "source_iteration": 999,
+      "bundle": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/frozen_policies/v13_direction_model999.pt",
+      "bundle_sha256": "6526dd5d7f4ad2e3f62d69931cd99d6e4c6dfc9942434e8dd17ded66a192feff",
+      "safe_weights_only_load": true,
+      "all_parameters_frozen": true,
+      "eval_mode": true,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "checkpoint_id": "v13_grounded_model499",
+      "split": "validation",
+      "source": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_direction_grounded/2026-09-29_17-57-10_fresh_direction_grounded_pelvis_progress_heel_toe_500/model_499.pt",
+      "source_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+      "source_iteration": 499,
+      "bundle": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/frozen_policies/v13_grounded_model499.pt",
+      "bundle_sha256": "534cc90cbc29ab5684a563dd2f9c0d962a54375b5ecd5376ff62a779686c0940",
+      "safe_weights_only_load": true,
+      "all_parameters_frozen": true,
+      "eval_mode": true,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "checkpoint_id": "v13_f2r1_model2929",
+      "split": "train",
+      "source": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_f2r1/2026-09-28_16-11-52_pelvis_relative_slide_progress_model929_plus2000/model_2929.pt",
+      "source_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+      "source_iteration": 2929,
+      "bundle": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/frozen_policies/v13_f2r1_model2929.pt",
+      "bundle_sha256": "680d439e91e732f463b82fab51af232c493e57d1d558016d12d6017963f9fbd6",
+      "safe_weights_only_load": true,
+      "all_parameters_frozen": true,
+      "eval_mode": true,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "split": "test_heldout",
+      "source": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/logs/rsl_rl/k1_moonwalk_v13_f2r1/2026-09-29_09-07-17_model2929_stability_guardrails_remaining24950_to_plus25000/model_12929.pt",
+      "source_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+      "source_iteration": 12929,
+      "bundle": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/frozen_policies/v13_f2r1_model12929_heldout.pt",
+      "bundle_sha256": "9c805d0f3d49d1e7b1bf61ae9f1ab4230d4c59ed3ab4fcfae5781b6e9a89bcf1",
+      "safe_weights_only_load": true,
+      "all_parameters_frozen": true,
+      "eval_mode": true,
+      "verified": true,
+      "errors": []
+    }
+  ]
+}

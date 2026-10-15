@@ -1,0 +1,935 @@
+{
+  "schema": 1,
+  "evaluation_root": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation",
+  "npz_file_count": 321,
+  "readable_file_count": 321,
+  "unreadable": [],
+  "teacher_v1_direct_field_coverage": {
+    "student_joint_position": {
+      "description": "22-D current joint positions",
+      "file_count": 0,
+      "examples": []
+    },
+    "student_joint_velocity": {
+      "description": "22-D current joint velocities",
+      "file_count": 0,
+      "examples": []
+    },
+    "student_imu_angular_velocity_body": {
+      "description": "current body-frame IMU angular velocity",
+      "file_count": 0,
+      "examples": []
+    },
+    "student_imu_projected_gravity_body": {
+      "description": "current body-frame projected gravity",
+      "file_count": 0,
+      "examples": []
+    },
+    "student_estimated_joint_torque": {
+      "description": "22-D estimated/applied joint torque",
+      "file_count": 0,
+      "examples": []
+    },
+    "student_previous_executed_action": {
+      "description": "previous executed action",
+      "file_count": 0,
+      "examples": []
+    },
+    "executed_action": {
+      "description": "current executed action",
+      "file_count": 0,
+      "examples": []
+    },
+    "contact_point_world": {
+      "description": "raw physical contact point(s)",
+      "file_count": 0,
+      "examples": []
+    },
+    "contact_normal_world": {
+      "description": "raw physical contact normal(s)",
+      "file_count": 0,
+      "examples": []
+    },
+    "contact_force_world": {
+      "description": "raw per-contact force vector(s)",
+      "file_count": 0,
+      "examples": []
+    },
+    "foot_body_position_world": {
+      "description": "foot rigid-body origin",
+      "file_count": 0,
+      "examples": []
+    },
+    "foot_body_linear_velocity_world": {
+      "description": "foot rigid-body linear velocity",
+      "file_count": 0,
+      "examples": []
+    },
+    "foot_body_angular_velocity_world": {
+      "description": "foot rigid-body angular velocity",
+      "file_count": 0,
+      "examples": []
+    },
+    "ground_velocity_world": {
+      "description": "ground velocity at the contact point",
+      "file_count": 0,
+      "examples": []
+    },
+    "next_joint_velocity": {
+      "description": "next-step 22-D joint velocity",
+      "file_count": 0,
+      "examples": []
+    },
+    "next_root_angular_velocity_body": {
+      "description": "next-step body-frame root angular velocity",
+      "file_count": 0,
+      "examples": []
+    },
+    "valid_transition": {
+      "description": "terminal/reset-safe transition mask",
+      "file_count": 0,
+      "examples": []
+    },
+    "termination_reason": {
+      "description": "episode termination reason",
+      "file_count": 0,
+      "examples": []
+    }
+  },
+  "known_diagnostic_proxy_coverage": {
+    "action": {
+      "limitation": "policy action; execution/action-manager semantics are not recorded",
+      "file_count": 294,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "foot_contact_force_xyz_n": {
+      "limitation": "per-foot aggregate force, not raw per-contact records",
+      "file_count": 248,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_contact_force_norm_n": {
+      "limitation": "force magnitude; does not separate normal/tangent",
+      "file_count": 248,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_ground_compatible_contact": {
+      "limitation": "derived contact Boolean",
+      "file_count": 244,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_point_actual": {
+      "limitation": "fixed tracked foot sites, not physical contact points",
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "foot_point_velocity_actual": {
+      "limitation": "fixed tracked site velocity, not selected contact-point velocity",
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "foot_site_min_height_m": {
+      "limitation": "fixed-site geometry diagnostic",
+      "file_count": 248,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "joint_pos_actual": {
+      "limitation": "joint position only; no paired joint velocity/torque",
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "root_quat_actual": {
+      "limitation": "root orientation diagnostic",
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "role_code": {
+      "limitation": "reference-phase foot-role annotation",
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    }
+  },
+  "related_key_inventory": {
+    "action": {
+      "file_count": 294,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "action_executed": {
+      "file_count": 167,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "action_manager_processed": {
+      "file_count": 174,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "action_manager_raw": {
+      "file_count": 174,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "action_norm": {
+      "file_count": 13,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_drop.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_fixed_reference.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_policy.npz"
+      ]
+    },
+    "applied_torque": {
+      "file_count": 183,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "applied_torque_norm": {
+      "file_count": 13,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_drop.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_fixed_reference.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_policy.npz"
+      ]
+    },
+    "balance_joint_residual": {
+      "file_count": 1,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v13_k2_balance_cycle50.npz"
+      ]
+    },
+    "bounded_processed_joint_target": {
+      "file_count": 167,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "computed_torque": {
+      "file_count": 183,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "cross_leg_contact_force_matrix_n": {
+      "file_count": 47,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v13_final_bilateral_residual_model2750_plus250_feet_contact.npz"
+      ]
+    },
+    "foot_contact_force": {
+      "file_count": 9,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_diagnostic500.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_numeric.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac51_diagnostic500_feet.npz"
+      ]
+    },
+    "foot_contact_force_norm_n": {
+      "file_count": 248,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_contact_force_xyz_n": {
+      "file_count": 248,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_contact_fz_n": {
+      "file_count": 13,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_drop.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_fixed_reference.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_policy.npz"
+      ]
+    },
+    "foot_contact_region_native_point_count": {
+      "file_count": 173,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_contact_region_native_valid": {
+      "file_count": 173,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_contact_region_normal_force_n": {
+      "file_count": 173,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_contact_region_normal_impulse_ns": {
+      "file_count": 173,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_ground_compatible_contact": {
+      "file_count": 244,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "foot_point_velocity_actual": {
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "foot_point_velocity_reference": {
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "joint_effort_limit": {
+      "file_count": 174,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "joint_names": {
+      "file_count": 9,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_diagnostic500.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_numeric.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac51_diagnostic500_feet.npz"
+      ]
+    },
+    "joint_order": {
+      "file_count": 5,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v13_h7_bilateral_lift_best_lateral_source_audit.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v13_h7_bilateral_lift_search_gate.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v13_h7_bilateral_lift_search_pop128_gen5.npz"
+      ]
+    },
+    "joint_pos_actual": {
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "joint_pos_reference": {
+      "file_count": 9,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_diagnostic500.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_numeric.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac51_diagnostic500_feet.npz"
+      ]
+    },
+    "joint_position_target": {
+      "file_count": 174,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "joint_vel_actual": {
+      "file_count": 138,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "joint_vel_reference": {
+      "file_count": 138,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "policy_action_unfiltered": {
+      "file_count": 16,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v17_model549_actor_mean_lowpass_10hz_feet_contact.npz"
+      ]
+    },
+    "policy_observation": {
+      "file_count": 70,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/baseline.npz"
+      ]
+    },
+    "raw_action": {
+      "file_count": 9,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_diagnostic500.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_numeric.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac51_diagnostic500_feet.npz"
+      ]
+    },
+    "release_root_rate_feedback_active": {
+      "file_count": 92,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/mimo_rate_feedback_120.npz"
+      ]
+    },
+    "release_root_rate_feedback_vector_rad": {
+      "file_count": 92,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/mimo_rate_feedback_120.npz"
+      ]
+    },
+    "root_actual": {
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "root_ang_vel_actual_w": {
+      "file_count": 129,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "root_ang_vel_reference_w": {
+      "file_count": 129,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "root_lin_vel": {
+      "file_count": 13,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_drop.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_fixed_reference.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_policy.npz"
+      ]
+    },
+    "root_pitch_error_rad": {
+      "file_count": 119,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "root_pitch_rate_error_rad_s": {
+      "file_count": 119,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "root_quat_actual": {
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "root_quat_reference": {
+      "file_count": 9,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_diagnostic500.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac50_numeric.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/oracle_v12_isaac51_diagnostic500_feet.npz"
+      ]
+    },
+    "root_reference": {
+      "file_count": 303,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v1.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_deterministic_v2.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/f1_cumulative1000_gate_fixes_v1.npz"
+      ]
+    },
+    "root_xyz": {
+      "file_count": 13,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_drop.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_fixed_reference.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_policy.npz"
+      ]
+    },
+    "target_impulse_active": {
+      "file_count": 111,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "target_impulse_rad": {
+      "file_count": 111,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "target_impulse_vector_rad": {
+      "file_count": 94,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/coordinated_bounded_002_120.npz"
+      ]
+    },
+    "total_contact_fz_n": {
+      "file_count": 13,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_drop.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_fixed_reference.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/physics_reality_policy.npz"
+      ]
+    },
+    "unbounded_processed_joint_target": {
+      "file_count": 167,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    },
+    "window_gate_anchor_forefoot_contact_fraction": {
+      "file_count": 163,
+      "examples": [
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+        "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_local_id_release/baseline.npz"
+      ]
+    }
+  },
+  "best_partial_diagnostic_files": [
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_feet_contact.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/failed_preroll_timeout500_2026-10-15/v17_model549_closed_loop_preroll150_follow_contact.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/baseline.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_left_ankle_roll_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_left_ankle_roll_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_left_hip_roll_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_left_hip_roll_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_right_ankle_pitch_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_right_ankle_pitch_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_right_hip_pitch_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset10_right_hip_pitch_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_left_ankle_roll_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_left_ankle_roll_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_left_hip_roll_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_left_hip_roll_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_right_ankle_pitch_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_right_ankle_pitch_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_right_hip_pitch_neg.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/h7_observation_predictiveness/offset3_right_hip_pitch_pos.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v13_final_bilateral_residual_model2750_plus250_feet_contact.npz",
+      "recoverable_concept_count": 10,
+      "recoverable_concepts": {
+        "joint_position": "joint_pos_actual",
+        "joint_velocity": "joint_vel_actual",
+        "root_angular_velocity_world": "root_ang_vel_actual_w",
+        "root_orientation_for_body_frame_conversion": "root_quat_actual",
+        "applied_torque": "applied_torque",
+        "executed_action": "action_executed",
+        "policy_observation": "policy_observation",
+        "native_contact_indicator": "foot_contact_region_native_valid",
+        "aggregate_normal_force": "foot_contact_region_normal_force_n",
+        "aggregate_normal_impulse": "foot_contact_region_normal_impulse_ns"
+      }
+    }
+  ],
+  "partial_diagnostic_concept_count": 10,
+  "irrecoverable_from_recorded_arrays": {
+    "raw_contact_point": "fixed tracked foot sites are not solver contact points",
+    "raw_contact_normal": "no solver contact normal is recorded",
+    "raw_tangential_contact_force": "only aggregate XYZ or normal force is recorded",
+    "contact_point_velocity": "foot_point_velocity_actual is a fixed site velocity and the required rigid-body angular velocity/contact lever arm pair is absent",
+    "moving_ground_velocity": "ground velocity and ground-body identity are absent",
+    "substep_contact_records": "only control-frame aggregates are recorded",
+    "termination_safe_transition_mask": "termination/reset provenance is absent",
+    "randomization_metadata": "seed, friction, mass and disturbances are not complete per trajectory"
+  },
+  "complete_teacher_v1_files": [],
+  "historical_data_accepted_for_teacher_v1_training": false,
+  "verdict": "No historical file contains the complete direct V1 input/label contract. Diagnostic proxies must not be promoted to physical ground truth."
+}

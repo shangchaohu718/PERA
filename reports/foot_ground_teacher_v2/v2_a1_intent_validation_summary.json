@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "selection_split": "validation",
+  "old_v1_test_accessed_for_v2_selection": false,
+  "final_test_status": "not_run_new_checkpoint_required",
+  "profiles": {
+    "v1": {
+      "active_supervision": [
+        "contact_bce",
+        "contact_mode_ce",
+        "relative_velocity_tangent",
+        "normal_force",
+        "delta_joint_velocity",
+        "delta_root_angular_velocity",
+        "joint_velocity_residual"
+      ],
+      "feet": {
+        "left": {
+          "contact_bce": 0.40720618205412884,
+          "contact_brier": 0.12320030842091717,
+          "contact_f1": 0.905333849928968,
+          "contact_mode_macro_f1": 0.48125720024108887,
+          "tangent_velocity_rmse_m_s": 0.15179466527511135,
+          "normal_force_rmse_n": 129.13539283633858
+        },
+        "right": {
+          "contact_bce": 0.45142665554358097,
+          "contact_brier": 0.1404677278215721,
+          "contact_f1": 0.8893244479289167,
+          "contact_mode_macro_f1": 0.476020872592926,
+          "tangent_velocity_rmse_m_s": 0.11061706320975057,
+          "normal_force_rmse_n": 126.7078337643929
+        }
+      },
+      "dynamics": {
+        "delta_joint_velocity_rmse": 1.4090566703125111,
+        "delta_joint_velocity_vs_persistence_rmse_improvement": -0.09100737931111054,
+        "delta_root_angular_velocity_rmse": 0.30754392773541706
+      }
+    },
+    "v2_a1_intent": {
+      "active_supervision": [
+        "contact_bce",
+        "contact_mode_ce",
+        "relative_velocity_tangent",
+        "normal_force",
+        "tangential_force",
+        "contact_impulse",
+        "foot_load_ratio",
+        "delta_joint_velocity",
+        "delta_root_angular_velocity",
+        "joint_velocity_residual"
+      ],
+      "feet": {
+        "left": {
+          "contact_bce": 0.8033229909675652,
+          "contact_brier": 0.17968493115935835,
+          "contact_f1": 0.9022364217252397,
+          "contact_mode_macro_f1": 0.49102556705474854,
+          "tangent_velocity_rmse_m_s": 0.16888640133744118,
+          "normal_force_rmse_n": 83.31480804833122
+        },
+        "right": {
+          "contact_bce": 0.6225280763162113,
+          "contact_brier": 0.1627400435552795,
+          "contact_f1": 0.9001764557600201,
+          "contact_mode_macro_f1": 0.5072842836380005,
+          "tangent_velocity_rmse_m_s": 0.17226512017394888,
+          "normal_force_rmse_n": 87.72024077490678
+        }
+      },
+      "dynamics": {
+        "delta_joint_velocity_rmse": 1.4249795286679512,
+        "delta_joint_velocity_vs_persistence_rmse_improvement": -0.10431240210155417,
+        "delta_root_angular_velocity_rmse": 0.28338840778204866
+      },
+      "seeds": [
+        730201,
+        730202,
+        730203
+      ],
+      "thresholds": [
+        0.05000000074505806,
+        0.05000000074505806,
+        0.06000000238418579
+      ],
+      "gradient_audit": {
+        "gradient_cosine/contact_group:dynamics_group": {
+          "mean": 0.06295919607994922,
+          "negative_fraction": 0.32407407407407407,
+          "count": 108
+        },
+        "gradient_cosine/contact_group:force_group": {
+          "mean": 0.1599614527556157,
+          "negative_fraction": 0.24074074074074073,
+          "count": 108
+        },
+        "gradient_cosine/contact_group:geometry_group": {
+          "mean": 0.0,
+          "negative_fraction": 0.0,
+          "count": 108
+        },
+        "gradient_cosine/contact_group:kinematics_group": {
+          "mean": 0.07941020637237536,
+          "negative_fraction": 0.28703703703703703,
+          "count": 108
+        },
+        "gradient_cosine/force_group:dynamics_group": {
+          "mean": 0.09549579228257278,
+          "negative_fraction": 0.28703703703703703,
+          "count": 108
+        },
+        "gradient_cosine/geometry_group:dynamics_group": {
+          "mean": 0.0,
+          "negative_fraction": 0.0,
+          "count": 108
+        },
+        "gradient_cosine/geometry_group:force_group": {
+          "mean": 0.0,
+          "negative_fraction": 0.0,
+          "count": 108
+        },
+        "gradient_cosine/geometry_group:kinematics_group": {
+          "mean": 0.0,
+          "negative_fraction": 0.0,
+          "count": 108
+        },
+        "gradient_cosine/kinematics_group:dynamics_group": {
+          "mean": 0.04352964988275845,
+          "negative_fraction": 0.3055555555555556,
+          "count": 108
+        },
+        "gradient_cosine/kinematics_group:force_group": {
+          "mean": 0.0789640860926334,
+          "negative_fraction": 0.3148148148148148,
+          "count": 108
+        },
+        "gradient_norm/contact_group": {
+          "mean": 2.527231539565104,
+          "negative_fraction": null,
+          "count": 108
+        },
+        "gradient_norm/dynamics_group": {
+          "mean": 0.9396161652273602,
+          "negative_fraction": null,
+          "count": 108
+        },
+        "gradient_norm/force_group": {
+          "mean": 1.0924580141350075,
+          "negative_fraction": null,
+          "count": 108
+        },
+        "gradient_norm/geometry_group": {
+          "mean": 0.0,
+          "negative_fraction": null,
+          "count": 108
+        },
+        "gradient_norm/kinematics_group": {
+          "mean": 1.2794368029744536,
+          "negative_fraction": null,
+          "count": 108
+        },
+        "gradient_norm/total": {
+          "mean": 6.119522000816133,
+          "negative_fraction": null,
+          "count": 10800
+        }
+      }
+    }
+  }
+}

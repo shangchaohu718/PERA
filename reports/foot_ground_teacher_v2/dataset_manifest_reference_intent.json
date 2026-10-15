@@ -1,0 +1,2076 @@
+{
+  "schema": 1,
+  "records": [
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730201_high.npz",
+      "sha256": "5e518054a33d15d6ea804f5036f876d63b2491c09ed6d8acdeb3fef97e1d6925",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730201_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730201_low.npz",
+      "sha256": "1ff1044a0dab78c0ec7ad11b9f36e004c32b07912af3f62146d691cf164e22fb",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730201_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730201_nominal.npz",
+      "sha256": "e9359b37cf49fd6ce2175bdf46cd0b7067c56e7cab2a127bfc5dc66f3e5da333",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730201_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730202_high.npz",
+      "sha256": "85ee18e9f5b2718cedaa6727093997f5bce0936150ee42a18b524baeb7d3f479",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730202_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730202_low.npz",
+      "sha256": "10bbfa0953c737d1888d974f34a98cc412840eb66d162ca4f8d5c541663cf668",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730202_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730202_nominal.npz",
+      "sha256": "ed0311b9ff82f9673d1649b955b26b0d423ebe0ce265a0be1922fadabc33135a",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730202_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730203_high.npz",
+      "sha256": "4aa39432564099273fab696e8572682608fb8a47efbeb4b3593b2cfa0df96bf2",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730203_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730203_low.npz",
+      "sha256": "a2c4d8619f15d33edb1e177fa1d2479e516ea5e910ba941672c1ba89a2e2bea2",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730203_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3a_model99/f3a_model99_s730203_nominal.npz",
+      "sha256": "17ca1b1a6d8e9e88bca895332854ea3da51730479e2e099cedf22b777dee4228",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3a_model99",
+        "checkpoint_sha256": "318a214697f55985357941047b5cf90f92dfc16d38037656f5758b6aa76b08d3",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3a_model99_s730203_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730201_high.npz",
+      "sha256": "c95514132e9d86a068aeaf0d7e93e0b4c6710b18b67f34476b2bae6437ca8dce",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730201_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730201_low.npz",
+      "sha256": "d307a020da5049a451707e679aef91ce0b55079a587dd108ee5a39bd9f370317",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730201_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730201_nominal.npz",
+      "sha256": "beefe0d60418e24e7e6eed89ef7973bf95fe3fea216a29f495b926f476b2cbd0",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730201_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730202_high.npz",
+      "sha256": "33311a6df780384a76b310c920594929e268943e015ec1b4c522b47aa60ac4ce",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730202_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730202_low.npz",
+      "sha256": "a67cf328d03f822c107310ce9cf0d7604d1f453d13d71162e8d002beece6bae0",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730202_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730202_nominal.npz",
+      "sha256": "e0fba873d590cda040580eef2e3c64786dcc3ab7c469121e8f80d373f450b31a",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730202_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730203_high.npz",
+      "sha256": "33c363dbd4912f4b7b01108cca94355347510674ccded951a7d03ff412817c7e",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730203_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730203_low.npz",
+      "sha256": "e3e0e00d52b0c54a0d2fe97271a217273cedfa2d0891e6080ca169a6b2c06f85",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730203_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/f3e_update5_preserved/f3e_update5_preserved_s730203_nominal.npz",
+      "sha256": "ac039afbcdaf97465132c94bdc51fd88f0c15485de30e22d6447b562fd608238",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "f3e_update5_preserved",
+        "checkpoint_sha256": "0b6d62a8048eadd3c2bf32eb7c5ef22eb2ee5e3f2fc9f19bd173f9800e22c5a5",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_periodic_softlimit_grounded_candidate_v12_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "f3e_update5_preserved_s730203_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730201_high.npz",
+      "sha256": "096f647c26eaab85f01ab298e73a2fbd0a5d9fa3717b0c7f7d5a7fa3c6a8a49c",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730201_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730201_low.npz",
+      "sha256": "5aeb0c12d7f6a9db6ee8665e8cfd525914a530b74fdf4b2fdcb33294cda355d5",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730201_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730201_nominal.npz",
+      "sha256": "20a8bcbc480239989b7d9a9392258c61732f80d6ccff8b09c63abad6e643adee",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730201_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730202_high.npz",
+      "sha256": "bb44d212ffe501b1bd86548789c71891f10f8cd4c72c899c1fbc488e825b651e",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730202_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730202_low.npz",
+      "sha256": "975d9c4945c3ecce1f995224ad884c4a19ba353071bfa5b73bddf6f72021aa2f",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730202_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730202_nominal.npz",
+      "sha256": "aefc071f5a30c80cf85e94ab4785bbcd91989be3a9899d433f8f193560ac0f64",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730202_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730203_high.npz",
+      "sha256": "70b8ea19a693c3a376fd2179dc4598b76607dd92f5c9235ee62850354fbfdd70",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730203_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730203_low.npz",
+      "sha256": "84dfe841570d89dd0b71e7e09b54c005ca0c699a22f492dbdd7a85a580ca6dd8",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730203_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_direction_model999/v13_direction_model999_s730203_nominal.npz",
+      "sha256": "6b98deff6547b3ead34dc1944e75e496f8f0ac768a2d23e9d8ce4c21e7af8cc3",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_direction_model999",
+        "checkpoint_sha256": "75395d1ff0ab11e5f1e442a76e6da6c49a280620e8acb13786d9e969a5e2f167",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_direction_model999_s730203_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_high.npz",
+      "sha256": "b638dddbdc344385a5a4b6e5c9b8b9305e045f8dd6b676dc8c4099fd7a1b517d",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730201_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_low.npz",
+      "sha256": "772814724d8600661a98e006234437ea5598ecc4d52769669f1b68fedf23e4dd",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730201_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_nominal.npz",
+      "sha256": "3fdd1bdc5ab867f640e9d3cc4d4b44697d92160be631a371274ff91cb90660b6",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730201_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730202_high.npz",
+      "sha256": "758c75e636548b727280151658f011654253b7fd3a3665a4a99114b61ccd176e",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730202_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730202_low.npz",
+      "sha256": "e106f6e85142a822447bc3127b0f28451e0eab335153cfe12133a7a4d422eff9",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730202_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730202_nominal.npz",
+      "sha256": "5844d2defc5a4589335ed6570da160e0d063a303e8876d58d374ab12e3665ff8",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730202_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730203_high.npz",
+      "sha256": "76eb5b0f8f7f1083e567188acda6179ca989f2715af82c5a8852ca8e270993ed",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730203_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730203_low.npz",
+      "sha256": "7b9e9967b0408d783b441d5b83750e7732c37caece9b32a6b903c221890970dd",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730203_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730203_nominal.npz",
+      "sha256": "6ebe9f6806d22aad0a9fc4ceb6202c203f8ae89447b99baf6caaeabb7ab0e692",
+      "split": "test",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model12929_heldout",
+        "checkpoint_sha256": "29d13fb11430c26fe478806f354a190b1c3223b4e8d8dd21ce6231bbf00466c4",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model12929_heldout_s730203_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730201_high.npz",
+      "sha256": "b12be187a1818d7018aad0877f3c5fe2cbcd9b97f2f1bb6f51bca959bb7d58af",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730201_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730201_low.npz",
+      "sha256": "e24c36cc99e3cdaa704465b55f53ecee2fb0ba0eac36d26cf6a1e84cf64bd361",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730201_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730201_nominal.npz",
+      "sha256": "4baddb5b1dcede9b72aaf5a88f00337b4056d0a011c52cf4fda94f65c303cda4",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730201_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730202_high.npz",
+      "sha256": "d09aefc554e292e0583c40e530777393d0bfcd85bcf29e533d79e060228ba94f",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730202_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730202_low.npz",
+      "sha256": "1935466bd254e4e67d43a2fa52b5412f919d934a0422b8f4d95d76757b35915c",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730202_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730202_nominal.npz",
+      "sha256": "ab2a59c5c97dc7bafb20a9c6c11f6181bed93f269d9bf5f02c8740724a1557b3",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730202_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730203_high.npz",
+      "sha256": "c1d8c8d835b48b312c6401d94e09edabb6eb884f97868c506324fd7390e13fda",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730203_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730203_low.npz",
+      "sha256": "2c62657e2eb93f44fce2688c3c044083123d2f10d41451811a990db676001dd6",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730203_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_f2r1_model2929/v13_f2r1_model2929_s730203_nominal.npz",
+      "sha256": "c0233998eec72352cb03737c45cf38a3bf4f510c38d54e8ecadd3d4f23ea3def",
+      "split": "train",
+      "metadata": {
+        "checkpoint_id": "v13_f2r1_model2929",
+        "checkpoint_sha256": "6a9cadf2d67f875f79e899caa973dca2666dda539b10281eb3414aeef0c2f310",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_f2r1_model2929_s730203_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730201_high.npz",
+      "sha256": "2501349762cda004ba91cf083fdb09d0f726abb56416db8f829b286692fbd3dd",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_grounded_model499_s730201_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730201_low.npz",
+      "sha256": "b6d818cd7edd3b22b3f3edb7a0cf902b449620aa5e22cee3f204c3d7091c5280",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_grounded_model499_s730201_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730201_nominal.npz",
+      "sha256": "208b29d0a3cbaf354c7f44c6f648f30bf743267e0ade705eb4a86a66466df262",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730201,
+        "start_phase": 0.8096192384769539,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_grounded_model499_s730201_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730202_high.npz",
+      "sha256": "942193db83c73802d4a402d7d714e4995c8f5ebeeca3872b714789d3b2272c48",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "ee_body_pos",
+        "trajectory_id": "v13_grounded_model499_s730202_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730202_low.npz",
+      "sha256": "830d05fc2b3630147b8aa46c4d8dc369e1f64f82038abb1b8648b98bf7219721",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "ee_body_pos",
+        "trajectory_id": "v13_grounded_model499_s730202_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730202_nominal.npz",
+      "sha256": "5a5f79bc1801d0405932c7ba51da6a821f447a86b7e9d3ef59d8b5fe4c817679",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730202,
+        "start_phase": 0.03206412825651302,
+        "termination_reason": "ee_body_pos",
+        "trajectory_id": "v13_grounded_model499_s730202_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730203_high.npz",
+      "sha256": "df3c77bfd44fd4e1d19d6e917c40fa344f7dfb9c4c145a0e76cee8ed4e6a9cb0",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.7,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "motion_end",
+        "trajectory_id": "v13_grounded_model499_s730203_high",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730203_low.npz",
+      "sha256": "3785329e0079842b16bd01ee485b030a36906b62be3e6b4fe0b3acfaad26ea41",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.3,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "ee_body_pos",
+        "trajectory_id": "v13_grounded_model499_s730203_low",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/reference_intent/v13_grounded_model499/v13_grounded_model499_s730203_nominal.npz",
+      "sha256": "e79d442dd4307a8efce200ff46d38e1b987ec29537b53dadbfee70efd71f9ad0",
+      "split": "validation",
+      "metadata": {
+        "checkpoint_id": "v13_grounded_model499",
+        "checkpoint_sha256": "9792226419ef17394f5ba38b6e46c5a3c2e771c163a0da9739b77bee673a6446",
+        "control_dt_s": 0.02,
+        "disturbance": {
+          "configured_push_event": false,
+          "type": "none"
+        },
+        "friction": 0.5,
+        "mass_scale": 1.0,
+        "reference_id": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/k1_61s_64s_contact_stabilized_candidate_v13_motionloader.npz",
+        "schema": 1,
+        "seed": 730203,
+        "start_phase": 0.4969939879759519,
+        "termination_reason": "ee_body_pos",
+        "trajectory_id": "v13_grounded_model499_s730203_nominal",
+        "reference_intent_contract": {
+          "schema": 1,
+          "names": [
+            "phase_sin",
+            "phase_cos",
+            "planned_anchor_left",
+            "planned_anchor_right",
+            "planned_slide_left",
+            "planned_slide_right"
+          ],
+          "source": "current_reference_frame_t",
+          "future_realized_contact_used": false,
+          "phase_labels": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz",
+          "cycle_start_50hz": 58,
+          "cycle_frames": 50
+        }
+      }
+    }
+  ],
+  "heldout_checkpoints": [
+    "v13_f2r1_model12929_heldout"
+  ],
+  "validation_checkpoints": [
+    "v13_grounded_model499"
+  ],
+  "checkpoint_source_exclusive": true,
+  "reference_intent_schema": {
+    "schema": 1,
+    "names": [
+      "phase_sin",
+      "phase_cos",
+      "planned_anchor_left",
+      "planned_anchor_right",
+      "planned_slide_left",
+      "planned_slide_right"
+    ],
+    "future_realized_contact_used": false
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "selection_split": "validation",
+  "old_v1_test_accessed": false,
+  "training_device": "cpu",
+  "seeds": [730201, 730202, 730203],
+  "epochs_per_seed": 100,
+  "optimizer_updates_per_seed": 3600,
+  "single_change": "add current reference phase and planned left/right anchor/slide roles",
+  "comparison": {
+    "v2_a1": {
+      "contact_bce_left_right": [0.693604, 0.619181],
+      "contact_brier_left_right": [0.161975, 0.153575],
+      "contact_f1_left_right": [0.909, 0.903],
+      "contact_mode_macro_f1_left_right": [0.499, 0.537],
+      "tangent_rmse_left_right_m_s": [0.190, 0.181],
+      "normal_force_rmse_left_right_n": [84.7, 89.5],
+      "delta_joint_velocity_rmse": 1.438027,
+      "delta_root_angular_velocity_rmse": 0.286153
+    },
+    "v2_a1_intent": {
+      "contact_bce_left_right": [0.803323, 0.622528],
+      "contact_brier_left_right": [0.179685, 0.162740],
+      "contact_f1_left_right": [0.902236, 0.900176],
+      "contact_mode_macro_f1_left_right": [0.491026, 0.507284],
+      "tangent_rmse_left_right_m_s": [0.168886, 0.172265],
+      "normal_force_rmse_left_right_n": [83.314808, 87.720241],
+      "delta_joint_velocity_rmse": 1.424980,
+      "delta_root_angular_velocity_rmse": 0.283388
+    }
+  },
+  "strata_tangent_rmse_m_s": {
+    "active_sliding": {"v2_a1": 0.237236, "v2_a1_intent": 0.235039},
+    "unexpected_slip": {"v2_a1": 0.211831, "v2_a1_intent": 0.186502},
+    "stable_contact": {"v2_a1": 0.143004, "v2_a1_intent": 0.128692},
+    "sliding": {"v2_a1": 0.211378, "v2_a1_intent": 0.191237},
+    "impact": {"v2_a1": 0.331239, "v2_a1_intent": 0.324348}
+  },
+  "gradient_audit": {
+    "v2_a1_intent_mean_norms": {
+      "contact": 2.527232,
+      "kinematics": 1.279437,
+      "force": 1.092458,
+      "dynamics": 0.939616
+    },
+    "contact_kinematics_cosine_mean": 0.079410,
+    "contact_force_cosine_mean": 0.159961,
+    "kinematics_force_cosine_mean": 0.078964
+  },
+  "counterfactual_action_sensitivity": {
+    "quality_passed_material_tangent_probe_teacher_pairs": 9,
+    "tangent_jacobian_rmse": 0.514080,
+    "tangent_cosine_mean": 0.084942,
+    "tangent_sign_accuracy": 0.611111,
+    "tangent_action_ignored_rate": 0.666667,
+    "tangent_sensitivity_gain_median": 0.113321,
+    "material_force_probe_teacher_pairs": 3,
+    "force_jacobian_rmse": 209.957540,
+    "force_cosine_mean": 1.0,
+    "force_sign_accuracy": 1.0,
+    "force_action_ignored_rate": 1.0,
+    "force_sensitivity_gain_median": 0.027154,
+    "gate_passed": false
+  },
+  "decision": {
+    "promote_over_v2_a1": false,
+    "reason": "Intent improves tangent regression, most clearly for unexpected slip and stable contact, but worsens contact probability calibration and contact-mode quality. Its counterfactual tangent direction is less wrong than V2-A1 but remains weak and it ignores two thirds of material tangent probes plus all material force probes.",
+    "next_step": "retain intent as an optional feature for a future action-contrastive model; do not combine it with architectural changes until counterfactual training coverage passes",
+    "actor_updates": 0,
+    "ppo_updates": 0,
+    "deployment_claim": false
+  }
+}

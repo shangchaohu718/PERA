@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "coverage": {
+    "train": {
+      "separation": 8277,
+      "stable": 4537,
+      "sliding": 5170,
+      "impact": 1984,
+      "left_anchor_right_slide": 685,
+      "right_anchor_left_slide": 450,
+      "double_support": 2460,
+      "contact_handoff": 3796,
+      "active_sliding": 5556,
+      "active_sliding_contact": 2223,
+      "unexpected_slip": 4906,
+      "valid_transitions": 9984,
+      "invalid_transitions": 0
+    },
+    "validation": {
+      "separation": 633,
+      "stable": 1489,
+      "sliding": 867,
+      "impact": 177,
+      "left_anchor_right_slide": 192,
+      "right_anchor_left_slide": 269,
+      "double_support": 971,
+      "contact_handoff": 470,
+      "active_sliding": 886,
+      "active_sliding_contact": 597,
+      "unexpected_slip": 568,
+      "valid_transitions": 1583,
+      "invalid_transitions": 0
+    },
+    "test": {
+      "separation": 3083,
+      "stable": 27,
+      "sliding": 789,
+      "impact": 1093,
+      "left_anchor_right_slide": 1,
+      "right_anchor_left_slide": 2,
+      "double_support": 191,
+      "contact_handoff": 1464,
+      "active_sliding": 1389,
+      "active_sliding_contact": 407,
+      "unexpected_slip": 1142,
+      "valid_transitions": 2496,
+      "invalid_transitions": 0
+    }
+  },
+  "minimum_mode_samples": 1,
+  "training_coverage_pass": true,
+  "missing_or_underrepresented": []
+}

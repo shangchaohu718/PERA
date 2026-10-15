@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import random
 import sys
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -32,10 +33,46 @@ def parse_args():
     parser.add_argument("--num-envs", type=int, default=1)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--ablation", choices=("full", "no_physics", "no_latent", "shuffle_latent", "no_history"), default="full")
+    parser.add_argument("--video", type=Path,
+                        help="optional H.264 MP4 from the exact evaluated rollout")
+    parser.add_argument("--video-width", type=int, default=960)
+    parser.add_argument("--video-height", type=int, default=720)
+    parser.add_argument("--no-reference-ghost", action="store_true",
+                        help="omit the translucent green reference robot")
     args = parser.parse_args()
-    if args.steps < 1 or args.num_envs < 1 or args.seed < 0:
+    if (args.steps < 1 or args.num_envs < 1 or args.seed < 0
+            or args.video_width < 1 or args.video_height < 1):
         parser.error("steps/num-envs must be positive and seed non-negative")
+    if args.video is not None and args.num_envs != 1:
+        parser.error("video evaluation requires --num-envs 1")
     return args
+
+
+def install_reference_ghost(env: Any, task: Any) -> None:
+    """Draw the current reference pose as a translucent green robot."""
+    original = getattr(env, "update_visualizers", None)
+    robot = task.bridge.robot
+    bridge = task.bridge
+
+    def update_visualizers(visualizer) -> None:
+        if original is not None:
+            original(visualizer)
+        reference = task.sampler.reference_window()
+        root = reference.root_pos_w[0, 0]
+        quat = reference.root_quat_wxyz[0, 0]
+        joint = robot.to_simulator_order(
+            reference.joint_pos[0, 0], bridge.joint_names)
+        qpos = torch.cat((root, quat, joint)).detach().cpu().numpy()
+        model = visualizer.mj_model
+        rgba = model.geom_rgba.copy()
+        try:
+            model.geom_rgba[:, :3] = np.array((0.15, 1.0, 0.25))
+            model.geom_rgba[:, 3] = 0.32
+            visualizer.add_ghost_mesh(qpos, model, label="REFERENCE")
+        finally:
+            model.geom_rgba[:] = rgba
+
+    env.update_visualizers = update_visualizers
 
 
 def main():
@@ -49,7 +86,7 @@ def main():
         HoloMotionK1MJLabAdapter, HoloMotionOnnxContract, make_holomotion_k1_mjlab_cfg,
     )
     from unified_motion.holomotion_mjlab_task import (
-        HoloMotionK1MJLabTask, HoloMotionFootRewardConfig, HoloMotionPhysicsRandomizationConfig,
+        HoloMotionK1MJLabTask, HoloMotionPhysicsRandomizationConfig,
     )
     from mjlab.envs import ManagerBasedRlEnv
 
@@ -70,14 +107,48 @@ def main():
         future_offsets_s=tuple(i*.02 for i in range(contract.future_frames+2)))
     cfg = make_holomotion_k1_mjlab_cfg(str(args.asset_root), contract, num_envs=args.num_envs)
     cfg.seed = args.seed
-    env = ManagerBasedRlEnv(cfg, device=args.device)
+    if args.video is not None:
+        cfg.viewer.width = args.video_width
+        cfg.viewer.height = args.video_height
+        cfg.viewer.distance = 3.0
+        cfg.viewer.elevation = -15.0
+        cfg.viewer.azimuth = 135.0
+        cfg.viewer.origin_type = cfg.viewer.OriginType.ASSET_ROOT
+        cfg.viewer.entity_name = "robot"
+    env = ManagerBasedRlEnv(
+        cfg, device=args.device,
+        render_mode="rgb_array" if args.video is not None else None,
+    )
+    writer = None
     try:
         task = HoloMotionK1MJLabTask(
             HoloMotionK1MJLabAdapter(K1MJLabBridge(env,
                 reference_steps=contract.future_frames+2), contract), sampler,
-            foot_reward_config=HoloMotionFootRewardConfig(**(config.get("foot_reward") or {})),
             physics_randomization=(None if config.get("physics_randomization") is None else
                 HoloMotionPhysicsRandomizationConfig(**config["physics_randomization"])))
+        if args.video is not None:
+            import imageio.v2 as imageio
+
+            args.video.parent.mkdir(parents=True, exist_ok=True)
+            if args.video.exists():
+                raise FileExistsError(f"refusing to overwrite video: {args.video}")
+            if not args.no_reference_ghost:
+                install_reference_ghost(env, task)
+            writer = imageio.get_writer(
+                str(args.video), fps=round(1.0 / env.step_dt),
+                codec="libx264", quality=8, macro_block_size=1,
+            )
+            original_step = task.step
+
+            def recorded_step(action):
+                transition = original_step(action)
+                frame = env.render()
+                if frame is None:
+                    raise RuntimeError("offscreen renderer returned no frame")
+                writer.append_data(frame)
+                return transition
+
+            task.step = recorded_step
         policy = frozen_k1_policy(loaded, ablation=args.ablation)
         report = evaluate_k1_policy(policy, task, steps=args.steps)
         from unified_motion.llm.advisor import fingerprint
@@ -99,10 +170,16 @@ def main():
         report.update(checkpoint=str(args.checkpoint.resolve()), seed=args.seed,
                       backend="mjlab_cuda", robot_skill_verified=False,
                       actor_backend=config.get("network_config", loaded.payload.get("network_config", {})).get("backend", "holomotion"))
+        if args.video is not None:
+            report["video"] = str(args.video.resolve())
+            report["video_fps"] = round(1.0 / env.step_dt)
+            report["video_frames"] = args.steps
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2), encoding="utf-8")
         print(json.dumps(report, indent=2))
     finally:
+        if writer is not None:
+            writer.close()
         env.close()
 
 

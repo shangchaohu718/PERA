@@ -1,0 +1,25 @@
+schema: 2
+baseline_manifest: reports/foot_ground_teacher_v1/dataset_manifest.json
+reference_intent:
+  phase_labels: /home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/motions/phase_labels_61_64_50hz_v2.npz
+  features: [phase_sin, phase_cos, planned_anchor_left, planned_anchor_right, planned_slide_left, planned_slide_right]
+  source_time: t
+  future_realized_contact_used: false
+experiments:
+  - {name: v1_reproduction, task_profile: v1, reference_intent: false}
+  - {name: v2_a1, task_profile: v2_a1, reference_intent: false}
+  - {name: v2_a2_core3, task_profile: v2_a2_core3, reference_intent: false}
+  - {name: v2_a1_intent, task_profile: v2_a1, reference_intent: true}
+optimization:
+  seeds: [730201, 730202, 730203]
+  epochs: 100
+  learning_rate: 0.0001
+  replay_updates: 1
+  gradient_audit_every: 100
+  contact_weight: 1.0
+protocol:
+  one_change_per_comparison: true
+  existing_test_is_development_diagnostic_only: true
+  new_checkpoint_exclusive_final_test_required: true
+  actor_updates: 0
+  ppo_updates: 0

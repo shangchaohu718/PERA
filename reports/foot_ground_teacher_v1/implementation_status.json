@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "status": "TEACHER_V1_TRAINED_INDEPENDENT_QUALITY_GATE_FAILED",
+  "quality_gate_pass": false,
+  "control_integration_authorized": false,
+  "ppo_updates": 0,
+  "student_trained": false,
+  "actor_modified": false,
+  "real_rollout_dataset_created": true,
+  "teacher_trained_on_real_data": true,
+  "independent_three_seed_evaluation_completed": true,
+  "dataset": {
+    "trajectories": 54,
+    "transitions": 14063,
+    "train_validation_test_trajectories": [36, 9, 9],
+    "heldout_checkpoint": "v13_f2r1_model12929_heldout",
+    "validation_checkpoint": "v13_grounded_model499",
+    "all_physics_and_provenance_audits_passed": true
+  },
+  "training": {
+    "selected_contact_weight": 1.0,
+    "epochs": 100,
+    "seeds": [730201, 730202, 730203],
+    "optimizer_updates_per_run": 3600,
+    "replay_updates": 1,
+    "selection_used_test_data": false,
+    "selected_validation_gate_passed": false
+  },
+  "failure_reasons": [
+    "On the source-exclusive validation checkpoint, delta_joint_velocity RMSE was 9.10% worse than the Persistence baseline.",
+    "On the unseen-policy held-out checkpoint, contact F1 was 0.471 left / 0.441 right and contact-mode macro-F1 was 0.306 left / 0.243 right.",
+    "Held-out slip-speed RMSE was 0.491 m/s left / 0.570 m/s right and normal-force RMSE was 358.6 N left / 362.2 N right.",
+    "Held-out root angular-velocity delta RMSE was 1.549 rad/s, above the frozen 1.0 rad/s gate."
+  ],
+  "completed": [
+    "Safe weights-only Isaac Lab/RSL-RL adapter with immutable source SHA-256 binding",
+    "Six behaviorally distinct frozen checkpoint sources and post-rollout freeze re-audit",
+    "Raw four-substep PhysX normal/friction point buffers and exact contact-point kinematics",
+    "Force/impulse unit audit, stable tangent frame, moving-ground-relative contract, and raw records",
+    "54 real Isaac trajectories over three rollout seeds, three friction levels, and varied start phases",
+    "Checkpoint-exclusive train/validation/test split with smoke data excluded",
+    "Shared-foot causal Transformer with separate contact and dynamics heads",
+    "Train-only target normalization, validity masks, per-target losses, and gradient norm/cosine logs",
+    "Contact-weight ablation 1.0/0.1/0.03 over three training seeds",
+    "Validation-only loss-weight/threshold selection and frozen-threshold held-out evaluation",
+    "Per-foot, per-mode, intent, impact, friction, force, slip, switch, and dynamics baseline metrics"
+  ],
+  "verification": {
+    "ruff": "PASS",
+    "focused_tests": "9 passed",
+    "full_tests": "887 passed, 18 skipped, 463 subtests passed",
+    "campaign_safe_bundles": "PASS: 6/6 weights-only bundles match unique IDs and immutable source SHA-256 after rollout",
+    "trajectory_audit": "PASS: 54/54 trajectories, 4 physics substeps, force/impulse reconstruction and provenance",
+    "coverage": "PASS for both anchor/slide directions, double support, handoff, active sliding, unexpected slip, and impact",
+    "heldout_evaluation": "COMPLETED on three independent Teacher seeds; quality gate 11/25 checks passed"
+  },
+  "next_action": "Do not train Student, modify Actor, resume PPO, or integrate control. Diagnose cross-policy contact/domain shift and dynamics generalization first."
+}

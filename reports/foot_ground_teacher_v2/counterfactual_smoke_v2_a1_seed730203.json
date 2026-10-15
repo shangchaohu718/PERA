@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "teacher_seed": 730203,
+  "teacher_task_profile": "v2_a1",
+  "dataset": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/smoke_f3e_frame25_right_ankle_pitch_delta002.npz",
+  "dataset_metadata": {
+    "action_index": 19,
+    "action_scale": 0.2682671844959259,
+    "actor_updates": 0,
+    "branches": [
+      "base",
+      "plus",
+      "minus"
+    ],
+    "checkpoint_id": "f3e_update5_preserved",
+    "context_steps": 26,
+    "dynamic_friction": 0.5,
+    "joint_name": "right_ankle_pitch_joint",
+    "null_replicate_branch": "base_duplicate",
+    "optimizer_updates": 0,
+    "ppo_updates": 0,
+    "pre_branch_state_max_abs_error": 0.0,
+    "probe_frame": 25,
+    "processed_target_delta_rad": [
+      0.0,
+      0.019999995827674866,
+      -0.02000001072883606
+    ],
+    "raw_action_delta": 0.07455253998948848,
+    "reference_intent_names": [
+      "phase_sin",
+      "phase_cos",
+      "planned_anchor_left",
+      "planned_anchor_right",
+      "planned_slide_left",
+      "planned_slide_right"
+    ],
+    "requested_delta_rad": 0.02,
+    "same_state_branching": true,
+    "schema": 1,
+    "seed": 730201,
+    "simulator_seed_via_cfg": false
+  },
+  "metrics": {
+    "schema": 1,
+    "branches": [
+      "base",
+      "plus",
+      "minus"
+    ],
+    "samples": 1,
+    "persistent_contact_foot_samples": 1,
+    "branch": {
+      "plus": {
+        "tangent_velocity_delta": {
+          "count": 2,
+          "mae": 0.007750168442726135,
+          "rmse": 0.009658172726631165,
+          "cosine_mean": 0.9947790503501892,
+          "sign_accuracy": 1.0,
+          "action_ignored_rate": 0.0,
+          "sensitivity_gain_median": 0.1869790405035019
+        },
+        "normal_force_delta": {
+          "count": 2,
+          "mae": 4.053343772888184,
+          "rmse": 5.636135578155518,
+          "cosine_mean": 1.0,
+          "sign_accuracy": 1.0,
+          "action_ignored_rate": 1.0,
+          "sensitivity_gain_median": 0.016939889639616013
+        },
+        "contact_branch_accuracy": 1.0,
+        "contact_change_accuracy": 1.0
+      },
+      "minus": {
+        "tangent_velocity_delta": {
+          "count": 2,
+          "mae": 0.007021941244602203,
+          "rmse": 0.009266642853617668,
+          "cosine_mean": 0.9991088509559631,
+          "sign_accuracy": 1.0,
+          "action_ignored_rate": 0.0,
+          "sensitivity_gain_median": 0.19242259860038757
+        },
+        "normal_force_delta": {
+          "count": 2,
+          "mae": 2.047907829284668,
+          "rmse": 2.801683187484741,
+          "cosine_mean": null,
+          "sign_accuracy": null,
+          "action_ignored_rate": null,
+          "sensitivity_gain_median": null
+        },
+        "contact_branch_accuracy": 1.0,
+        "contact_change_accuracy": 1.0
+      }
+    },
+    "data_quality": {
+      "processed_plus_abs_error_rad": 3.725290298461914e-09,
+      "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+      "null_replicate_available": true,
+      "null_contact_match_rate": 1.0,
+      "null_tangent_velocity_noise_rmse": 0.0003951173566747457,
+      "null_normal_force_noise_rmse_n": 0.005460883025079966,
+      "tangent_response_above_noise_rate": 1.0,
+      "force_response_above_noise_rate": 1.0,
+      "tangent_informative_response_rate": 1.0,
+      "force_informative_response_rate": 0.5,
+      "tangent_response_eligible_foot_samples": 1,
+      "force_response_eligible_foot_samples": 1
+    },
+    "symmetric_jacobian": {
+      "tangent_velocity": {
+        "count": 2,
+        "mae": 0.3693026900291443,
+        "rmse": 0.4728181064128876,
+        "cosine_mean": 0.9973574876785278,
+        "sign_accuracy": 1.0,
+        "action_ignored_rate": 0.0,
+        "sensitivity_gain_median": 0.1897353082895279
+      },
+      "normal_force": {
+        "count": 2,
+        "mae": 152.53125,
+        "rmse": 210.9385528564453,
+        "cosine_mean": 1.0,
+        "sign_accuracy": 1.0,
+        "action_ignored_rate": 1.0,
+        "sensitivity_gain_median": 0.02239004150032997
+      }
+    }
+  },
+  "collection_quality_checks": [
+    {
+      "name": "pre-branch state equality",
+      "value": 0.0,
+      "operator": "<=",
+      "limit": 1e-06,
+      "passed": true
+    },
+    {
+      "name": "processed plus target",
+      "value": 3.725290298461914e-09,
+      "operator": "<=",
+      "limit": 0.0001,
+      "passed": true
+    },
+    {
+      "name": "processed minus target",
+      "value": 1.1175870895385742e-08,
+      "operator": "<=",
+      "limit": 0.0001,
+      "passed": true
+    },
+    {
+      "name": "null replicate available",
+      "value": true,
+      "operator": "==",
+      "limit": true,
+      "passed": true
+    },
+    {
+      "name": "null contact deterministic",
+      "value": 1.0,
+      "operator": "==",
+      "limit": 1.0,
+      "passed": true
+    },
+    {
+      "name": "null tangent noise",
+      "value": 0.0003951173566747457,
+      "operator": "<=",
+      "limit": 0.001,
+      "passed": true
+    },
+    {
+      "name": "null force noise",
+      "value": 0.005460883025079966,
+      "operator": "<=",
+      "limit": 0.1,
+      "passed": true
+    },
+    {
+      "name": "tangent response exceeds numerical noise",
+      "value": 1.0,
+      "operator": "==",
+      "limit": 1.0,
+      "passed": true
+    },
+    {
+      "name": "force response exceeds numerical noise",
+      "value": 1.0,
+      "operator": "==",
+      "limit": 1.0,
+      "passed": true
+    }
+  ],
+  "collection_quality_gate_passed": true,
+  "actor_updates": 0,
+  "ppo_updates": 0
+}

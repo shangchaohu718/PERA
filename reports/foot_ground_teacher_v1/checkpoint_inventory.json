@@ -1,0 +1,3126 @@
+{
+  "schema": 1,
+  "runs_root": "/home/tcl/Desktop/start/HoloMotion-UM/runs",
+  "checkpoint_count": 201,
+  "candidate_count": 73,
+  "moonwalk_verified_count": 0,
+  "warning": "No checkpoint is linked to a motion filename containing 'moon'; do not relabel ordinary walk checkpoints as moonwalk policies.",
+  "records": [
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791941684283974546,
+      "mode": "0o664",
+      "sha256": "ac185f9a26fdc5ad0d863ab8d1ba4dcad3efa0f0b7453d1c0edea6a027ff845b",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42/model_50.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42/model_50.pt",
+      "iteration": 50,
+      "size_bytes": 2665113,
+      "mtime_ns": 1791941756934208479,
+      "mode": "0o664",
+      "sha256": "2fa906f3003902f25cf46a5fc76f3e1ab0bad9eeee2fae81f22cb011d09823a2",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791941828077919407,
+      "mode": "0o664",
+      "sha256": "14251927b5a6b2be26fdc290ee3ff0a2e90653a68808f74c25f20599e92ced8f",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42/model_150.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42/model_150.pt",
+      "iteration": 150,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791941899911407740,
+      "mode": "0o664",
+      "sha256": "296f2437e86d3f02fa375a07e3a6cbc554512b529c137c4b697783c34b249aa3",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791941973283676374,
+      "mode": "0o664",
+      "sha256": "35e4e30010f480313cc78ba9f79d5589ff47fee7cc2037eb9ac23ee55ece9174",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791942183841838589,
+      "mode": "0o664",
+      "sha256": "6af7ecf1e5e78410babc22d355a8ab8dbf6522bdfc0cc352d9d8009ff331d861",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_50.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_50.pt",
+      "iteration": 50,
+      "size_bytes": 2665113,
+      "mtime_ns": 1791942258775287915,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942331568511868,
+      "mode": "0o664",
+      "sha256": "c0f06ab68a7a44b3aa77050b23ef11233e3c3ce85b5c035de29159c5337a1645",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_150.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_150.pt",
+      "iteration": 150,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942403427323088,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942475620810890,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_250.pt",
+      "iteration": 250,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942550231455147,
+      "mode": "0o664",
+      "sha256": "18572dead746fe6618b3230b3b076bba6b0403bb236a0f6f60162c40b8fcab02",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942624091581879,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_350.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_350.pt",
+      "iteration": 350,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942758657525715,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791942901214576831,
+      "mode": "0o664",
+      "sha256": "2c8655a08521d0f3968785cb202997b6250644001a0b478fd7a1b5cfc87ab3c8",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_450.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_450.pt",
+      "iteration": 450,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791943046388424870,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_499.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500/model_499.pt",
+      "iteration": 499,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791943190883360168,
+      "mode": "0o664",
+      "sha256": "fe01bfdd188e73c383dd66a1a3e1d0700c628a65e122e22a5d41340d23c93009",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 2665319,
+      "mtime_ns": 1791942772769866988,
+      "mode": "0o664",
+      "sha256": "b236ad51827647fd4ac245e702c7af51a4522182a8d989d8afa323eb6c3f1ce2",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_350.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_350.pt",
+      "iteration": 350,
+      "size_bytes": 2665319,
+      "mtime_ns": 1791942914709078742,
+      "mode": "0o664",
+      "sha256": "a1847bde61f14c184ccb583162c1f3e3693bb9101182f8d1ab258393be2545e9",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 2665319,
+      "mtime_ns": 1791943057294752444,
+      "mode": "0o664",
+      "sha256": "5aeb4d53ee26192b34a8c7624878471de6721722d274a5b1c4c18512b9cfac0d",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_450.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_450.pt",
+      "iteration": 450,
+      "size_bytes": 2665319,
+      "mtime_ns": 1791943197201999958,
+      "mode": "0o664",
+      "sha256": "7ae976e31b15359694dd1bb96b507279d85b77082f53a4a1d2097e72a8d2542d",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_499.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_capacity500_resume250/model_499.pt",
+      "iteration": 499,
+      "size_bytes": 2665319,
+      "mtime_ns": 1791943271982253341,
+      "mode": "0o664",
+      "sha256": "f35cbd0aba828b1db338364c914ec49f51c862e4df49a340bc50e332fd491257",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_baseline_gate_500_seed42_njmax500/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_baseline_gate_500_seed42_njmax500/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791942067233272710,
+      "mode": "0o664",
+      "sha256": "70d1834f15936f94bb0b7e265dbe9771b3e1b6f864d24519710c7710a5d6ad2f",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_flow_smoke_seed42/baseline_matched/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_flow_smoke_seed42/baseline_matched/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791941410572066545,
+      "mode": "0o664",
+      "sha256": "0d461b1b2b0e2a9607e26c298e276018273c0c7b8a65866dc9c32a3e972a3468",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_flow_smoke_seed42/baseline_matched/model_1.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_flow_smoke_seed42/baseline_matched/model_1.pt",
+      "iteration": 1,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791941411026058745,
+      "mode": "0o664",
+      "sha256": "2057ccfcd585ff9eff425f7a050b9b9b559528bb4fbb9598619306658d8a0699",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_flow_smoke_seed42/physics_full/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_flow_smoke_seed42/physics_full/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 5296571,
+      "mtime_ns": 1791941416178980642,
+      "mode": "0o664",
+      "sha256": "fae8059e2716be65c990f496add32e361ad959107d0417331aeb5a0efa9177ae",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_flow_smoke_seed42/physics_full/model_1.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_flow_smoke_seed42/physics_full/model_1.pt",
+      "iteration": 1,
+      "size_bytes": 5296571,
+      "mtime_ns": 1791941416720973427,
+      "mode": "0o664",
+      "sha256": "beeb5ea2adb2a914e33b2ea5c8bc12e8dbe129eb7d94669a95567a6b4411a0b0",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_physics_update_smoke_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_physics_update_smoke_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 5296571,
+      "mtime_ns": 1791941466979730109,
+      "mode": "0o664",
+      "sha256": "1898454657623712b864fa7681312b0e08996875362b6a68ff7c04cf00b2ac9d",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_mlp_physics_update_smoke_seed42/model_24.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_mlp_physics_update_smoke_seed42/model_24.pt",
+      "iteration": 24,
+      "size_bytes": 7303044,
+      "mtime_ns": 1791941481947825224,
+      "mode": "0o664",
+      "sha256": "792738e9468cae1cab8738952267999721fd470b1ce9035f44eabae83dec0fa9",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 57076493,
+      "mtime_ns": 1791968996174557184,
+      "mode": "0o664",
+      "sha256": "70b741d2330fa5d8c5c98748d88bcf13ea5e6fd3575b08e019e1e3abf5393f91",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791969106788616178,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791969253932042579,
+      "mode": "0o664",
+      "sha256": "6cbbef8e8b8640a457e21a5ac461f8a15aaf09d3f0b8bf2e3800f42e7a498039",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791969402303752795,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791969548604886551,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791969695894680068,
+      "mode": "0o664",
+      "sha256": "c6d172387285e2472d1a4107129920798380df2ee6357337525611ce42ead8dd",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_600.pt",
+      "iteration": 600,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791969844911229730,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_700.pt",
+      "iteration": 700,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791970007340773699,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_800.pt",
+      "iteration": 800,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791970230451984625,
+      "mode": "0o664",
+      "sha256": "87e6def97009a1fd2e46f36c2230c6a05504f0a679f2e0a77453310d01974ba1",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_900.pt",
+      "iteration": 900,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791970456850016846,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model26998_mjlab_adapt_1000_seed42/model_999.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model26998_mjlab_adapt_1000_seed42/model_999.pt",
+      "iteration": 999,
+      "size_bytes": 57077323,
+      "mtime_ns": 1791970678715845775,
+      "mode": "0o664",
+      "sha256": "bf1c8efa698d9c0ef12f0beee547aebd0e95031f16fda19bbb12a420e12359e7",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 27492375,
+      "mtime_ns": 1791972630439489387,
+      "mode": "0o664",
+      "sha256": "1ac5bc2b4e37d9eb0d98dcde61d138ca8e84e1595282099380eb59e9af387cca",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791972871699457965,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791973114521322985,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791973356081087734,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791973590103687290,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791973825230274075,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_600.pt",
+      "iteration": 600,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791974060593845602,
+      "mode": "0o664",
+      "sha256": "171cb31426341b543a0557b8c85bcf2c2f42dd8e4ed4c8a53bde7d4548d1352a",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_700.pt",
+      "iteration": 700,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791974296357411251,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_800.pt",
+      "iteration": 800,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791974530658947308,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_900.pt",
+      "iteration": 900,
+      "size_bytes": 33560587,
+      "mtime_ns": 1791974765930493266,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 33560945,
+      "mtime_ns": 1791974999034003586,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1100.pt",
+      "iteration": 1100,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791975235154557439,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1200.pt",
+      "iteration": 1200,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791975471139108040,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1300.pt",
+      "iteration": 1300,
+      "size_bytes": 33560945,
+      "mtime_ns": 1791975704208614034,
+      "mode": "0o664",
+      "sha256": "a7c0de336a6494ed60a77abffdefc99ceec2ab3439c749a4a2dbe8362c153e07",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1400.pt",
+      "iteration": 1400,
+      "size_bytes": 33560945,
+      "mtime_ns": 1791975940394166423,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 33560945,
+      "mtime_ns": 1791976175928708717,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1600.pt",
+      "iteration": 1600,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791976409054214593,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1700.pt",
+      "iteration": 1700,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791976644871760832,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1800.pt",
+      "iteration": 1800,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791976882019326996,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_1900.pt",
+      "iteration": 1900,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791977114971830028,
+      "mode": "0o664",
+      "sha256": "15804d8fd88c5508dcb68327ef7601dad821974d4b09d90d07450e8f7462586b",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791977350974378895,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2100.pt",
+      "iteration": 2100,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791977588011943306,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2200.pt",
+      "iteration": 2200,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791977822199464846,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2300.pt",
+      "iteration": 2300,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791978059495033116,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2400.pt",
+      "iteration": 2400,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791978296178592179,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2499.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_2500_seed42/model_2499.pt",
+      "iteration": 2499,
+      "size_bytes": 33561137,
+      "mtime_ns": 1791978528342083270,
+      "mode": "0o664",
+      "sha256": "a9e34863c311382eb4b6fcd6c790d415685f721ef0c94e1b692449ab2387df3a",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 27501967,
+      "mtime_ns": 1792029126864871299,
+      "mode": "0o664",
+      "sha256": "4ca2e0210c4e3296f0a505831c756f9aeff596a6148f7c3c11318aee41e12bdf",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792029358034677980,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792029590798859159,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792029710862520427,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792029873410097497,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792030075031695331,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_600.pt",
+      "iteration": 600,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792030198955399211,
+      "mode": "0o664",
+      "sha256": "65141410ff5c2c63d0b99b374fc4135db2584ee523cbe834d235133d94baa84d",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_700.pt",
+      "iteration": 700,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792030323482566635,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_800.pt",
+      "iteration": 800,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792030444907967226,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_900.pt",
+      "iteration": 900,
+      "size_bytes": 33570187,
+      "mtime_ns": 1792030573297446184,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792030699867245397,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1100.pt",
+      "iteration": 1100,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792030891648735570,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1200.pt",
+      "iteration": 1200,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792031150036153700,
+      "mode": "0o664",
+      "sha256": "a19c32603b6cd23981df784b7b8ff9f41d7f8dcab2bbcdf71b619bd3c1902302",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1300.pt",
+      "iteration": 1300,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792031471426439499,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1400.pt",
+      "iteration": 1400,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792031863461129294,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 33570805,
+      "mtime_ns": 1792032229165823090,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1600.pt",
+      "iteration": 1600,
+      "size_bytes": 33570805,
+      "mtime_ns": 1792032592629174217,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1700.pt",
+      "iteration": 1700,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792032925021296245,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1800.pt",
+      "iteration": 1800,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792033229203718101,
+      "mode": "0o664",
+      "sha256": "bd8e1a2d5931551b088a9e8ee991f0efbe7f70c01dbca4d0b9a94913354dbabc",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_1900.pt",
+      "iteration": 1900,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792033480910891375,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792033717623475659,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2100.pt",
+      "iteration": 2100,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792033954992183115,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2200.pt",
+      "iteration": 2200,
+      "size_bytes": 33570805,
+      "mtime_ns": 1792034188758980711,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_model999_retention16_teacher_v3_whitened_2500_seed42/model_2300.pt",
+      "iteration": 2300,
+      "size_bytes": 33570997,
+      "mtime_ns": 1792034451104170935,
+      "mode": "0o664",
+      "sha256": "7a885e5f534947ea6b359f9b714a7713c249f46c338daa89bd07a4a75d5f878f",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791945136642067063,
+      "mode": "0o664",
+      "sha256": "a3f404d48b535418b2aff89200116d2b57d485bdc85d8d8f2ca086c7c8469c77",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791945414073007361,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791945692617584923,
+      "mode": "0o664",
+      "sha256": "8829ed1b602bad324e9d2991c3b5349c11c7b94a5fdee37ce1b9cc0779d1bafb",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791945974871131272,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791946251868219800,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791946533601651373,
+      "mode": "0o664",
+      "sha256": "0275f893ed06f66960bf564305068705af911b17168b8b6e9b77a0b07317e31f",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_600.pt",
+      "iteration": 600,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791946809282236044,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_700.pt",
+      "iteration": 700,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791947036047618307,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_800.pt",
+      "iteration": 800,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791947174067525554,
+      "mode": "0o664",
+      "sha256": "b12d2a34f100356c5e3eb76406251c530a3cdea1d8806184b31d2ab5d0bd9cb8",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_900.pt",
+      "iteration": 900,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791947314860817715,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_999.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_1k_seed42/model_999.pt",
+      "iteration": 999,
+      "size_bytes": 2665191,
+      "mtime_ns": 1791947453569622120,
+      "mode": "0o664",
+      "sha256": "f7299394424910f278015de573a2ef80370bb1bba36e8bec95ce7b3e0f19c298",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791955532979636849,
+      "mode": "0o664",
+      "sha256": "12e54b7ae335da6f2607a8633d0a4d64148e6f985547b2778a06779f328c05cf",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1100.pt",
+      "iteration": 1100,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791955673690562855,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1200.pt",
+      "iteration": 1200,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791955918268005307,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1300.pt",
+      "iteration": 1300,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791956110062762811,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1400.pt",
+      "iteration": 1400,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791956248879780348,
+      "mode": "0o664",
+      "sha256": "6c41a5ea0fa21a86ee8163e1b848cf2c926954152a6715e397dfe8045ab7b1bc",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791956457673839095,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1600.pt",
+      "iteration": 1600,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791956615152159930,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1700.pt",
+      "iteration": 1700,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791956754703223690,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1800.pt",
+      "iteration": 1800,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791956890292233692,
+      "mode": "0o664",
+      "sha256": "7147a0fa541456b34b1aa7f776135c16be6074b516aebcccd9619a67c6387c79",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_1900.pt",
+      "iteration": 1900,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791957086876154132,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791957280137640156,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2100.pt",
+      "iteration": 2100,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791957413932707253,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2200.pt",
+      "iteration": 2200,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791957561583322257,
+      "mode": "0o664",
+      "sha256": "13e0665a2455216671ae5e24e316482cf18c7094327495dff9cbde3d099f27e5",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2300.pt",
+      "iteration": 2300,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791957741263530668,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2400.pt",
+      "iteration": 2400,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791957878013057169,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2499.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_2500_seed42/model_2499.pt",
+      "iteration": 2499,
+      "size_bytes": 2665397,
+      "mtime_ns": 1791958021832864597,
+      "mode": "0o664",
+      "sha256": "5ee1cc96b67bc4672b7093fc90ff3938a863bb63a64b682795e954b71537199b",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 5296571,
+      "mtime_ns": 1791949131407263689,
+      "mode": "0o664",
+      "sha256": "e92c82c454f8f74e671b0dc0d9584f22d8e9e2f40a70aa4665983f1a989ae72d",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791949345684744541,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791949569262917466,
+      "mode": "0o664",
+      "sha256": "1b22545a2e5825a9b7e9770828a5e4cf36d8af326d2160878e1e1214feff5f1d",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791949786782151713,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791950006841612566,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791950242174871392,
+      "mode": "0o664",
+      "sha256": "4d4158eef79480543105751219bedb1dbfad646591bbc4347a2c663fd1e397ac",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_600.pt",
+      "iteration": 600,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791950489627731335,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_700.pt",
+      "iteration": 700,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791950730148987375,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_800.pt",
+      "iteration": 800,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791950979437505119,
+      "mode": "0o664",
+      "sha256": "d31ac76e52cd264f98e53ac7036d9fadac59f2ea91fa00e754e0d89318dc65bf",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_900.pt",
+      "iteration": 900,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791951229350183509,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_999.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_1k_seed42/model_999.pt",
+      "iteration": 999,
+      "size_bytes": 7303435,
+      "mtime_ns": 1791951471531934761,
+      "mode": "0o664",
+      "sha256": "23f33bc8d58afe40fa2eff452b9f516b0259207ea1879072dd6a62b4e8c058c1",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791958426626047287,
+      "mode": "0o664",
+      "sha256": "40e7d42ecaaccf88f41f571371ede9b9874d3ab06abbe8fb41e623746b6a688a",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1100.pt",
+      "iteration": 1100,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791958672573375804,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1200.pt",
+      "iteration": 1200,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791959005855779820,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1300.pt",
+      "iteration": 1300,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791959477701211323,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1400.pt",
+      "iteration": 1400,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791960066024283296,
+      "mode": "0o664",
+      "sha256": "d45d93edad6f83ed040156dbe6bef3908e5e627e6634265f6678affc66825233",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791960724964324876,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1600.pt",
+      "iteration": 1600,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791961382915799965,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1700.pt",
+      "iteration": 1700,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791962020251717454,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1800.pt",
+      "iteration": 1800,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791962662220925390,
+      "mode": "0o664",
+      "sha256": "95d0136c1baaa705dcbfed3538596373191980094c94489a7ed3130ccdc956ff",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_1900.pt",
+      "iteration": 1900,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791963308190527531,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791963928744345069,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2100.pt",
+      "iteration": 2100,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791964567995511883,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2200.pt",
+      "iteration": 2200,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791965204206196933,
+      "mode": "0o664",
+      "sha256": "9259e06281125f23da236f6aa1dbf987aed8abf55d8c12795c470a68353bca64",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2300.pt",
+      "iteration": 2300,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791965707741337021,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2400.pt",
+      "iteration": 2400,
+      "size_bytes": 7303122,
+      "mtime_ns": 1791965963413196550,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2499.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_mlp_physics_2500_seed42/model_2499.pt",
+      "iteration": 2499,
+      "size_bytes": 7304018,
+      "mtime_ns": 1791966218528234163,
+      "mode": "0o664",
+      "sha256": "c0306539c3a0aa0729cdc364f46ad3b1445911573a17568b47117430117ee088",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 4464057,
+      "mtime_ns": 1791959529124443626,
+      "mode": "0o664",
+      "sha256": "881e18a8189fa117836060c9a4154442d8a90c61011f2b89d56795f29904c757",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_100.pt",
+      "iteration": 100,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791959782383831399,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_200.pt",
+      "iteration": 200,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791960042131584280,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_300.pt",
+      "iteration": 300,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791960296993929713,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_400.pt",
+      "iteration": 400,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791960538419258188,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791960781971084653,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_600.pt",
+      "iteration": 600,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791961025221232406,
+      "mode": "0o664",
+      "sha256": "fde62b2d7362af2d9a4e37b4939757f2517edb16d134ecb4378e9af8e7c6b884",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_700.pt",
+      "iteration": 700,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791961273508516413,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_800.pt",
+      "iteration": 800,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791961526823478459,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_900.pt",
+      "iteration": 900,
+      "size_bytes": 5670091,
+      "mtime_ns": 1791961770247786037,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791962009763506787,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1100.pt",
+      "iteration": 1100,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791962253249768631,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1200.pt",
+      "iteration": 1200,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791962493203011792,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1300.pt",
+      "iteration": 1300,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791962729369623806,
+      "mode": "0o664",
+      "sha256": "dd0437038e3d82645ef71a8272990c6a585b7c165f9773f6d546937c104cf018",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1400.pt",
+      "iteration": 1400,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791962975401962556,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791963217665027560,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1600.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1600.pt",
+      "iteration": 1600,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791963456437610854,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1700.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1700.pt",
+      "iteration": 1700,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791963701286549545,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1800.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1800.pt",
+      "iteration": 1800,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791963942992671674,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1900.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_1900.pt",
+      "iteration": 1900,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791964186122761747,
+      "mode": "0o664",
+      "sha256": "7335db71ec79ce9273dbb5c4d9b13a68ac348a1da3da3e04eeaa8095311a66b9",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791964431752228128,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2100.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2100.pt",
+      "iteration": 2100,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791964673004203936,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2200.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2200.pt",
+      "iteration": 2200,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791964913507915163,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2300.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2300.pt",
+      "iteration": 2300,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791965154428475155,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2400.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2400.pt",
+      "iteration": 2400,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791965394925270832,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2499.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_500f_teacher_only_2500_seed42/model_2499.pt",
+      "iteration": 2499,
+      "size_bytes": 5670432,
+      "mtime_ns": 1791965630032521066,
+      "mode": "0o664",
+      "sha256": "02aa58dc4f0aab5ec642149c27981424533519dd979effaa3141db9019a1d886",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_500.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk1_subject1_verified_mlp_5k_seed42/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk1_subject1_verified_mlp_5k_seed42/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 2664651,
+      "mtime_ns": 1791944680957737257,
+      "mode": "0o664",
+      "sha256": "de0ef83cd4c44a747038366ad137d4c9098efa4fe75d7961827a3651246abd4e",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1__start_558600_len_13066.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "mlp"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 66536461,
+      "mtime_ns": 1791862686052976566,
+      "mode": "0o664",
+      "sha256": "0e34e0d81f7471d7159dbe9f914a5088811ffe9c96c053f0149fb57c33154ff1",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_250.pt",
+      "iteration": 250,
+      "size_bytes": 66537291,
+      "mtime_ns": 1791863493516841458,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 66537291,
+      "mtime_ns": 1791864275206545318,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_750.pt",
+      "iteration": 750,
+      "size_bytes": 66537291,
+      "mtime_ns": 1791865091038038736,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791865893452589987,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_1250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_1250.pt",
+      "iteration": 1250,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791866631990803355,
+      "mode": "0o664",
+      "sha256": "f46deb38fbdc7f071cab54f17c382c1882a97457e42619e9c8971caa1c9c1653",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791867352145916908,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_1750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_1750.pt",
+      "iteration": 1750,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791868091126139231,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791868830961366740,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_2250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_2250.pt",
+      "iteration": 2250,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791869578572638754,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_2500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_2500.pt",
+      "iteration": 2500,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791870513919007037,
+      "mode": "0o664",
+      "sha256": "c1d1a51e46868d3e230f458b2b0292d81611b298b2656b1823c1f1b8ccce44f2",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_2750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_2750.pt",
+      "iteration": 2750,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791871682777240293,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_3000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_3000.pt",
+      "iteration": 3000,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791872886134055773,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_3250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_3250.pt",
+      "iteration": 3250,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791874096513102926,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_3500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_3500.pt",
+      "iteration": 3500,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791875298886051715,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_3750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_3750.pt",
+      "iteration": 3750,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791876501119946281,
+      "mode": "0o664",
+      "sha256": "cf20577ce73890d32257e43aeb2b5cfb59cdb8d66ec2d595918024bc3bfd524f",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_4000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_4000.pt",
+      "iteration": 4000,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791877707053854666,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_4250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_4250.pt",
+      "iteration": 4250,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791878937455237598,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_4500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_4500.pt",
+      "iteration": 4500,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791880138592924929,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_4750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_4750.pt",
+      "iteration": 4750,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791881185389241112,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/baseline_matched/model_4999.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/baseline_matched/model_4999.pt",
+      "iteration": 4999,
+      "size_bytes": 66537514,
+      "mtime_ns": 1791882310273224886,
+      "mode": "0o664",
+      "sha256": "c4edfd04c5d8b527b870ae30c879cd042c7feab8e55c90bd499670e93b270287",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_0.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_0.pt",
+      "iteration": 0,
+      "size_bytes": 68758201,
+      "mtime_ns": 1791870631425935336,
+      "mode": "0o664",
+      "sha256": "dd8d56e5be74d995aefdfff669be294c0bf5dacf92ced385dd7ba2bce40a2fce",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_250.pt",
+      "iteration": 250,
+      "size_bytes": 70352523,
+      "mtime_ns": 1791872900473151844,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_500.pt",
+      "iteration": 500,
+      "size_bytes": 70352523,
+      "mtime_ns": 1791875134176907643,
+      "mode": "0o664",
+      "sha256": "65ca39202d10657aeda416e9d2879312173633ef8e1cc8e36aa186d489839fcd",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_750.pt",
+      "iteration": 750,
+      "size_bytes": 70352523,
+      "mtime_ns": 1791877490432837035,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_1000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_1000.pt",
+      "iteration": 1000,
+      "size_bytes": 70353019,
+      "mtime_ns": 1791880008968272872,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_1250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_1250.pt",
+      "iteration": 1250,
+      "size_bytes": 70353019,
+      "mtime_ns": 1791882315407315326,
+      "mode": "0o664",
+      "sha256": "2527a8b25fba40e0f154c53c8a18f70fe459fbd94ee374f8291f74eab271af3e",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_1500.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_1500.pt",
+      "iteration": 1500,
+      "size_bytes": 70353019,
+      "mtime_ns": 1791883742108872580,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_1750.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_1750.pt",
+      "iteration": 1750,
+      "size_bytes": 70353019,
+      "mtime_ns": 1791885415355714929,
+      "mode": "0o664",
+      "sha256": "09d7f8b9f6e7a2259b191adb6d47013bb66d8c6475c96777090c28badfd0d5d4",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_2000.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_2000.pt",
+      "iteration": 2000,
+      "size_bytes": 70353019,
+      "mtime_ns": 1791887696526201609,
+      "mode": "0o664",
+      "sha256": null,
+      "candidate": false,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    },
+    {
+      "checkpoint_id": "runs/k1_walk_ab_5k_seed42/physics_full/model_2250.pt",
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/runs/k1_walk_ab_5k_seed42/physics_full/model_2250.pt",
+      "iteration": 2250,
+      "size_bytes": 70353019,
+      "mtime_ns": 1791890955029858724,
+      "mode": "0o664",
+      "sha256": "89fb05e310077cf52fa298f5e5292d25cf9a7640709f834a9741e5d23b3359b0",
+      "candidate": true,
+      "behavior_class": "unmeasured",
+      "motion_files": [
+        "walk1_subject1_reference_named.npz"
+      ],
+      "moonwalk_reference_verified": false,
+      "actor_backend": "holomotion"
+    }
+  ]
+}

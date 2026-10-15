@@ -1,0 +1,2114 @@
+{
+  "schema": 1,
+  "trajectory_count": 54,
+  "all_verified": true,
+  "bundle_provenance_checked": true,
+  "records": [
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730201_high.npz",
+      "sha256": "04ca49365cc34ee2fb15d371b48e5df5c512fe3f720f4577177402a5d84748c4",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730201,
+      "trajectory_id": "f3a_model99_s730201_high",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        62,
+        67
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          34,
+          29
+        ],
+        "stable": [
+          32,
+          37
+        ],
+        "sliding": [
+          28,
+          22
+        ],
+        "impact": [
+          2,
+          8
+        ]
+      },
+      "normal_force_max_n": 769.528564453125,
+      "tangential_force_max_n": 538.6511840820312,
+      "contact_impulse_max_ns": 7.614556312561035,
+      "slip_speed_max_m_s": 1.7250128984451294,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730201_low.npz",
+      "sha256": "7cbc7680cf6f21705f60a4bf601cd701c2f3e1a2ef1a5994ea6b609e7a351df8",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730201,
+      "trajectory_id": "f3a_model99_s730201_low",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        63,
+        67
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          33,
+          29
+        ],
+        "stable": [
+          21,
+          26
+        ],
+        "sliding": [
+          40,
+          36
+        ],
+        "impact": [
+          2,
+          5
+        ]
+      },
+      "normal_force_max_n": 592.9202880859375,
+      "tangential_force_max_n": 177.768798828125,
+      "contact_impulse_max_ns": 10.789983749389648,
+      "slip_speed_max_m_s": 1.8888065814971924,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730201_nominal.npz",
+      "sha256": "7b66e6a8732be400688615b3d3facdcbe7babcbf738f95b12b323bc07e29f402",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730201,
+      "trajectory_id": "f3a_model99_s730201_nominal",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        54,
+        70
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          42,
+          26
+        ],
+        "stable": [
+          32,
+          36
+        ],
+        "sliding": [
+          18,
+          29
+        ],
+        "impact": [
+          4,
+          5
+        ]
+      },
+      "normal_force_max_n": 1356.9366455078125,
+      "tangential_force_max_n": 412.6910095214844,
+      "contact_impulse_max_ns": 10.657707214355469,
+      "slip_speed_max_m_s": 2.0085737705230713,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730202_high.npz",
+      "sha256": "c8567f0bc60682db9fcdfb41952ea274ee071411b3d8b292a811aa49cf1c783e",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730202,
+      "trajectory_id": "f3a_model99_s730202_high",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        304,
+        338
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          180,
+          146
+        ],
+        "stable": [
+          181,
+          171
+        ],
+        "sliding": [
+          103,
+          139
+        ],
+        "impact": [
+          20,
+          28
+        ]
+      },
+      "normal_force_max_n": 833.5557250976562,
+      "tangential_force_max_n": 349.1423645019531,
+      "contact_impulse_max_ns": 14.606405258178711,
+      "slip_speed_max_m_s": 2.1379940509796143,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730202_low.npz",
+      "sha256": "1c3320f28d6e47f4dd8edd854d54e71bc93f70392a73cdf0145d47bd22ed3779",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730202,
+      "trajectory_id": "f3a_model99_s730202_low",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        295,
+        373
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          189,
+          111
+        ],
+        "stable": [
+          81,
+          88
+        ],
+        "sliding": [
+          191,
+          266
+        ],
+        "impact": [
+          23,
+          19
+        ]
+      },
+      "normal_force_max_n": 811.3761596679688,
+      "tangential_force_max_n": 243.40599060058594,
+      "contact_impulse_max_ns": 12.12274169921875,
+      "slip_speed_max_m_s": 1.910076379776001,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730202_nominal.npz",
+      "sha256": "18ba0f9dd73ba28a734c9b02f2d9c15429d288afa57afb864e161f15ad4bb032",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730202,
+      "trajectory_id": "f3a_model99_s730202_nominal",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        289,
+        352
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          195,
+          132
+        ],
+        "stable": [
+          153,
+          133
+        ],
+        "sliding": [
+          112,
+          197
+        ],
+        "impact": [
+          24,
+          22
+        ]
+      },
+      "normal_force_max_n": 713.2207641601562,
+      "tangential_force_max_n": 352.6749267578125,
+      "contact_impulse_max_ns": 11.073360443115234,
+      "slip_speed_max_m_s": 1.8960578441619873,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730203_high.npz",
+      "sha256": "dc7fa9aaf14d0be9b4aadade062c3211470267b9552182e97c717e442950b34e",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730203,
+      "trajectory_id": "f3a_model99_s730203_high",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        146,
+        187
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          106,
+          65
+        ],
+        "stable": [
+          84,
+          91
+        ],
+        "sliding": [
+          52,
+          82
+        ],
+        "impact": [
+          10,
+          14
+        ]
+      },
+      "normal_force_max_n": 862.7035522460938,
+      "tangential_force_max_n": 597.6373291015625,
+      "contact_impulse_max_ns": 10.071115493774414,
+      "slip_speed_max_m_s": 1.9004870653152466,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730203_low.npz",
+      "sha256": "22092ca135706b27d3dff2a32da988201815d3f8436f3632d33832efcd1cfac5",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730203,
+      "trajectory_id": "f3a_model99_s730203_low",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        145,
+        201
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          107,
+          51
+        ],
+        "stable": [
+          44,
+          45
+        ],
+        "sliding": [
+          87,
+          145
+        ],
+        "impact": [
+          14,
+          11
+        ]
+      },
+      "normal_force_max_n": 1477.4735107421875,
+      "tangential_force_max_n": 441.1553955078125,
+      "contact_impulse_max_ns": 11.482636451721191,
+      "slip_speed_max_m_s": 2.4307167530059814,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3a_model99/f3a_model99_s730203_nominal.npz",
+      "sha256": "a569bc3d5a21a3771c028ceea564daf024051894e9ac6a1e97261d1791e552e4",
+      "checkpoint_id": "f3a_model99",
+      "seed": 730203,
+      "trajectory_id": "f3a_model99_s730203_nominal",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        147,
+        195
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          105,
+          57
+        ],
+        "stable": [
+          74,
+          71
+        ],
+        "sliding": [
+          60,
+          113
+        ],
+        "impact": [
+          13,
+          11
+        ]
+      },
+      "normal_force_max_n": 1658.5430908203125,
+      "tangential_force_max_n": 677.5175170898438,
+      "contact_impulse_max_ns": 9.904921531677246,
+      "slip_speed_max_m_s": 2.1027133464813232,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730201_high.npz",
+      "sha256": "367bdd7ac80d594cb76f88204d2b72fec2388e1d0cab261a7ec1982bc2cb6b4c",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "trajectory_id": "f3e_update5_preserved_s730201_high",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        57,
+        59
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          39,
+          37
+        ],
+        "stable": [
+          41,
+          31
+        ],
+        "sliding": [
+          12,
+          23
+        ],
+        "impact": [
+          4,
+          5
+        ]
+      },
+      "normal_force_max_n": 660.9682006835938,
+      "tangential_force_max_n": 218.84259033203125,
+      "contact_impulse_max_ns": 8.674489974975586,
+      "slip_speed_max_m_s": 0.9889042377471924,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730201_low.npz",
+      "sha256": "f88659dbb79ad4cc7505b2df5eb1660ddb767bbb53fa9ef56820d1b8f57f36e0",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "trajectory_id": "f3e_update5_preserved_s730201_low",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        69,
+        64
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          27,
+          32
+        ],
+        "stable": [
+          26,
+          21
+        ],
+        "sliding": [
+          38,
+          36
+        ],
+        "impact": [
+          5,
+          7
+        ]
+      },
+      "normal_force_max_n": 598.9335327148438,
+      "tangential_force_max_n": 175.5330810546875,
+      "contact_impulse_max_ns": 7.799868106842041,
+      "slip_speed_max_m_s": 1.7709206342697144,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730201_nominal.npz",
+      "sha256": "1c8f4175254bb74e93ccb7eb3c40e2cbefc075289c1ce460e6bee8e708c638de",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730201,
+      "trajectory_id": "f3e_update5_preserved_s730201_nominal",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        58,
+        59
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          38,
+          37
+        ],
+        "stable": [
+          36,
+          29
+        ],
+        "sliding": [
+          18,
+          26
+        ],
+        "impact": [
+          4,
+          4
+        ]
+      },
+      "normal_force_max_n": 974.0086059570312,
+      "tangential_force_max_n": 292.749755859375,
+      "contact_impulse_max_ns": 7.641068458557129,
+      "slip_speed_max_m_s": 2.160029172897339,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730202_high.npz",
+      "sha256": "9dec0907d3cc78df5e2903291aa6dccb37e130b6206023d96216c8c048904d0d",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730202,
+      "trajectory_id": "f3e_update5_preserved_s730202_high",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        261,
+        271
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          223,
+          213
+        ],
+        "stable": [
+          145,
+          151
+        ],
+        "sliding": [
+          81,
+          83
+        ],
+        "impact": [
+          35,
+          37
+        ]
+      },
+      "normal_force_max_n": 1355.1644287109375,
+      "tangential_force_max_n": 947.3268432617188,
+      "contact_impulse_max_ns": 11.23546028137207,
+      "slip_speed_max_m_s": 2.2645373344421387,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730202_low.npz",
+      "sha256": "06708af9e8e4d413ae9fbc100fcb879cb41c2875dd93969a94a00d3b73b88223",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730202,
+      "trajectory_id": "f3e_update5_preserved_s730202_low",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        271,
+        292
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          213,
+          192
+        ],
+        "stable": [
+          114,
+          105
+        ],
+        "sliding": [
+          127,
+          152
+        ],
+        "impact": [
+          30,
+          35
+        ]
+      },
+      "normal_force_max_n": 1338.812255859375,
+      "tangential_force_max_n": 393.023681640625,
+      "contact_impulse_max_ns": 10.712146759033203,
+      "slip_speed_max_m_s": 1.7420347929000854,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730202_nominal.npz",
+      "sha256": "8e199fb87e4205df358b5cc3d17ad886b82b2134ec43876ea20df03af7d5ca46",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730202,
+      "trajectory_id": "f3e_update5_preserved_s730202_nominal",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        271,
+        285
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          213,
+          199
+        ],
+        "stable": [
+          149,
+          123
+        ],
+        "sliding": [
+          90,
+          135
+        ],
+        "impact": [
+          32,
+          27
+        ]
+      },
+      "normal_force_max_n": 1628.4822998046875,
+      "tangential_force_max_n": 654.5927124023438,
+      "contact_impulse_max_ns": 16.450565338134766,
+      "slip_speed_max_m_s": 2.0761847496032715,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730203_high.npz",
+      "sha256": "037f8bbf8c8f97a5645b709b49addbbc95ab2dd855447a458577ca4d03e4795a",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730203,
+      "trajectory_id": "f3e_update5_preserved_s730203_high",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        140,
+        146
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          112,
+          106
+        ],
+        "stable": [
+          85,
+          82
+        ],
+        "sliding": [
+          37,
+          42
+        ],
+        "impact": [
+          18,
+          22
+        ]
+      },
+      "normal_force_max_n": 1194.2159423828125,
+      "tangential_force_max_n": 409.12652587890625,
+      "contact_impulse_max_ns": 8.93781852722168,
+      "slip_speed_max_m_s": 1.3210071325302124,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730203_low.npz",
+      "sha256": "cb707e09750e6421092235f0e406b6891341c432d537d015725fb426c578ff3f",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730203,
+      "trajectory_id": "f3e_update5_preserved_s730203_low",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        148,
+        157
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          104,
+          95
+        ],
+        "stable": [
+          59,
+          55
+        ],
+        "sliding": [
+          70,
+          88
+        ],
+        "impact": [
+          19,
+          14
+        ]
+      },
+      "normal_force_max_n": 718.3192138671875,
+      "tangential_force_max_n": 197.27859497070312,
+      "contact_impulse_max_ns": 9.030759811401367,
+      "slip_speed_max_m_s": 1.9941291809082031,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/f3e_update5_preserved/f3e_update5_preserved_s730203_nominal.npz",
+      "sha256": "a023250cbf3a13eb7c5710f90c41805264537290327645d244bbb456a0544038",
+      "checkpoint_id": "f3e_update5_preserved",
+      "seed": 730203,
+      "trajectory_id": "f3e_update5_preserved_s730203_nominal",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        136,
+        141
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          116,
+          111
+        ],
+        "stable": [
+          80,
+          72
+        ],
+        "sliding": [
+          35,
+          52
+        ],
+        "impact": [
+          21,
+          17
+        ]
+      },
+      "normal_force_max_n": 961.6530151367188,
+      "tangential_force_max_n": 467.91217041015625,
+      "contact_impulse_max_ns": 8.861244201660156,
+      "slip_speed_max_m_s": 1.5525254011154175,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730201_high.npz",
+      "sha256": "f7bd88bf6c12827c43d0d3501191bbfb4aefa77b1e523824fc63a0cc4eac310b",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730201,
+      "trajectory_id": "v13_direction_model999_s730201_high",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        64,
+        62
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          32,
+          33
+        ],
+        "stable": [
+          40,
+          29
+        ],
+        "sliding": [
+          19,
+          24
+        ],
+        "impact": [
+          5,
+          10
+        ]
+      },
+      "normal_force_max_n": 790.876708984375,
+      "tangential_force_max_n": 511.2912292480469,
+      "contact_impulse_max_ns": 7.129980087280273,
+      "slip_speed_max_m_s": 2.2856147289276123,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730201_low.npz",
+      "sha256": "67f6df4c23b1e49b67e7f316ab8ab1419e45113c3a005e44b54e2b0d1f709d6e",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730201,
+      "trajectory_id": "v13_direction_model999_s730201_low",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        72,
+        55
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          24,
+          36
+        ],
+        "stable": [
+          19,
+          24
+        ],
+        "sliding": [
+          52,
+          23
+        ],
+        "impact": [
+          1,
+          13
+        ]
+      },
+      "normal_force_max_n": 1448.62548828125,
+      "tangential_force_max_n": 173.87254333496094,
+      "contact_impulse_max_ns": 7.243127822875977,
+      "slip_speed_max_m_s": 2.474123001098633,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730201_nominal.npz",
+      "sha256": "8e74c5fe876f18fd8604053edf8490d1fb80a20f4c5cf06eb3b692602147ffbf",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730201,
+      "trajectory_id": "v13_direction_model999_s730201_nominal",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        63,
+        48
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          33,
+          45
+        ],
+        "stable": [
+          29,
+          28
+        ],
+        "sliding": [
+          29,
+          9
+        ],
+        "impact": [
+          5,
+          14
+        ]
+      },
+      "normal_force_max_n": 650.3958740234375,
+      "tangential_force_max_n": 325.19403076171875,
+      "contact_impulse_max_ns": 6.91350793838501,
+      "slip_speed_max_m_s": 2.3731536865234375,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730202_high.npz",
+      "sha256": "ee0c3c23dc045c3e530cbce273866b992799b0a5bbba98e774c5701add9b20d1",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730202,
+      "trajectory_id": "v13_direction_model999_s730202_high",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        298,
+        308
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          183,
+          166
+        ],
+        "stable": [
+          185,
+          158
+        ],
+        "sliding": [
+          90,
+          113
+        ],
+        "impact": [
+          26,
+          47
+        ]
+      },
+      "normal_force_max_n": 831.1542358398438,
+      "tangential_force_max_n": 473.7940673828125,
+      "contact_impulse_max_ns": 8.112860679626465,
+      "slip_speed_max_m_s": 1.9737932682037354,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730202_low.npz",
+      "sha256": "d4923b2ebf7e4d8fc86d472c9c19427248483e214c26359e2b7a48d31684ebaa",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730202,
+      "trajectory_id": "v13_direction_model999_s730202_low",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        315,
+        297
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          169,
+          176
+        ],
+        "stable": [
+          94,
+          86
+        ],
+        "sliding": [
+          206,
+          165
+        ],
+        "impact": [
+          15,
+          57
+        ]
+      },
+      "normal_force_max_n": 704.7257690429688,
+      "tangential_force_max_n": 209.6425323486328,
+      "contact_impulse_max_ns": 6.972919464111328,
+      "slip_speed_max_m_s": 1.7935333251953125,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730202_nominal.npz",
+      "sha256": "27245c5ec8c72ef45367004c53d5b4eba009eb2594d9a163197bece261f1581b",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730202,
+      "trajectory_id": "v13_direction_model999_s730202_nominal",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        324,
+        297
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          160,
+          176
+        ],
+        "stable": [
+          167,
+          157
+        ],
+        "sliding": [
+          139,
+          94
+        ],
+        "impact": [
+          18,
+          57
+        ]
+      },
+      "normal_force_max_n": 762.3234252929688,
+      "tangential_force_max_n": 360.42291259765625,
+      "contact_impulse_max_ns": 9.05816650390625,
+      "slip_speed_max_m_s": 1.4180101156234741,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730203_high.npz",
+      "sha256": "cd6d17bfda994202452296c2d3d242b7571da7674db2861d13cef07d0e0afb7a",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730203,
+      "trajectory_id": "v13_direction_model999_s730203_high",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        153,
+        155
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          99,
+          93
+        ],
+        "stable": [
+          95,
+          86
+        ],
+        "sliding": [
+          46,
+          46
+        ],
+        "impact": [
+          12,
+          27
+        ]
+      },
+      "normal_force_max_n": 1051.1319580078125,
+      "tangential_force_max_n": 735.6759033203125,
+      "contact_impulse_max_ns": 7.981629371643066,
+      "slip_speed_max_m_s": 2.408830165863037,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730203_low.npz",
+      "sha256": "d427aaa6cc805d69e0416f5d14c0b339918744178569beded26cbc7028740cfc",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730203,
+      "trajectory_id": "v13_direction_model999_s730203_low",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        166,
+        157
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          86,
+          86
+        ],
+        "stable": [
+          59,
+          53
+        ],
+        "sliding": [
+          100,
+          84
+        ],
+        "impact": [
+          7,
+          29
+        ]
+      },
+      "normal_force_max_n": 695.3685913085938,
+      "tangential_force_max_n": 119.5708236694336,
+      "contact_impulse_max_ns": 7.142488479614258,
+      "slip_speed_max_m_s": 2.1681671142578125,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_direction_model999/v13_direction_model999_s730203_nominal.npz",
+      "sha256": "03f7a87397ae769ea9590721a1cf4768997bd7f435672653afd964848fed013f",
+      "checkpoint_id": "v13_direction_model999",
+      "seed": 730203,
+      "trajectory_id": "v13_direction_model999_s730203_nominal",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        158,
+        166
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          93,
+          83
+        ],
+        "stable": [
+          90,
+          83
+        ],
+        "sliding": [
+          59,
+          60
+        ],
+        "impact": [
+          10,
+          26
+        ]
+      },
+      "normal_force_max_n": 764.0843505859375,
+      "tangential_force_max_n": 221.23495483398438,
+      "contact_impulse_max_ns": 8.394615173339844,
+      "slip_speed_max_m_s": 2.051013469696045,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_high.npz",
+      "sha256": "dd8df5b9fdc29f97d285581e556f7069b5faf19e02d35cf6f9af96515b5a531b",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730201,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730201_high",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        34,
+        28
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          59,
+          59
+        ],
+        "stable": [
+          0,
+          0
+        ],
+        "sliding": [
+          14,
+          14
+        ],
+        "impact": [
+          23,
+          23
+        ]
+      },
+      "normal_force_max_n": 992.260009765625,
+      "tangential_force_max_n": 447.82098388671875,
+      "contact_impulse_max_ns": 9.686267852783203,
+      "slip_speed_max_m_s": 2.32891845703125,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_low.npz",
+      "sha256": "9aa33356a0f59f7de30c11481f002a97ff40e0ee758d3b1ed80e9ded3ed24bb9",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730201,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730201_low",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        42,
+        33
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          48,
+          54
+        ],
+        "stable": [
+          0,
+          2
+        ],
+        "sliding": [
+          26,
+          15
+        ],
+        "impact": [
+          22,
+          25
+        ]
+      },
+      "normal_force_max_n": 951.2289428710938,
+      "tangential_force_max_n": 244.5930633544922,
+      "contact_impulse_max_ns": 9.454007148742676,
+      "slip_speed_max_m_s": 2.509772539138794,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730201_nominal.npz",
+      "sha256": "670e1d39b25851cd8b30988cf535e5e736fd623997ca0c51bc50ed17b893a77d",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730201,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730201_nominal",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        34,
+        28
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          58,
+          59
+        ],
+        "stable": [
+          0,
+          1
+        ],
+        "sliding": [
+          17,
+          18
+        ],
+        "impact": [
+          21,
+          18
+        ]
+      },
+      "normal_force_max_n": 1006.87744140625,
+      "tangential_force_max_n": 493.68994140625,
+      "contact_impulse_max_ns": 10.869380950927734,
+      "slip_speed_max_m_s": 2.1239430904388428,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730202_high.npz",
+      "sha256": "c0a6cee1b01bde6d4881149c3b94151c157a8128618896ca22d397a43ef3cde3",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730202,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730202_high",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        159,
+        153
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          307,
+          303
+        ],
+        "stable": [
+          2,
+          2
+        ],
+        "sliding": [
+          78,
+          86
+        ],
+        "impact": [
+          97,
+          93
+        ]
+      },
+      "normal_force_max_n": 2388.26513671875,
+      "tangential_force_max_n": 789.9185791015625,
+      "contact_impulse_max_ns": 13.87242317199707,
+      "slip_speed_max_m_s": 2.1178505420684814,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730202_low.npz",
+      "sha256": "611cddb2e38f317aacd5b7702f0c736f3a0f5b13ca5c2744daefe4938a8521ae",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730202,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730202_low",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        151,
+        144
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          300,
+          304
+        ],
+        "stable": [
+          3,
+          2
+        ],
+        "sliding": [
+          62,
+          72
+        ],
+        "impact": [
+          119,
+          106
+        ]
+      },
+      "normal_force_max_n": 1604.6219482421875,
+      "tangential_force_max_n": 318.62396240234375,
+      "contact_impulse_max_ns": 12.098212242126465,
+      "slip_speed_max_m_s": 2.4284427165985107,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730202_nominal.npz",
+      "sha256": "f17cdddf4c5969eddfae27baec92e09621a53071fddfa1c4b38eba9257fc7af9",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730202,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730202_nominal",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        166,
+        139
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          300,
+          298
+        ],
+        "stable": [
+          2,
+          4
+        ],
+        "sliding": [
+          78,
+          67
+        ],
+        "impact": [
+          104,
+          115
+        ]
+      },
+      "normal_force_max_n": 1612.2164306640625,
+      "tangential_force_max_n": 601.2429809570312,
+      "contact_impulse_max_ns": 13.556429862976074,
+      "slip_speed_max_m_s": 1.9685027599334717,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730203_high.npz",
+      "sha256": "28d7428892214a6c2096944fcd022e8f7bb1e9333831f7cfe2260a8e5b2917c8",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730203,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730203_high",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        79,
+        81
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          162,
+          156
+        ],
+        "stable": [
+          2,
+          2
+        ],
+        "sliding": [
+          34,
+          45
+        ],
+        "impact": [
+          54,
+          49
+        ]
+      },
+      "normal_force_max_n": 1283.138427734375,
+      "tangential_force_max_n": 640.7788696289062,
+      "contact_impulse_max_ns": 15.083395004272461,
+      "slip_speed_max_m_s": 1.728807806968689,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730203_low.npz",
+      "sha256": "39912d94e1efee4c615033863cdb39226936d9648b426f3980557c2315656d13",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730203,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730203_low",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        85,
+        87
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          155,
+          150
+        ],
+        "stable": [
+          0,
+          1
+        ],
+        "sliding": [
+          40,
+          42
+        ],
+        "impact": [
+          57,
+          59
+        ]
+      },
+      "normal_force_max_n": 1295.8441162109375,
+      "tangential_force_max_n": 370.5279235839844,
+      "contact_impulse_max_ns": 10.820512771606445,
+      "slip_speed_max_m_s": 2.478426218032837,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model12929_heldout/v13_f2r1_model12929_heldout_s730203_nominal.npz",
+      "sha256": "4d59a89502356b827b962999ba515ff7dc4e7c6c60918296e86a246df9b67286",
+      "checkpoint_id": "v13_f2r1_model12929_heldout",
+      "seed": 730203,
+      "trajectory_id": "v13_f2r1_model12929_heldout_s730203_nominal",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        90,
+        76
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          150,
+          161
+        ],
+        "stable": [
+          3,
+          1
+        ],
+        "sliding": [
+          42,
+          39
+        ],
+        "impact": [
+          57,
+          51
+        ]
+      },
+      "normal_force_max_n": 1502.0626220703125,
+      "tangential_force_max_n": 495.2981262207031,
+      "contact_impulse_max_ns": 11.713380813598633,
+      "slip_speed_max_m_s": 1.7663674354553223,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730201_high.npz",
+      "sha256": "9748d3b5d5d8641723de81177e3cb8ef72d5e2762de7b39babfcc01cc4b4ea47",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730201,
+      "trajectory_id": "v13_f2r1_model2929_s730201_high",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        48,
+        34
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          46,
+          51
+        ],
+        "stable": [
+          7,
+          3
+        ],
+        "sliding": [
+          23,
+          20
+        ],
+        "impact": [
+          20,
+          22
+        ]
+      },
+      "normal_force_max_n": 1009.6380615234375,
+      "tangential_force_max_n": 496.4070129394531,
+      "contact_impulse_max_ns": 7.904387474060059,
+      "slip_speed_max_m_s": 1.511317491531372,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730201_low.npz",
+      "sha256": "aa21cfc633edd7928dcf9ba4ac2923a19bf3784186ad7e2eed0d0717202aecac",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730201,
+      "trajectory_id": "v13_f2r1_model2929_s730201_low",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        44,
+        37
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          48,
+          51
+        ],
+        "stable": [
+          5,
+          8
+        ],
+        "sliding": [
+          22,
+          15
+        ],
+        "impact": [
+          21,
+          22
+        ]
+      },
+      "normal_force_max_n": 1188.6663818359375,
+      "tangential_force_max_n": 168.0614013671875,
+      "contact_impulse_max_ns": 7.175814628601074,
+      "slip_speed_max_m_s": 1.394547462463379,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730201_nominal.npz",
+      "sha256": "ef18e5247f38d3cf5aac9ed606e1a3218d39209deaab29b4af835898d2d67102",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730201,
+      "trajectory_id": "v13_f2r1_model2929_s730201_nominal",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        46,
+        24
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          47,
+          60
+        ],
+        "stable": [
+          6,
+          4
+        ],
+        "sliding": [
+          25,
+          9
+        ],
+        "impact": [
+          18,
+          23
+        ]
+      },
+      "normal_force_max_n": 516.4189453125,
+      "tangential_force_max_n": 234.119140625,
+      "contact_impulse_max_ns": 14.071453094482422,
+      "slip_speed_max_m_s": 1.5678431987762451,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730202_high.npz",
+      "sha256": "a3f0b8e70303c0c301a836db4a0ad41ae3a5d694294428354f67305ee123d8fd",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730202,
+      "trajectory_id": "v13_f2r1_model2929_s730202_high",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        216,
+        148
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          254,
+          297
+        ],
+        "stable": [
+          42,
+          20
+        ],
+        "sliding": [
+          101,
+          60
+        ],
+        "impact": [
+          87,
+          107
+        ]
+      },
+      "normal_force_max_n": 1493.6832275390625,
+      "tangential_force_max_n": 592.7587890625,
+      "contact_impulse_max_ns": 10.691108703613281,
+      "slip_speed_max_m_s": 2.038693428039551,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730202_low.npz",
+      "sha256": "252b849a606e63931c5bc176101f44fd68c906a2506fc90a94bae1e742ad4071",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730202,
+      "trajectory_id": "v13_f2r1_model2929_s730202_low",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        224,
+        161
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          245,
+          282
+        ],
+        "stable": [
+          20,
+          11
+        ],
+        "sliding": [
+          126,
+          84
+        ],
+        "impact": [
+          93,
+          107
+        ]
+      },
+      "normal_force_max_n": 1494.6978759765625,
+      "tangential_force_max_n": 255.31077575683594,
+      "contact_impulse_max_ns": 10.288851737976074,
+      "slip_speed_max_m_s": 1.7749543190002441,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730202_nominal.npz",
+      "sha256": "ccf6a45b0291d13b4df99312f5c002f4d7548521035b0dcfe0d0385cad56c879",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730202,
+      "trajectory_id": "v13_f2r1_model2929_s730202_nominal",
+      "termination_reason": "motion_end",
+      "frames": 484,
+      "valid_transitions": 484,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        227,
+        143
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          246,
+          294
+        ],
+        "stable": [
+          31,
+          14
+        ],
+        "sliding": [
+          126,
+          53
+        ],
+        "impact": [
+          81,
+          123
+        ]
+      },
+      "normal_force_max_n": 1367.4635009765625,
+      "tangential_force_max_n": 363.5697937011719,
+      "contact_impulse_max_ns": 12.606792449951172,
+      "slip_speed_max_m_s": 1.9513729810714722,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730203_high.npz",
+      "sha256": "d7622ca3442d8a248909db49e4ad8e88e0b1a512335bc4d9e694b95c745a0db8",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730203,
+      "trajectory_id": "v13_f2r1_model2929_s730203_high",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        112,
+        87
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          133,
+          149
+        ],
+        "stable": [
+          21,
+          14
+        ],
+        "sliding": [
+          49,
+          33
+        ],
+        "impact": [
+          49,
+          56
+        ]
+      },
+      "normal_force_max_n": 1340.718994140625,
+      "tangential_force_max_n": 526.239501953125,
+      "contact_impulse_max_ns": 8.752030372619629,
+      "slip_speed_max_m_s": 1.6819096803665161,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730203_low.npz",
+      "sha256": "90bc30aa9f78b34b3f7c2c313a50f50e9d231a50d1dd0bbb303a543e33d6e3b4",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730203,
+      "trajectory_id": "v13_f2r1_model2929_s730203_low",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        113,
+        75
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          131,
+          154
+        ],
+        "stable": [
+          12,
+          4
+        ],
+        "sliding": [
+          67,
+          33
+        ],
+        "impact": [
+          42,
+          61
+        ]
+      },
+      "normal_force_max_n": 1253.9918212890625,
+      "tangential_force_max_n": 275.77252197265625,
+      "contact_impulse_max_ns": 9.772356033325195,
+      "slip_speed_max_m_s": 1.845938801765442,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_f2r1_model2929/v13_f2r1_model2929_s730203_nominal.npz",
+      "sha256": "d1bafd0d2a1e1ee7bfc9c0571c27b3f14e83c855161c84d128e8b5c8c7f4fe4d",
+      "checkpoint_id": "v13_f2r1_model2929",
+      "seed": 730203,
+      "trajectory_id": "v13_f2r1_model2929_s730203_nominal",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        124,
+        79
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          123,
+          149
+        ],
+        "stable": [
+          18,
+          11
+        ],
+        "sliding": [
+          63,
+          38
+        ],
+        "impact": [
+          48,
+          54
+        ]
+      },
+      "normal_force_max_n": 990.1015014648438,
+      "tangential_force_max_n": 472.62567138671875,
+      "contact_impulse_max_ns": 11.107429504394531,
+      "slip_speed_max_m_s": 1.7067984342575073,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730201_high.npz",
+      "sha256": "ecc694cfbb5fe2279cb81058b496798b35e7d9920f0fa99a1af0e56dc2536dcb",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730201,
+      "trajectory_id": "v13_grounded_model499_s730201_high",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        85,
+        71
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          11,
+          25
+        ],
+        "stable": [
+          55,
+          52
+        ],
+        "sliding": [
+          28,
+          12
+        ],
+        "impact": [
+          2,
+          7
+        ]
+      },
+      "normal_force_max_n": 466.142578125,
+      "tangential_force_max_n": 245.2662811279297,
+      "contact_impulse_max_ns": 7.772557258605957,
+      "slip_speed_max_m_s": 1.4294828176498413,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730201_low.npz",
+      "sha256": "0f8008391ee79f9204e34f13c1d8bca6dd59e6cb76562f2c99d0f87c06cc37b1",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730201,
+      "trajectory_id": "v13_grounded_model499_s730201_low",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        80,
+        62
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          16,
+          32
+        ],
+        "stable": [
+          42,
+          24
+        ],
+        "sliding": [
+          36,
+          29
+        ],
+        "impact": [
+          2,
+          11
+        ]
+      },
+      "normal_force_max_n": 438.9591369628906,
+      "tangential_force_max_n": 101.00709533691406,
+      "contact_impulse_max_ns": 6.343046188354492,
+      "slip_speed_max_m_s": 2.181910753250122,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730201_nominal.npz",
+      "sha256": "ea301fdf083be3af4fdcddbcb1831ef615ed38f1e6d9b5e447dfde8368a7cafb",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730201,
+      "trajectory_id": "v13_grounded_model499_s730201_nominal",
+      "termination_reason": "motion_end",
+      "frames": 96,
+      "valid_transitions": 96,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        77,
+        74
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          19,
+          21
+        ],
+        "stable": [
+          43,
+          45
+        ],
+        "sliding": [
+          29,
+          23
+        ],
+        "impact": [
+          5,
+          7
+        ]
+      },
+      "normal_force_max_n": 487.953369140625,
+      "tangential_force_max_n": 204.2188720703125,
+      "contact_impulse_max_ns": 7.017789363861084,
+      "slip_speed_max_m_s": 1.7973133325576782,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730202_high.npz",
+      "sha256": "f0a21dea16f40a142c781ae289efec51d576408a48e13fbfb23386405e9028ae",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730202,
+      "trajectory_id": "v13_grounded_model499_s730202_high",
+      "termination_reason": "ee_body_pos",
+      "frames": 361,
+      "valid_transitions": 361,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        286,
+        271
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          75,
+          86
+        ],
+        "stable": [
+          189,
+          183
+        ],
+        "sliding": [
+          82,
+          62
+        ],
+        "impact": [
+          15,
+          30
+        ]
+      },
+      "normal_force_max_n": 872.8311767578125,
+      "tangential_force_max_n": 507.283935546875,
+      "contact_impulse_max_ns": 9.627153396606445,
+      "slip_speed_max_m_s": 1.926584243774414,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730202_low.npz",
+      "sha256": "77f9d64ba1fa3dc30666b6b804e1ae87d3f3b9f6db0a5b266effd265846a4fbd",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730202,
+      "trajectory_id": "v13_grounded_model499_s730202_low",
+      "termination_reason": "ee_body_pos",
+      "frames": 115,
+      "valid_transitions": 115,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        97,
+        96
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          18,
+          17
+        ],
+        "stable": [
+          52,
+          43
+        ],
+        "sliding": [
+          42,
+          49
+        ],
+        "impact": [
+          3,
+          6
+        ]
+      },
+      "normal_force_max_n": 505.6504821777344,
+      "tangential_force_max_n": 151.4805145263672,
+      "contact_impulse_max_ns": 4.947281360626221,
+      "slip_speed_max_m_s": 0.9437620043754578,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730202_nominal.npz",
+      "sha256": "78f61784d11410f9bbaeaa0b27ac96cf2d128a8671d56fe9761336776a8f933c",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730202,
+      "trajectory_id": "v13_grounded_model499_s730202_nominal",
+      "termination_reason": "ee_body_pos",
+      "frames": 172,
+      "valid_transitions": 172,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        144,
+        142
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          28,
+          27
+        ],
+        "stable": [
+          79,
+          88
+        ],
+        "sliding": [
+          61,
+          51
+        ],
+        "impact": [
+          4,
+          6
+        ]
+      },
+      "normal_force_max_n": 335.7279968261719,
+      "tangential_force_max_n": 156.83753967285156,
+      "contact_impulse_max_ns": 5.1631340980529785,
+      "slip_speed_max_m_s": 0.778913676738739,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730203_high.npz",
+      "sha256": "1dad9a884bfd42150c37f4aff7190bea0e7912ca28ae455aa7bab60fce59e7ba",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730203,
+      "trajectory_id": "v13_grounded_model499_s730203_high",
+      "termination_reason": "motion_end",
+      "frames": 252,
+      "valid_transitions": 252,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        190,
+        201
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          60,
+          50
+        ],
+        "stable": [
+          118,
+          142
+        ],
+        "sliding": [
+          56,
+          44
+        ],
+        "impact": [
+          18,
+          16
+        ]
+      },
+      "normal_force_max_n": 574.62646484375,
+      "tangential_force_max_n": 285.5423278808594,
+      "contact_impulse_max_ns": 6.481368541717529,
+      "slip_speed_max_m_s": 2.277878999710083,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730203_low.npz",
+      "sha256": "38c22815498cfeaaeeba2501629630bc171d9ba6b5c30c7cdae44c9a4a98d996",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730203,
+      "trajectory_id": "v13_grounded_model499_s730203_low",
+      "termination_reason": "ee_body_pos",
+      "frames": 219,
+      "valid_transitions": 219,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        170,
+        184
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          49,
+          35
+        ],
+        "stable": [
+          75,
+          83
+        ],
+        "sliding": [
+          84,
+          90
+        ],
+        "impact": [
+          11,
+          11
+        ]
+      },
+      "normal_force_max_n": 683.7831420898438,
+      "tangential_force_max_n": 155.26719665527344,
+      "contact_impulse_max_ns": 7.483179092407227,
+      "slip_speed_max_m_s": 2.450174570083618,
+      "verified": true,
+      "errors": []
+    },
+    {
+      "path": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v1/v13_grounded_model499/v13_grounded_model499_s730203_nominal.npz",
+      "sha256": "f1982523b242afb0d87c57a3d520e9e47f97763ce213596872e924ebbc0fd0d0",
+      "checkpoint_id": "v13_grounded_model499",
+      "seed": 730203,
+      "trajectory_id": "v13_grounded_model499_s730203_nominal",
+      "termination_reason": "ee_body_pos",
+      "frames": 176,
+      "valid_transitions": 176,
+      "physics_substeps_per_control_step": 4,
+      "active_contact_frames_left_right": [
+        140,
+        146
+      ],
+      "mode_counts_left_right": {
+        "separation": [
+          36,
+          28
+        ],
+        "stable": [
+          80,
+          96
+        ],
+        "sliding": [
+          49,
+          40
+        ],
+        "impact": [
+          11,
+          12
+        ]
+      },
+      "normal_force_max_n": 598.6012573242188,
+      "tangential_force_max_n": 265.0079040527344,
+      "contact_impulse_max_ns": 6.236329555511475,
+      "slip_speed_max_m_s": 2.3206567764282227,
+      "verified": true,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "schema": 1,
+  "split": "validation",
+  "seeds": [
+    730201,
+    730202,
+    730203
+  ],
+  "task_profiles": [
+    "v1"
+  ],
+  "feet": {
+    "left": {
+      "count": 4749,
+      "bins": [
+        {
+          "low": 0.0,
+          "high": 0.10000000149011612,
+          "count": 0,
+          "mean_probability": null,
+          "empirical_contact_frequency": null,
+          "absolute_gap": null
+        },
+        {
+          "low": 0.10000000149011612,
+          "high": 0.20000000298023224,
+          "count": 50,
+          "mean_probability": 0.16984564065933228,
+          "empirical_contact_frequency": 0.07999999821186066,
+          "absolute_gap": 0.08984564244747162
+        },
+        {
+          "low": 0.20000000298023224,
+          "high": 0.30000001192092896,
+          "count": 431,
+          "mean_probability": 0.2604348659515381,
+          "empirical_contact_frequency": 0.34570765495300293,
+          "absolute_gap": 0.08527278900146484
+        },
+        {
+          "low": 0.30000001192092896,
+          "high": 0.4000000059604645,
+          "count": 426,
+          "mean_probability": 0.34086766839027405,
+          "empirical_contact_frequency": 0.4906103312969208,
+          "absolute_gap": 0.14974266290664673
+        },
+        {
+          "low": 0.4000000059604645,
+          "high": 0.5,
+          "count": 34,
+          "mean_probability": 0.4290288984775543,
+          "empirical_contact_frequency": 0.38235294818878174,
+          "absolute_gap": 0.04667595028877258
+        },
+        {
+          "low": 0.5,
+          "high": 0.6000000238418579,
+          "count": 13,
+          "mean_probability": 0.5701990723609924,
+          "empirical_contact_frequency": 0.8461538553237915,
+          "absolute_gap": 0.2759547829627991
+        },
+        {
+          "low": 0.6000000238418579,
+          "high": 0.699999988079071,
+          "count": 270,
+          "mean_probability": 0.6659398078918457,
+          "empirical_contact_frequency": 0.699999988079071,
+          "absolute_gap": 0.03406018018722534
+        },
+        {
+          "low": 0.699999988079071,
+          "high": 0.800000011920929,
+          "count": 1512,
+          "mean_probability": 0.7603006362915039,
+          "empirical_contact_frequency": 0.8604497313499451,
+          "absolute_gap": 0.10014909505844116
+        },
+        {
+          "low": 0.800000011920929,
+          "high": 0.8999999761581421,
+          "count": 1964,
+          "mean_probability": 0.8389144539833069,
+          "empirical_contact_frequency": 0.9592667818069458,
+          "absolute_gap": 0.12035232782363892
+        },
+        {
+          "low": 0.8999999761581421,
+          "high": 1.0,
+          "count": 49,
+          "mean_probability": 0.9092077016830444,
+          "empirical_contact_frequency": 0.9591836929321289,
+          "absolute_gap": 0.04997599124908447
+        }
+      ],
+      "ece": 0.10731777192341903,
+      "mce": 0.2759547829627991,
+      "bce": 0.40720757842063904,
+      "brier": 0.12320057302713394,
+      "positive_probability": {
+        "count": 3807,
+        "q01": 0.25256338715553284,
+        "q10": 0.587680995464325,
+        "median": 0.8012662529945374,
+        "q90": 0.8640396595001221,
+        "q99": 0.9014503955841064
+      },
+      "negative_probability": {
+        "count": 942,
+        "q01": 0.15796901285648346,
+        "q10": 0.22773966193199158,
+        "median": 0.34374332427978516,
+        "q90": 0.7936203479766846,
+        "q99": 0.854149580001831
+      },
+      "by_true_contact_mode": {
+        "separation": {
+          "count": 936,
+          "mean_probability": 0.470643550157547,
+          "probability_q10": 0.22796714305877686,
+          "probability_median": 0.34374332427978516,
+          "probability_q90": 0.7946906089782715,
+          "bce": 0.7678472995758057,
+          "brier": 0.27642276883125305,
+          "predicted_contact_rate": 0.4572649598121643,
+          "mode_head_accuracy": 0.5256410241127014
+        },
+        "stable": {
+          "count": 2199,
+          "mean_probability": 0.8032662868499756,
+          "probability_q10": 0.7380797863006592,
+          "probability_median": 0.8194099068641663,
+          "probability_q90": 0.8706821203231812,
+          "bce": 0.22839100658893585,
+          "brier": 0.046296026557683945,
+          "predicted_contact_rate": 0.9831741452217102,
+          "mode_head_accuracy": 0.7712596654891968
+        },
+        "sliding": {
+          "count": 1401,
+          "mean_probability": 0.7297105193138123,
+          "probability_q10": 0.374296098947525,
+          "probability_median": 0.7781391143798828,
+          "probability_q90": 0.8503343462944031,
+          "bce": 0.3521827459335327,
+          "brier": 0.09796520322561264,
+          "predicted_contact_rate": 0.9093504548072815,
+          "mode_head_accuracy": 0.2855103611946106
+        },
+        "impact": {
+          "count": 213,
+          "mean_probability": 0.3768876791000366,
+          "probability_q10": 0.261179119348526,
+          "probability_median": 0.34467899799346924,
+          "probability_q90": 0.6837178468704224,
+          "bce": 1.0304410457611084,
+          "brier": 0.4098290205001831,
+          "predicted_contact_rate": 0.3380281627178192,
+          "mode_head_accuracy": 0.31924882531166077
+        }
+      }
+    },
+    "right": {
+      "count": 4749,
+      "bins": [
+        {
+          "low": 0.0,
+          "high": 0.10000000149011612,
+          "count": 0,
+          "mean_probability": null,
+          "empirical_contact_frequency": null,
+          "absolute_gap": null
+        },
+        {
+          "low": 0.10000000149011612,
+          "high": 0.20000000298023224,
+          "count": 74,
+          "mean_probability": 0.1745414435863495,
+          "empirical_contact_frequency": 0.6216216087341309,
+          "absolute_gap": 0.44708016514778137
+        },
+        {
+          "low": 0.20000000298023224,
+          "high": 0.30000001192092896,
+          "count": 397,
+          "mean_probability": 0.2583637237548828,
+          "empirical_contact_frequency": 0.4307304918766022,
+          "absolute_gap": 0.17236676812171936
+        },
+        {
+          "low": 0.30000001192092896,
+          "high": 0.4000000059604645,
+          "count": 420,
+          "mean_probability": 0.345785528421402,
+          "empirical_contact_frequency": 0.3523809611797333,
+          "absolute_gap": 0.006595432758331299
+        },
+        {
+          "low": 0.4000000059604645,
+          "high": 0.5,
+          "count": 128,
+          "mean_probability": 0.43537604808807373,
+          "empirical_contact_frequency": 0.4765625,
+          "absolute_gap": 0.04118645191192627
+        },
+        {
+          "low": 0.5,
+          "high": 0.6000000238418579,
+          "count": 10,
+          "mean_probability": 0.537697434425354,
+          "empirical_contact_frequency": 0.6000000238418579,
+          "absolute_gap": 0.062302589416503906
+        },
+        {
+          "low": 0.6000000238418579,
+          "high": 0.699999988079071,
+          "count": 132,
+          "mean_probability": 0.6747918725013733,
+          "empirical_contact_frequency": 0.8636363744735718,
+          "absolute_gap": 0.1888445019721985
+        },
+        {
+          "low": 0.699999988079071,
+          "high": 0.800000011920929,
+          "count": 1753,
+          "mean_probability": 0.7642863392829895,
+          "empirical_contact_frequency": 0.860239565372467,
+          "absolute_gap": 0.09595322608947754
+        },
+        {
+          "low": 0.800000011920929,
+          "high": 0.8999999761581421,
+          "count": 1830,
+          "mean_probability": 0.831783652305603,
+          "empirical_contact_frequency": 0.9191256761550903,
+          "absolute_gap": 0.0873420238494873
+        },
+        {
+          "low": 0.8999999761581421,
+          "high": 1.0,
+          "count": 5,
+          "mean_probability": 0.907362163066864,
+          "empirical_contact_frequency": 1.0,
+          "absolute_gap": 0.09263783693313599
+        }
+      ],
+      "ece": 0.0976228858890421,
+      "mce": 0.44708016514778137,
+      "bce": 0.4514273703098297,
+      "brier": 0.14046789705753326,
+      "positive_probability": {
+        "count": 3741,
+        "q01": 0.19331316649913788,
+        "q10": 0.4088789224624634,
+        "median": 0.7936222553253174,
+        "q90": 0.8495627641677856,
+        "q99": 0.8822445273399353
+      },
+      "negative_probability": {
+        "count": 1008,
+        "q01": 0.1695159375667572,
+        "q10": 0.2478005439043045,
+        "median": 0.3888899087905884,
+        "q90": 0.8147974014282227,
+        "q99": 0.8629962801933289
+      },
+      "by_true_contact_mode": {
+        "separation": {
+          "count": 963,
+          "mean_probability": 0.5175687670707703,
+          "probability_q10": 0.2551261782646179,
+          "probability_median": 0.4025613069534302,
+          "probability_q90": 0.8156960010528564,
+          "bce": 0.8801328539848328,
+          "brier": 0.32236185669898987,
+          "predicted_contact_rate": 0.5285565853118896,
+          "mode_head_accuracy": 0.32191070914268494
+        },
+        "stable": {
+          "count": 2268,
+          "mean_probability": 0.7875601649284363,
+          "probability_q10": 0.729132890701294,
+          "probability_median": 0.800809383392334,
+          "probability_q90": 0.8519152998924255,
+          "bce": 0.245905339717865,
+          "brier": 0.05123613029718399,
+          "predicted_contact_rate": 0.9894179701805115,
+          "mode_head_accuracy": 0.815696656703949
+        },
+        "sliding": {
+          "count": 1200,
+          "mean_probability": 0.7477921843528748,
+          "probability_q10": 0.45195427536964417,
+          "probability_median": 0.791806697845459,
+          "probability_q90": 0.8492488861083984,
+          "bce": 0.3197653591632843,
+          "brier": 0.0847565084695816,
+          "predicted_contact_rate": 0.9300000071525574,
+          "mode_head_accuracy": 0.18666666746139526
+        },
+        "impact": {
+          "count": 318,
+          "mean_probability": 0.3001042604446411,
+          "probability_q10": 0.18295662105083466,
+          "probability_median": 0.26237019896507263,
+          "probability_q90": 0.43477120995521545,
+          "bce": 1.1158132553100586,
+          "brier": 0.43627747893333435,
+          "predicted_contact_rate": 0.13522012531757355,
+          "mode_head_accuracy": 0.7201257944107056
+        }
+      }
+    }
+  }
+}

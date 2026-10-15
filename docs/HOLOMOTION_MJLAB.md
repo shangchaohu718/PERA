@@ -19,8 +19,9 @@ CPU verification evidence and the remaining real-simulation validation gate.
 
 `tools/run_holomotion_physics_ab.py` launches two sequential runs from the
 same random seed and the same 16-expert HoloMotion architecture. The baseline
-uses `--matched-physics-task`, so rewards and domain randomization match the
-Physics run. The Physics run uses the complete default Set encoder, GRU memory,
+uses `--matched-physics-task`, so domain randomization matches the Physics run.
+Both runs use the unmodified HoloMotion v1.4 reward weights; Physics does not
+add foot-slip or foot-impact reward terms. The Physics run uses the complete default Set encoder, GRU memory,
 dynamics learner, calibration, and residual policy; the randomly initialized
 base Actor remains trainable.
 

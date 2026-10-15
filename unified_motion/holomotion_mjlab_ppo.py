@@ -154,6 +154,7 @@ class HoloMotionPPORollout:
     privileged_teacher_env_ids: torch.Tensor | None = None
     privileged_teacher_contacts: torch.Tensor | None = None
     privileged_teacher_contact_mask: torch.Tensor | None = None
+    teacher_candidate_actions: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -422,14 +423,12 @@ class HoloMotionMJLabPPO:
             }
             if getattr(self, "_network_config", None) is not None:
                 contract = getattr(getattr(self.task, "adapter", None), "contract", None)
-                foot = getattr(self.task, "foot_reward_config", None)
                 randomization = getattr(self.task, "physics_randomization", None)
                 payload.update(policy_schema=1, network_config=self._network_config,
                     base_actor_state_dict=checkpoint_actor.state_dict(),
                     critic_state_dict=self.critic.state_dict(), ppo_config=asdict(self.config),
                     policy_runtime_config=dict(rollout_steps=self._policy_rollout_steps,
                         task_contract=None if contract is None else asdict(contract),
-                        foot_reward=None if foot is None else asdict(foot),
                         physics_randomization=None if randomization is None else asdict(randomization)))
             if hasattr(self, "dynamics"):
                 payload.update(
@@ -449,7 +448,6 @@ class HoloMotionMJLabPPO:
                 if getattr(self, "_network_config", None) is not None:
                     from .holomotion_physics_runtime import dynamics_configuration
                     contract = getattr(getattr(self.task, "adapter", None), "contract", None)
-                    foot = getattr(self.task, "foot_reward_config", None)
                     randomization = getattr(self.task, "physics_randomization", None)
                     payload.update(
                         physics_schema=5,
@@ -460,12 +458,17 @@ class HoloMotionMJLabPPO:
                         confidence_state_dict=self.confidence.state_dict(),
                         physics_runtime_config=dict(schema=2, network_config=self._network_config,
                             physics_actor_config=asdict(self.actor.config),
+                            physics_control_mode=getattr(self, '_physics_control_mode', 'student'),
+                            teacher_action_proposal=(
+                                "base_mean_pre_sample"
+                                if getattr(self, '_physics_control_mode', 'student') == 'teacher'
+                                else None
+                            ),
                             dynamics_config=dynamics_configuration(self.dynamics),
                             confidence_config=asdict(self.confidence.config),
                             confidence_warmup_steps=self.confidence_warmup_steps,
                             rollout_steps=getattr(self, "_policy_rollout_steps", 32),
                             task_contract=None if contract is None else asdict(contract),
-                            foot_reward=None if foot is None else asdict(foot),
                             physics_randomization=None if randomization is None else asdict(randomization)),
                         physics_loss_weights=dict(
                             system_identification_weight=self.system_identification_weight,

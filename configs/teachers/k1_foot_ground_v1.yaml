@@ -1,0 +1,55 @@
+schema: 1
+experiment: k1_foot_ground_teacher_v1
+control_dt_s: 0.02
+robot_dof: 22
+features:
+  student_observation_schema: q22_dq22_imu6_tau22_previous_action22_v1
+  student_observation_dim: 94
+  privileged_current_schema: root_velocity_height_material_disturbance_v1
+  privileged_current_dim: 12
+  foot_current_schema: measured_contact_kinematics_force_v1
+  foot_current_dim: 15
+model:
+  width: 128
+  foot_width: 48
+  heads: 4
+  layers: 3
+  context_steps: 32
+  dropout: 0.0
+optimization:
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  trajectory_order: seeded_epoch_shuffle_v1
+  contact_mode_class_weighting: inverse_frequency_train_split
+  replay_updates: 1
+  gradient_audit_every: 100
+  seeds: [730201, 730202, 730203]
+loss:
+  contact_weight_ablation: [1.0, 0.1, 0.03]
+  geometry_weight: 0.1
+  kinematics_weight: 1.0
+  force_weight: 1.0
+  dynamics_weight: 1.0
+  impulse_weight: 0.1
+protocol:
+  regression_statistics: train_split_only
+  threshold_selection: validation_only
+  split_unit: complete_checkpoint_reference_trajectory
+  require_heldout_checkpoint_test: true
+  future_action_contract: next_step_executed_action_only
+  multistep_oracle_action: false
+  ppo_updates: 0
+quality_gate:
+  # Frozen before held-out checkpoint evaluation. These are Teacher V1 research
+  # gates, not claims about future Student observability or Actor performance.
+  required_test_seeds: 3
+  minimum_stratum_samples: 1
+  contact_f1_min: 0.75
+  contact_brier_max: 0.20
+  contact_mode_macro_f1_min: 0.40
+  tangent_velocity_rmse_m_s_max: 0.35
+  slip_speed_rmse_m_s_max: 0.25
+  normal_force_rmse_n_max: 250.0
+  tangential_force_rmse_n_max: 175.0
+  root_angular_velocity_delta_rmse_rad_s_max: 1.0
+  delta_joint_velocity_vs_persistence_rmse_improvement_min: 0.0

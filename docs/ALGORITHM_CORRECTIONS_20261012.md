@@ -80,7 +80,7 @@ batch=8、CPU 两线程、默认宽度、每个长度重放 3 次取中位数：
 
 | 对照 | 加到同一套训练参数的选项 |
 |---|---|
-| 基础 Actor 微调，匹配奖励和物理随机化 | `--matched-physics-task` |
+| 基础 Actor 微调，匹配物理随机化 | `--matched-physics-task` |
 | 默认 Physics：直接 ID、基础 Actor 冻结 | `--physics` |
 | 加参数自编码 Teacher 辅助目标 | `--physics-teacher` |
 | Physics 同时微调基础 Actor | `--physics --finetune-base-actor` |

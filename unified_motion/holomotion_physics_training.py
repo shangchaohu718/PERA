@@ -27,6 +27,7 @@ from .holomotion_physics_actor import (
     HoloMotionPhysicsActor,
     HoloMotionPhysicsActorConfig,
     dynamics_actor_features,
+    teacher_actor_features,
 )
 from .models.physics import DynamicsModel, PhysicsObservation
 from .holomotion_physics_runtime import physics_policy_inputs
@@ -193,6 +194,177 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         self._physics_age = None
         self._dynamics_history = DynamicsHistory(dynamics_history_steps, max_bytes=dynamics_history_bytes)
         self._policy_rollout_steps = policy_rollout_steps
+        self._physics_control_mode = "student"
+        self._teacher_control_history = None
+
+    def prepare_teacher_control(self, *, reinitialize_residual: bool = True,
+                                freeze_base_actor: bool = True,
+                                residual_limit: float | None = None) -> None:
+        """Train a residual from frozen Teacher predictions.
+
+        This is a privileged simulation experiment, not a deployable policy.
+        The feature contract intentionally contains only physical predictions
+        that can later be distilled into a Student.
+
+        ``freeze_base_actor=True`` preserves the original residual-only audit.
+        Setting it to ``False`` is the paired learning experiment: the Actor is
+        freshly initialized and learns jointly with the residual while the
+        pretrained Teacher remains frozen.
+        """
+        if type(freeze_base_actor) is not bool:
+            raise TypeError("freeze_base_actor must be boolean")
+        if (residual_limit is not None
+                and (isinstance(residual_limit, bool)
+                     or not isinstance(residual_limit, (float, int))
+                     or not 0.0 < float(residual_limit) <= 1.0)):
+            raise ValueError("residual_limit must be in (0, 1]")
+        if self.privileged_teacher_ema is None or self.privileged_teacher_updates < 1:
+            raise ValueError("Teacher-controlled residual requires a trained privileged Teacher")
+        feature_dim = 9 + 2*self.dynamics.robot.dof + self.privileged_teacher.config.contact_slots
+        if reinitialize_residual:
+            config = replace(self.actor.config, physics_feature_dim=feature_dim,
+                             residual_limit=(self.actor.config.residual_limit
+                                             if residual_limit is None else float(residual_limit)))
+            self.actor = HoloMotionPhysicsActor(self.actor.base_actor, config).to(self.task.device)
+        elif (self.actor.config.physics_feature_dim != feature_dim
+              or residual_limit is not None
+              and self.actor.config.residual_limit != float(residual_limit)):
+            raise ValueError("checkpoint Teacher residual configuration is invalid")
+        self.actor.base_actor.requires_grad_(not freeze_base_actor)
+        self.actor.physics_residual.requires_grad_(True)
+        self.dynamics.requires_grad_(False)
+        self.actor_dynamics.requires_grad_(False)
+        self.confidence.requires_grad_(False)
+        self.privileged_teacher.requires_grad_(False)
+        self.privileged_teacher_ema.requires_grad_(False).eval()
+        decay, no_decay = [], []
+        for name, parameter in self.actor.named_parameters():
+            if not parameter.requires_grad:
+                continue
+            target = no_decay if (
+                parameter.ndim < 2 or "log_std" in name or "bias" in name or "norm" in name
+            ) else decay
+            target.append(parameter)
+        self.actor_optimizer = torch.optim.AdamW(
+            [{"params": decay, "weight_decay": .01},
+             {"params": no_decay, "weight_decay": 0.}],
+            lr=self.config.actor_learning_rate,
+            betas=(self.config.actor_beta1, self.config.actor_beta2))
+        self._physics_control_mode = "teacher"
+        self.update_config = replace(
+            self.update_config, freeze_base_actor=freeze_base_actor)
+        self._teacher_control_history = None
+
+    @torch.no_grad()
+    def _teacher_residual_features(self, observation, truth, parameters, start,
+                                   candidate_mean):
+        teacher = self.privileged_teacher_ema
+        if teacher is None:
+            raise RuntimeError("Teacher-controlled residual has no Teacher")
+        current = normalized_core(truth, self.dynamics.robot)
+        packed = teacher_inputs(observation.critic, truth, parameters,
+                                self.dynamics.robot, teacher.config)
+        history = self._teacher_control_history
+        if history is None:
+            history = ([], [], [], [])
+        inputs, starts, actions, cores = history
+        # The current candidate is the deterministic base-policy mean, not a
+        # random sample.  The residual therefore shifts the Gaussian mean
+        # before execution instead of applying an action-dependent transform to
+        # an already sampled action.  After task.step(), this slot is replaced
+        # with the accepted command for causal history on the next frame.
+        inputs.append(packed); starts.append(start)
+        actions.append(candidate_mean.detach()); cores.append(current)
+        keep = teacher.config.context_steps
+        for values in history:
+            del values[:-keep]
+        output = teacher(torch.stack(inputs, 1), torch.stack(starts, 1),
+                         torch.stack(actions, 1), torch.stack(cores, 1))
+        self._teacher_control_history = history
+        return teacher_actor_features({key: value[:, -1] for key, value in output.items()},
+                                      dof=self.dynamics.robot.dof,
+                                      contact_slots=teacher.config.contact_slots)
+
+    def prepare_teacher_only(self) -> None:
+        """Freeze every deployable/control branch; leave only Teacher trainable."""
+        if self.privileged_teacher is None or self.privileged_teacher_optimizer is None:
+            raise ValueError("teacher-only training requires the privileged Transformer Teacher")
+        self.actor.requires_grad_(False)
+        self.critic.requires_grad_(False)
+        self.dynamics.requires_grad_(False)
+        self.actor_dynamics.requires_grad_(False)
+        self.confidence.requires_grad_(False)
+        self.privileged_teacher.requires_grad_(True)
+        self._teacher_only = True
+
+    def update_teacher_only(self, rollout: HoloMotionPPORollout) -> dict[str, Any] | None:
+        """Update only the privileged Teacher and report reserved-transition baselines."""
+        if not getattr(self, "_teacher_only", False):
+            raise RuntimeError("call prepare_teacher_only before Teacher-only training")
+        if self.privileged_teacher is None:
+            raise RuntimeError("privileged Teacher is unavailable")
+        self._dynamics_rollouts.append(rollout)
+        required_steps = self.dynamics_burn_in_steps + self.dynamics_train_steps
+        available_steps = sum(item.actions.shape[1] for item in self._dynamics_rollouts)
+        if available_steps < required_steps:
+            return None
+        batches = self._dynamics_rollouts
+        try:
+            observation = _concat_physics([item.physics_observation for item in batches])
+            next_observation = _concat_physics([item.next_physics_observation for item in batches])
+            starts = torch.cat([item.physics_episode_start for item in batches], dim=1)
+            actions = torch.cat([item.actions if item.executed_actions is None
+                                 else item.executed_actions for item in batches], dim=1)
+            parameters = torch.cat([item.physics_teacher_target for item in batches], dim=1)
+            burn = self.dynamics_burn_in_steps
+            end = available_steps
+            validation_steps = min(end-burn-1, max(1, math.ceil(
+                (end-burn)*self.privileged_teacher.config.validation_fraction)))
+            train_end = end-validation_steps
+            if train_end <= burn:
+                raise ValueError("Teacher-only window needs separate train and validation transitions")
+            result = self._update_privileged_teacher(
+                batches, next_observation, starts, actions, parameters, burn, train_end,
+                validation_end=end)
+            if result is None:
+                raise RuntimeError("privileged Teacher update was unexpectedly disabled")
+            ids, output, loss, _ = result
+            details = []
+            admitted = actions.new_zeros(6)
+            if "validation" in output:
+                with torch.no_grad():
+                    prefix = batches[0].dynamics_prefix or DynamicsHistory()
+                    hidden, cores, valid, _ = replay_dynamics_inputs(
+                        self.dynamics, prefix, observation, starts, actions)
+                    encoding = self.dynamics.forward_sequence(
+                        observation, episode_start=starts, initial_hidden=hidden,
+                        previous_predicted_core=cores, previous_prediction_valid=valid)
+                    prediction = self.dynamics.predict_next(
+                        _slice_physics(observation, train_end, end),
+                        actions[:, train_end:end],
+                        encoding.latent[:, train_end:end],
+                        physics_encoding=_slice_encoding(encoding, train_end, end).physics_encoding())
+                    admitted, details = assess_teacher(
+                        output["validation"],
+                        prediction.next_core[ids]/core_scale(self.dynamics.robot, actions),
+                        prediction.next_contact_logits[ids], output["shuffled"],
+                        normalized_core(next_observation, self.dynamics.robot)[ids, train_end:end],
+                        output["current"], next_observation.core_valid[ids, train_end:end],
+                        next_observation.contact_features[ids, train_end:end, :, 10],
+                        output["current_contacts"],
+                        next_observation.contact_mask[ids, train_end:end]
+                            & output["current_contact_mask"],
+                        self.privileged_teacher.config)
+            return {
+                "teacher_only_loss": float(loss),
+                "teacher_multistep_loss": float(output.get("multistep_loss", 0.)),
+                "teacher_updates": self.privileged_teacher_updates,
+                "teacher_validation_samples": len(ids)*validation_steps,
+                "teacher_admitted_fraction": float(admitted.mean()),
+                "teacher_validation": details,
+            }
+        finally:
+            self._dynamics_rollouts.clear()
 
     def privileged_teacher_checkpoint(self):
         if self.privileged_teacher is None:
@@ -245,6 +417,23 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             confidence_config=loaded.calibration.config,
             update_config=PhysicsUpdateConfig(**payload["physics_update_config"]),
             **payload["physics_training_config"], **payload["physics_loss_weights"])
+        control_mode = payload["physics_runtime_config"].get("physics_control_mode", "student")
+        if control_mode == "teacher":
+            if payload["physics_runtime_config"].get("teacher_action_proposal") != "base_mean_pre_sample":
+                raise ValueError(
+                    "legacy Teacher-control checkpoints used sampled-action residuals and "
+                    "cannot be resumed for PPO; use them only for frozen evaluation"
+                )
+            # Configure collection before optimizer restoration, while keeping
+            # the residual architecture and weights stored in the checkpoint.
+            saved_updates = payload.get("privileged_teacher", {}).get("updates", 0)
+            result.privileged_teacher_updates = saved_updates
+            result.prepare_teacher_control(
+                reinitialize_residual=False,
+                freeze_base_actor=result.update_config.freeze_base_actor,
+            )
+        elif control_mode != "student":
+            raise ValueError(f"unsupported Physics control mode: {control_mode!r}")
         result.load_optimizer_checkpoint(checkpoint, _validated_physics=loaded)
         return result
 
@@ -256,6 +445,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         self._physics_memory = None
         self._dynamics_history.clear()
         self._dynamics_rollouts.clear()
+        self._teacher_control_history = None
         self._physics_episode_start = torch.ones(
             self.task.num_envs, dtype=torch.bool, device=self.task.device
         )
@@ -296,6 +486,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         env_ids = tuple(range(self.task.num_envs))
         dynamics_prefix = self._dynamics_history.snapshot()
         executed_actions = []
+        teacher_candidate_actions = []
         ages = []
         self._policy_rollout_steps = num_steps
 
@@ -327,22 +518,50 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 self.actor_dynamics, frame, start, env_ids, before,
                 self._physics_age, self.confidence_warmup_steps, self.confidence)
             teacher_target = self.task.physics_teacher_target()
+            teacher_control = getattr(self, "_physics_control_mode", "student") == "teacher"
+            truth = (self.task.privileged_physics_observation()
+                     if teacher_ids is not None or teacher_control else None)
             if teacher_ids is not None:
-                truth = self.task.privileged_physics_observation()
+                assert truth is not None
                 privileged_inputs.append(teacher_inputs(observation.critic, truth, teacher_target,
                     self.dynamics.robot, self.privileged_teacher.config).index_select(0, teacher_ids))
                 privileged_cores.append(normalized_core(truth, self.dynamics.robot).index_select(0, teacher_ids).clone())
                 privileged_contacts.append(truth.contact_features[..., 10].index_select(0, teacher_ids).clone())
                 privileged_contact_masks.append(truth.contact_mask.index_select(0, teacher_ids).clone())
             data = flat_observations_to_tensordict(observation.actor, observation.critic)
-            actor_out = self._actor_forward(
-                data, mode="sampling", update_obs_norm=False,
-                physics_features=feature, physics_confidence=confidence,
-            )
+            if teacher_control:
+                assert truth is not None
+                base_out = self.actor.base_actor(
+                    data, mode="sampling", update_obs_norm=False)
+                candidate_mean = base_out.get("mu").detach().clone()
+                feature = self._teacher_residual_features(
+                    observation, truth, teacher_target, start, candidate_mean)
+                teacher_candidate_actions.append(candidate_mean)
+                confidence = feature.new_ones(feature.shape[:-1] + (1,))
+                actor_out = self.actor.apply_physics(
+                    base_out, feature, confidence, mode="sampling")
+            else:
+                actor_out = self._actor_forward(
+                    data, mode="sampling", update_obs_norm=False,
+                    physics_features=feature, physics_confidence=confidence,
+                )
             critic_out = self.critic(data, update_obs_norm=False)
             action = actor_out.get("actions")
             transition = self.task.step(action)
             executed = getattr(self.task, "last_executed_action", action).detach().clone()
+            if teacher_control:
+                # The current Teacher forward must be conditioned on the candidate
+                # base action: that is the action whose consequence the residual is
+                # deciding how to modify.  Once the environment has accepted the
+                # corrected command, however, future Teacher calls must remember the
+                # command that actually caused the observed transition.  Leaving the
+                # base action in this slot makes action history and state history
+                # describe two different trajectories.
+                assert self._teacher_control_history is not None
+                teacher_actions = self._teacher_control_history[2]
+                if not teacher_actions:
+                    raise RuntimeError("Teacher action history was not initialized")
+                teacher_actions[-1] = executed
             executed_actions.append(executed)
             self._dynamics_history.append(frame, start, executed)
             prediction = self.actor_dynamics.predict_next(
@@ -404,11 +623,15 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             privileged_teacher_env_ids=teacher_ids,
             privileged_teacher_contacts=stack(privileged_contacts) if privileged_contacts else None,
             privileged_teacher_contact_mask=stack(privileged_contact_masks) if privileged_contact_masks else None,
+            teacher_candidate_actions=(stack(teacher_candidate_actions)
+                                       if teacher_candidate_actions else None),
         )
 
     def update_dynamics(
         self, rollout: HoloMotionPPORollout
     ) -> HoloMotionDynamicsMetrics | None:
+        if getattr(self, "_physics_control_mode", "student") == "teacher":
+            return None
         required=(rollout.physics_observation,rollout.next_physics_observation,
                   rollout.physics_episode_start,rollout.physics_initial_hidden,
                   rollout.previous_predicted_core,rollout.previous_prediction_valid,
@@ -440,7 +663,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         calibration_steps = max(1, math.ceil((end-burn)*self.update_config.calibration_fraction))
         calibration_begin = end-calibration_steps
         train_end = calibration_begin
-        teacher_v2 = self.privileged_teacher is not None and self.privileged_teacher.config.objective_version == 2
+        teacher_v2 = self.privileged_teacher is not None and self.privileged_teacher.config.objective_version >= 2
         if teacher_v2 and calibration_begin-burn >= 2:
             teacher_validation_steps = min(calibration_begin-burn-1,
                 max(1, math.ceil((end-burn)*self.privileged_teacher.config.validation_fraction)))
@@ -627,11 +850,12 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         inputs = torch.cat([b.privileged_teacher_input for b in batches], 1)[:, :validation_end]
         current = torch.cat([b.privileged_teacher_core for b in batches], 1)[:, :validation_end]
         selected_starts, selected_actions = starts[ids, :validation_end], actions[ids, :validation_end]
+        selected_dones = torch.cat([b.dones.squeeze(-1) for b in batches], 1)[ids, :validation_end]
         self.privileged_teacher.train()
         output = self.privileged_teacher(inputs[:, :train_end], selected_starts[:, :train_end],
             selected_actions[:, :train_end], current[:, :train_end])
         valid = torch.zeros_like(selected_starts[:, :train_end])
-        valid[:, burn:] = True
+        valid[:, burn:] = ~selected_dones[:, burn:train_end]
         truth = normalized_core(next_observation, self.dynamics.robot)[ids, :train_end]
         contacts = next_observation.contact_features[ids, :train_end, :, 10]
         contact_mask = next_observation.contact_mask[ids, :train_end]
@@ -640,9 +864,15 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             raise ValueError('Teacher contact labels exceed configured slots')
         contacts, contact_mask = F.pad(contacts, (0, padding)), F.pad(contact_mask, (0, padding))
         loss = teacher_supervision(output, truth, next_observation.core_valid[ids, :train_end],
-            contacts, contact_mask, parameters[ids, :train_end], valid, self.privileged_teacher.config)
+            contacts, contact_mask, parameters[ids, :train_end], valid,
+            self.privileged_teacher.config, current_core=current[:, :train_end])
+        multistep_loss = self._teacher_multistep_loss(
+            self.privileged_teacher, output["latent"], current[:, :train_end],
+            next_observation, selected_starts[:, :train_end], selected_actions[:, :train_end],
+            selected_dones[:, :train_end], ids, burn, train_end)
+        total_teacher_loss = loss + self.privileged_teacher.config.multistep_weight*multistep_loss
         self.privileged_teacher_optimizer.zero_grad(set_to_none=True)
-        (self.teacher_reconstruction_weight*loss).backward()
+        (self.teacher_reconstruction_weight*total_teacher_loss).backward()
         nn.utils.clip_grad_norm_(self.privileged_teacher.parameters(), 1., error_if_nonfinite=True)
         self.privileged_teacher_optimizer.step()
         self.privileged_teacher_updates += 1
@@ -653,7 +883,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             self.privileged_teacher_ema.eval()
             targets = self.privileged_teacher_ema(inputs, selected_starts, selected_actions, current)
             training_targets = {key: value[:, burn:train_end].detach() for key, value in targets.items()}
-            if self.privileged_teacher.config.objective_version == 2 and train_end < validation_end:
+            training_targets["multistep_loss"] = multistep_loss.detach()
+            if self.privileged_teacher.config.objective_version >= 2 and train_end < validation_end:
                 validation = {key: value[:, train_end:validation_end].detach() for key, value in targets.items()}
                 action_window = selected_actions[:, train_end:validation_end]
                 shuffled_actions = action_window.flatten(0, 1).roll(1, 0).reshape_as(action_window)
@@ -664,7 +895,46 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                     current_contact_mask=torch.cat([b.privileged_teacher_contact_mask for b in batches], 1)[:, train_end:validation_end])
             targets = training_targets
         ramp = min(1., self.privileged_teacher_updates/self.privileged_teacher.config.warmup_updates)
-        return ids, targets, loss.detach(), ramp
+        return ids, targets, total_teacher_loss.detach(), ramp
+
+    def _teacher_multistep_loss(self, teacher, latent, current, next_observation,
+                                starts, actions, dones, ids, burn, train_end):
+        """Direct 4/8-step delta supervision with the executed action window."""
+        if teacher.config.objective_version < 3 or not teacher.config.multistep_weight:
+            return actions.new_zeros(())
+        truth_all = normalized_core(next_observation, self.dynamics.robot)[ids, :train_end]
+        valid_all = next_observation.core_valid[ids, :train_end]
+        terms = []
+        for horizon in teacher.config.prediction_horizons:
+            length = train_end-horizon+1
+            begin = burn
+            if horizon <= 1 or length <= begin:
+                continue
+            valid_transition = torch.ones_like(starts[:, begin:length])
+            for offset in range(horizon):
+                valid_transition &= ~dones[:, begin+offset:length+offset]
+            for offset in range(1, horizon):
+                valid_transition &= ~starts[:, begin+offset:length+offset]
+            if not valid_transition.any():
+                continue
+            window = torch.stack([actions[:, begin+i:length+i]
+                                  for i in range(horizon)], -2)
+            predicted = teacher.predict_future_core(
+                latent[:, begin:length], window, current[:, begin:length], horizon=horizon)
+            truth = truth_all[:, begin+horizon-1:length+horizon-1]
+            mask = valid_all[:, begin+horizon-1:length+horizon-1] & valid_transition.unsqueeze(-1)
+            group_losses = []
+            for section in core_groups(truth.shape[-1]):
+                selected = mask[..., section]
+                target_delta = truth[..., section]-current[:, begin:length, section]
+                predicted_delta = predicted[..., section]-current[:, begin:length, section]
+                error = torch.where(selected, predicted_delta-target_delta.detach(), 0.)
+                if teacher.config.delta_whitening:
+                    _, std = teacher.delta_statistics(horizon, predicted)
+                    error = error/std[..., section]
+                group_losses.append(error.square().sum()/selected.sum().clamp_min(1))
+            terms.append(torch.stack(group_losses).mean())
+        return torch.stack(terms).mean() if terms else actions.new_zeros(())
 
     @torch.no_grad()
     def _publish_dynamics(self, batches, observation, starts, actions, target, calibration_begin):

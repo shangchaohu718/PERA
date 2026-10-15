@@ -20,10 +20,6 @@ LIMITS = {
     'optimizer.teacher_learning_rate': (1e-7, 1e-2),
     'loss.system_identification_weight': (.001, 2.),
     'loss.teacher_distillation_weight': (0., .5),
-    'reward.left_slip_weight': (0., .2),
-    'reward.right_slip_weight': (0., .2),
-    'reward.left_impact_weight': (0., .2),
-    'reward.right_impact_weight': (0., .2),
 }
 SCALARS = frozenset({
     'reward_mean', 'done_count', 'analytic_kl', 'clip_fraction', 'entropy',
@@ -37,8 +33,7 @@ SCALARS = frozenset({
 })
 TRACKING = frozenset({'root_position_error_m', 'root_orientation_error_rad',
     'root_linear_velocity_error_mps', 'root_angular_velocity_error_radps',
-    'keybody_linear_velocity_rmse_mps', 'keybody_angular_velocity_rmse_radps',
-    'left_foot_slip', 'right_foot_slip', 'left_foot_impact', 'right_foot_impact'})
+    'keybody_linear_velocity_rmse_mps', 'keybody_angular_velocity_rmse_radps'})
 
 SYSTEM_PROMPT = '''You advise K1 humanoid motion-training experiments. Return exactly one JSON
 object with keys "reason" (short evidence-based explanation) and "changes" (a mapping).
@@ -88,8 +83,6 @@ def tuning_snapshot(trainer):
         group, name = key.split('.')
         if group == 'loss' and hasattr(trainer, name):
             settings[key] = float(getattr(trainer, name))
-        if group == 'reward' and hasattr(trainer.task, 'foot_reward_config'):
-            settings[key] = float(getattr(trainer.task.foot_reward_config, name))
     sampler = trainer.task.sampler
     if hasattr(sampler, 'set_sampling_weights'):
         weights = getattr(sampler, 'sampling_weights', None)
@@ -342,9 +335,7 @@ def apply_trial_adjustment(trainer, candidate):
     ppo = {k.split('.')[1]: v for k, v in after.items() if k.startswith('ppo.')}
     if 'optimizer.critic_learning_rate' in after:
         ppo['critic_learning_rate'] = after['optimizer.critic_learning_rate']
-    reward = {k.split('.')[1]: v for k, v in after.items() if k.startswith('reward.')}
     updated_ppo = replace(trainer.config, **ppo)
-    updated_reward = replace(trainer.task.foot_reward_config, **reward) if reward else None
     teacher_config = (replace(trainer.privileged_teacher.config,
         learning_rate=after['optimizer.teacher_learning_rate'])
         if 'optimizer.teacher_learning_rate' in after else None)
@@ -359,8 +350,6 @@ def apply_trial_adjustment(trainer, candidate):
     if teacher_config is not None:
         trainer.privileged_teacher.config = teacher_config
         trainer.privileged_teacher_ema.config = teacher_config
-    if updated_reward is not None:
-        trainer.task.foot_reward_config = updated_reward
     for key, value in after.items():
         if key.startswith('loss.'):
             setattr(trainer, key.split('.')[1], value)

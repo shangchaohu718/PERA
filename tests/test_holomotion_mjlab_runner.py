@@ -68,3 +68,8 @@ def test_physics_checkpoint_keeps_original_actor_layout_and_extra_state(tmp_path
 def test_runner_configuration_rejects_unbounded_zero_iterations():
     with pytest.raises(ValueError, match="num_iterations"):
         HoloMotionRunnerConfig(num_iterations=0)
+
+
+def test_runner_configuration_rejects_zero_progress_interval():
+    with pytest.raises(ValueError, match="progress_interval"):
+        HoloMotionRunnerConfig(num_iterations=1, progress_interval=0)

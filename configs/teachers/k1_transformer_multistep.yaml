@@ -1,0 +1,19 @@
+# Privileged K1 Teacher trained before residual/Student learning.
+objective_version: 3
+critic_dim: 843
+contact_slots: 2
+object_slots: 4
+width: 128
+heads: 8
+layers: 4
+context_steps: 64
+train_envs: 64
+learning_rate: 0.0001
+ema_decay: 0.98
+warmup_updates: 20
+validation_fraction: 0.25
+minimum_validation_samples: 16
+minimum_prediction_gain: 0.05
+minimum_action_gain: 0.01
+prediction_horizons: [1, 4, 8]
+multistep_weight: 0.5

@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "teacher_seed": 730203,
+  "teacher_task_profile": "v2_a1",
+  "dataset": "/home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual/f3e_frame025_left_ankle_pitch_delta002_actuator_audit.npz",
+  "dataset_metadata": {
+    "action_index": 18,
+    "action_scale": 0.2682671844959259,
+    "actor_updates": 0,
+    "actuator_time_lag_physics_steps": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "applied_torque_delta_nm": [
+      0.0,
+      0.43963778018951416,
+      -0.4396347999572754
+    ],
+    "branches": [
+      "base",
+      "plus",
+      "minus"
+    ],
+    "checkpoint_id": "f3e_update5_preserved",
+    "context_steps": 26,
+    "delayed_actuator_target_delta_rad": [
+      0.0,
+      0.02000001072883606,
+      -0.02000001072883606
+    ],
+    "dynamic_friction": 0.5,
+    "joint_name": "left_ankle_pitch_joint",
+    "null_replicate_branch": "base_duplicate",
+    "optimizer_updates": 0,
+    "ppo_updates": 0,
+    "pre_branch_state_max_abs_error": 0.0,
+    "probe_frame": 25,
+    "processed_target_delta_rad": [
+      0.0,
+      0.02000001072883606,
+      -0.02000001072883606
+    ],
+    "raw_action_delta": 0.07455253998948848,
+    "reference_intent_names": [
+      "phase_sin",
+      "phase_cos",
+      "planned_anchor_left",
+      "planned_anchor_right",
+      "planned_slide_left",
+      "planned_slide_right"
+    ],
+    "requested_delta_rad": 0.02,
+    "same_state_branching": true,
+    "schema": 1,
+    "seed": 730201,
+    "simulator_seed_via_cfg": false
+  },
+  "metrics": {
+    "schema": 1,
+    "branches": [
+      "base",
+      "plus",
+      "minus"
+    ],
+    "samples": 1,
+    "persistent_contact_foot_samples": 1,
+    "branch": {
+      "plus": {
+        "tangent_velocity_delta": {
+          "count": 2,
+          "mae": 0.0009309351444244385,
+          "rmse": 0.0010032322024926543,
+          "cosine_mean": null,
+          "sign_accuracy": null,
+          "action_ignored_rate": null,
+          "sensitivity_gain_median": null
+        },
+        "normal_force_delta": {
+          "count": 2,
+          "mae": 0.045754432678222656,
+          "rmse": 0.0462593212723732,
+          "cosine_mean": null,
+          "sign_accuracy": null,
+          "action_ignored_rate": null,
+          "sensitivity_gain_median": null
+        },
+        "contact_branch_accuracy": 0.5,
+        "contact_change_accuracy": 1.0
+      },
+      "minus": {
+        "tangent_velocity_delta": {
+          "count": 2,
+          "mae": 0.00080864317715168,
+          "rmse": 0.0008087997557595372,
+          "cosine_mean": null,
+          "sign_accuracy": null,
+          "action_ignored_rate": null,
+          "sensitivity_gain_median": null
+        },
+        "normal_force_delta": {
+          "count": 2,
+          "mae": 0.09726619720458984,
+          "rmse": 0.10719910264015198,
+          "cosine_mean": null,
+          "sign_accuracy": null,
+          "action_ignored_rate": null,
+          "sensitivity_gain_median": null
+        },
+        "contact_branch_accuracy": 0.5,
+        "contact_change_accuracy": 1.0
+      }
+    },
+    "data_quality": {
+      "processed_plus_abs_error_rad": 1.1175870895385742e-08,
+      "processed_minus_abs_error_rad": 1.1175870895385742e-08,
+      "null_replicate_available": true,
+      "null_contact_match_rate": 1.0,
+      "null_tangent_velocity_noise_rmse": 0.0003951173566747457,
+      "null_normal_force_noise_rmse_n": 0.005460883025079966,
+      "tangent_response_above_noise_rate": 0.0,
+      "force_response_above_noise_rate": 1.0,
+      "tangent_informative_response_rate": 0.0,
+      "force_informative_response_rate": 0.0,
+      "tangent_response_eligible_foot_samples": 1,
+      "force_response_eligible_foot_samples": 1
+    },
+    "symmetric_jacobian": {
+      "tangent_velocity": {
+        "count": 2,
+        "mae": 0.02956467866897583,
+        "rmse": 0.03787340968847275,
+        "cosine_mean": null,
+        "sign_accuracy": null,
+        "action_ignored_rate": null,
+        "sensitivity_gain_median": null
+      },
+      "normal_force": {
+        "count": 2,
+        "mae": 2.602051258087158,
+        "rmse": 2.6021082401275635,
+        "cosine_mean": null,
+        "sign_accuracy": null,
+        "action_ignored_rate": null,
+        "sensitivity_gain_median": null
+      }
+    }
+  },
+  "collection_quality_checks": [
+    {
+      "name": "pre-branch state equality",
+      "value": 0.0,
+      "operator": "<=",
+      "limit": 1e-06,
+      "passed": true
+    },
+    {
+      "name": "processed plus target",
+      "value": 1.1175870895385742e-08,
+      "operator": "<=",
+      "limit": 0.0001,
+      "passed": true
+    },
+    {
+      "name": "processed minus target",
+      "value": 1.1175870895385742e-08,
+      "operator": "<=",
+      "limit": 0.0001,
+      "passed": true
+    },
+    {
+      "name": "delayed actuator plus target",
+      "value": 1.1175870895385742e-08,
+      "operator": "<=",
+      "limit": 0.0001,
+      "passed": true
+    },
+    {
+      "name": "delayed actuator minus target",
+      "value": 1.1175870895385742e-08,
+      "operator": "<=",
+      "limit": 0.0001,
+      "passed": true
+    },
+    {
+      "name": "null replicate available",
+      "value": true,
+      "operator": "==",
+      "limit": true,
+      "passed": true
+    },
+    {
+      "name": "null contact deterministic",
+      "value": 1.0,
+      "operator": "==",
+      "limit": 1.0,
+      "passed": true
+    },
+    {
+      "name": "null tangent noise",
+      "value": 0.0003951173566747457,
+      "operator": "<=",
+      "limit": 0.001,
+      "passed": true
+    },
+    {
+      "name": "null force noise",
+      "value": 0.005460883025079966,
+      "operator": "<=",
+      "limit": 0.1,
+      "passed": true
+    }
+  ],
+  "collection_quality_gate_passed": true,
+  "sensitivity_informativeness_checks": [
+    {
+      "name": "tangent response exceeds numerical noise",
+      "value": 0.0,
+      "operator": ">",
+      "limit": 0.0,
+      "passed": false
+    },
+    {
+      "name": "force response exceeds numerical noise",
+      "value": 1.0,
+      "operator": ">",
+      "limit": 0.0,
+      "passed": true
+    }
+  ],
+  "tangent_sensitivity_probe_informative": false,
+  "force_sensitivity_probe_informative": true,
+  "tangent_material_probe_informative": false,
+  "force_material_probe_informative": false,
+  "actor_updates": 0,
+  "ppo_updates": 0
+}

@@ -54,36 +54,6 @@ class HoloMotionMJLabTransition:
 
 
 @dataclass(frozen=True)
-class HoloMotionFootRewardConfig:
-    """Independent left/right physical penalties; no symmetry is imposed."""
-
-    left_slip_weight: float = 0.0
-    right_slip_weight: float = 0.0
-    left_impact_weight: float = 0.0
-    right_impact_weight: float = 0.0
-    impact_threshold_n: float = 100.0
-
-    def __post_init__(self) -> None:
-        weights = (
-            self.left_slip_weight, self.right_slip_weight,
-            self.left_impact_weight, self.right_impact_weight,
-        )
-        if any(
-            isinstance(value, bool) or not isinstance(value, (float, int))
-            or not math.isfinite(value) or value < 0
-            for value in weights
-        ):
-            raise ValueError("foot reward weights must be finite and non-negative")
-        if (
-            isinstance(self.impact_threshold_n, bool)
-            or not isinstance(self.impact_threshold_n, (float, int))
-            or not math.isfinite(self.impact_threshold_n)
-            or self.impact_threshold_n <= 0
-        ):
-            raise ValueError("impact_threshold_n must be positive and finite")
-
-
-@dataclass(frozen=True)
 class HoloMotionPhysicsRandomizationConfig:
     """Slow physical variables that the privileged Teacher is allowed to see."""
 
@@ -113,7 +83,6 @@ class HoloMotionK1MJLabTask:
         self,
         adapter: HoloMotionK1MJLabAdapter,
         sampler: MotionSampler,
-        foot_reward_config: HoloMotionFootRewardConfig | None = None,
         physics_randomization: HoloMotionPhysicsRandomizationConfig | None = None,
     ) -> None:
         if not isinstance(adapter, HoloMotionK1MJLabAdapter):
@@ -136,11 +105,8 @@ class HoloMotionK1MJLabTask:
         self.bridge = adapter.bridge
         # The bridge exposes two intentionally separate reads: deployable
         # proprioceptive/kinematic input for the student and exact simulator
-        # contact truth for Teacher/Critic/reward supervision.
+        # contact truth for Physics supervision.
         self.physics_bridge = K1PhysicsBridge(self.bridge)
-        self.foot_reward_config = foot_reward_config or HoloMotionFootRewardConfig()
-        if not isinstance(self.foot_reward_config, HoloMotionFootRewardConfig):
-            raise TypeError("foot_reward_config must be HoloMotionFootRewardConfig")
         if physics_randomization is not None and not isinstance(
             physics_randomization, HoloMotionPhysicsRandomizationConfig
         ):
@@ -409,28 +375,6 @@ class HoloMotionK1MJLabTask:
         terms = holomotion_k1_reward_terms(
             state, reference, body_reference, reference_index=1
         )
-        contact = self.privileged_foot_contact_truth()
-        active = contact.contact_found.to(action.dtype)
-        left_slip = contact.slip_speed_m_s[:, 0] * active[:, 0]
-        right_slip = contact.slip_speed_m_s[:, 1] * active[:, 1]
-        threshold = float(self.foot_reward_config.impact_threshold_n)
-        left_impact = torch.relu(contact.normal_force_n[:, 0] - threshold) / threshold
-        right_impact = torch.relu(contact.normal_force_n[:, 1] - threshold) / threshold
-        terms.update(
-            left_foot_slip=left_slip,
-            right_foot_slip=right_slip,
-            left_foot_impact=left_impact,
-            right_foot_impact=right_impact,
-        )
-        cfg = self.foot_reward_config
-        terms["weighted_total"] = (
-            terms["weighted_total"]
-            - float(cfg.left_slip_weight) * left_slip
-            - float(cfg.right_slip_weight) * right_slip
-            - float(cfg.left_impact_weight) * left_impact
-            - float(cfg.right_impact_weight) * right_impact
-        )
-        terms["known_weighted_total"] = terms["weighted_total"]
         gravity_distance = gravity_projection_distance(
             state.root_quat_wxyz, reference.root_quat_wxyz[:, 1]
         )

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "checkpoint_id": "model_549",
+  "source_sha256": "d432d1f3c9e3ff5e6ebdf5074b794b63df5b570e0130fa0de19382ce4f4ee4ae",
+  "source_iteration": 549,
+  "historical_rollout": "/home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk/evaluation/v17_model549_actor_mean_lowpass_8hz_feet_contact.npz",
+  "expected_action_key": "policy_action_unfiltered",
+  "frames": 500,
+  "max_abs_action_error": 9.5367431640625e-07,
+  "mean_abs_action_error": 1.2103514279715455e-07,
+  "absolute_tolerance": 2e-06,
+  "all_parameters_frozen": true,
+  "source_checkpoint_modified": false,
+  "notes": "This verifies deterministic Actor inference before action-manager processing. It does not validate Isaac contact-label collection or Teacher quality."
+}

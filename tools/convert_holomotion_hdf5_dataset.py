@@ -8,9 +8,11 @@ This tool only serializes their output into MotionLibrary's explicit contract.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
+import numpy as np
 import torch
 
 from unified_motion.data.motion_sampler import MotionClip
@@ -58,6 +60,42 @@ def parse_args() -> argparse.Namespace:
 
 def _xyzw_to_wxyz(value: torch.Tensor) -> torch.Tensor:
     return torch.cat((value[..., 3:], value[..., :3]), dim=-1)
+
+
+def _save_named_mjlab_npz(
+    clip: MotionClip,
+    destination: Path,
+    *,
+    source_manifest: Path,
+    source_motion_key: str,
+) -> None:
+    """Write the exact format consumed by ``from_named_mjlab_files``."""
+    if not clip.body_names:
+        raise ValueError("HoloMotion K1 training requires named body FK arrays")
+    metadata = json.dumps(
+        {
+            "schema": "holomotion_hdf5_reference_named_v1",
+            "source_manifest": str(source_manifest),
+            "source_motion_key": source_motion_key,
+            "quaternion_order": "wxyz_body_to_world",
+            "content": "reference_only_from_hdf5_training_fk",
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    np.savez_compressed(
+        destination,
+        joint_pos=clip.joint_pos.detach().cpu().numpy(),
+        joint_vel=clip.joint_vel.detach().cpu().numpy(),
+        body_pos_w=clip.body_pos_w.detach().cpu().numpy(),
+        body_quat_w=clip.body_quat_wxyz.detach().cpu().numpy(),
+        body_lin_vel_w=clip.body_lin_vel_w.detach().cpu().numpy(),
+        body_ang_vel_w=clip.body_ang_vel_w.detach().cpu().numpy(),
+        fps=np.asarray(clip.fps),
+        joint_names=np.asarray(clip.joint_names),
+        body_names=np.asarray(clip.body_names),
+        metadata=np.asarray(metadata),
+    )
 
 
 def main() -> None:
@@ -127,7 +165,12 @@ def main() -> None:
                 body_lin_vel_w=arrays["ref_body_vel"],
                 body_ang_vel_w=arrays["ref_body_ang_vel"],
             )
-            clip.save_project_npz(destination)
+            _save_named_mjlab_npz(
+                clip,
+                destination,
+                source_manifest=args.manifest.expanduser().resolve(),
+                source_motion_key=sample.motion_key,
+            )
     finally:
         dataset.close()
     print(f"converted {count} windows into {output}")
