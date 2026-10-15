@@ -1,0 +1,183 @@
+{
+  "total": 877,
+  "pytest_exit_code": 0,
+  "subtests": {
+    "passed": 450,
+    "failed": 0,
+    "skipped": 0
+  },
+  "collection_errors": [],
+  "passed": 859,
+  "failed": 0,
+  "skipped": 18,
+  "project": "0.21.0",
+  "evaluated_at": "2026-10-13T06:49:50.307451+00:00",
+  "python": "3.12.13",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.5.4",
+  "cuda_available": false,
+  "runner": "pytest; includes unittest and pytest functions",
+  "process_returncode": 0,
+  "elapsed_seconds": 69.07902140001534,
+  "optional_dependencies": {
+    "mujoco": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mujoco'"
+    },
+    "mjlab": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'mjlab'"
+    },
+    "warp": {
+      "importable": false,
+      "reason": "ModuleNotFoundError: No module named 'warp'"
+    }
+  },
+  "core_suite_status": "PASS",
+  "actual_mjlab_training": "NOT_RUN: tensor/analytic/mock tests are not a robot contact solver",
+  "scope_note": "通过代码测试不等于真实机器人仿真、GPU性能、零样本能力通过。",
+  "base_commit": "6bb9c4fc2c9aa279028fb92b3459f11fe0978a1a",
+  "scope": "Second logic review fixes: CPU regression only; no new simulator or API benefit claim.",
+  "new_regression_tests": 16,
+  "fixes": [
+    {
+      "issue": "Fresh HoloMotion observation statistics never updated",
+      "resolution": "Update configured Actor/Critic EMA once per observed step after all PPO replay. Keep frozen Actor statistics frozen; save the mode and allow explicit legacy opt-in.",
+      "evidence": "Counts remain 0 during rollout and optimizer replay, then become 12 after 3 environments x 4 steps; restored training reaches 24. Frozen evaluation leaves all persistent state unchanged."
+    },
+    {
+      "issue": "Teacher contact persistence used zero Student placeholders",
+      "resolution": "Capture current privileged contacts and their mask separately. Quality admission uses current truth and requires both endpoints to be valid.",
+      "evidence": "A constant-contact fixture rejects a 0.5-probability Teacher against the true persistence BCE of approximately 0.01005."
+    },
+    {
+      "issue": "Nonzero Dropout changed probabilities before any PPO update",
+      "resolution": "Use eval mode in collection and PPO replay while retaining autograd for trainable parameters.",
+      "evidence": "Both plain and Physics HoloMotion with 0.3 attention/MLP dropout pass pre-update probability replay checks and perform optimizer updates."
+    },
+    {
+      "issue": "Reordered motion libraries silently reassigned curriculum weights",
+      "resolution": "Save ordered names and canonical motion-content hashes with weights; reject changed order, content or missing identity when resuming training.",
+      "evidence": "Order changes, same-name content changes and legacy weighted packages without identity are rejected; matching-library resume still passes."
+    },
+    {
+      "issue": "Trial validation admitted a baseline modified by another new proposal",
+      "resolution": "Record source and actual starting tuning snapshots, inherited advice and newly applied advice separately. Require an unchanged baseline and exactly the declared candidate change.",
+      "evidence": "Different baseline proposals, changed initial settings and missing evidence are rejected. Shared inherited advice and float32 representation noise are accepted."
+    }
+  ],
+  "compatibility": {
+    "legacy_normalization": "Missing mode preserves prior frozen-statistics behavior. Use --observation-normalization update to explicitly enable the new behavior before collection.",
+    "legacy_weighted_training": "Resume requires verified motion identity; old weighted packages need a verified re-export. Frozen inference is unaffected.",
+    "legacy_trial_reports": "Missing training_trial evidence is rejected by the strengthened validator."
+  },
+  "before_fix_probes": {
+    "normalization": {
+      "initial": {
+        "actor": {
+          "count": 0,
+          "abs_mean": 0.0
+        },
+        "critic": {
+          "count": 0,
+          "abs_mean": 0.0
+        }
+      },
+      "after_24_transitions_per_env_and_3_updates": {
+        "actor": {
+          "count": 0,
+          "abs_mean": 0.0
+        },
+        "critic": {
+          "count": 0,
+          "abs_mean": 0.0
+        }
+      },
+      "enabled": true,
+      "20_and_40_observations_equal_after_normalizer": true,
+      "normalized_value": 10.0
+    },
+    "dropout": {
+      "actor_training": true,
+      "before_any_optimizer_step_max_abs_logprob_difference": 9.023151397705078
+    },
+    "contact_persistence": {
+      "true_current_contact": 1.0,
+      "recorded_persistence_input": [
+        0.0
+      ],
+      "current_admission": {
+        "teacher": 0.6814640760421753,
+        "student": 2.3025853633880615,
+        "persistence": 4.605170726776123,
+        "shuffled": 0.6817529201507568,
+        "samples": 16,
+        "admitted": true,
+        "action_sensitive": false
+      },
+      "admission_with_true_current_contact": {
+        "teacher": 0.6814640760421753,
+        "student": 2.3025853633880615,
+        "persistence": 0.010050325654447079,
+        "shuffled": 0.6817529201507568,
+        "samples": 16,
+        "admitted": false,
+        "action_sensitive": false
+      }
+    },
+    "changed_baseline": {
+      "baseline_entropy": 0.0055,
+      "unchanged_entropy": 0.005,
+      "candidate_entropy": 0.0045,
+      "accepted": true,
+      "baseline_has_different_new_adjustment": true
+    },
+    "curriculum_reordering": {
+      "saved": {
+        "moonwalk": 1.2000000476837158,
+        "dance": 0.800000011920929
+      },
+      "restored": {
+        "dance": 1.2000000476837158,
+        "moonwalk": 0.800000011920929
+      },
+      "reordered_library_rejected": false
+    },
+    "dropout_controls": [
+      {
+        "dropout": 0.0,
+        "mode": "train",
+        "max_logprob_difference": 6.198883056640625e-06
+      },
+      {
+        "dropout": 0.3,
+        "mode": "train",
+        "max_logprob_difference": 6.344161033630371
+      },
+      {
+        "dropout": 0.3,
+        "mode": "eval",
+        "max_logprob_difference": 6.198883056640625e-06
+      }
+    ]
+  },
+  "implementation_sha256": {
+    "tests/test_holomotion_mjlab_runner.py": "587db8551c3137d1f7ba51cd0b651d910fcdba453af244132d569801f1223f23",
+    "tests/test_training_advisor.py": "689be13a29414d67d892fdc9288b196269cce8cc7cb6a349f6242ded44fab355",
+    "tools/evaluate_physics_holomotion_k1_mjlab.py": "86de4df51cc28422c1f58f4b07f1715444852564fe337627d0a40a8818013c18",
+    "tools/train_holomotion_k1_mjlab.py": "e336b245b84e64a895329b8286f572cbcb6bd699f36db8fff50923119e68fdaf",
+    "unified_motion/data/motion_sampler.py": "9911509d11325aa0cd283c1fe655b943a7676824bff1ad209d0919142ae072a9",
+    "unified_motion/holomotion_mjlab_ppo.py": "44f8cd012ad4d90f5fe9a0ec36c952298f3093c74372d8067ed6658eb14f96c3",
+    "unified_motion/holomotion_mjlab_runner.py": "d75630f5830e035175a773c007bf8dd2cde046910db67d65a90504aec9418252",
+    "unified_motion/holomotion_physics_training.py": "3ab431fdf26c678f580a7e49ac8fa0f6075723e531b5ca0bf01fe57ea1067616",
+    "unified_motion/llm/advisor.py": "36cbb7e89616daa397812c94c0f330d604597754b96a77763c58bc3ab27584af",
+    "unified_motion/llm/validation.py": "d6220f6605369c95d1e02a163e301e3cbc7f43471c9d1d5662eea8fb852fa79c",
+    "tests/test_second_logic_fixes.py": "73dd3429cc11d67774b77433d7d51bee881f4406798176d2e0b9b7cb18eea65f"
+  },
+  "not_validated": [
+    "CUDA/mjlab training",
+    "Real robot control gains",
+    "Real DeepSeek/GLM API requests",
+    "Training throughput or leaderboard improvements"
+  ]
+}

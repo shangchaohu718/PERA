@@ -194,9 +194,15 @@ def trial_reports():
             tracking=dict(root_position_error_m=.1, root_orientation_error_rad=.1,
                 root_linear_velocity_error_mps=.2, keybody_linear_velocity_rmse_mps=.2),
             physical_failures=3, reference_completions=5, reward_mean=10.)
+        report['training_trial'] = dict(schema=1, source_settings=deepcopy(SETTINGS),
+            initial_settings=deepcopy(SETTINGS), source_adjustment_sha256=None, applied_adjustment_sha256=None)
+        report['training_trial_sha256'] = fingerprint(report['training_trial'])
         baseline.append(report)
         improved = deepcopy(report)
         improved['trial_adjustment_sha256'] = fingerprint(candidate)
+        improved['training_trial']['initial_settings'] = deepcopy(candidate['settings_after'])
+        improved['training_trial']['applied_adjustment_sha256'] = fingerprint(candidate)
+        improved['training_trial_sha256'] = fingerprint(improved['training_trial'])
         improved['tracking']['root_position_error_m'] = .09
         improved['reward_mean'] = -100.  # Shaped reward must not determine admission.
         trial.append(improved)

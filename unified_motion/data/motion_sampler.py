@@ -25,7 +25,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
+import hashlib
+import json
 from pathlib import Path
 from typing import Sequence
 
@@ -499,6 +501,27 @@ class MotionLibrary:
         self.clip_starts = torch.cat((self.clip_lengths.new_zeros(1),
                                       self.clip_lengths.cumsum(0)[:-1]), dim=0)
         self.clip_durations_s = (self.clip_lengths - 1).to(self.dtype) / self.clip_fps
+
+    def manifest(self):
+        """Bind curriculum indices to ordered names and immutable motion content."""
+        if not hasattr(self, '_content_manifest'):
+            rows = []
+            names = ('joint_pos', 'joint_vel', 'root_pos_w', 'root_quat_wxyz',
+                     'root_lin_vel_w', 'root_ang_vel_w')
+            if self.body_names:
+                names += ('body_pos_w', 'body_quat_wxyz', 'body_lin_vel_w', 'body_ang_vel_w')
+            for index, name in enumerate(self.clip_names):
+                begin, length = int(self.clip_starts[index]), int(self.clip_lengths[index])
+                header = dict(robot=asdict(self.robot), body_names=self.body_names,
+                              fps=float(self.clip_fps[index]), length=length)
+                digest = hashlib.sha256(json.dumps(header, sort_keys=True).encode('utf-8'))
+                for field in names:
+                    value = getattr(self, field)[begin:begin+length].detach().cpu().contiguous()
+                    digest.update(str((field, str(value.dtype), tuple(value.shape))).encode('utf-8'))
+                    digest.update(value.numpy().tobytes())
+                rows.append(dict(name=name, content_sha256=digest.hexdigest()))
+            self._content_manifest = rows
+        return [dict(row) for row in self._content_manifest]
 
     @staticmethod
     def _validate_tensor(clip: str, name: str, value: torch.Tensor,

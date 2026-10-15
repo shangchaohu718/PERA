@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .holomotion_mjlab_ppo import HoloMotionMJLabPPO
-from .llm.advisor import tuning_snapshot
+from .llm.advisor import tuning_snapshot, start_training_trial
 
 
 @dataclass(frozen=True)
@@ -58,6 +58,10 @@ class HoloMotionMJLabRunner:
 
     def run(self) -> list[dict[str, Any]]:
         cfg = self.config
+        if not hasattr(self.trainer, 'training_trial'):
+            start_training_trial(self.trainer)
+        if self.trainer.training_trial['initial_settings'] != tuning_snapshot(self.trainer):
+            raise ValueError('training settings changed after trial initialization')
         minimum_remaining = (
             cfg.steps_per_env * self.trainer.task.sampler.step_dt
             + float(self.trainer.task.sampler.offsets_s[-1])

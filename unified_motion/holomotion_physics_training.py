@@ -268,6 +268,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
     def collect(self, num_steps: int) -> HoloMotionPPORollout:
         if num_steps < 1:
             raise ValueError("num_steps must be positive")
+        self.actor.eval(); self.critic.eval()
         if self._observation is None:
             self.reset()
         self.actor.reset_kv_cache(self.task.num_envs, self.task.device)
@@ -283,6 +284,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         reward_terms: dict[str,list[torch.Tensor]]={}
         previous_core=[];previous_valid=[];teacher_targets=[]
         privileged_inputs=[];privileged_cores=[]
+        privileged_contacts=[];privileged_contact_masks=[]
         teacher_ids = None
         if self.privileged_teacher is not None:
             count = min(self.task.num_envs, self.privileged_teacher.config.train_envs)
@@ -330,6 +332,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 privileged_inputs.append(teacher_inputs(observation.critic, truth, teacher_target,
                     self.dynamics.robot, self.privileged_teacher.config).index_select(0, teacher_ids))
                 privileged_cores.append(normalized_core(truth, self.dynamics.robot).index_select(0, teacher_ids).clone())
+                privileged_contacts.append(truth.contact_features[..., 10].index_select(0, teacher_ids).clone())
+                privileged_contact_masks.append(truth.contact_mask.index_select(0, teacher_ids).clone())
             data = flat_observations_to_tensordict(observation.actor, observation.critic)
             actor_out = self._actor_forward(
                 data, mode="sampling", update_obs_norm=False,
@@ -398,6 +402,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             privileged_teacher_input=stack(privileged_inputs) if privileged_inputs else None,
             privileged_teacher_core=stack(privileged_cores) if privileged_cores else None,
             privileged_teacher_env_ids=teacher_ids,
+            privileged_teacher_contacts=stack(privileged_contacts) if privileged_contacts else None,
+            privileged_teacher_contact_mask=stack(privileged_contact_masks) if privileged_contact_masks else None,
         )
 
     def update_dynamics(
@@ -498,7 +504,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                             teacher_output['current'], next_observation.core_valid[ids, train_end:calibration_begin],
                             next_observation.contact_features[ids, train_end:calibration_begin, :, 10],
                             teacher_output['current_contacts'],
-                            next_observation.contact_mask[ids, train_end:calibration_begin],
+                            next_observation.contact_mask[ids, train_end:calibration_begin]
+                                & teacher_output['current_contact_mask'],
                             self.privileged_teacher.config)
                         teacher_validation_samples = len(ids)*(calibration_begin-train_end)
                 encoding = _slice_encoding(encoding, 0, train_end-burn)
@@ -612,6 +619,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         ids = batches[0].privileged_teacher_env_ids
         if ids is None or any(batch.privileged_teacher_input is None
                 or batch.privileged_teacher_core is None
+                or batch.privileged_teacher_contacts is None
+                or batch.privileged_teacher_contact_mask is None
                 or not torch.equal(ids, batch.privileged_teacher_env_ids) for batch in batches):
             raise ValueError('Transformer Teacher requires matching, current-frame privileged rollout data')
         validation_end = train_end if validation_end is None else validation_end
@@ -651,8 +660,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 training_targets.update(validation=validation,
                     shuffled=self.privileged_teacher_ema.decode(validation['latent'], shuffled_actions, current[:, train_end:validation_end]),
                     current=current[:, train_end:validation_end],
-                    current_contacts=_concat_physics([b.physics_observation for b in batches]).contact_features[
-                        ids, train_end:validation_end, :, 10])
+                    current_contacts=torch.cat([b.privileged_teacher_contacts for b in batches], 1)[:, train_end:validation_end],
+                    current_contact_mask=torch.cat([b.privileged_teacher_contact_mask for b in batches], 1)[:, train_end:validation_end])
             targets = training_targets
         ramp = min(1., self.privileged_teacher_updates/self.privileged_teacher.config.warmup_updates)
         return ids, targets, loss.detach(), ramp

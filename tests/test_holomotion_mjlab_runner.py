@@ -20,6 +20,7 @@ def _minimal_trainer() -> HoloMotionMJLabPPO:
     trainer.critic = torch.nn.Linear(3, 1)
     trainer.actor_optimizer = torch.optim.AdamW(trainer.actor.parameters())
     trainer.critic_optimizer = torch.optim.AdamW(trainer.critic.parameters())
+    trainer._observation_normalization = dict(schema=1, actor=False, critic=False)
     return trainer
 
 

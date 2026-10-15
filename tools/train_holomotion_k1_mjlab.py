@@ -105,6 +105,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument('--advisor-config', type=Path, help='optional asynchronous DeepSeek/GLM proposal-only adviser')
     parser.add_argument('--trial-adjustment', type=Path, help='explicit experimental coefficient proposal applied before collection')
+    parser.add_argument('--observation-normalization', choices=('auto', 'update', 'frozen'), default='auto',
+        help='auto: fresh weights update stats; imported/legacy weights preserve stats; resume keeps the saved mode')
     parser.add_argument("--physics-teacher", action="store_true")
     parser.add_argument('--physics-teacher-architecture', choices=('transformer', 'mlp'), default='transformer')
     parser.add_argument('--physics-teacher-config', type=Path, help='training-only Transformer Teacher YAML')
@@ -346,13 +348,16 @@ def main() -> None:
                      load_teacher_config(args.physics_teacher_config))
                     if args.physics_teacher and args.physics_teacher_architecture == 'transformer' else None),
                 **physics_options)
-        from unified_motion.llm.advisor import apply_trial_adjustment, tuning_snapshot
+        from unified_motion.llm.advisor import apply_trial_adjustment, tuning_snapshot, start_training_trial
         start_iteration = 0 if resume_payload is None else resume_payload["iter"]+1
         if args.resume_optimizer:
             resumed = trainer.load_optimizer_checkpoint(
                 args.run_dir / f"{args.checkpoint_name}.pt"
             )
             start_iteration = resumed.iteration + 1
+        if args.observation_normalization != 'auto':
+            trainer.configure_observation_normalization(enabled=args.observation_normalization == 'update')
+        start_training_trial(trainer)
         if args.trial_adjustment is not None:
             apply_trial_adjustment(trainer, json.loads(args.trial_adjustment.read_text(encoding='utf-8')))
         if args.resume is not None:
@@ -363,6 +368,7 @@ def main() -> None:
         motion_paths = (sorted(args.motion_dir.expanduser().rglob('*.npz'))
                         if args.motion_dir is not None else args.motion)
         trainer.training_protocol = dict(schema=1, seed=args.seed, num_envs=args.num_envs,
+            observation_normalization=dict(trainer._observation_normalization),
             steps_per_env=args.steps_per_env, motion_sha256=[file_sha256(path) for path in motion_paths],
             asset_root=str(args.asset_root.resolve()), task_contract=asdict(contract),
             physics_randomization=(None if task.physics_randomization is None else asdict(task.physics_randomization)))

@@ -152,6 +152,8 @@ class HoloMotionPPORollout:
     privileged_teacher_input: torch.Tensor | None = None
     privileged_teacher_core: torch.Tensor | None = None
     privileged_teacher_env_ids: torch.Tensor | None = None
+    privileged_teacher_contacts: torch.Tensor | None = None
+    privileged_teacher_contact_mask: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -266,6 +268,13 @@ class HoloMotionMJLabPPO:
         self.actor = algorithm.actor
         self._network_config = getattr(algorithm, "network_config", None)
         self.critic = algorithm.critic
+        # eval() disables stochastic layers, not autograd. Sampling and PPO
+        # replay must describe the same conditional Gaussian distribution.
+        self.actor.eval()
+        self.critic.eval()
+        self._observation_normalization = dict(schema=1,
+            actor=getattr(algorithm, 'pretrained', False) is not True,
+            critic=getattr(algorithm, 'pretrained', False) is not True)
         self.task = task
         self.config = config or HoloMotionPPOConfig.from_original(algorithm.config)
         if self.config.num_learning_epochs < 1 or self.config.num_mini_batches < 1:
@@ -338,6 +347,38 @@ class HoloMotionMJLabPPO:
                 for item in value
             )
         return value
+
+    def configure_observation_normalization(self, *, enabled):
+        """Explicitly opt an imported/legacy checkpoint into statistics updates."""
+        if type(enabled) is not bool:
+            raise TypeError('normalization enabled must be boolean')
+        if self._observation is not None:
+            raise ValueError('configure observation normalization before collection')
+        self._observation_normalization = dict(schema=1, actor=enabled, critic=enabled)
+
+    @torch.no_grad()
+    def _update_observation_statistics(self, rollout):
+        """Advance configured EMA statistics only after all PPO replay is done.
+
+        Keep one update per observed environment step, as in the original
+        normalizer, without forwarding the policy or touching its caches.
+        Frozen base policies and imported pretrained statistics stay frozen.
+        """
+        data = flat_observations_to_tensordict(
+            rollout.actor_observation, rollout.critic_observation).flatten(0, 1)
+        batch, steps = rollout.actions.shape[:2]
+        base = getattr(self.actor, 'base_actor', self.actor)
+        for name, module in (('actor', base), ('critic', self.critic)):
+            normalizer = getattr(module, 'obs_normalizer', None)
+            config = (self._network_config or {}).get(name, {}).get('obs_norm', {})
+            if (not self._observation_normalization[name]
+                    or not getattr(module, 'obs_norm_enabled', False)
+                    or not config.get('update_at_train', True)
+                    or not any(p.requires_grad for p in module.parameters())):
+                continue
+            values = module.assembler(data).reshape(batch, steps, -1)
+            for step in range(steps):
+                normalizer.update(values[:, step])
 
     def save_checkpoint(
         self,
@@ -440,8 +481,12 @@ class HoloMotionMJLabPPO:
                 for runtime_name in ('policy_runtime_config', 'physics_runtime_config'):
                     if runtime_name in payload:
                         payload[runtime_name]['motion_sampling_weights'] = sampling_weights.detach().cpu().tolist()
+                        payload[runtime_name]['motion_sampling_manifest'] = sampler.library.manifest()
             if hasattr(self, 'training_adjustment'):
                 payload['training_adjustment'] = self.training_adjustment
+            payload['observation_normalization'] = self._observation_normalization
+            if hasattr(self, 'training_trial'):
+                payload['training_trial'] = self.training_trial
             payload['training_source_checkpoint_sha256'] = getattr(self, 'training_source_checkpoint_sha256', None)
             payload['training_seed'] = getattr(self, 'training_seed', None)
             payload['training_protocol'] = getattr(self, 'training_protocol', None)
@@ -544,7 +589,17 @@ class HoloMotionMJLabPPO:
                 self.confidence.load_state_dict(loaded.calibration.state_dict(), strict=True)
         saved_runtime = payload.get('physics_runtime_config', payload.get('policy_runtime_config', {}))
         if saved_runtime.get('motion_sampling_weights') is not None:
+            manifest = saved_runtime.get('motion_sampling_manifest')
+            if manifest is None:
+                raise ValueError('legacy weighted checkpoint lacks motion identity; re-export with the verified original motion library')
+            if manifest != self.task.sampler.library.manifest():
+                raise ValueError('curriculum motion library identity or order differs from checkpoint')
             self.task.sampler.set_sampling_weights(saved_runtime['motion_sampling_weights'])
+        normalization = payload.get('observation_normalization', dict(schema=1, actor=False, critic=False))
+        if (normalization.get('schema') != 1 or set(normalization) != {'schema', 'actor', 'critic'}
+                or any(type(normalization[key]) is not bool for key in ('actor', 'critic'))):
+            raise ValueError('invalid observation normalization checkpoint configuration')
+        self._observation_normalization = dict(normalization)
         if 'training_adjustment' in payload:
             self.training_adjustment = payload['training_adjustment']
         self.actor_optimizer.load_state_dict(payload["actor_optimizer_state_dict"])
@@ -564,6 +619,8 @@ class HoloMotionMJLabPPO:
             self.dynamics.invalidate_memories()
             self.actor_dynamics.invalidate_memories()
             self._dynamics_rollouts.clear()
+        from .llm.advisor import start_training_trial
+        start_training_trial(self)
         return HoloMotionPPOResumeState(iteration=iteration, checkpoint=path)
 
     @torch.no_grad()
@@ -583,6 +640,7 @@ class HoloMotionMJLabPPO:
     def collect(self, num_steps: int) -> HoloMotionPPORollout:
         if num_steps < 1:
             raise ValueError("num_steps must be positive")
+        self.actor.eval(); self.critic.eval()
         self._policy_rollout_steps = num_steps
         if self._observation is None:
             self.reset()
@@ -748,6 +806,7 @@ class HoloMotionMJLabPPO:
             group["lr"] = critic_lr
 
     def update(self, rollout: HoloMotionPPORollout) -> HoloMotionPPOUpdateMetrics:
+        self.actor.eval(); self.critic.eval()
         cfg = self.config
         num_envs = rollout.actions.shape[0]
         mini_batches = min(cfg.num_mini_batches, num_envs)
@@ -961,6 +1020,7 @@ class HoloMotionMJLabPPO:
                 break
 
         self._apply_adaptive_lr(kl_windowed)
+        self._update_observation_statistics(rollout)
         denominator = max(1, updates)
         return HoloMotionPPOUpdateMetrics(
             actor_loss=totals["actor"] / denominator,

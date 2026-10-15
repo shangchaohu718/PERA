@@ -88,6 +88,9 @@ def main():
             motion_sha256=[file_sha256(path) for path in args.motion],
             asset_root=str(args.asset_root.resolve()), ablation=args.ablation)
         report.update(evaluation_protocol=protocol, evaluation_protocol_sha256=fingerprint(protocol),
+            training_trial=loaded.payload.get('training_trial'),
+            training_trial_sha256=(fingerprint(loaded.payload['training_trial'])
+                                   if 'training_trial' in loaded.payload else None),
             trial_adjustment_sha256=(fingerprint(loaded.payload['training_adjustment'])
                                      if 'training_adjustment' in loaded.payload else None),
             training_source_checkpoint_sha256=loaded.payload.get('training_source_checkpoint_sha256'),

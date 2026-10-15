@@ -294,6 +294,26 @@ class ProposalValidationError(ValueError):
         self.api = api
 
 
+def start_training_trial(trainer):
+    """Record the untouched starting point, separately from inherited advice."""
+    current = tuning_snapshot(trainer)
+    inherited = getattr(trainer, 'training_adjustment', None)
+    trainer.training_trial = dict(schema=1, source_settings=current,
+        initial_settings=dict(current), source_adjustment_sha256=(
+            None if inherited is None else fingerprint(inherited)), applied_adjustment_sha256=None)
+
+
+def settings_match(actual, expected):
+    """Allow only float32 representation error in materialized numeric settings."""
+    if type(actual) is dict and type(expected) is dict:
+        return actual.keys() == expected.keys() and all(settings_match(actual[k], expected[k]) for k in actual)
+    if type(actual) is list and type(expected) is list:
+        return len(actual) == len(expected) and all(settings_match(a, b) for a, b in zip(actual, expected))
+    return (type(actual) in (int, float) and type(expected) in (int, float)
+            and math.isfinite(actual) and math.isfinite(expected)
+            and math.isclose(actual, expected, rel_tol=1e-6, abs_tol=1e-12))
+
+
 def apply_trial_adjustment(trainer, candidate):
     """Apply an explicit experimental fork before collection, never during a PPO rollout.
 
@@ -314,6 +334,11 @@ def apply_trial_adjustment(trainer, candidate):
     if not isinstance(evidence, dict) or fingerprint(evidence) != candidate.get('evidence_sha256'):
         raise ValueError('candidate evidence checksum mismatch')
     validate_curriculum_evidence(current, candidate['changes'], evidence)
+    if not hasattr(trainer, 'training_trial'):
+        start_training_trial(trainer)
+    if (trainer.training_trial['applied_adjustment_sha256'] is not None
+            or trainer.training_trial['source_settings'] != current):
+        raise ValueError('a trial must apply exactly one proposal to its unchanged starting settings')
     ppo = {k.split('.')[1]: v for k, v in after.items() if k.startswith('ppo.')}
     if 'optimizer.critic_learning_rate' in after:
         ppo['critic_learning_rate'] = after['optimizer.critic_learning_rate']
@@ -340,6 +365,8 @@ def apply_trial_adjustment(trainer, candidate):
         if key.startswith('loss.'):
             setattr(trainer, key.split('.')[1], value)
     trainer.training_adjustment = candidate
+    trainer.training_trial['initial_settings'] = tuning_snapshot(trainer)
+    trainer.training_trial['applied_adjustment_sha256'] = fingerprint(candidate)
 
 
 class PeriodicTrainingAdvisor:

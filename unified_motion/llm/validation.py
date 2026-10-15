@@ -3,7 +3,7 @@ import hashlib
 import math
 import statistics
 
-from .advisor import fingerprint, validate_changes, validate_curriculum_evidence
+from .advisor import fingerprint, validate_changes, validate_curriculum_evidence, settings_match
 
 TRACKING_METRICS = ('root_position_error_m', 'root_orientation_error_rad',
                     'root_linear_velocity_error_mps', 'keybody_linear_velocity_rmse_mps')
@@ -70,8 +70,25 @@ def compare_trials(candidate, baseline_reports, candidate_reports, *, max_cost_r
         if (type(base.get('training_seed')) is not int or base['training_seed'] != new.get('training_seed')
                 or new.get('trial_adjustment_sha256') != fingerprint(candidate)):
             raise ValueError('candidate or training seed provenance differs')
-        if base.get('trial_adjustment_sha256') == fingerprint(candidate):
-            raise ValueError('baseline cannot already contain the candidate adjustment')
+        source_adjustments = []
+        for report, is_candidate in ((base, False), (new, True)):
+            trial_info = report.get('training_trial')
+            if (not isinstance(trial_info, dict) or trial_info.get('schema') != 1
+                    or report.get('training_trial_sha256') != fingerprint(trial_info)
+                    or trial_info.get('source_settings') != candidate['settings_before']):
+                raise ValueError('verified starting trial settings are required')
+            inherited = trial_info.get('source_adjustment_sha256')
+            if inherited is not None and (not isinstance(inherited, str) or len(inherited) != 64):
+                raise ValueError('invalid inherited adjustment provenance')
+            expected = candidate['settings_after'] if is_candidate else candidate['settings_before']
+            applied = fingerprint(candidate) if is_candidate else None
+            if (not settings_match(trial_info.get('initial_settings'), expected)
+                    or trial_info.get('applied_adjustment_sha256') != applied
+                    or report.get('trial_adjustment_sha256') != (applied if is_candidate else inherited)):
+                raise ValueError('baseline must be unchanged; candidate must apply only its declared proposal')
+            source_adjustments.append(inherited)
+        if source_adjustments[0] != source_adjustments[1]:
+            raise ValueError('trial forks must inherit the same source adjustment')
         before_cost, after_cost = base.get('training_cost') or {}, new.get('training_cost') or {}
         if (type(before_cost.get('transitions')) is not int or before_cost['transitions'] <= 0
                 or before_cost['transitions'] != after_cost.get('transitions')):
