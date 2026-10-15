@@ -3,7 +3,17 @@
 本版本在用户提供的R20工程上继续修改，**不另起项目、不重复写PPO或动力学模型**。
 新增LRU（Linear Recurrent Unit）Actor插口；`transformer`是原`dense`的易读别名，真实结构没有MoE/Router。
 
-## 当前开发状态（2026-10-12）
+## 当前开发状态（2026-10-13）
+
+**2026-10-13 更新：[Transformer 物理教师与 DeepSeek／GLM 训练顾问](docs/PRIVILEGED_TEACHER_AND_LLM.md)**。
+新增训练专用因果 Transformer 教师、完整保存恢复与异步 LLM 调参建议。本轮进一步修正：
+物理门控保留小幅反馈；教师通过留出质量检查后才蒸馏状态／接触预测；接通四步预测监督；
+LLM 保留时间趋势和分动作证据，并调整真实优化器学习率。部署仍运行学生与可选 Actor。
+进一步修正随机 Actor 默认冻结、教师重力方向约束、动作敏感性误拒绝，以及 LLM 候选局部改善掩盖总体退步的问题。
+本次本地回归 **843 项通过、0 失败、18 项跳过，另有 450 个子测试通过**；
+见 [修正验证摘要](reports/logic_fixes_20261013.json) 和
+[三种子合成学习报告](reports/logic_fixes_learning_20261013.json)。合成数据上的改善不代表机器人控制收益；
+真实 CUDA/mjlab 训练与 API 调用尚未验证。上一阶段报告保留在 `reports/teacher_llm_validation_20261013.json`。
 
 **先读 [当前算法结构与物理反馈研究路线](docs/ARCHITECTURE_AND_RESEARCH_20261012.md)**：
 包含运行与训练结构图、Actor/Physics 的分工、信息泄露边界、本轮改动，以及太空步、滑板、舞蹈
@@ -21,8 +31,8 @@ privileged Teacher。仓库此前记录 **665 项测试通过（另有 18 项按
 后续已修复 Dynamics 更新的环境连续性，补齐完整 Physics 策略加载和冻结评测。
 实现与使用方式见 [Physics 运行时说明](docs/PHYSICS_RUNTIME_AND_CONTINUITY.md)。
 随后已修复缺失测量反馈、KL 梯度、残差目标条件、校准门控与 Dynamics 发布约束，
-默认直接 ID、冻结基础 Actor，Teacher 改为显式可选。见 [算法修复和实验证据](docs/ALGORITHM_CORRECTIONS_20261012.md)。
-最新发布回归为 **752 项通过、0 失败、18 项 CUDA 跳过**，另有 445 个子测试通过。
+默认直接 ID、Teacher 显式可选；现仅默认冻结已加载的预训练 HoloMotion Actor，随机初始化 Actor 默认参与训练。此前修复见 [算法修复和实验证据](docs/ALGORITHM_CORRECTIONS_20261012.md)。
+2026-10-12 发布回归为 **752 项通过、0 失败、18 项 CUDA 跳过**，另有 445 个子测试通过。
 已补齐 Windows UTF-8 报告读取和独立 Actor YAML 校验，见 [发布验证摘要](reports/local_validation_20261012.json)。
 
 HoloMotion 和六种自定义 Actor 现可在同一个 K1 训练入口切换：

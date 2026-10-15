@@ -14,6 +14,12 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 
+# Support the documented ``python tools/train_holomotion_k1_mjlab.py`` form
+# without requiring an editable install of this repository.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 import torch
 import numpy as np
 import yaml
@@ -35,6 +41,7 @@ from unified_motion.holomotion_mjlab_task import (
     HoloMotionPhysicsRandomizationConfig,
 )
 from unified_motion.holomotion_original_algorithm import (
+    initialize_original_holomotion_k1_algorithm,
     load_original_holomotion_k1_algorithm,
 )
 from unified_motion.physics_confidence import PhysicsConfidenceConfig
@@ -59,7 +66,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--actor", choices=(*ACTOR_BACKENDS, "dense"), help="default: holomotion; dense aliases transformer; resume infers the backend")
     parser.add_argument("--actor-config", type=Path, help="custom Actor YAML mapping (K1ActorConfig fields)")
     parser.add_argument("--resume", type=Path, help="standalone complete K1 checkpoint; restores its configuration")
-    parser.add_argument("--run-dir", type=Path, help="original HoloMotion weights/config directory")
+    holomotion_source = parser.add_mutually_exclusive_group()
+    holomotion_source.add_argument("--run-dir", type=Path, help="original HoloMotion weights/config directory")
+    holomotion_source.add_argument(
+        "--holomotion-config",
+        type=Path,
+        help="compact HoloMotion architecture/PPO YAML; randomly initializes all weights",
+    )
     parser.add_argument("--checkpoint-name", default="model_9999")
     parser.add_argument(
         "--resume-optimizer",
@@ -90,10 +103,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--log-interval", type=int, default=1)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument('--advisor-config', type=Path, help='optional asynchronous DeepSeek/GLM proposal-only adviser')
+    parser.add_argument('--trial-adjustment', type=Path, help='explicit experimental coefficient proposal applied before collection')
     parser.add_argument("--physics-teacher", action="store_true")
+    parser.add_argument('--physics-teacher-architecture', choices=('transformer', 'mlp'), default='transformer')
+    parser.add_argument('--physics-teacher-config', type=Path, help='training-only Transformer Teacher YAML')
     parser.add_argument("--physics", action="store_true", help="direct-ID Physics residual without Teacher")
     parser.add_argument("--finetune-base-actor", action="store_true", help="unfreeze base Actor in Physics runs")
-    parser.add_argument("--physics-gate", choices=("calibrated", "off", "ungated"), default="calibrated")
+    parser.add_argument("--physics-gate", choices=("bounded", "calibrated", "off", "ungated"), default="bounded")
+    parser.add_argument('--physics-feedback-floor', type=float, default=.1)
     parser.add_argument("--physics-ema-half-life-steps", type=float, default=1024.)
     parser.add_argument("--physics-max-update-kl", type=float, default=.01)
     parser.add_argument("--physics-history-mib", type=int, default=512)
@@ -124,8 +142,9 @@ def parse_args() -> argparse.Namespace:
     if args.actor == "dense":
         args.actor = "transformer"
     if args.resume is not None:
-        if args.resume_optimizer or args.run_dir is not None or args.actor_config is not None:
-            parser.error("--resume restores its bundle; do not combine with run-dir, resume-optimizer or actor-config")
+        if (args.resume_optimizer or args.run_dir is not None
+                or args.holomotion_config is not None or args.actor_config is not None):
+            parser.error("--resume restores its bundle; do not combine with run-dir, holomotion-config, resume-optimizer or actor-config")
         restore_options = {"--steps-per-env", "--finetune-base-actor", "--matched-physics-task", "--physics", "--physics-teacher"}
         explicit = {token.split("=", 1)[0] for token in sys.argv[1:] if token.startswith("--")}
         conflicting = {flag for flag in explicit if (flag in restore_options
@@ -138,14 +157,23 @@ def parse_args() -> argparse.Namespace:
         args.actor = args.actor or "holomotion"
         if args.onnx is None and args.task_contract is None:
             parser.error("provide --onnx or --task-contract for a new run")
-        if args.actor == "holomotion" and args.run_dir is None:
-            parser.error("--actor holomotion requires --run-dir with original weights")
-        if args.actor != "holomotion" and (args.run_dir is not None or args.resume_optimizer):
+        if (args.actor == "holomotion"
+                and args.run_dir is None and args.holomotion_config is None):
+            parser.error("--actor holomotion requires --run-dir or --holomotion-config")
+        if args.actor != "holomotion" and (
+            args.run_dir is not None or args.holomotion_config is not None
+            or args.resume_optimizer
+        ):
             parser.error("custom Actors start fresh; use --resume for their complete bundles")
+        if args.resume_optimizer and args.run_dir is None:
+            parser.error("--resume-optimizer requires --run-dir and an original checkpoint")
         if args.actor == "holomotion" and args.actor_config is not None:
             parser.error("HoloMotion architecture comes from its source run, not --actor-config")
         if args.physics_scene_encoder == "gnn" and not (args.physics or args.physics_teacher):
             parser.error("--physics-scene-encoder gnn requires --physics or --physics-teacher")
+        if args.physics_teacher_config is not None and (
+                not args.physics_teacher or args.physics_teacher_architecture != 'transformer'):
+            parser.error('--physics-teacher-config requires the Transformer Teacher')
     positive = (
         "iterations",
         "steps_per_env",
@@ -175,6 +203,7 @@ def parse_args() -> argparse.Namespace:
     try:
         PhysicsUpdateConfig(ema_half_life_steps=args.physics_ema_half_life_steps,
                             maximum_mean_kl=args.physics_max_update_kl)
+        PhysicsConfidenceConfig(mode=args.physics_gate, feedback_floor=args.physics_feedback_floor)
     except ValueError as error:
         parser.error(str(error))
     return args
@@ -203,7 +232,8 @@ def main() -> None:
         physics_enabled = "physics_schema" in resume_payload
         if (args.physics or args.physics_teacher) and not physics_enabled:
             raise ValueError("cannot add Physics through resume; start a new experiment")
-        args.physics_teacher = (saved_runtime.get("dynamics_config", {}).get("teacher_student", False))
+        args.physics_teacher = (saved_runtime.get("dynamics_config", {}).get("teacher_student", False)
+                                or saved_runtime.get('privileged_teacher_config') is not None)
         args.steps_per_env = saved_runtime["rollout_steps"]
         saved_contract = saved_runtime.get("task_contract")
         contract = HoloMotionOnnxContract(**saved_contract) if saved_contract is not None else None
@@ -263,18 +293,30 @@ def main() -> None:
             if matched_physics_task else None
         ),
     )
+    advisor = None
     try:
         if args.resume is not None:
             trainer = resume_k1_trainer(args.resume, task, holomotion_root=args.holomotion_root,
                 dynamics_history_bytes=args.physics_history_mib*1024**2)
         else:
-            algorithm = load_original_holomotion_k1_algorithm(
-                holomotion_root=args.holomotion_root,
-                run_dir=args.run_dir,
-                checkpoint_name=args.checkpoint_name,
-                device=device,
-            ) if args.actor == "holomotion" else create_custom_k1_algorithm(
-                custom_actor_config(args.actor, args.actor_config), device=device)
+            if args.actor == "holomotion":
+                algorithm = (
+                    initialize_original_holomotion_k1_algorithm(
+                        holomotion_root=args.holomotion_root,
+                        config_path=args.holomotion_config,
+                        device=device,
+                    )
+                    if args.holomotion_config is not None
+                    else load_original_holomotion_k1_algorithm(
+                        holomotion_root=args.holomotion_root,
+                        run_dir=args.run_dir,
+                        checkpoint_name=args.checkpoint_name,
+                        device=device,
+                    )
+                )
+            else:
+                algorithm = create_custom_k1_algorithm(
+                    custom_actor_config(args.actor, args.actor_config), device=device)
             physics_options = {} if not physics_enabled else dict(
                 dynamics_config=dict(
                     physics_width=args.physics_width,
@@ -290,19 +332,40 @@ def main() -> None:
                 dynamics_ema_decay=args.physics_ema_decay,
                 dynamics_epochs=args.physics_dynamics_epochs,
                 dynamics_history_bytes=args.physics_history_mib*1024**2,
-                confidence_config=PhysicsConfidenceConfig(mode=args.physics_gate),
+                confidence_config=PhysicsConfidenceConfig(mode=args.physics_gate, feedback_floor=args.physics_feedback_floor),
                 update_config=PhysicsUpdateConfig(ema_half_life_steps=args.physics_ema_half_life_steps,
                     maximum_mean_kl=args.physics_max_update_kl,
-                    freeze_base_actor=args.actor == "holomotion" and not args.finetune_base_actor),
+                    freeze_base_actor=(args.actor == "holomotion"
+                        and args.run_dir is not None
+                        and not args.finetune_base_actor)),
             )
             trainer = create_k1_trainer(algorithm, task, physics=physics_enabled,
-                teacher=args.physics_teacher, **physics_options)
+                teacher=args.physics_teacher,
+                privileged_teacher_config=(
+                    ({} if args.physics_teacher_config is None else
+                     load_teacher_config(args.physics_teacher_config))
+                    if args.physics_teacher and args.physics_teacher_architecture == 'transformer' else None),
+                **physics_options)
+        from unified_motion.llm.advisor import apply_trial_adjustment, tuning_snapshot
         start_iteration = 0 if resume_payload is None else resume_payload["iter"]+1
         if args.resume_optimizer:
             resumed = trainer.load_optimizer_checkpoint(
                 args.run_dir / f"{args.checkpoint_name}.pt"
             )
             start_iteration = resumed.iteration + 1
+        if args.trial_adjustment is not None:
+            apply_trial_adjustment(trainer, json.loads(args.trial_adjustment.read_text(encoding='utf-8')))
+        if args.resume is not None:
+            from unified_motion.llm.validation import file_sha256
+            trainer.training_source_checkpoint_sha256 = file_sha256(args.resume)
+        trainer.training_seed = args.seed
+        from unified_motion.llm.validation import file_sha256
+        motion_paths = (sorted(args.motion_dir.expanduser().rglob('*.npz'))
+                        if args.motion_dir is not None else args.motion)
+        trainer.training_protocol = dict(schema=1, seed=args.seed, num_envs=args.num_envs,
+            steps_per_env=args.steps_per_env, motion_sha256=[file_sha256(path) for path in motion_paths],
+            asset_root=str(args.asset_root.resolve()), task_contract=asdict(contract),
+            physics_randomization=(None if task.physics_randomization is None else asdict(task.physics_randomization)))
         runner_config = HoloMotionRunnerConfig(
             num_iterations=args.iterations,
             steps_per_env=args.steps_per_env,
@@ -317,11 +380,18 @@ def main() -> None:
             destination_config = output / "config.yaml"
             if not destination_config.exists():
                 shutil.copy2(source_config, destination_config)
+        if args.holomotion_config is not None:
+            source_config = args.holomotion_config.expanduser().resolve()
+            destination_config = output / "holomotion_config.yaml"
+            if not destination_config.exists():
+                shutil.copy2(source_config, destination_config)
         metadata = {
             "actor_backend": args.actor,
             "network_config": trainer._network_config,
             "source_run": None if args.run_dir is None else str(args.run_dir.expanduser().resolve()),
             "source_checkpoint": str(args.resume) if args.resume else (args.checkpoint_name if args.run_dir else None),
+            "initialization_config": (str(args.holomotion_config.expanduser().resolve())
+                if args.holomotion_config is not None else None),
             "motion_files": (
                 [str(path.expanduser().resolve()) for path in args.motion]
                 if args.motion is not None
@@ -334,7 +404,11 @@ def main() -> None:
             ),
             "resume_optimizer": args.resume_optimizer or args.resume is not None,
             "seed": args.seed,
+            "training_tuning": tuning_snapshot(trainer),
+            "trial_adjustment": getattr(trainer, 'training_adjustment', None),
             "physics_teacher": args.physics_teacher,
+            "privileged_teacher_config": (None if getattr(trainer, 'privileged_teacher', None) is None
+                                          else asdict(trainer.privileged_teacher.config)),
             "physics_enabled": physics_enabled,
             "matched_physics_task": matched_physics_task,
             "physics_model": ({
@@ -363,10 +437,16 @@ def main() -> None:
         metadata_path.write_text(
             json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8"
         )
-        records = HoloMotionMJLabRunner(trainer, output, runner_config).run()
+        if args.advisor_config is not None:
+            from unified_motion.llm.advisor import PeriodicTrainingAdvisor
+            advisor = PeriodicTrainingAdvisor(
+                yaml.safe_load(args.advisor_config.read_text(encoding='utf-8')), output/'advisor')
+        records = HoloMotionMJLabRunner(trainer, output, runner_config, advisor=advisor).run()
         print(json.dumps(records[-1], ensure_ascii=False, indent=2))
     finally:
         task.close()
+        if advisor is not None:
+            advisor.close()
 
 
 def custom_actor_config(backend, path=None):
@@ -378,6 +458,14 @@ def custom_actor_config(backend, path=None):
     if ("transformer" if selected == "dense" else selected) != backend:
         raise ValueError("Actor config backbone disagrees with --actor")
     return K1ActorConfig(backbone=backend, **values)
+
+
+def load_teacher_config(path):
+    from unified_motion.privileged_teacher import PrivilegedTeacherConfig
+    values = yaml.safe_load(Path(path).read_text(encoding='utf-8'))
+    if not isinstance(values, dict):
+        raise ValueError('Transformer Teacher config must be a YAML mapping')
+    return asdict(PrivilegedTeacherConfig(**values))
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 import torch
+import yaml
 
 ACTOR_CURRENT_TERM_WIDTHS = (
     ("actor_ref_gravity_projection_cur", 3),
@@ -139,6 +140,109 @@ class OriginalHoloMotionK1Algorithm:
     config: Any
     run_dir: Path
     network_config: dict | None = None
+    pretrained: bool = False
+
+
+class _ConfigNode(dict):
+    """Tiny attribute-access mapping used by HoloMotionPPOConfig.from_original."""
+
+    def __getattr__(self, name: str) -> Any:
+        try:
+            return self[name]
+        except KeyError as error:
+            raise AttributeError(name) from error
+
+
+def _config_node(value: Any) -> Any:
+    if isinstance(value, dict):
+        return _ConfigNode({key: _config_node(item) for key, item in value.items()})
+    if isinstance(value, list):
+        return [_config_node(item) for item in value]
+    return value
+
+
+def _merge_mapping(target: dict, overrides: dict) -> None:
+    for key, value in overrides.items():
+        if isinstance(value, dict) and isinstance(target.get(key), dict):
+            _merge_mapping(target[key], value)
+        else:
+            target[key] = value
+
+
+def initialize_original_holomotion_k1_algorithm(
+    *,
+    holomotion_root: str | Path,
+    config_path: str | Path,
+    device: str | torch.device = "cpu",
+) -> OriginalHoloMotionK1Algorithm:
+    """Randomly initialize the audited HoloMotion K1 actor and critic.
+
+    The compact project config contains deliberate overrides and PPO settings;
+    observation schemas continue to come from the vendored, audited HoloMotion
+    module config.  No checkpoint or pretrained tensor is read here.
+    """
+    root = Path(holomotion_root).expanduser().resolve()
+    path = Path(config_path).expanduser().resolve()
+    base_path = (
+        root
+        / "holomotion"
+        / "config"
+        / "modules"
+        / "motion_tracking"
+        / "motion_tracking_tf-moe.yaml"
+    )
+    missing = [str(candidate) for candidate in (base_path, path) if not candidate.is_file()]
+    if missing:
+        raise FileNotFoundError(f"missing HoloMotion initialization files: {missing}")
+    values = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(values, dict) or set(values) != {
+        "actor_overrides", "critic_overrides", "ppo"
+    }:
+        raise ValueError(
+            "HoloMotion config must contain exactly actor_overrides, "
+            "critic_overrides, and ppo mappings"
+        )
+    if not all(isinstance(values[name], dict) for name in values):
+        raise ValueError("HoloMotion config sections must be YAML mappings")
+    modules = yaml.safe_load(base_path.read_text(encoding="utf-8"))["modules"]
+    actor_cfg, critic_cfg = modules["actor"], modules["critic"]
+    _merge_mapping(actor_cfg, values["actor_overrides"])
+    _merge_mapping(critic_cfg, values["critic_overrides"])
+    ppo_cfg = values["ppo"]
+    for name in ("noise_std_type", "fix_sigma", "min_sigma", "max_sigma"):
+        actor_cfg[name] = ppo_cfg[name]
+    for name in (
+        "aux_state_pred",
+        "aux_router_command_recon",
+        "aux_router_switch_penalty",
+        "moe_load_balance",
+        "inactive_expert_margin_to_topk",
+        "selected_expert_margin_to_unselected",
+    ):
+        actor_cfg[name] = ppo_cfg[name]
+    router = ppo_cfg["moe_router"]
+    for name in (
+        "routing_score_fn", "routing_scale", "use_dynamic_bias",
+        "bias_update_rate", "expert_bias_clip",
+    ):
+        actor_cfg[name] = router[name]
+    # The local bridge always exposes one current-state token and ten future
+    # reference frames, independent of the upstream Hydra interpolation tree.
+    for cfg in (actor_cfg, critic_cfg):
+        cfg["obs_schema"]["flattened_obs"]["seq_len"] = 1
+        cfg["obs_schema"]["flattened_obs_fut"]["seq_len"] = 10
+    network_config = dict(
+        actor=actor_cfg,
+        critic=critic_cfg,
+        init_noise_std=float(ppo_cfg["init_noise_std"]),
+    )
+    actor, critic = build_original_holomotion_networks(
+        network_config, device=device, holomotion_root=root
+    )
+    config = _config_node({"algo": {"config": ppo_cfg}})
+    return OriginalHoloMotionK1Algorithm(
+        actor, critic, config, path.parent, network_config
+    )
 
 
 def build_original_holomotion_networks(network_config, *, device="cpu", holomotion_root=None):
@@ -222,4 +326,4 @@ def load_original_holomotion_k1_algorithm(
         )
         state = {key.removeprefix("_orig_mod."): value for key, value in state.items()}
         module.load_state_dict(state, strict=True)
-    return OriginalHoloMotionK1Algorithm(actor, critic, config, run, network_config)
+    return OriginalHoloMotionK1Algorithm(actor, critic, config, run, network_config, pretrained=True)

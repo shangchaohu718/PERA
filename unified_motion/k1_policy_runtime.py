@@ -23,10 +23,11 @@ def runtime_configuration(payload):
 
 
 def load_k1_checkpoint(checkpoint, *, device="cpu", holomotion_root=None):
-    payload = torch.load(Path(checkpoint), map_location=device, weights_only=True)
+    payload = torch.load(Path(checkpoint), map_location='cpu', weights_only=True)
     if not isinstance(payload, dict):
         raise ValueError("K1 checkpoint must be a dictionary")
     if "physics_schema" in payload:
+        del payload
         return load_physics_checkpoint(checkpoint, device=device, holomotion_root=holomotion_root)
     required = {"network_config", "base_actor_state_dict", "critic_state_dict", "ppo_config",
                 "policy_runtime_config", "iter"}

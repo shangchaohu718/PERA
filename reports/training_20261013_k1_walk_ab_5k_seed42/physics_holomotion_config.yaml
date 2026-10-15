@@ -1,0 +1,98 @@
+# From-scratch K1 baseline derived from the existing 16-expert preflight run.
+# Observation schemas are supplied by the audited vendored HoloMotion snapshot.
+actor_overrides:
+  num_fine_experts: 16
+  num_shared_experts: 1
+  top_k: 2
+  obs_embed_mlp_hidden: 1024
+  router_embed_mlp_hidden: 512
+  d_model: 256
+  n_heads: 4
+  n_kv_heads: 2
+  n_layers: 1
+  dense_layer_at_first: false
+  ff_mult: 0.5
+  ff_mult_dense: 4
+  max_ctx_len: 32
+  rope_max_seq_len: 8192
+
+critic_overrides:
+  layer_config:
+    hidden_dims: [1024, 1024, 512]
+    activation: SiLU
+
+ppo:
+  gamma: 0.99
+  lam: 0.95
+  clip_param: 0.2
+  value_loss_coef: 1.0
+  entropy_coef: 0.005
+  max_grad_norm: 1.0
+  use_clipped_value_loss: true
+  desired_kl: 0.01
+  init_noise_std: 1.0
+  schedule: adaptive
+  actor_learning_rate: 3.0e-5
+  critic_learning_rate: 5.0e-5
+  normalize_advantage_per_mini_batch: false
+  global_advantage_norm: true
+  num_learning_epochs: 3
+  num_mini_batches: 24
+  kl_coef: 0.0
+  noise_std_type: log
+  fix_sigma: false
+  min_sigma: 0.01
+  max_sigma: 1.2
+  adaptive_lr:
+    adapt_critic: false
+    lr_scaler: 1.2
+    kl_high_factor: 2.0
+    kl_low_factor: 0.5
+    min_learning_rate: 1.0e-6
+    max_learning_rate: 1.0
+  distributed_update:
+    kl_early_stop:
+      enabled: true
+      window_size: 3
+      factor: 1.8
+      min_updates: 1
+  aux_state_pred:
+    enabled: true
+    w_keybody_contact: 0.01
+    w_base_lin_vel: 0.01
+    w_ref_keybody_rel_pos: 0.1
+    w_robot_keybody_rel_pos: 0.1
+    min_std: 0.01
+    max_std: 2.0
+    keybody_contact_names:
+      - left_hip_pitch_link
+      - right_hip_pitch_link
+      - left_knee_pitch_link
+      - right_knee_pitch_link
+      - left_ankle_roll_link
+      - right_ankle_roll_link
+      - left_elbow_pitch_link
+      - right_elbow_pitch_link
+      - left_elbow_yaw_link
+      - right_elbow_yaw_link
+    keybody_rel_pos_names:
+      - left_knee_pitch_link
+      - right_knee_pitch_link
+      - left_ankle_roll_link
+      - right_ankle_roll_link
+      - left_elbow_yaw_link
+      - right_elbow_yaw_link
+  inactive_expert_margin_to_topk:
+    enabled: true
+    weight: 10.0
+    ratio_floor: 0.1
+  aux_router_command_recon: {enabled: false, weight: 0.0, hidden_dim: 0, term_prefix: actor_ref_}
+  aux_router_switch_penalty: {enabled: false, weight: 0.0}
+  moe_load_balance: {enabled: false, weight: 0.0}
+  selected_expert_margin_to_unselected: {enabled: false, weight: 0.0, target: 0.0}
+  moe_router:
+    routing_score_fn: softmax
+    routing_scale: 1.0
+    use_dynamic_bias: false
+    bias_update_rate: 0.001
+    expert_bias_clip: 1.0

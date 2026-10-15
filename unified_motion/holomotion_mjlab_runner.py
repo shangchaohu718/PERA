@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .holomotion_mjlab_ppo import HoloMotionMJLabPPO
+from .llm.advisor import tuning_snapshot
 
 
 @dataclass(frozen=True)
@@ -41,10 +42,12 @@ class HoloMotionMJLabRunner:
         trainer: HoloMotionMJLabPPO,
         output_dir: str | Path,
         config: HoloMotionRunnerConfig,
+        advisor=None,
     ) -> None:
         self.trainer = trainer
         self.output_dir = Path(output_dir).expanduser().resolve()
         self.config = config
+        self.advisor = advisor
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.log_path = self.output_dir / "metrics.jsonl"
 
@@ -64,6 +67,8 @@ class HoloMotionMJLabRunner:
             min_remaining_s=minimum_remaining,
         )
         records = []
+        self.trainer.training_compute_seconds = 0.
+        self.trainer.training_transitions = 0
         last_checkpoint_iteration = None
         stop = cfg.start_iteration + cfg.num_iterations
         for iteration in range(cfg.start_iteration, stop):
@@ -80,6 +85,8 @@ class HoloMotionMJLabRunner:
                 physics_metrics = self.trainer.update_dynamics(rollout)
                 physics_update_seconds = time.perf_counter() - physics_start
             update_seconds = ppo_update_seconds + physics_update_seconds
+            self.trainer.training_compute_seconds += collection_seconds+update_seconds
+            self.trainer.training_transitions += rollout.actions.shape[0]*rollout.actions.shape[1]
             clip_statistics = {}
             for clip_id, clip_name in enumerate(
                 self.trainer.task.sampler.library.clip_names
@@ -89,10 +96,21 @@ class HoloMotionMJLabRunner:
                 if count == 0:
                     continue
                 clip_statistics[clip_name] = {
+                    "clip_id": clip_id,
                     "sampled_steps": count,
                     "reward_mean": float(rollout.rewards.squeeze(-1)[selected].mean()),
                     "done_count": int(rollout.dones.squeeze(-1)[selected].sum()),
                 }
+                if rollout.reward_terms is not None:
+                    clip_statistics[clip_name]['tracking'] = {
+                        name: float(value[selected].float().mean())
+                        for name, value in rollout.reward_terms.items()
+                        if name.endswith(('_error_m', '_error_rad', '_error_mps', '_error_radps',
+                                          '_rmse_mps', '_rmse_radps')) or name.startswith(('left_foot_', 'right_foot_'))}
+                    for term, label in [('physical_failure', 'physical_failures'),
+                                        ('reference_completion', 'reference_completions')]:
+                        if term in rollout.reward_terms:
+                            clip_statistics[clip_name][label] = int(rollout.reward_terms[term][selected].sum())
             record = {
                 "iteration": iteration,
                 "reward_mean": float(rollout.rewards.mean()),
@@ -102,6 +120,7 @@ class HoloMotionMJLabRunner:
                 "ppo_update_seconds": ppo_update_seconds,
                 "physics_update_seconds": physics_update_seconds,
                 "clips": clip_statistics,
+                "training_tuning": tuning_snapshot(self.trainer),
                 **asdict(metrics),
             }
             if rollout.physics_confidence is not None:
@@ -109,6 +128,10 @@ class HoloMotionMJLabRunner:
                     rollout.physics_confidence.mean()
                 )
             if rollout.reward_terms is not None:
+                for term, label in [('physical_failure', 'physical_failures'),
+                                    ('reference_completion', 'reference_completions')]:
+                    if term in rollout.reward_terms:
+                        record[label] = int(rollout.reward_terms[term].sum())
                 record["reward_terms"] = {
                     name: float(value.float().mean())
                     for name, value in rollout.reward_terms.items()
@@ -121,6 +144,8 @@ class HoloMotionMJLabRunner:
             records.append(record)
             if iteration % cfg.log_interval == 0:
                 self._log(record)
+            if self.advisor is not None:
+                self.advisor.on_iteration(record, self.trainer)
             if iteration % cfg.save_interval == 0:
                 self.trainer.save_checkpoint(
                     self.output_dir / f"model_{iteration}.pt",

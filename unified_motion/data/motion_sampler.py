@@ -685,6 +685,15 @@ class MotionSampler:
         # 世界位置平移 + 绕 z 的角度，只在 reset 后根据实际初始身体计算一次。
         self.yaw_delta = torch.zeros_like(self.start_times_s)
         self.xy_shift = torch.zeros(num_envs, 2, device=library.device, dtype=library.dtype)
+        self.sampling_weights = None
+
+    def set_sampling_weights(self, weights):
+        """Set positive per-clip curriculum weights; affect only subsequent episode resets."""
+        value = torch.as_tensor(weights, device=self.library.device, dtype=self.library.dtype)
+        if (value.shape != (len(self.library.clip_names),) or not torch.isfinite(value).all()
+                or (value <= 0).any()):
+            raise ValueError('motion sampling weights must be finite, positive and match clip count')
+        self.sampling_weights = (value/value.mean()).detach().clone()
 
     def _env_ids(self, env_ids: Sequence[int] | torch.Tensor | None) -> torch.Tensor:
         """功能：把环境编号统一成 GPU/CPU 上的一维整数索引，并检查是否越界。
@@ -759,7 +768,9 @@ class MotionSampler:
             candidates = (self.library.clip_durations_s >= float(min_remaining_s)).nonzero().flatten()
             if candidates.numel() == 0:
                 raise ValueError('动作库中没有满足 min_remaining_s 的片段')
-            chosen = candidates[torch.randint(candidates.numel(), (k,), device=dev)]
+            chosen = candidates[(torch.randint(candidates.numel(), (k,), device=dev)
+                if self.sampling_weights is None else
+                torch.multinomial(self.sampling_weights[candidates], k, replacement=True))]
         else:
             chosen = torch.as_tensor(clip_ids, device=dev)
             if chosen.ndim != 1 or chosen.shape[0] != k or chosen.dtype not in (torch.int32, torch.int64):

@@ -1,0 +1,12 @@
+# API key is read only from GLM_API_KEY. Use a model enabled on your BigModel account.
+provider: glm
+model: glm-5.3
+thinking: false
+json_mode: true
+timeout_seconds: 30
+max_tokens: 2048
+retries: 1
+interval: 500
+window: 100
+max_calls: 8
+task_description: K1 reference walking; compare fixed tracking accuracy and total training cost.

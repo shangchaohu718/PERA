@@ -1,0 +1,51 @@
+{
+  "scope": "Privileged causal Transformer Teacher and optional DeepSeek/GLM coefficient adviser",
+  "base_commit": "a45014c",
+  "code_state": "local uncommitted implementation",
+  "evaluated_at": "2026-10-13T05:04:42.306684+00:00",
+  "command": "python tools/evaluate.py --output runs/local_validation/teacher_llm_20261013",
+  "python": "3.12.13",
+  "torch": "2.10.0+cpu",
+  "numpy": "2.5.4",
+  "passed": 803,
+  "failed": 0,
+  "skipped": 18,
+  "subtests_passed": 450,
+  "subtests_failed": 0,
+  "collection_errors": [],
+  "elapsed_seconds": 67.57336579999537,
+  "cuda_available": false,
+  "mujoco_importable": false,
+  "mjlab_importable": false,
+  "warp_importable": false,
+  "teacher_checks": [
+    "causal attention and episode isolation",
+    "current-frame privileged input; no future measured state input",
+    "missing object masking and slot capacity rejection",
+    "stop-gradient distillation targets",
+    "held-out calibration tail excluded from Teacher training",
+    "online Teacher and Student optimizer updates without environment reset",
+    "Teacher, EMA and optimizer checkpoint resume",
+    "frozen inference never reads privileged Teacher inputs",
+    "mocked simulator CLI train/resume with Transformer Teacher"
+  ],
+  "advisor_checks": [
+    "mock DeepSeek and GLM transports; keys separated from payload/metadata",
+    "bounded HTTP retries and sanitized errors",
+    "timeouts, malformed responses, truncation and empty content fail without adjustments",
+    "prompt metadata whitelist and numeric parameter bounds",
+    "asynchronous call budget; no automatic coefficient changes",
+    "explicit pre-collection trial application and checkpoint restore",
+    "positive curriculum weights affect future resets only",
+    "matched fixed-metric evaluation admission and training cost guard",
+    "separate physical failure and reference completion metrics"
+  ],
+  "cli_previews": {
+    "deepseek": "PASS: --dry-run, no API call",
+    "glm": "PASS: --dry-run, no API call",
+    "input_provenance": "synthetic CPU test task metrics and runner metadata; not real robot evidence"
+  },
+  "actual_provider_requests": "NOT_RUN: no live credentials used",
+  "actual_mjlab_training": "NOT_RUN: CPU tensor/mock tests do not simulate robot contact dynamics",
+  "research_benefit": "UNVERIFIED: requires matched CUDA training, held-out evaluation and multiple training seeds"
+}

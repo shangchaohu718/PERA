@@ -1,0 +1,502 @@
+{
+  "scope": "Constructed regression and action-conditioned linear-system probes; NOT robot physics.",
+  "torch": "2.10.0+cpu",
+  "device": "cpu",
+  "seeds": [
+    {
+      "seed": 7,
+      "residual": {
+        "calibrated": {
+          "gate": 0.0,
+          "heldout_mse": 0.00021447036124300212,
+          "maximum_abs_correction": 0.0
+        },
+        "bounded": {
+          "gate": 0.10000000149011612,
+          "heldout_mse": 8.202693607017864e-06,
+          "maximum_abs_correction": 0.02323942445218563
+        },
+        "mse_reduction_fraction": 0.9617537194441337
+      },
+      "teacher": {
+        "config": {
+          "objective_version": 2,
+          "critic_dim": 8,
+          "contact_slots": 2,
+          "object_slots": 0,
+          "width": 32,
+          "heads": 2,
+          "layers": 1,
+          "context_steps": 4,
+          "train_envs": 64,
+          "learning_rate": 0.003,
+          "ema_decay": 0.98,
+          "warmup_updates": 20,
+          "validation_fraction": 0.25,
+          "minimum_validation_samples": 16,
+          "minimum_prediction_gain": 0.05,
+          "minimum_action_gain": 0.01
+        },
+        "initial": {
+          "core_mse": 0.024492468684911728,
+          "persistence_mse": 0.012983285821974277,
+          "hidden_gain_student_mse": 0.0022026870865374804,
+          "shuffled_action_mse": 0.0246496070176363,
+          "admitted_groups": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "diagnostics": [
+            {
+              "teacher": 0.02602796070277691,
+              "student": 0.002202686620876193,
+              "persistence": 0.012983285821974277,
+              "shuffled": 0.024990638718008995,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.01840275339782238,
+              "student": 0.002202686620876193,
+              "persistence": 0.012983285821974277,
+              "shuffled": 0.019769880920648575,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.03347627446055412,
+              "student": 0.002202686620876193,
+              "persistence": 0.012983285821974277,
+              "shuffled": 0.03229539468884468,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.023747147992253304,
+              "student": 0.0022026868537068367,
+              "persistence": 0.012983286753296852,
+              "shuffled": 0.023932361975312233,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.024633748456835747,
+              "student": 0.0022026868537068367,
+              "persistence": 0.012983286753296852,
+              "shuffled": 0.024943161755800247,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.0,
+              "student": 0.0,
+              "persistence": 0.0,
+              "shuffled": 0.0,
+              "samples": 0,
+              "admitted": false
+            }
+          ]
+        },
+        "trained": {
+          "core_mse": 8.54516929393867e-06,
+          "persistence_mse": 0.012983285821974277,
+          "hidden_gain_student_mse": 0.0022026870865374804,
+          "shuffled_action_mse": 0.025898287072777748,
+          "admitted_groups": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "diagnostics": [
+            {
+              "teacher": 7.636605914740358e-06,
+              "student": 0.002202686620876193,
+              "persistence": 0.012983285821974277,
+              "shuffled": 0.025898786261677742,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 6.731920166203054e-06,
+              "student": 0.002202686620876193,
+              "persistence": 0.012983285821974277,
+              "shuffled": 0.02586878091096878,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 8.263158633781131e-06,
+              "student": 0.002202686620876193,
+              "persistence": 0.012983285821974277,
+              "shuffled": 0.02588094212114811,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 8.706834705662914e-06,
+              "student": 0.0022026868537068367,
+              "persistence": 0.012983286753296852,
+              "shuffled": 0.025908101350069046,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 8.793114830041304e-06,
+              "student": 0.0022026868537068367,
+              "persistence": 0.012983286753296852,
+              "shuffled": 0.025894802063703537,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 0.0,
+              "student": 0.0,
+              "persistence": 0.0,
+              "shuffled": 0.0,
+              "samples": 0,
+              "admitted": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 19,
+      "residual": {
+        "calibrated": {
+          "gate": 0.0,
+          "heldout_mse": 0.00021009396004956216,
+          "maximum_abs_correction": 0.0
+        },
+        "bounded": {
+          "gate": 0.10000000149011612,
+          "heldout_mse": 5.61696515433141e-06,
+          "maximum_abs_correction": 0.02338467352092266
+        },
+        "mse_reduction_fraction": 0.97326450911294
+      },
+      "teacher": {
+        "config": {
+          "objective_version": 2,
+          "critic_dim": 8,
+          "contact_slots": 2,
+          "object_slots": 0,
+          "width": 32,
+          "heads": 2,
+          "layers": 1,
+          "context_steps": 4,
+          "train_envs": 64,
+          "learning_rate": 0.003,
+          "ema_decay": 0.98,
+          "warmup_updates": 20,
+          "validation_fraction": 0.25,
+          "minimum_validation_samples": 16,
+          "minimum_prediction_gain": 0.05,
+          "minimum_action_gain": 0.01
+        },
+        "initial": {
+          "core_mse": 0.021394245326519012,
+          "persistence_mse": 0.012282295152544975,
+          "hidden_gain_student_mse": 0.002219493966549635,
+          "shuffled_action_mse": 0.02162087894976139,
+          "admitted_groups": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "diagnostics": [
+            {
+              "teacher": 0.016032155603170395,
+              "student": 0.0022194937337189913,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.013682018965482712,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.022392569109797478,
+              "student": 0.0022194937337189913,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.025445634499192238,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.012949948199093342,
+              "student": 0.0022194937337189913,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.01426279079169035,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.02102268487215042,
+              "student": 0.002219493966549635,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.021287409588694572,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.02351236157119274,
+              "student": 0.002219493966549635,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.023518739268183708,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.0,
+              "student": 0.0,
+              "persistence": 0.0,
+              "shuffled": 0.0,
+              "samples": 0,
+              "admitted": false
+            }
+          ]
+        },
+        "trained": {
+          "core_mse": 8.972558134701103e-06,
+          "persistence_mse": 0.012282295152544975,
+          "hidden_gain_student_mse": 0.002219493966549635,
+          "shuffled_action_mse": 0.025382446125149727,
+          "admitted_groups": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "diagnostics": [
+            {
+              "teacher": 5.981945378152886e-06,
+              "student": 0.0022194937337189913,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.02540588192641735,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 6.370488335960545e-06,
+              "student": 0.0022194937337189913,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.025374600663781166,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 6.928877610334894e-06,
+              "student": 0.0022194937337189913,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.025366870686411858,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 9.557327757647727e-06,
+              "student": 0.002219493966549635,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.025381268933415413,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 9.429110832570586e-06,
+              "student": 0.002219493966549635,
+              "persistence": 0.0122822942212224,
+              "shuffled": 0.025383619591593742,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 0.0,
+              "student": 0.0,
+              "persistence": 0.0,
+              "shuffled": 0.0,
+              "samples": 0,
+              "admitted": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "seed": 42,
+      "residual": {
+        "calibrated": {
+          "gate": 0.0,
+          "heldout_mse": 0.00020540619152598083,
+          "maximum_abs_correction": 0.0
+        },
+        "bounded": {
+          "gate": 0.10000000149011612,
+          "heldout_mse": 8.890133358363528e-06,
+          "maximum_abs_correction": 0.02348468080163002
+        },
+        "mse_reduction_fraction": 0.9567192532400414
+      },
+      "teacher": {
+        "config": {
+          "objective_version": 2,
+          "critic_dim": 8,
+          "contact_slots": 2,
+          "object_slots": 0,
+          "width": 32,
+          "heads": 2,
+          "layers": 1,
+          "context_steps": 4,
+          "train_envs": 64,
+          "learning_rate": 0.003,
+          "ema_decay": 0.98,
+          "warmup_updates": 20,
+          "validation_fraction": 0.25,
+          "minimum_validation_samples": 16,
+          "minimum_prediction_gain": 0.05,
+          "minimum_action_gain": 0.01
+        },
+        "initial": {
+          "core_mse": 0.02416384406387806,
+          "persistence_mse": 0.011633104644715786,
+          "hidden_gain_student_mse": 0.0023627723567187786,
+          "shuffled_action_mse": 0.023898741230368614,
+          "admitted_groups": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "diagnostics": [
+            {
+              "teacher": 0.027304498478770256,
+              "student": 0.0023627723567187786,
+              "persistence": 0.01163310557603836,
+              "shuffled": 0.027298079803586006,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.018879089504480362,
+              "student": 0.0023627723567187786,
+              "persistence": 0.01163310557603836,
+              "shuffled": 0.017284084111452103,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.018439071252942085,
+              "student": 0.0023627723567187786,
+              "persistence": 0.01163310557603836,
+              "shuffled": 0.018001500517129898,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.02731737680733204,
+              "student": 0.0023627723567187786,
+              "persistence": 0.011633106507360935,
+              "shuffled": 0.02695738710463047,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.02208334393799305,
+              "student": 0.0023627723567187786,
+              "persistence": 0.011633106507360935,
+              "shuffled": 0.02208271063864231,
+              "samples": 512,
+              "admitted": false
+            },
+            {
+              "teacher": 0.0,
+              "student": 0.0,
+              "persistence": 0.0,
+              "shuffled": 0.0,
+              "samples": 0,
+              "admitted": false
+            }
+          ]
+        },
+        "trained": {
+          "core_mse": 1.245646762981778e-05,
+          "persistence_mse": 0.011633104644715786,
+          "hidden_gain_student_mse": 0.0023627723567187786,
+          "shuffled_action_mse": 0.02540973387658596,
+          "admitted_groups": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "diagnostics": [
+            {
+              "teacher": 9.64352693699766e-06,
+              "student": 0.0023627723567187786,
+              "persistence": 0.01163310557603836,
+              "shuffled": 0.025397688150405884,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 8.922448614612222e-06,
+              "student": 0.0023627723567187786,
+              "persistence": 0.01163310557603836,
+              "shuffled": 0.025406794622540474,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 9.189873708237428e-06,
+              "student": 0.0023627723567187786,
+              "persistence": 0.01163310557603836,
+              "shuffled": 0.025416746735572815,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 1.3713148291571997e-05,
+              "student": 0.0023627723567187786,
+              "persistence": 0.011633106507360935,
+              "shuffled": 0.02540678344666958,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 1.2510724445746746e-05,
+              "student": 0.0023627723567187786,
+              "persistence": 0.011633106507360935,
+              "shuffled": 0.025413773953914642,
+              "samples": 512,
+              "admitted": true
+            },
+            {
+              "teacher": 0.0,
+              "student": 0.0,
+              "persistence": 0.0,
+              "shuffled": 0.0,
+              "samples": 0,
+              "admitted": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "elapsed_seconds": 7.841898000013316,
+  "teacher_equation": "normalized_next_core = 0.2 * gain * action[0], gain uniform [0.2,1.6]",
+  "caveat": "Teacher has gain as privileged input; an uninformed student cannot recover it. No sim2real claim."
+}

@@ -1,5 +1,10 @@
 # Official HoloMotion K1 → mjlab adapter
 
+The 2026-10-13 training extension adds an optional causal privileged Transformer
+Teacher and DeepSeek/GLM coefficient proposals with explicit matched trials.
+See [Teacher and LLM guide](PRIVILEGED_TEACHER_AND_LLM.md) for architecture,
+compatibility flags, commands and the limits of the CPU validation.
+
 The shared K1 task now supports HoloMotion and six custom Actor backends through
 `tools/train_k1_mjlab.py --actor ...`, with common Physics residual, checkpoint
 resume and frozen evaluation. See [Actor switching](K1_ACTOR_SWITCHING.md).
@@ -9,6 +14,32 @@ Physics checkpoints with calibrated, frozen EMA/residual evaluation. Schema 4 re
 legacy inference semantics. See [algorithm corrections](ALGORITHM_CORRECTIONS_20261012.md) and
 [runtime and continuity](PHYSICS_RUNTIME_AND_CONTINUITY.md) for loading, migration,
 CPU verification evidence and the remaining real-simulation validation gate.
+
+## From-scratch matched Physics A/B
+
+`tools/run_holomotion_physics_ab.py` launches two sequential runs from the
+same random seed and the same 16-expert HoloMotion architecture. The baseline
+uses `--matched-physics-task`, so rewards and domain randomization match the
+Physics run. The Physics run uses the complete default Set encoder, GRU memory,
+dynamics learner, calibration, and residual policy; the randomly initialized
+base Actor remains trainable.
+
+Preview the exact commands without starting CUDA work:
+
+```bash
+python tools/run_holomotion_physics_ab.py \
+  --asset-root /path/to/k1/assets \
+  --motion /path/to/one_action.npz \
+  --onnx /path/to/k1_policy.onnx \
+  --output-root runs/k1_one_action_ab \
+  --iterations 1000 \
+  --dry-run
+```
+
+Remove `--dry-run` to execute the matched baseline followed by the full
+Physics run. A task-contract JSON may replace `--onnx`. The architecture is
+defined in `configs/actors/holomotion_k1_16e.yaml`; this path initializes new
+weights and never loads a pretrained checkpoint.
 
 ## Provenance
 
@@ -201,19 +232,28 @@ python tools/train_holomotion_k1_mjlab.py \
 ```
 
 The student path never reads the mjlab contact sensor. It receives
-proprioception plus ordered left/right foot link kinematics. The privileged
-Teacher target is deliberately narrow: two normalized, episode-randomized slow
-variables (ground friction and trunk-mass scale). Exact left/right contact
+proprioception plus ordered left/right foot link kinematics. Its direct ID target
+contains two normalized, episode-randomized slow variables (ground friction and
+trunk-mass scale). The optional Transformer Teacher additionally receives current
+privileged state, Critic observations and available object slots, and learns
+state/contact transitions. Exact left/right contact
 point, normal, force, slip, and friction utilization remain privileged labels
 for next-state/contact prediction and rewards; they are never Actor inputs.
 The deployable latent defaults to 8 values.
 
 The residual Actor input is ordered as global context, student latent,
 left-foot token, right-foot token; there is no left/right set pooling at this
-boundary. Its residual is gated by both predicted system-identification
-uncertainty and evidence age. Dynamics training accumulates across rollout
-boundaries, uses 64 burn-in frames followed by 128 gradient-carrying frames,
-and recomputes/optimizes that sequence 4 times by default. The Actor consumes
+boundary. New runs default to the bounded gate: a 0.1 feedback floor plus
+calibrated ID information and evidence age. With the 0.25 residual limit, the
+floor permits at most 0.025 action units before informative ID evidence; this is
+an explicit feedback budget, not a safety probability. Old checkpoints retain
+their saved gate. Dynamics training accumulates across rollout boundaries with
+64 burn-in frames and a 128-frame window split into a training prefix and a
+calibration tail; Transformer v2 reserves a separate Teacher-validation slice.
+The training prefix is optimized four times by default, with one-step and
+four-step targets that never cross resets or reserved-data boundaries. Teacher
+v2 distills only physical predictions admitted by held-out quality checks.
+The Actor consumes
 an EMA copy of DynamicsModel to avoid a moving feature target. These values are
 configurable through the `--physics-*` options.
 Left/right slip and impact weights remain independently configurable. Physics

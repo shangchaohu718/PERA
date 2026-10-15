@@ -172,6 +172,7 @@ def _trainer(physics, **task_kwargs):
         from unified_motion.algorithms.dynamics_history import DynamicsHistory
         trainer._dynamics_history = DynamicsHistory()
         trainer._dynamics_rollouts = []
+        trainer.privileged_teacher = None
         trainer.dynamics = DynamicsModel(get_robot_contract("k1_22dof"),
             physics_width=4, memory_width=4, latent_width=2, hidden_dim=8,
             system_id_dim=2, teacher_student=True, uncertainty=True)
@@ -288,7 +289,9 @@ def _real_trainer(physics, monkeypatch, *, boundaries=True):
         dynamics = DynamicsModel(task.bridge.robot, physics_width=4, memory_width=4,
             latent_width=2, hidden_dim=8, system_id_dim=2, teacher_student=True,
             uncertainty=True)
-        trainer = HoloMotionPhysicsMJLabPPO(algorithm, task, dynamics, config=ppo_cfg)
+        from unified_motion.physics_update import PhysicsUpdateConfig
+        trainer = HoloMotionPhysicsMJLabPPO(algorithm, task, dynamics, config=ppo_cfg,
+            update_config=PhysicsUpdateConfig(freeze_base_actor=True))
     else:
         trainer = HoloMotionMJLabPPO(algorithm, task, config=ppo_cfg)
     return trainer

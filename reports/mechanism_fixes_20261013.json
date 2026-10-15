@@ -1,0 +1,141 @@
+{
+  "scope": "Physics feedback gating, quality-admitted physical Teacher distillation, multi-step supervision and evidence-based LLM tuning interfaces.",
+  "evaluated_at": "2026-10-13T06:00:44.183907+00:00",
+  "base_commit": "a45014c",
+  "working_tree": "Local uncommitted changes; no push performed in this repair.",
+  "regression": {
+    "total": 839,
+    "passed": 821,
+    "failed": 0,
+    "skipped": 18,
+    "subtests": {
+      "passed": 450,
+      "failed": 0,
+      "skipped": 0
+    },
+    "collection_errors": [],
+    "elapsed_seconds": 67.88685929999338,
+    "core_suite_status": "PASS",
+    "python": "3.12.13",
+    "torch": "2.10.0+cpu",
+    "numpy": "2.5.4",
+    "cuda_available": false,
+    "optional_dependencies": {
+      "mujoco": {
+        "importable": false,
+        "reason": "ModuleNotFoundError: No module named 'mujoco'"
+      },
+      "mjlab": {
+        "importable": false,
+        "reason": "ModuleNotFoundError: No module named 'mjlab'"
+      },
+      "warp": {
+        "importable": false,
+        "reason": "ModuleNotFoundError: No module named 'warp'"
+      }
+    }
+  },
+  "full_regression_report": "runs/local_validation/mechanism_fixes_20261013/evaluation.json",
+  "reproduction": [
+    "python tools/evaluate.py --output runs/local_validation/mechanism_fixes_20261013",
+    "python tools/validate_mechanism_learning.py --output runs/mechanism_learning.json"
+  ],
+  "changes": {
+    "gate": "New K1 runs use bounded mode with feedback_floor=0.1. Mean calibrated ID information replaces worst-dimension squared attenuation. Same computation in collection, PPO replay and inference; zero-init, action bounds and publication KL checks retained.",
+    "teacher": "Objective v2 removes latent-coordinate MSE and parameter-copy supervision. Five normalized state groups plus contact BCE; separate training/Teacher-validation/calibration regions. EMA physical targets require improvement over Student and persistence and an executed-vs-permuted action diagnostic.",
+    "multistep": "New K1 Dynamics defaults to horizons (1,4); 0.1 times normalized group MSE supervises recorded ordered executed actions, excluding reset and reserved-data crossings.",
+    "advisor": "Ordered trends, anonymous per-clip fixed errors and separate failures/completions. Curriculum changes require evidence. Independent-Adam global loss multipliers replaced with actual critic/Teacher optimizer rates, saved and restored. Latest per-iteration snapshot used by offline requests."
+  },
+  "tests_confirm": [
+    "Uninformative ID: calibrated gate gives zero residual PPO update; bounded gate gives nonzero gradient and update.",
+    "Collection/recomputed policy parity; standalone full-policy frozen evaluation; old calibrated and legacy checkpoint behavior.",
+    "Rejected/insufficient/action-insensitive Teachers cannot distill; admitted physical targets reach the Student optimizer; latent coordinate changes do not change v2 distillation.",
+    "Validation and calibration labels excluded from optimizer targets; stopped Teacher gradients; masked/rejected NaNs do not poison Student gradients.",
+    "Four-step prediction heads receive gradients and reject reset-crossing windows.",
+    "Dynamics updates preserve environment continuity.",
+    "Opposite metric trends or swapped clip difficulty produce different requests; names and paths excluded from numeric evidence.",
+    "Missing per-clip evidence rejects curriculum changes; provider errors and proposal budgets fail without parameter changes.",
+    "A 25 percent critic learning-rate increase changes actual same-batch update norm by approximately 25 percent; optimizer rates survive checkpoint restore."
+  ],
+  "synthetic_learning": {
+    "report": "reports/mechanism_learning_20261013.json",
+    "seeds": [
+      7,
+      19,
+      42
+    ],
+    "residual_mse_reduction_fraction": [
+      0.9617537194441337,
+      0.97326450911294,
+      0.9567192532400414
+    ],
+    "largest_correction": 0.02348468080163002,
+    "teacher_initial_mse": [
+      0.024492468684911728,
+      0.021394245326519012,
+      0.02416384406387806
+    ],
+    "teacher_trained_mse": [
+      8.54516929393867e-06,
+      8.972558134701103e-06,
+      1.245646762981778e-05
+    ],
+    "teacher_admitted_groups": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "meaning": "Constructed learning counterexamples using production network modules; NOT robot tracking accuracy, PPO locomotion convergence or GPU throughput."
+  },
+  "not_verified": [
+    "Real DeepSeek/GLM API requests (no credentials used).",
+    "Real CUDA/mjlab/MuJoCo robot training: dependencies and CUDA unavailable locally.",
+    "Multi-seed robot-control gains, sim2real, skateboard dynamics, motion-specific sliding rewards, leaderboard ranking or wall-clock advantage."
+  ],
+  "limitations": [
+    "Feedback floor is a design budget, not confidence or a safety guarantee.",
+    "Teacher admission uses correlated temporal holdout samples and heuristic thresholds, not independent-domain generalization evidence.",
+    "Privileged information can remain unidentifiable to the Student; predictive distillation does not create missing observations.",
+    "Four-step auxiliary direct prediction is not a long-horizon world model.",
+    "LLM candidates still require explicit matched experiments; no automatic promotion."
+  ],
+  "source_sha256": {
+    "unified_motion/physics_confidence.py": "a3e81c35566b369218a5b69d00d9fcbea8c70f4a9a9379d6d22c89ed4ed81c89",
+    "unified_motion/privileged_teacher.py": "523491294bf3091251556b3ee3106a0f8ee7b1c4856e87187deb4bf8e205e90e",
+    "unified_motion/holomotion_physics_training.py": "a867ac35efca43130c07473bd406a89274b63d79d111205a0fcf0e2eb7bce947",
+    "unified_motion/k1_training.py": "059f941b92e0869f23c2bb156eed82a9170a73b27f2fd298e2a2f07d15cd73cf",
+    "unified_motion/llm/advisor.py": "0c7c13c1dd5be48889b570ba698ff25a8b71101ca1834fbad7c017ba140f4e82",
+    "unified_motion/llm/validation.py": "7c81eb04e862d0043d28a293b594a144f3352687fd764625d00f2c61d4816017",
+    "unified_motion/holomotion_mjlab_runner.py": "378dc08f7d13b3a6624022b29f854badbdb98998e7ca9e14a0d84c28cf025f9c",
+    "unified_motion/holomotion_mjlab_task.py": "fd42f0a37b51099eb7baebeca1c3417c89e40bef21a2d6aa42ccb0d16d457b0d",
+    "unified_motion/holomotion_mjlab_ppo.py": "72a7d52f9293b6ded0feabb78a70751b718bea1cae154a04d0a676342ad6eade",
+    "tools/train_holomotion_k1_mjlab.py": "2ccb36f42f1cdc956b89226eb73a23464f7d970d45ec83402a489f969c79641b",
+    "tools/advise_training.py": "8392c17aa0b30214789d80448873fbc853dbd5df6ab827aa769e174cfd9f0e22",
+    "tools/validate_mechanism_learning.py": "f7e1cb022107468fad3812238eb6f4fe0432a454295aa162d8935bbee701f9b1",
+    "tests/test_mechanism_fixes.py": "b35754a1f8542a79040a2c857ae7f038cf12f568c7cf77308cac51ce22ac4d9c",
+    "tests/test_privileged_transformer_teacher.py": "37afbb6f5958f633fcc23a71a0abf9de63d9b41a64ad1d3d86007f3bc391c066",
+    "tests/test_training_advisor.py": "8059ae81aa07691a5a4837157b1e75e51daf825786a16b53068832cfd53ce539",
+    "tests/test_physics_runtime.py": "147a44d797a90544dea175644feeb1d0f97647bc33d3ccc83ebad5a927d5be17"
+  }
+}

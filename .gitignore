@@ -8,3 +8,6 @@ dist/
 runs/
 assets/
 *.pt
+.env
+.env.*
+!.env.example

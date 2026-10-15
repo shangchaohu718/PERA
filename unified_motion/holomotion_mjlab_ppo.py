@@ -149,6 +149,9 @@ class HoloMotionPPORollout:
     executed_actions: torch.Tensor | None = None
     dynamics_prefix: Any | None = None
     physics_age: torch.Tensor | None = None
+    privileged_teacher_input: torch.Tensor | None = None
+    privileged_teacher_core: torch.Tensor | None = None
+    privileged_teacher_env_ids: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -428,6 +431,23 @@ class HoloMotionMJLabPPO:
                             teacher_reconstruction_weight=self.teacher_reconstruction_weight,
                             teacher_distillation_weight=self.teacher_distillation_weight),
                     )
+            if getattr(self, 'privileged_teacher', None) is not None:
+                payload['privileged_teacher'] = self.privileged_teacher_checkpoint()
+                payload['physics_runtime_config']['privileged_teacher_config'] = payload['privileged_teacher']['config']
+            sampler = getattr(getattr(self, 'task', None), 'sampler', None)
+            sampling_weights = getattr(sampler, 'sampling_weights', None)
+            if sampling_weights is not None:
+                for runtime_name in ('policy_runtime_config', 'physics_runtime_config'):
+                    if runtime_name in payload:
+                        payload[runtime_name]['motion_sampling_weights'] = sampling_weights.detach().cpu().tolist()
+            if hasattr(self, 'training_adjustment'):
+                payload['training_adjustment'] = self.training_adjustment
+            payload['training_source_checkpoint_sha256'] = getattr(self, 'training_source_checkpoint_sha256', None)
+            payload['training_seed'] = getattr(self, 'training_seed', None)
+            payload['training_protocol'] = getattr(self, 'training_protocol', None)
+            if hasattr(self, 'training_compute_seconds'):
+                payload['training_cost'] = dict(compute_seconds=self.training_compute_seconds,
+                    transitions=self.training_transitions)
             torch.save(self._checkpoint_state_to_cpu(payload), target)
         except Exception:
             # Leave an obviously incomplete directory rather than publishing a
@@ -511,8 +531,9 @@ class HoloMotionMJLabPPO:
                     teacher_distillation_weight=self.teacher_distillation_weight)
                 if payload["ppo_config"] != asdict(self.config) or payload["physics_loss_weights"] != expected_losses:
                     raise ValueError("physics checkpoint optimization configuration differs from this run")
+                from .physics_confidence import PhysicsConfidenceConfig
                 if (payload["physics_update_config"] != asdict(self.update_config)
-                        or runtime["confidence_config"] != asdict(self.confidence.config)):
+                        or PhysicsConfidenceConfig(**runtime["confidence_config"]) != self.confidence.config):
                     raise ValueError("physics update/confidence configuration differs from this run")
                 if (runtime["physics_actor_config"] != asdict(self.actor.config)
                         or runtime["dynamics_config"] != dynamics_configuration(self.dynamics)
@@ -521,6 +542,11 @@ class HoloMotionMJLabPPO:
                 self.actor.load_state_dict(loaded.actor.state_dict(), strict=True)
                 self.critic.load_state_dict(loaded.critic.state_dict(), strict=True)
                 self.confidence.load_state_dict(loaded.calibration.state_dict(), strict=True)
+        saved_runtime = payload.get('physics_runtime_config', payload.get('policy_runtime_config', {}))
+        if saved_runtime.get('motion_sampling_weights') is not None:
+            self.task.sampler.set_sampling_weights(saved_runtime['motion_sampling_weights'])
+        if 'training_adjustment' in payload:
+            self.training_adjustment = payload['training_adjustment']
         self.actor_optimizer.load_state_dict(payload["actor_optimizer_state_dict"])
         self.critic_optimizer.load_state_dict(payload["critic_optimizer_state_dict"])
         if hasattr(self, "dynamics"):
@@ -534,6 +560,7 @@ class HoloMotionMJLabPPO:
             self.dynamics_optimizer.load_state_dict(
                 payload["dynamics_optimizer_state_dict"]
             )
+            self.restore_privileged_teacher(payload)
             self.dynamics.invalidate_memories()
             self.actor_dynamics.invalidate_memories()
             self._dynamics_rollouts.clear()

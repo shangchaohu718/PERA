@@ -1,8 +1,14 @@
 """Frozen evaluation of every complete K1 Actor bundle, with or without Physics."""
 import argparse
+from dataclasses import asdict
 import json
 from pathlib import Path
 import random
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 import numpy as np
 import torch
@@ -74,6 +80,19 @@ def main():
                 HoloMotionPhysicsRandomizationConfig(**config["physics_randomization"])))
         policy = frozen_k1_policy(loaded, ablation=args.ablation)
         report = evaluate_k1_policy(policy, task, steps=args.steps)
+        from unified_motion.llm.advisor import fingerprint
+        from unified_motion.llm.validation import file_sha256
+        protocol = dict(schema=1, steps=args.steps, num_envs=args.num_envs, seed=args.seed,
+            task_contract=saved if saved is not None else asdict(contract),
+            physics_randomization=config.get('physics_randomization'),
+            motion_sha256=[file_sha256(path) for path in args.motion],
+            asset_root=str(args.asset_root.resolve()), ablation=args.ablation)
+        report.update(evaluation_protocol=protocol, evaluation_protocol_sha256=fingerprint(protocol),
+            trial_adjustment_sha256=(fingerprint(loaded.payload['training_adjustment'])
+                                     if 'training_adjustment' in loaded.payload else None),
+            training_source_checkpoint_sha256=loaded.payload.get('training_source_checkpoint_sha256'),
+            training_protocol=loaded.payload.get('training_protocol'),
+            training_seed=loaded.payload.get('training_seed'), training_cost=loaded.payload.get('training_cost'))
         report.update(checkpoint=str(args.checkpoint.resolve()), seed=args.seed,
                       backend="mjlab_cuda", robot_skill_verified=False,
                       actor_backend=config.get("network_config", loaded.payload.get("network_config", {})).get("backend", "holomotion"))

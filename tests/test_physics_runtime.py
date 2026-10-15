@@ -10,8 +10,10 @@ from unified_motion.holomotion_physics_runtime import (
 from unified_motion.holomotion_physics_training import HoloMotionPhysicsMJLabPPO
 
 
-def _saved(tmp_path, monkeypatch):
+def _saved(tmp_path, monkeypatch, gate_mode='bounded'):
     trainer = _real_trainer(True, monkeypatch)
+    from unified_motion.physics_confidence import PhysicsConfidence, PhysicsConfidenceConfig
+    trainer.confidence = PhysicsConfidence(2, PhysicsConfidenceConfig(mode=gate_mode))
     trainer.dynamics_burn_in_steps = 2
     trainer.dynamics_train_steps = 4
     trainer.dynamics_epochs = 2
@@ -67,6 +69,26 @@ def test_frozen_evaluation_never_uses_teacher_or_privileged_targets(tmp_path, mo
     report = evaluate_physics_policy(policy, task, steps=10)
     assert report["weights_unchanged"]
     assert policy.age.tolist() == [10, 10, 10]
+
+
+def test_frozen_metrics_distinguish_reference_end_from_physical_failure(tmp_path, monkeypatch):
+    _, path = _saved(tmp_path, monkeypatch)
+    policy = FrozenPhysicsPolicy.from_checkpoint(path)
+    task = _Task()
+    step = task.step
+    def outcomes(action):
+        transition = step(action)
+        transition.terminated[:] = True
+        # One completion, one failure at the reference end, one failure before the end.
+        transition.motion_finished = torch.tensor([True, True, False])
+        transition.physical_failure = torch.tensor([False, True, True])
+        transition.terms = {'root_position_error_m': torch.tensor([.1, .2, .3])}
+        return transition
+    task.step = outcomes
+    report = evaluate_physics_policy(policy, task, steps=1)
+    assert report['terminations'] == 3
+    assert report['physical_failures'] == 2 and report['reference_completions'] == 1
+    assert report['tracking']['root_position_error_m'] == pytest.approx(.2)
 
 
 @pytest.mark.parametrize("missing", ["base_actor_state_dict", "physics_residual_state_dict",
@@ -165,8 +187,9 @@ def test_task_contract_mismatch_rejected_before_evaluation_reset(tmp_path, monke
     assert task.full_resets == 0
 
 
-def test_saved_calibration_really_opens_nonzero_residual_and_supports_ablation(tmp_path, monkeypatch):
-    trainer, path = _saved(tmp_path, monkeypatch)
+@pytest.mark.parametrize('gate_mode', ['bounded', 'calibrated'])
+def test_saved_calibration_really_opens_nonzero_residual_and_supports_ablation(tmp_path, monkeypatch, gate_mode):
+    trainer, path = _saved(tmp_path, monkeypatch, gate_mode)
     full = FrozenPhysicsPolicy.from_checkpoint(path)
     disabled = FrozenPhysicsPolicy.from_checkpoint(path, ablation="no_physics")
     task = _Task()
@@ -174,7 +197,10 @@ def test_saved_calibration_really_opens_nonzero_residual_and_supports_ablation(t
     first = torch.ones(3, dtype=torch.bool)
     a = full.act(obs.actor, task.deployable_physics(), first)
     b = disabled.act(obs.actor, task.deployable_physics(), first)
-    torch.testing.assert_close(a, b)  # No response evidence at the real first frame.
+    if gate_mode == 'calibrated':
+        torch.testing.assert_close(a, b)  # Legacy mode requires response evidence.
+    else:
+        assert 1e-6 < (a-b).abs().max() <= .025+1e-6  # Explicit small feedback budget.
     full.record_action(a); disabled.record_action(b)
     a = full.act(obs.actor, task.deployable_physics(), ~first)
     b = disabled.act(obs.actor, task.deployable_physics(), ~first)

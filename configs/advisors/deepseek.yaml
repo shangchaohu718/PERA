@@ -1,0 +1,12 @@
+# API key is read only from DEEPSEEK_API_KEY. Model may be changed to one on your account.
+provider: deepseek
+model: deepseek-flash
+thinking: false
+json_mode: true
+timeout_seconds: 30
+max_tokens: 2048
+retries: 1
+interval: 500
+window: 100
+max_calls: 8
+task_description: K1 reference walking; compare fixed tracking accuracy and total training cost.

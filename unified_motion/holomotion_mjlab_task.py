@@ -50,6 +50,7 @@ class HoloMotionMJLabTransition:
     terms: dict[str, torch.Tensor]
     gravity_projection_distance: torch.Tensor
     motion_finished: torch.Tensor
+    physical_failure: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -260,7 +261,7 @@ class HoloMotionK1MJLabTask:
 
     @torch.no_grad()
     def privileged_physics_observation(self):
-        """Exact state used only as a next-state prediction target."""
+        """Training-only truth for transition labels and privileged Teacher inputs."""
         return self.physics_bridge.read()
 
     def _auxiliary_targets(
@@ -439,8 +440,13 @@ class HoloMotionK1MJLabTask:
         motion_finished = self.sampler.finished(
             min_remaining_s=float(self.sampler.offsets_s[-1])
         )
-        terminated = physics.terminated | (gravity_distance > 0.8) | motion_finished
+        physical_failure = physics.terminated | (gravity_distance > 0.8)
+        terminated = physical_failure | motion_finished
         truncated = physics.truncated & ~terminated
+        # Diagnostics only: added after weighted_total is finalized. A failure
+        # on the final reference frame is not counted as a successful completion.
+        terms['physical_failure'] = physical_failure.to(action.dtype)
+        terms['reference_completion'] = (motion_finished & ~physical_failure).to(action.dtype)
         self._pending_reference = None
         self._pending_body_reference = None
         return HoloMotionMJLabTransition(
@@ -450,6 +456,7 @@ class HoloMotionK1MJLabTask:
             terms=terms,
             gravity_projection_distance=gravity_distance,
             motion_finished=motion_finished,
+            physical_failure=physical_failure,
         )
 
     def close(self) -> None:

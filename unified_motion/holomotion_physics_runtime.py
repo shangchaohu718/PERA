@@ -63,7 +63,8 @@ def load_physics_checkpoint(checkpoint, *, device="cpu", holomotion_root=None):
     legacy inference. Schema 3 lacks residual limits and the resolved network
     config; only its original trainer/configuration can migrate it to schema 4.
     """
-    payload = torch.load(Path(checkpoint), map_location=device, weights_only=True)
+    # Keep training-only Teacher/optimizer tensors off the inference device.
+    payload = torch.load(Path(checkpoint), map_location='cpu', weights_only=True)
     if not isinstance(payload, dict) or payload.get("physics_schema") not in (4, 5):
         raise ValueError("complete Physics loading requires schema 4 or 5; re-save a schema 3 "
                          "checkpoint using its original pre-schema-5 trainer/configuration")
@@ -76,6 +77,16 @@ def load_physics_checkpoint(checkpoint, *, device="cpu", holomotion_root=None):
     if type(payload["iter"]) is not int or payload["iter"] < 0:
         raise ValueError("invalid checkpoint iteration")
     runtime = payload["physics_runtime_config"]
+    teacher_config = runtime.get('privileged_teacher_config')
+    teacher = payload.get('privileged_teacher')
+    if (teacher_config is None) != (teacher is None):
+        raise ValueError('incomplete privileged Transformer Teacher checkpoint')
+    if teacher is not None:
+        from .privileged_teacher import PrivilegedTeacherConfig
+        PrivilegedTeacherConfig(**teacher_config)
+        if (teacher.get('schema') != 1 or teacher.get('config') != teacher_config
+                or {'model', 'ema', 'optimizer', 'updates'} - teacher.keys()):
+            raise ValueError('invalid privileged Transformer Teacher checkpoint')
     if runtime.get("schema") != (1 if legacy else 2):
         raise ValueError("unsupported Physics runtime schema")
     if not legacy and ("confidence_config" not in runtime or "confidence_state_dict" not in payload):
@@ -261,6 +272,9 @@ def evaluate_physics_policy(policy, task, *, steps: int):
     observation = task.reset()
     starts = torch.ones(task.num_envs, device=task.device, dtype=torch.bool)
     reward, terminations, timeouts = 0., 0, 0
+    completions = 0
+    physical_failures, outcome_known = 0, True
+    tracking_sums, tracking_counts = {}, {}
     action_digest = hashlib.sha256()
     for _ in range(steps):
         frame = task.deployable_physics() if policy.needs_physics else None
@@ -271,6 +285,21 @@ def evaluate_physics_policy(policy, task, *, steps: int):
         reward += float(transition.reward.sum())
         terminations += int(transition.terminated.sum())
         timeouts += int(transition.truncated.sum())
+        finished = getattr(transition, 'motion_finished', None)
+        failure = getattr(transition, 'physical_failure', None)
+        if finished is not None and failure is not None:
+            completions += int((finished & ~failure).sum())
+            physical_failures += int(failure.sum())
+        else:
+            outcome_known = False
+        for name in ('root_position_error_m', 'root_orientation_error_rad',
+                     'root_linear_velocity_error_mps', 'keybody_linear_velocity_rmse_mps'):
+            value = getattr(transition, 'terms', {}).get(name)
+            if value is not None:
+                if not torch.isfinite(value).all():
+                    raise ValueError('non-finite frozen tracking metric')
+                tracking_sums[name] = tracking_sums.get(name, 0.)+float(value.sum())
+                tracking_counts[name] = tracking_counts.get(name, 0)+value.numel()
         starts = transition.terminated | transition.truncated
         if starts.any().item():
             observation = task.reset(starts.nonzero(as_tuple=False).flatten(),
@@ -282,5 +311,8 @@ def evaluate_physics_policy(policy, task, *, steps: int):
         raise RuntimeError("frozen evaluation modified policy weights or persistent buffers")
     return dict(steps=steps, num_envs=task.num_envs,
         reward_mean=reward/(steps*task.num_envs), terminations=terminations, timeouts=timeouts,
+        reference_completions=completions if outcome_known else None,
+        physical_failures=physical_failures if outcome_known else None,
+        tracking={name: total/tracking_counts[name] for name, total in tracking_sums.items()},
         deterministic=True, weights_unchanged=True, weight_sha256=after,
         action_sha256=action_digest.hexdigest(), policy=policy.policy_name, ablation=policy.ablation)

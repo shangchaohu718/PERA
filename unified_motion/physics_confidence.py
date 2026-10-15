@@ -16,9 +16,10 @@ class PhysicsConfidenceConfig:
     prior_variance: float = 1/3
     minimum_samples: int = 16
     minimum_skill: float = .05
+    feedback_floor: float = .1
 
     def __post_init__(self):
-        if self.mode not in ("calibrated", "off", "ungated", "legacy"):
+        if self.mode not in ("bounded", "calibrated", "off", "ungated", "legacy"):
             raise ValueError("unknown Physics confidence mode")
         if not math.isfinite(self.prior_variance) or self.prior_variance <= 0:
             raise ValueError("prior variance must be positive")
@@ -26,6 +27,8 @@ class PhysicsConfidenceConfig:
             raise ValueError("minimum_samples must be positive")
         if not math.isfinite(self.minimum_skill) or not 0 <= self.minimum_skill < 1:
             raise ValueError("minimum_skill must be in [0,1)")
+        if type(self.feedback_floor) not in (float, int) or not math.isfinite(self.feedback_floor) or not 0 < self.feedback_floor <= .25:
+            raise ValueError('feedback_floor must be in (0,.25]')
 
 
 class PhysicsConfidence(nn.Module):
@@ -63,6 +66,15 @@ class PhysicsConfidence(nn.Module):
         if self.config.mode == "ungated":
             return torch.ones_like(logvar[..., :1])
         prior = self.config.prior_variance
+        if self.config.mode == 'bounded':
+            # A bounded feedback budget keeps useful contact/history features trainable.
+            # It is not a claim that unidentified parameters are known. Collection,
+            # PPO replay and inference use this SAME gate, with no straight-through trick.
+            variance = torch.maximum(logvar.exp()*self.temperature, self.mse)
+            information = (1-variance/prior).clamp(0, 1).mean(-1, keepdim=True)
+            ready = self.samples >= self.config.minimum_samples
+            floor = self.config.feedback_floor
+            return floor+(1-floor)*information*ready*evidence
         skill = (1-self.mse/prior).clamp(0, 1).amin()
         ready = (self.samples >= self.config.minimum_samples) & (skill >= self.config.minimum_skill)
         # The empirical MSE is a floor: a low variance head cannot certify itself.
@@ -74,5 +86,6 @@ class PhysicsConfidence(nn.Module):
         return asdict(self.config)
 
     def set_extra_state(self, value):
-        if value != asdict(self.config):
+        # Older calibrated bundles predate feedback_floor and keep their formula.
+        if asdict(PhysicsConfidenceConfig(**value)) != asdict(self.config):
             raise ValueError("Physics confidence configuration differs")

@@ -4,12 +4,12 @@ import math
 import torch
 
 
-def validate_teacher_weights(model, reconstruction, distillation):
+def validate_teacher_weights(model, reconstruction, distillation, *, teacher_available=False):
     if any(not math.isfinite(v) or v < 0 for v in (reconstruction, distillation)):
         raise ValueError("Teacher weights must be finite and non-negative")
     if bool(reconstruction) != bool(distillation):
         raise ValueError("enable or disable both Teacher objectives together")
-    if reconstruction and not model.teacher_student:
+    if reconstruction and not (model.teacher_student or teacher_available):
         raise ValueError("Teacher objectives require a Teacher model")
 
 

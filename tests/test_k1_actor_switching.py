@@ -68,7 +68,7 @@ def assert_replay(trainer, rollout):
 
 
 @pytest.mark.parametrize("backend", ACTOR_BACKENDS)
-@pytest.mark.parametrize("physics", [False, True])
+@pytest.mark.parametrize("physics", [False, True, 'transformer'])
 def test_every_backend_collects_updates_resumes_and_freezes(backend, physics, monkeypatch, tmp_path):
     torch.manual_seed(72)
     engine = trainer(backend, physics, monkeypatch)
@@ -86,8 +86,8 @@ def test_every_backend_collects_updates_resumes_and_freezes(backend, physics, mo
             dynamics = engine.update_dynamics(rollout)
     if physics:
         assert dynamics is not None
-        assert engine.update_config.freeze_base_actor == (backend == "holomotion")
-    assert (state_fingerprint(actor) == initial) == (physics and backend == "holomotion")
+        assert not engine.update_config.freeze_base_actor  # All fixtures initialize fresh weights.
+    assert state_fingerprint(actor) != initial
     assert engine.task.full_resets == 1 and engine.task.steps == 6
     path = engine.save_checkpoint(tmp_path/"complete.pt", iteration=2)
     # New runtime loads without sidecars, preserves actual selected architecture.
@@ -168,6 +168,38 @@ def test_custom_cli_does_not_require_holomotion_weights(backend, monkeypatch):
     assert config.actor == backend and config.run_dir is None
 
 
+def test_holomotion_cli_accepts_random_initialization_config(monkeypatch):
+    from tools.train_holomotion_k1_mjlab import parse_args
+    monkeypatch.setattr("sys.argv", ["train_k1_mjlab.py", "--actor", "holomotion",
+        "--holomotion-config", "holomotion.yaml", "--onnx", "contract.onnx",
+        "--asset-root", "assets", "--motion", "motion.npz", "--output-dir", "new_run",
+        "--iterations", "2", "--physics"])
+    config = parse_args()
+    assert config.run_dir is None
+    assert config.holomotion_config == Path("holomotion.yaml")
+    assert config.physics
+
+
+def test_shipped_holomotion_config_builds_16_expert_network_metadata(monkeypatch):
+    from unified_motion import holomotion_original_algorithm as original
+    root = Path(__file__).resolve().parents[1]
+    captured = {}
+    actor, critic = object(), object()
+    def build(network_config, **kwargs):
+        captured.update(network_config)
+        return actor, critic
+    monkeypatch.setattr(original, "build_original_holomotion_networks", build)
+    result = original.initialize_original_holomotion_k1_algorithm(
+        holomotion_root=root/"third_party/HoloMotion/source",
+        config_path=root/"configs/actors/holomotion_k1_16e.yaml")
+    assert result.actor is actor and result.critic is critic
+    assert captured["actor"]["num_fine_experts"] == 16
+    assert captured["actor"]["d_model"] == 256
+    assert captured["critic"]["layer_config"]["hidden_dims"] == [1024, 1024, 512]
+    assert captured["actor"]["obs_schema"]["flattened_obs_fut"]["seq_len"] == 10
+    assert result.config.algo.config.init_noise_std == 1.0
+
+
 @pytest.mark.parametrize("physics", [False, True])
 def test_cli_runs_and_resumes_with_explicit_mock_simulator(tmp_path, monkeypatch, physics):
     """Exercise real main/runner/checkpoints; hardware and task observations are synthetic."""
@@ -205,12 +237,14 @@ def test_cli_runs_and_resumes_with_explicit_mock_simulator(tmp_path, monkeypatch
         tasks.append(result)
         return result
     monkeypatch.setattr(cli, "HoloMotionK1MJLabTask", make_task)
-    common = ["--asset-root", "assets", "--motion", "motion.npz", "--num-envs", "3", "--iterations", "2"]
+    motion_path = tmp_path/'synthetic_motion.npz'
+    motion_path.write_bytes(b'MOCK: MotionLibrary is replaced for this CLI wiring test')
+    common = ["--asset-root", "assets", "--motion", str(motion_path), "--num-envs", "3", "--iterations", "2"]
     args = ["train_k1_mjlab.py", "--actor", "lru", "--actor-config", str(config_file),
         "--task-contract", str(contract_file), "--output-dir", str(tmp_path/"first"),
         "--steps-per-env", "3", *common]
     if physics:
-        args += ["--physics", "--physics-burn-in-steps", "1", "--physics-train-steps", "2",
+        args += ["--physics-teacher" if physics == 'transformer' else "--physics", "--physics-burn-in-steps", "1", "--physics-train-steps", "2",
             "--physics-dynamics-epochs", "1", "--physics-width", "4", "--physics-memory-width", "4",
             "--physics-latent-width", "2", "--physics-hidden-dim", "8", "--physics-scene-encoder", "gnn"]
     monkeypatch.setattr(sys, "argv", args)
@@ -218,7 +252,7 @@ def test_cli_runs_and_resumes_with_explicit_mock_simulator(tmp_path, monkeypatch
     path = tmp_path/"first/model_1.pt"
     assert path.is_file() and tasks[-1].steps == 6
     metadata = json.loads((tmp_path/"first/mjlab_runner.json").read_text(encoding="utf-8"))
-    assert metadata["actor_backend"] == "lru" and metadata["physics_enabled"] == physics
+    assert metadata["actor_backend"] == "lru" and metadata["physics_enabled"] == bool(physics)
     monkeypatch.setattr(sys, "argv", ["train_k1_mjlab.py", "--resume", str(path),
         "--output-dir", str(tmp_path/"resumed"), *common])
     cli.main()
@@ -227,6 +261,8 @@ def test_cli_runs_and_resumes_with_explicit_mock_simulator(tmp_path, monkeypatch
     if physics:
         loaded = load_k1_checkpoint(tmp_path/"resumed/model_3.pt")
         assert loaded.dynamics.encoder.scene_encoder == "gnn"
+        if physics == 'transformer':
+            assert loaded.payload['privileged_teacher']['updates'] == 4
 
 
 def test_resume_does_not_silently_override_saved_training_settings(monkeypatch):
