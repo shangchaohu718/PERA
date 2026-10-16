@@ -36,6 +36,8 @@ from .physics_confidence import PhysicsConfidence, PhysicsConfidenceConfig
 from .physics_update import PhysicsUpdateConfig
 from .privileged_teacher import (
     PrivilegedTeacherConfig, PrivilegedTransformerTeacher, teacher_inputs,
+    teacher_physics_inputs, teacher_critic_privilege, teacher_contact_targets,
+    teacher_shared_critic_inputs,
     normalized_core, core_scale, teacher_supervision,
     assess_teacher, predictive_distillation, core_groups,
 )
@@ -196,6 +198,73 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         self._policy_rollout_steps = policy_rollout_steps
         self._physics_control_mode = "student"
         self._teacher_control_history = None
+        self._teacher_observation_history = None
+
+    def prepare_teacher_observation(self) -> None:
+        """Feed frozen privileged Teacher ``z_t`` into the Actor observation.
+
+        The Actor is the only action-producing module in this mode.  The old
+        Physics residual wrapper is removed, and Teacher parameters remain
+        frozen while PPO trains the complete Actor policy.
+        """
+        if self.privileged_teacher_ema is None or self.privileged_teacher_updates < 1:
+            raise ValueError("Teacher observation requires a trained privileged Teacher")
+        base_actor = getattr(self.actor, "base_actor", self.actor)
+        config = getattr(base_actor, "config", None)
+        latent_width = self.dynamics.latent_width
+        teacher_config = self.privileged_teacher_ema.config
+        if teacher_config.objective_version < 5:
+            raise ValueError(
+                "direct Teacher observation requires the shared Critic/Teacher v5 contract"
+            )
+        if getattr(config, "teacher_latent_dim", 0) != latent_width:
+            raise ValueError(
+                "Actor teacher_latent_dim must match the saved Teacher latent width"
+            )
+        expected_privilege = teacher_config.critic_privileged_dim(self.dynamics.system_id_dim)
+        if getattr(self.critic, "privileged_dim", 0) != expected_privilege:
+            raise ValueError(
+                "Critic privileged dimension must match the Teacher v5 shared contract"
+            )
+        self.actor = base_actor.to(self.task.device)
+        self.actor.requires_grad_(True)
+        self.dynamics.requires_grad_(False)
+        self.actor_dynamics.requires_grad_(False)
+        self.confidence.requires_grad_(False)
+        self.privileged_teacher.requires_grad_(False)
+        self.privileged_teacher_ema.requires_grad_(False).eval()
+        decay, no_decay = [], []
+        for name, parameter in self.actor.named_parameters():
+            target = no_decay if (
+                parameter.ndim < 2 or "log_std" in name or "bias" in name or "norm" in name
+            ) else decay
+            target.append(parameter)
+        self.actor_optimizer = torch.optim.AdamW(
+            [{"params": decay, "weight_decay": .01},
+             {"params": no_decay, "weight_decay": 0.}],
+            lr=self.config.actor_learning_rate,
+            betas=(self.config.actor_beta1, self.config.actor_beta2))
+        self._physics_control_mode = "teacher_observation"
+        self.update_config = replace(self.update_config, freeze_base_actor=False)
+        self._teacher_observation_history = None
+
+    @torch.no_grad()
+    def _teacher_observation_latent(self, observation, frame, contact_truth, parameters, start):
+        teacher = self.privileged_teacher_ema
+        if teacher is None:
+            raise RuntimeError("Teacher observation mode has no Teacher")
+        packed = teacher_shared_critic_inputs(
+            observation.critic, frame, contact_truth, parameters, teacher.config)
+        history = self._teacher_observation_history
+        if history is None:
+            history = ([], [])
+        inputs, starts = history
+        inputs.append(packed); starts.append(start)
+        del inputs[:-teacher.config.context_steps]
+        del starts[:-teacher.config.context_steps]
+        latent = teacher.encode(torch.stack(inputs, 1), torch.stack(starts, 1))[:, -1]
+        self._teacher_observation_history = history
+        return latent
 
     def prepare_teacher_control(self, *, reinitialize_residual: bool = True,
                                 freeze_base_actor: bool = True,
@@ -220,6 +289,10 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             raise ValueError("residual_limit must be in (0, 1]")
         if self.privileged_teacher_ema is None or self.privileged_teacher_updates < 1:
             raise ValueError("Teacher-controlled residual requires a trained privileged Teacher")
+        if self.privileged_teacher_ema.config.objective_version >= 4:
+            raise ValueError(
+                "Teacher v4 is an observation contract and cannot control the legacy residual"
+            )
         feature_dim = 9 + 2*self.dynamics.robot.dof + self.privileged_teacher.config.contact_slots
         if reinitialize_residual:
             config = replace(self.actor.config, physics_feature_dim=feature_dim,
@@ -369,7 +442,9 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
     def privileged_teacher_checkpoint(self):
         if self.privileged_teacher is None:
             return None
-        return dict(schema=1, config=asdict(self.privileged_teacher.config),
+        schema = (3 if self.privileged_teacher.config.objective_version >= 5 else
+                  2 if self.privileged_teacher.config.objective_version >= 4 else 1)
+        return dict(schema=schema, config=asdict(self.privileged_teacher.config),
             model=self.privileged_teacher.state_dict(), ema=self.privileged_teacher_ema.state_dict(),
             optimizer=self.privileged_teacher_optimizer.state_dict(), updates=self.privileged_teacher_updates)
 
@@ -379,7 +454,10 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             raise ValueError('checkpoint privileged Teacher configuration differs')
         if saved is None:
             return
-        if saved.get('schema') != 1 or PrivilegedTeacherConfig.from_saved(saved.get('config', {})) != self.privileged_teacher.config:
+        expected_schema = (3 if self.privileged_teacher.config.objective_version >= 5 else
+                           2 if self.privileged_teacher.config.objective_version >= 4 else 1)
+        if (saved.get('schema') != expected_schema
+                or PrivilegedTeacherConfig.from_saved(saved.get('config', {})) != self.privileged_teacher.config):
             raise ValueError('unsupported privileged Teacher checkpoint')
         if type(saved.get('updates')) is not int or saved['updates'] < 0:
             raise ValueError('invalid privileged Teacher update count')
@@ -404,11 +482,14 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         if payload["physics_schema"] != 5:
             raise ValueError("legacy Physics checkpoints support frozen evaluation; initialize a new schema 5 training run")
         validate_task_contract(payload["physics_runtime_config"], task)
-        algorithm = OriginalHoloMotionK1Algorithm(loaded.actor.base_actor, loaded.critic,
+        loaded_base_actor = getattr(loaded.actor, "base_actor", loaded.actor)
+        algorithm = OriginalHoloMotionK1Algorithm(loaded_base_actor, loaded.critic,
             None, Path(checkpoint).parent, payload["physics_runtime_config"]["network_config"])
+        control_mode = payload["physics_runtime_config"].get("physics_control_mode", "student")
         result = cls(algorithm, task, loaded.dynamics,
             config=HoloMotionPPOConfig(**payload["ppo_config"]),
-            physics_actor_config=loaded.actor.config,
+            physics_actor_config=(None if control_mode == "teacher_observation"
+                                  else loaded.actor.config),
             policy_rollout_steps=payload["physics_runtime_config"]["rollout_steps"],
             dynamics_history_steps=dynamics_history_steps,
             dynamics_history_bytes=dynamics_history_bytes,
@@ -417,7 +498,6 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             confidence_config=loaded.calibration.config,
             update_config=PhysicsUpdateConfig(**payload["physics_update_config"]),
             **payload["physics_training_config"], **payload["physics_loss_weights"])
-        control_mode = payload["physics_runtime_config"].get("physics_control_mode", "student")
         if control_mode == "teacher":
             if payload["physics_runtime_config"].get("teacher_action_proposal") != "base_mean_pre_sample":
                 raise ValueError(
@@ -432,6 +512,10 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 reinitialize_residual=False,
                 freeze_base_actor=result.update_config.freeze_base_actor,
             )
+        elif control_mode == "teacher_observation":
+            saved_updates = payload.get("privileged_teacher", {}).get("updates", 0)
+            result.privileged_teacher_updates = saved_updates
+            result.prepare_teacher_observation()
         elif control_mode != "student":
             raise ValueError(f"unsupported Physics control mode: {control_mode!r}")
         result.load_optimizer_checkpoint(checkpoint, _validated_physics=loaded)
@@ -446,6 +530,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         self._dynamics_history.clear()
         self._dynamics_rollouts.clear()
         self._teacher_control_history = None
+        self._teacher_observation_history = None
         self._physics_episode_start = torch.ones(
             self.task.num_envs, dtype=torch.bool, device=self.task.device
         )
@@ -455,9 +540,133 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         return observation
 
     @torch.no_grad()
+    def _finish_teacher_observation_transition(self, transition) -> torch.Tensor:
+        """Timeout bootstrap for the asymmetric v4 Critic, before any reset."""
+        timeout_values = transition.reward.new_zeros((self.task.num_envs, 1))
+        if (transition.terminated & transition.truncated).any().item():
+            raise ValueError("terminated and truncated must be disjoint")
+        if transition.truncated.any().item():
+            ids = transition.truncated.nonzero(as_tuple=False).flatten()
+            critic_obs = self.task.critic_observation(ids)
+            frame, contacts = self.task.privileged_teacher_observation()
+            privilege = teacher_critic_privilege(
+                frame, contacts, self.task.physics_teacher_target(),
+                self.privileged_teacher_ema.config).index_select(0, ids)
+            data = flat_observations_to_tensordict(
+                critic_obs.new_zeros((len(ids), 506)), critic_obs)
+            timeout_values[ids] = self.critic(
+                data, update_obs_norm=False, critic_privileged=privilege,
+            ).get("values").reshape(-1, 1)
+        done = transition.terminated | transition.truncated
+        if done.any().item():
+            ids = done.nonzero(as_tuple=False).flatten()
+            self.actor.clear_env_cache(ids)
+            self._observation = self.task.reset(
+                ids, random_start=True,
+                min_remaining_s=float(self.task.sampler.offsets_s[-1]),
+            )
+        else:
+            self._observation = self.task.observe()
+        return timeout_values
+
+    @torch.no_grad()
+    def _collect_teacher_observation(self, num_steps: int) -> HoloMotionPPORollout:
+        """Collect PPO data through the clean Teacher-z observation path only.
+
+        No deployable Dynamics, confidence gate, Student feature or action
+        residual is evaluated in this method.  The single action-producing path
+        is ``Actor(obs, reference, z) -> environment``.
+        """
+        if self.privileged_teacher_ema is None:
+            raise RuntimeError("Teacher observation mode has no frozen Teacher")
+        self.actor.eval(); self.critic.eval(); self.privileged_teacher_ema.eval()
+        if self._observation is None:
+            self.reset()
+        self.actor.reset_kv_cache(self.task.num_envs, self.task.device)
+        if self._physics_episode_start is None:
+            raise RuntimeError("Teacher episode state was not initialized")
+
+        actor_obs=[]; critic_obs=[]; actions=[]; log_probs=[]; means=[]; sigmas=[]; values=[]
+        rewards=[]; dones=[]; truncated=[]; timeout_values=[]; clip_ids=[]
+        latents=[]; critic_privileges=[]
+        aux_base=[]; aux_contacts=[]; aux_ref=[]; aux_robot=[]
+        reward_terms: dict[str,list[torch.Tensor]] = {}
+        self._policy_rollout_steps = num_steps
+        for _ in range(num_steps):
+            observation = self._observation
+            assert observation is not None
+            start = self._physics_episode_start.clone()
+            frame, contact_truth = self.task.privileged_teacher_observation()
+            parameters = self.task.physics_teacher_target()
+            latent = self._teacher_observation_latent(
+                observation, frame, contact_truth, parameters, start)
+            privilege = teacher_critic_privilege(
+                frame, contact_truth, parameters, self.privileged_teacher_ema.config)
+            data = flat_observations_to_tensordict(
+                observation.actor, observation.critic)
+            actor_out = self._actor_forward(
+                data, mode="sampling", update_obs_norm=False,
+                teacher_latent=latent)
+            critic_out = self.critic(
+                data, update_obs_norm=False, critic_privileged=privilege)
+            action = actor_out.get("actions")
+            transition = self.task.step(action)
+            done = transition.terminated | transition.truncated
+
+            actor_obs.append(observation.actor); critic_obs.append(observation.critic)
+            actions.append(action); log_probs.append(actor_out.get("actions_log_prob").reshape(-1,1))
+            means.append(actor_out.get("mu")); sigmas.append(actor_out.get("sigma"))
+            values.append(critic_out.get("values").reshape(-1,1))
+            rewards.append(transition.reward.reshape(-1,1)); dones.append(done.reshape(-1,1))
+            truncated.append(transition.truncated.reshape(-1,1))
+            clip_ids.append(self.task.sampler.clip_ids.clone())
+            latents.append(latent); critic_privileges.append(privilege)
+            for name, value in transition.terms.items():
+                reward_terms.setdefault(name, []).append(value.detach().clone())
+            aux_base.append(observation.auxiliary.base_lin_vel_b)
+            aux_contacts.append(observation.auxiliary.keybody_contacts)
+            aux_ref.append(observation.auxiliary.ref_keybody_rel_pos)
+            aux_robot.append(observation.auxiliary.robot_keybody_rel_pos)
+            timeout_values.append(self._finish_teacher_observation_transition(transition))
+            self._physics_episode_start = done
+
+        final = self._observation
+        assert final is not None
+        final_frame, final_contacts = self.task.privileged_teacher_observation()
+        final_privilege = teacher_critic_privilege(
+            final_frame, final_contacts, self.task.physics_teacher_target(),
+            self.privileged_teacher_ema.config)
+        final_data = flat_observations_to_tensordict(final.actor, final.critic)
+        bootstrap = self.critic(
+            final_data, update_obs_norm=False,
+            critic_privileged=final_privilege).get("values").reshape(-1,1)
+        stack = lambda values: torch.stack(values, dim=1)
+        reward_tensor=stack(rewards); value_tensor=stack(values); done_tensor=stack(dones).bool()
+        advantage, returns = generalized_advantage_estimate(
+            reward_tensor, value_tensor, done_tensor, bootstrap,
+            gamma=self.config.gamma, lam=self.config.lam,
+            truncated=stack(truncated), timeout_values=stack(timeout_values))
+        if self.config.normalize_advantage:
+            advantage = normalize_advantages(advantage)
+        return HoloMotionPPORollout(
+            actor_observation=stack(actor_obs), critic_observation=stack(critic_obs),
+            actions=stack(actions), old_log_prob=stack(log_probs), old_mu=stack(means),
+            old_sigma=stack(sigmas), old_value=value_tensor, returns=returns,
+            advantages=advantage, dones=done_tensor, rewards=reward_tensor,
+            gt_base_lin_vel_b=stack(aux_base), gt_keybody_contacts=stack(aux_contacts),
+            gt_ref_keybody_rel_pos=stack(aux_ref), gt_robot_keybody_rel_pos=stack(aux_robot),
+            clip_ids=stack(clip_ids),
+            reward_terms={name:stack(items) for name,items in reward_terms.items()},
+            truncated=stack(truncated), timeout_values=stack(timeout_values),
+            teacher_latent=stack(latents), critic_privileged=stack(critic_privileges),
+        )
+
+    @torch.no_grad()
     def collect(self, num_steps: int) -> HoloMotionPPORollout:
         if num_steps < 1:
             raise ValueError("num_steps must be positive")
+        if getattr(self, "_physics_control_mode", "student") == "teacher_observation":
+            return self._collect_teacher_observation(num_steps)
         self.actor.eval(); self.critic.eval()
         if self._observation is None:
             self.reset()
@@ -475,6 +684,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         previous_core=[];previous_valid=[];teacher_targets=[]
         privileged_inputs=[];privileged_cores=[]
         privileged_contacts=[];privileged_contact_masks=[]
+        privileged_next_contact_physics=[];privileged_next_contact_modes=[]
         teacher_ids = None
         if self.privileged_teacher is not None:
             count = min(self.task.num_envs, self.privileged_teacher.config.train_envs)
@@ -487,6 +697,7 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         dynamics_prefix = self._dynamics_history.snapshot()
         executed_actions = []
         teacher_candidate_actions = []
+        teacher_latents = []
         ages = []
         self._policy_rollout_steps = num_steps
 
@@ -518,13 +729,34 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 self.actor_dynamics, frame, start, env_ids, before,
                 self._physics_age, self.confidence_warmup_steps, self.confidence)
             teacher_target = self.task.physics_teacher_target()
-            teacher_control = getattr(self, "_physics_control_mode", "student") == "teacher"
-            truth = (self.task.privileged_physics_observation()
-                     if teacher_ids is not None or teacher_control else None)
+            control_mode = getattr(self, "_physics_control_mode", "student")
+            teacher_control = control_mode == "teacher"
+            teacher_observation = control_mode == "teacher_observation"
+            teacher_v4 = bool(self.privileged_teacher is not None
+                              and self.privileged_teacher.config.objective_version >= 4)
+            exact_contacts = None
+            if teacher_ids is not None or teacher_control or teacher_observation:
+                if teacher_v4:
+                    truth, exact_contacts = self.task.privileged_teacher_observation()
+                else:
+                    truth = self.task.privileged_physics_observation()
+            else:
+                truth = None
             if teacher_ids is not None:
                 assert truth is not None
-                privileged_inputs.append(teacher_inputs(observation.critic, truth, teacher_target,
-                    self.dynamics.robot, self.privileged_teacher.config).index_select(0, teacher_ids))
+                if self.privileged_teacher.config.objective_version >= 5:
+                    packed = teacher_shared_critic_inputs(
+                        observation.critic, truth, exact_contacts, teacher_target,
+                        self.privileged_teacher.config)
+                elif teacher_v4:
+                    packed = teacher_physics_inputs(
+                        truth, exact_contacts, teacher_target,
+                        self.dynamics.robot, self.privileged_teacher.config)
+                else:
+                    packed = teacher_inputs(
+                        observation.critic, truth, teacher_target,
+                        self.dynamics.robot, self.privileged_teacher.config)
+                privileged_inputs.append(packed.index_select(0, teacher_ids))
                 privileged_cores.append(normalized_core(truth, self.dynamics.robot).index_select(0, teacher_ids).clone())
                 privileged_contacts.append(truth.contact_features[..., 10].index_select(0, teacher_ids).clone())
                 privileged_contact_masks.append(truth.contact_mask.index_select(0, teacher_ids).clone())
@@ -540,6 +772,22 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 confidence = feature.new_ones(feature.shape[:-1] + (1,))
                 actor_out = self.actor.apply_physics(
                     base_out, feature, confidence, mode="sampling")
+            elif teacher_observation:
+                assert truth is not None
+                latent = self._teacher_observation_latent(
+                    observation, truth, exact_contacts, teacher_target, start)
+                teacher_latents.append(latent)
+                actor_out = self._actor_forward(
+                    data, mode="sampling", update_obs_norm=False,
+                    teacher_latent=latent,
+                )
+            elif getattr(self, "_teacher_only", False):
+                # Data collection for the Teacher must reproduce the imported
+                # source Actor exactly.  Do not route it through a randomly
+                # initialized Student feature path or residual, even if that
+                # residual currently happens to be zero-initialized.
+                actor_out = self.actor.base_actor(
+                    data, mode="sampling", update_obs_norm=False)
             else:
                 actor_out = self._actor_forward(
                     data, mode="sampling", update_obs_norm=False,
@@ -569,7 +817,18 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 physics_encoding=encoding.physics_encoding(),
             )
             self._physics_memory = self.actor_dynamics.remember_prediction(memory, prediction)
-            next_frame = snapshot_physics(self.task.privileged_physics_observation())
+            if teacher_v4:
+                next_frame_raw, next_contact_truth = self.task.privileged_teacher_observation()
+                next_frame = snapshot_physics(next_frame_raw)
+                if teacher_ids is not None:
+                    contact_physics, contact_modes = teacher_contact_targets(
+                        next_contact_truth, self.privileged_teacher.config)
+                    privileged_next_contact_physics.append(
+                        contact_physics.index_select(0, teacher_ids))
+                    privileged_next_contact_modes.append(
+                        contact_modes.index_select(0, teacher_ids))
+            else:
+                next_frame = snapshot_physics(self.task.privileged_physics_observation())
             done = transition.terminated | transition.truncated
 
             actor_obs.append(observation.actor);critic_obs.append(observation.critic)
@@ -608,7 +867,8 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             stack(actor_obs),stack(critic_obs),stack(actions),stack(log_probs),stack(means),
             stack(sigmas),value_tensor,returns,advantage,done_tensor,reward_tensor,
             stack(aux_base),stack(aux_contacts),stack(aux_ref),stack(aux_robot),stack(clip_ids),
-            physics_features=stack(features),physics_confidence=stack(confidences),
+            physics_features=(None if teacher_latents else stack(features)),
+            physics_confidence=(None if teacher_latents else stack(confidences)),
             physics_observation=_stack_physics(frames),
             next_physics_observation=_stack_physics(next_frames),
             physics_episode_start=stack(starts),physics_initial_hidden=initial_hidden,
@@ -623,14 +883,20 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
             privileged_teacher_env_ids=teacher_ids,
             privileged_teacher_contacts=stack(privileged_contacts) if privileged_contacts else None,
             privileged_teacher_contact_mask=stack(privileged_contact_masks) if privileged_contact_masks else None,
+            privileged_teacher_next_contact_physics=(
+                stack(privileged_next_contact_physics) if privileged_next_contact_physics else None),
+            privileged_teacher_next_contact_modes=(
+                stack(privileged_next_contact_modes) if privileged_next_contact_modes else None),
             teacher_candidate_actions=(stack(teacher_candidate_actions)
                                        if teacher_candidate_actions else None),
+            teacher_latent=(stack(teacher_latents) if teacher_latents else None),
         )
 
     def update_dynamics(
         self, rollout: HoloMotionPPORollout
     ) -> HoloMotionDynamicsMetrics | None:
-        if getattr(self, "_physics_control_mode", "student") == "teacher":
+        if getattr(self, "_physics_control_mode", "student") in (
+                "teacher", "teacher_observation"):
             return None
         required=(rollout.physics_observation,rollout.next_physics_observation,
                   rollout.physics_episode_start,rollout.physics_initial_hidden,
@@ -846,6 +1112,12 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
                 or batch.privileged_teacher_contact_mask is None
                 or not torch.equal(ids, batch.privileged_teacher_env_ids) for batch in batches):
             raise ValueError('Transformer Teacher requires matching, current-frame privileged rollout data')
+        teacher_v4 = self.privileged_teacher.config.objective_version >= 4
+        if teacher_v4 and any(
+                batch.privileged_teacher_next_contact_physics is None
+                or batch.privileged_teacher_next_contact_modes is None
+                for batch in batches):
+            raise ValueError('Teacher v4 requires next-frame contact physics labels')
         validation_end = train_end if validation_end is None else validation_end
         inputs = torch.cat([b.privileged_teacher_input for b in batches], 1)[:, :validation_end]
         current = torch.cat([b.privileged_teacher_core for b in batches], 1)[:, :validation_end]
@@ -863,9 +1135,14 @@ class HoloMotionPhysicsMJLabPPO(HoloMotionMJLabPPO):
         if padding < 0:
             raise ValueError('Teacher contact labels exceed configured slots')
         contacts, contact_mask = F.pad(contacts, (0, padding)), F.pad(contact_mask, (0, padding))
+        contact_physics = (None if not teacher_v4 else torch.cat(
+            [b.privileged_teacher_next_contact_physics for b in batches], 1)[:, :train_end])
+        contact_modes = (None if not teacher_v4 else torch.cat(
+            [b.privileged_teacher_next_contact_modes for b in batches], 1)[:, :train_end])
         loss = teacher_supervision(output, truth, next_observation.core_valid[ids, :train_end],
             contacts, contact_mask, parameters[ids, :train_end], valid,
-            self.privileged_teacher.config, current_core=current[:, :train_end])
+            self.privileged_teacher.config, current_core=current[:, :train_end],
+            contact_physics=contact_physics, contact_modes=contact_modes)
         multistep_loss = self._teacher_multistep_loss(
             self.privileged_teacher, output["latent"], current[:, :train_end],
             next_observation, selected_starts[:, :train_end], selected_actions[:, :train_end],

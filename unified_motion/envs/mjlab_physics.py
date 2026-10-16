@@ -341,9 +341,15 @@ class K1PhysicsBridge:
     @torch.no_grad()
     def privileged_contact_truth(self) -> PrivilegedFootContactTruth:
         """Read exact mjlab contacts for non-Actor training channels only."""
+        _, truth = self.privileged_read()
+        return truth
+
+    @torch.no_grad()
+    def privileged_read(self) -> tuple[PhysicsObservation, PrivilegedFootContactTruth]:
+        """Atomically read one physical frame and its richer contact truth."""
         exact = self.read()
         tangential, slip, utilization = self.contact_supervision()
-        return PrivilegedFootContactTruth(
+        truth = PrivilegedFootContactTruth(
             point_position_b=exact.contact_features[..., :3].clone(),
             point_velocity_b=exact.contact_features[..., 3:6].clone(),
             normal_b=exact.contact_features[..., 6:9].clone(),
@@ -353,6 +359,7 @@ class K1PhysicsBridge:
             slip_speed_m_s=slip,
             friction_utilization=utilization,
         )
+        return exact, truth
 
     @torch.no_grad()
     def read(self) -> PhysicsObservation:

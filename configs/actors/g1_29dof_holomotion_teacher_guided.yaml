@@ -1,0 +1,9 @@
+# Stage 2: freeze the physics Teacher and train the official 29-output G1 Actor.
+robot_id: g1_29dof
+# Must match Teacher grouped z64: 8 contact + 16 force + 16 kinematics + 24 dynamics.
+latent_width: 64
+actor_width: 256
+actor_hidden_dim: 256
+reference_steps: 10
+init_std: 1.0
+system_id_dim: 2

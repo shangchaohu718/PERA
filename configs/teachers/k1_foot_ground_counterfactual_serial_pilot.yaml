@@ -1,0 +1,30 @@
+schema: 1
+purpose: serial_process_quality_and_material_yield_pilot
+source_root: /home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk
+bundle_root: /home/tcl/Desktop/start/HoloMotion-UM
+launcher: scripts/run_isaac51_k1.sh
+collector: /home/tcl/Desktop/start/HoloMotion-UM/tools/collect_foot_ground_counterfactual_isaac.py
+merger: /home/tcl/Desktop/start/HoloMotion-UM/tools/merge_foot_ground_counterfactual_serial.py
+execution_mode: independent_process_replay
+phase_labels: motions/phase_labels_61_64_50hz_v2.npz
+output_dir: /home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_serial_pilot
+raw_output_dir: /home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_serial_pilot_raw
+seeds: [730201]
+deltas_rad: [0.04]
+context_steps: 32
+probe_frames:
+  - {frame: 5, stratum: left_slide_right_anchor}
+  - {frame: 25, stratum: right_slide_left_anchor}
+  - {frame: 23, stratum: air_to_right_slide_transition}
+  - {frame: 48, stratum: air_to_left_slide_transition}
+joints: [left_ankle_pitch_joint, right_ankle_pitch_joint]
+friction_conditions:
+  - {name: low, static: 0.4, dynamic: 0.3}
+  - {name: nominal, static: 0.6, dynamic: 0.5}
+  - {name: high, static: 0.8, dynamic: 0.7}
+checkpoints:
+  - id: f3e_update5_preserved
+    path: logs/rsl_rl/k1_moonwalk_f3h1/f3e_update5_complete_source/model_3.pt
+    policy_bundle: data/foot_ground_v1/frozen_policies/f3e_update5_preserved.pt
+    env_config_class: k1_moonwalk.project_task.env_cfg:MoonwalkF3DNoActionRateEnvCfg
+    split: pilot

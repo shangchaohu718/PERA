@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 import yaml
 
@@ -29,8 +30,13 @@ def main() -> None:
     source_root, bundle_root = Path(cfg["source_root"]), Path(cfg["bundle_root"])
     launcher = resolve(source_root, cfg["launcher"])
     collector = Path(cfg["collector"])
+    execution_mode = cfg.get("execution_mode", "parallel_clone")
+    if execution_mode not in ("parallel_clone", "independent_process_replay"):
+        raise ValueError(f"unsupported execution_mode: {execution_mode}")
+    merger = Path(cfg["merger"]) if execution_mode == "independent_process_replay" else None
     labels = resolve(source_root, cfg["phase_labels"])
     output_root = Path(cfg["output_dir"])
+    raw_output_root = Path(cfg.get("raw_output_dir", str(output_root) + "_raw"))
     frictions = cfg["friction_conditions"]
     jobs = []
     for checkpoint in cfg["checkpoints"]:
@@ -51,27 +57,59 @@ def main() -> None:
                                     f"{joint_tag}_d{delta_tag}_{friction['name']}")
                         output = output_root / checkpoint["split"] / checkpoint["id"] / \
                             f"{identity}.npz"
-                        command = [
+                        command_prefix = [
                             str(launcher), str(collector), "--headless", "--device", "cuda:0",
                             "--checkpoint", str(source), "--policy-bundle", str(bundle),
                             "--checkpoint-id", checkpoint["id"],
                             "--env-config-class", checkpoint["env_config_class"],
-                            "--phase-labels", str(labels), "--output", str(output),
+                            "--phase-labels", str(labels),
                             "--seed", str(seed), "--probe-frame", str(probe["frame"]),
                             "--joint-name", joint, "--delta-rad", str(delta),
                             "--context-steps", str(cfg["context_steps"]),
-                            "--static-friction", str(friction["static"]),
-                            "--dynamic-friction", str(friction["dynamic"]),
-                            "--manual-seed-without-replicator",
                         ]
-                        jobs.append({
+                        job = {
                             "checkpoint_id": checkpoint["id"], "split": checkpoint["split"],
                             "seed": seed, "probe_frame": probe["frame"],
                             "stratum": probe["stratum"], "joint": joint,
                             "delta_rad": delta, "friction_condition": friction["name"],
-                            "output": str(output), "command": command,
-                        })
-    manifest = {"schema": 1, "config": str(args.config.resolve()),
+                            "output": str(output), "execution_mode": execution_mode,
+                        }
+                        if execution_mode == "parallel_clone":
+                            job["command"] = command_prefix + [
+                                "--output", str(output),
+                                "--static-friction", str(friction["static"]),
+                                "--dynamic-friction", str(friction["dynamic"]),
+                                "--manual-seed-without-replicator",
+                            ]
+                        else:
+                            branch_outputs = {
+                                branch: raw_output_root / checkpoint["split"] / checkpoint["id"] /
+                                identity / f"{branch}.npz"
+                                for branch in ("base", "plus", "minus", "null")
+                            }
+                            job["branch_outputs"] = {
+                                name: str(path) for name, path in branch_outputs.items()}
+                            job["branch_commands"] = {
+                                branch: command_prefix + [
+                                    "--output", str(branch_outputs[branch]),
+                                    "--static-friction", str(friction["static"]),
+                                    "--dynamic-friction", str(friction["dynamic"]),
+                                    "--manual-seed-without-replicator",
+                                    "--single-branch", branch,
+                                ]
+                                for branch in ("base", "plus", "minus", "null")
+                            }
+                            job["merge_command"] = [
+                                sys.executable, str(merger),
+                                "--base", str(branch_outputs["base"]),
+                                "--plus", str(branch_outputs["plus"]),
+                                "--minus", str(branch_outputs["minus"]),
+                                "--null", str(branch_outputs["null"]),
+                                "--output", str(output),
+                            ]
+                        jobs.append(job)
+    manifest = {"schema": 2, "config": str(args.config.resolve()),
+                "execution_mode": execution_mode,
                 "job_count": len(jobs), "jobs": jobs}
     args.job_manifest.parent.mkdir(parents=True, exist_ok=True)
     args.job_manifest.write_text(json.dumps(manifest, indent=2) + "\n")
@@ -92,7 +130,17 @@ def main() -> None:
         output.parent.mkdir(parents=True, exist_ok=True)
         print(f"[{index}/{len(jobs)}] {job['checkpoint_id']} frame={job['probe_frame']} "
               f"joint={job['joint']} delta={job['delta_rad']}", flush=True)
-        subprocess.run(job["command"], check=True)
+        if job["execution_mode"] == "parallel_clone":
+            subprocess.run(job["command"], check=True)
+        else:
+            for branch in ("base", "plus", "minus", "null"):
+                branch_output = Path(job["branch_outputs"][branch])
+                if branch_output.exists():
+                    continue
+                branch_output.parent.mkdir(parents=True, exist_ok=True)
+                print(f"  branch={branch}", flush=True)
+                subprocess.run(job["branch_commands"][branch], check=True)
+            subprocess.run(job["merge_command"], check=True)
 
 
 if __name__ == "__main__":

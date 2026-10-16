@@ -39,6 +39,8 @@ def parse_args():
     parser.add_argument("--video-height", type=int, default=720)
     parser.add_argument("--no-reference-ghost", action="store_true",
                         help="omit the translucent green reference robot")
+    parser.add_argument("--stop-on-first-done", action="store_true",
+                        help="end evaluation at the first failure, timeout, or reference completion")
     args = parser.parse_args()
     if (args.steps < 1 or args.num_envs < 1 or args.seed < 0
             or args.video_width < 1 or args.video_height < 1):
@@ -150,10 +152,13 @@ def main():
 
             task.step = recorded_step
         policy = frozen_k1_policy(loaded, ablation=args.ablation)
-        report = evaluate_k1_policy(policy, task, steps=args.steps)
+        report = evaluate_k1_policy(
+            policy, task, steps=args.steps, stop_on_first_done=args.stop_on_first_done
+        )
         from unified_motion.llm.advisor import fingerprint
         from unified_motion.llm.validation import file_sha256
         protocol = dict(schema=1, steps=args.steps, num_envs=args.num_envs, seed=args.seed,
+            stop_on_first_done=args.stop_on_first_done,
             task_contract=saved if saved is not None else asdict(contract),
             physics_randomization=config.get('physics_randomization'),
             motion_sha256=[file_sha256(path) for path in args.motion],
@@ -173,7 +178,7 @@ def main():
         if args.video is not None:
             report["video"] = str(args.video.resolve())
             report["video_fps"] = round(1.0 / env.step_dt)
-            report["video_frames"] = args.steps
+            report["video_frames"] = report["steps"]
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2), encoding="utf-8")
         print(json.dumps(report, indent=2))

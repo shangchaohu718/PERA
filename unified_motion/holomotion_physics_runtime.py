@@ -18,7 +18,8 @@ from .holomotion_physics_actor import (
     teacher_actor_features,
 )
 from .privileged_teacher import (
-    PrivilegedTeacherConfig, PrivilegedTransformerTeacher, teacher_inputs, normalized_core,
+    PrivilegedTeacherConfig, PrivilegedTransformerTeacher, teacher_inputs,
+    teacher_shared_critic_inputs, normalized_core,
 )
 from .models.physics import DynamicsModel
 from .robot_contract import RobotContract
@@ -52,7 +53,7 @@ def physics_policy_inputs(model, frame, starts, env_ids, memory, age, warmup, ca
 
 @dataclass
 class PhysicsCheckpoint:
-    actor: HoloMotionPhysicsActor
+    actor: torch.nn.Module
     critic: torch.nn.Module
     dynamics: DynamicsModel
     actor_dynamics: DynamicsModel
@@ -87,8 +88,10 @@ def load_physics_checkpoint(checkpoint, *, device="cpu", holomotion_root=None):
     if (teacher_config is None) != (teacher is None):
         raise ValueError('incomplete privileged Transformer Teacher checkpoint')
     if teacher is not None:
-        PrivilegedTeacherConfig(**teacher_config)
-        if (teacher.get('schema') != 1 or teacher.get('config') != teacher_config
+        parsed_teacher_config = PrivilegedTeacherConfig(**teacher_config)
+        expected_teacher_schema = (3 if parsed_teacher_config.objective_version >= 5 else
+                                   2 if parsed_teacher_config.objective_version >= 4 else 1)
+        if (teacher.get('schema') != expected_teacher_schema or teacher.get('config') != teacher_config
                 or {'model', 'ema', 'optimizer', 'updates'} - teacher.keys()):
             raise ValueError('invalid privileged Transformer Teacher checkpoint')
     if runtime.get("schema") != (1 if legacy else 2):
@@ -102,10 +105,6 @@ def load_physics_checkpoint(checkpoint, *, device="cpu", holomotion_root=None):
         raise ValueError("checkpoint confidence configurations disagree")
     base_actor, critic = build_k1_networks(
         runtime["network_config"], device=device, holomotion_root=holomotion_root)
-    actor_config = dict(runtime["physics_actor_config"])
-    if legacy:
-        actor_config.setdefault("condition_on_base_action", False)
-    actor = HoloMotionPhysicsActor(base_actor, HoloMotionPhysicsActorConfig(**actor_config)).to(device)
     config = dict(runtime["dynamics_config"])
     if legacy:
         config.setdefault("mask_unobserved_core", False)
@@ -113,21 +112,43 @@ def load_physics_checkpoint(checkpoint, *, device="cpu", holomotion_root=None):
     dynamics = DynamicsModel(robot, **config).to(device)
     ema = DynamicsModel(robot, **config).to(device)
     control_mode = runtime.get("physics_control_mode", "student")
+    if control_mode == "teacher_observation":
+        if runtime.get("physics_actor_config") is not None:
+            raise ValueError("Teacher-observation checkpoint must not contain a residual config")
+        if payload["physics_residual_state_dict"]:
+            raise ValueError("Teacher-observation checkpoint must not contain residual weights")
+        if getattr(getattr(base_actor, "config", None), "teacher_latent_dim", 0) != dynamics.latent_width:
+            raise ValueError("Actor and Teacher latent widths disagree")
+        teacher_contract = PrivilegedTeacherConfig(**(teacher_config or {}))
+        if teacher_contract.objective_version < 5:
+            raise ValueError("Teacher-observation checkpoint requires the shared Critic/Teacher v5 contract")
+        if getattr(critic, "privileged_dim", 0) != teacher_contract.critic_privileged_dim(
+                dynamics.system_id_dim):
+            raise ValueError("Critic and Teacher physical privilege widths disagree")
+        actor = base_actor
+    else:
+        actor_config = dict(runtime["physics_actor_config"])
+        if legacy:
+            actor_config.setdefault("condition_on_base_action", False)
+        actor = HoloMotionPhysicsActor(
+            base_actor, HoloMotionPhysicsActorConfig(**actor_config)).to(device)
     expected_feature_dim = (3*dynamics.physics_width+dynamics.latent_width
                             if control_mode == "student"
                             else 9+2*robot.dof+(teacher_config or {}).get("contact_slots", 2)
                             if control_mode == "teacher" else None)
-    if expected_feature_dim is None:
+    if expected_feature_dim is None and control_mode != "teacher_observation":
         raise ValueError(f"unsupported Physics control mode: {control_mode!r}")
-    if actor.config.physics_feature_dim != expected_feature_dim:
+    if expected_feature_dim is not None and actor.config.physics_feature_dim != expected_feature_dim:
         raise ValueError("Physics Actor and control feature widths disagree")
-    if actor.config.action_dim != robot.dof or actor.config.action_dim != 22:
+    action_dim = (actor.config.action_dim if hasattr(actor.config, "action_dim") else 22)
+    if action_dim != robot.dof or action_dim != 22:
         raise ValueError("Physics Actor and K1 action contracts disagree")
     if not dynamics.uncertainty or not dynamics.system_id_dim:
         raise ValueError("Physics confidence requires uncertainty and system identification")
     base_actor.load_state_dict(payload["base_actor_state_dict"], strict=True)
     critic.load_state_dict(payload["critic_state_dict"], strict=True)
-    actor.physics_residual.load_state_dict(payload["physics_residual_state_dict"], strict=True)
+    if control_mode != "teacher_observation":
+        actor.physics_residual.load_state_dict(payload["physics_residual_state_dict"], strict=True)
     dynamics.load_state_dict(payload["dynamics_state_dict"], strict=True)
     ema.load_state_dict(payload["actor_dynamics_state_dict"], strict=True)
     privileged_teacher = None
@@ -377,11 +398,73 @@ class FrozenTeacherPhysicsPolicy:
         self.pending = False
 
 
+class FrozenTeacherObservationPolicy:
+    """Frozen Actor whose observation is augmented by privileged Teacher z."""
+
+    needs_physics = False
+    needs_privileged_teacher = True
+    policy_name = "teacher_latent_observation"
+
+    def __init__(self, actor, teacher, *, rollout_steps, task_contract=None,
+                 ablation="full"):
+        if ablation not in ("full", "no_physics"):
+            raise ValueError("Teacher-observation evaluation supports full/no_physics")
+        self.actor = actor.eval().requires_grad_(False)
+        self.teacher = teacher.eval().requires_grad_(False)
+        self.rollout_steps = rollout_steps
+        self.task_contract = task_contract
+        self.ablation = ablation
+        self.reset()
+
+    @property
+    def frozen_modules(self):
+        return (self.actor, self.teacher)
+
+    def reset(self):
+        self.steps = 0
+        self.history = ([], [])
+
+    @torch.no_grad()
+    def act_privileged(self, observation, task, episode_start):
+        batch = observation.actor.shape[0]
+        if episode_start.shape != (batch,) or episode_start.dtype != torch.bool:
+            raise ValueError("episode_start must be a boolean [B] tensor")
+        if self.steps % self.rollout_steps == 0:
+            self.actor.reset_kv_cache(batch, observation.actor.device)
+        elif episode_start.any().item():
+            self.actor.clear_env_cache(episode_start.nonzero(as_tuple=False).flatten())
+        truth, contacts = task.privileged_teacher_observation()
+        packed = teacher_shared_critic_inputs(
+            observation.critic, truth, contacts, task.physics_teacher_target(),
+            self.teacher.config)
+        inputs, starts = self.history
+        inputs.append(packed); starts.append(episode_start)
+        del inputs[:-self.teacher.config.context_steps]
+        del starts[:-self.teacher.config.context_steps]
+        latent = self.teacher.encode(
+            torch.stack(inputs, 1), torch.stack(starts, 1))[:, -1]
+        if self.ablation == "no_physics":
+            latent = torch.zeros_like(latent)
+        data = flat_observations_to_tensordict(observation.actor, observation.critic)
+        action = self.actor(data, mode="inference", update_obs_norm=False,
+                            teacher_latent=latent).get("actions")
+        if action.shape != (batch, 22) or not torch.isfinite(action).all():
+            raise RuntimeError("frozen Teacher-observation policy produced invalid actions")
+        self.steps += 1
+        return action
+
+    def record_action(self, executed_action):
+        # z_t is computed before a_t and does not consume action history.
+        return None
+
+
 @torch.no_grad()
-def evaluate_physics_policy(policy, task, *, steps: int):
+def evaluate_physics_policy(policy, task, *, steps: int, stop_on_first_done: bool = False):
     """Bounded deterministic evaluation; never calls PPO, Dynamics update or Teacher."""
     if type(steps) is not int or steps < 1:
         raise ValueError("steps must be positive")
+    if type(stop_on_first_done) is not bool:
+        raise TypeError("stop_on_first_done must be boolean")
     before = state_fingerprint(*policy.frozen_modules)
     validate_task_contract({"task_contract": policy.task_contract}, task)
     policy.reset()
@@ -398,6 +481,7 @@ def evaluate_physics_policy(policy, task, *, steps: int):
     target_clip_count = target_count = target_clip_env_steps = 0
     torque_saturation_count = torque_count = torque_saturation_env_steps = 0
     torque_ratio_max = 0.0
+    executed_steps = 0
     for _ in range(steps):
         frame = task.deployable_physics() if policy.needs_physics else None
         action = (policy.act_privileged(observation, task, starts)
@@ -405,6 +489,7 @@ def evaluate_physics_policy(policy, task, *, steps: int):
                   else policy.act(observation.actor, frame, starts))
         action_digest.update(action.detach().cpu().contiguous().numpy().tobytes())
         transition = task.step(action)
+        executed_steps += 1
         residual = getattr(policy, "last_residual", None)
         base_action = getattr(policy, "last_base_action", None)
         if residual is not None and base_action is not None:
@@ -488,6 +573,8 @@ def evaluate_physics_policy(policy, task, *, steps: int):
                 tracking_counts[name] = tracking_counts.get(name, 0)+value.numel()
         starts = transition.terminated | transition.truncated
         if starts.any().item():
+            if stop_on_first_done:
+                break
             observation = task.reset(starts.nonzero(as_tuple=False).flatten(),
                 random_start=False, min_remaining_s=float(task.sampler.offsets_s[-1]))
         else:
@@ -495,8 +582,9 @@ def evaluate_physics_policy(policy, task, *, steps: int):
     after = state_fingerprint(*policy.frozen_modules)
     if before != after:
         raise RuntimeError("frozen evaluation modified policy weights or persistent buffers")
-    report = dict(steps=steps, num_envs=task.num_envs,
-        reward_mean=reward/(steps*task.num_envs), terminations=terminations, timeouts=timeouts,
+    report = dict(steps=executed_steps, requested_steps=steps, num_envs=task.num_envs,
+        stop_on_first_done=stop_on_first_done,
+        reward_mean=reward/(executed_steps*task.num_envs), terminations=terminations, timeouts=timeouts,
         reference_completions=completions if outcome_known else None,
         physical_failures=physical_failures if outcome_known else None,
         tracking={name: total/tracking_counts[name] for name, total in tracking_sums.items()},
@@ -511,21 +599,21 @@ def evaluate_physics_policy(policy, task, *, steps: int):
                 (residual_squares / max(base_squares, 1.0e-30)) ** 0.5
             ),
             "residual_joint_mean_abs": (
-                residual_joint_abs / (steps * task.num_envs)
+                residual_joint_abs / (executed_steps * task.num_envs)
             ).tolist(),
             "residual_joint_max_abs": residual_joint_max.tolist(),
             "target_clip_fraction": (
                 target_clip_count / target_count if target_count else None
             ),
             "target_clip_env_step_fraction": (
-                target_clip_env_steps / (steps * task.num_envs)
+                target_clip_env_steps / (executed_steps * task.num_envs)
                 if target_count else None
             ),
             "torque_saturation_fraction_99pct": (
                 torque_saturation_count / torque_count if torque_count else None
             ),
             "torque_saturation_env_step_fraction_99pct": (
-                torque_saturation_env_steps / (steps * task.num_envs)
+                torque_saturation_env_steps / (executed_steps * task.num_envs)
                 if torque_count else None
             ),
             "torque_to_limit_max_ratio": torque_ratio_max if torque_count else None,

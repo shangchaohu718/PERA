@@ -10,6 +10,9 @@ experiments:
   - {name: v2_a1, task_profile: v2_a1, reference_intent: false}
   - {name: v2_a2_core3, task_profile: v2_a2_core3, reference_intent: false}
   - {name: v2_a1_intent, task_profile: v2_a1, reference_intent: true}
+  - {name: v3_z32_intent, task_profile: v2_a1, reference_intent: true, latent_dim: 32}
+  - {name: v3_z64_intent, task_profile: v2_a1, reference_intent: true, latent_dim: 64}
+  - {name: v3_z64_grouped_intent, task_profile: v2_a1, reference_intent: true, latent_dim: 64, latent_group_dims: [16, 16, 32]}
 optimization:
   seeds: [730201, 730202, 730203]
   epochs: 100

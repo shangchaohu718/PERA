@@ -163,10 +163,55 @@ an exact action response has zero loss while an action-ignoring prediction is
 penalized. The complete Teacher/RSL/multihorizon regression suite now has 23
 passing tests.
 
-The planned `clone` versus `deterministic_replay` Isaac A/B remains a runtime
-requirement. On 2026-10-15 the host exposed the loaded NVIDIA 580.65.06 kernel
-module but no `/dev/nvidia*` device nodes, and `nvidia-smi` could not communicate
-with the driver. No new probe was counted and no external process, driver, or
-host service was modified. The collector implementation is syntax-valid, but
-the new replay mode must not be described as validated until that A/B runs on
-a restored Isaac-capable GPU runtime.
+The `clone` versus `deterministic_replay` Isaac A/B ran on 2026-10-16 after GPU
+access was explicitly moved outside the desktop sandbox. Neither parallel mode
+passes the strict data gate at frame 37. Probe-time cloning achieves exposed
+state agreement (5.96e-8 max error), but duplicate-base tangent/force noise is
+1.75 mm/s and 1.90 N. Cloning once at reset and replaying identical actions
+achieves zero exposed reset error, but the four parallel PhysX environments
+diverge to .072 max state error by the probe; duplicate-base noise is then
+4.05 mm/s and 1.73 N. The replay variant is therefore rejected rather than
+promoted.
+
+There is also a positive result: env0 from three separate fresh Isaac processes
+with the same seed is bitwise identical for all stored history features,
+actions, contact flags, tangent velocity, and normal force at this probe. The
+collector now supports schema-2 single-branch rollouts and a strict schema-3
+merger executes this design: base/plus/minus/null are four independent
+single-environment runs, and merging requires identical experiment metadata,
+bitwise-equal pre-action histories, and the requested processed action delta.
+Source paths and SHA-256 hashes are retained in the merged sample.
+
+The first two serial-process probes both pass every strict quality check with
+exactly zero pre-action history difference and zero duplicate-base tangent and
+force noise. Frame 25 is an active-slide sample with a material tangent response;
+frame 37 is a valid transition/neutral sample whose response is below both
+training floors. Neither has a material force response. This validates the
+serial mechanism, but not campaign yield or task coverage. The 576-job campaign
+remains blocked until a small stratified serial pilot demonstrates sufficient
+anchor, active-slide, impact, and force-response yield. Machine-readable A/B
+and pilot details are in `counterfactual_clone_replay_ab_frame37_v2.json` and
+`counterfactual_serial_pilot2.json`.
+
+An additional eight-sample stratified serial pilot has now completed: four
+phase strata, both ankle sides, three friction levels, and a .04 rad action
+perturbation. All 8/8 merged samples pass the strict state, processed/delayed
+action, contact agreement, and null-noise checks; every pre-action history and
+both null physical targets are bitwise identical across fresh Isaac processes.
+Two samples have material tangent response and four have material normal-force
+response. The strongest observed central spans are .0634 m/s tangent velocity
+and 14.9 N normal force.
+
+The pilot is not training-ready. It contains only one checkpoint, one seed and
+one delta; it has no impact sample or checkpoint-held-out source. The readiness
+artifact therefore deliberately reports `training_ready: false`. It also
+reveals that planned intent and realized contact mode can differ: for example,
+one planned-anchor foot is actually sliding and has a material response. Future
+sampling must stratify on both planned role and realized mode rather than using
+reference intent alone.
+
+The 576 merged-job manifest has been regenerated as schema 2 using four
+independent process rollouts per job. It remains unexecuted. The next expansion
+should target impact and contact-switch frames across additional checkpoint and
+seed sources before spending the full 2,304 Isaac startups. Pilot details are
+in `counterfactual_serial_pilot_readiness.json`.

@@ -11,6 +11,7 @@ from unified_motion.holomotion_mjlab_task import HoloMotionK1MJLabTask
 from unified_motion.holomotion_mjlab_rewards import HoloMotionMJLabState
 from unified_motion.holomotion_physics_training import HoloMotionPhysicsMJLabPPO
 from unified_motion.models.physics import DynamicsModel, PhysicsObservation
+from unified_motion.envs.mjlab_physics import PrivilegedFootContactTruth
 from unified_motion.robot_contract import get_robot_contract
 
 
@@ -155,6 +156,21 @@ class _Task:
             torch.zeros(batch, 0, dtype=torch.bool))
 
     privileged_physics_observation = deployable_physics
+
+    def privileged_teacher_observation(self):
+        frame = self.deployable_physics()
+        batch = self.num_envs
+        truth = PrivilegedFootContactTruth(
+            point_position_b=frame.contact_features[..., :3],
+            point_velocity_b=frame.contact_features[..., 3:6],
+            normal_b=frame.contact_features[..., 6:9],
+            normal_force_n=frame.contact_features[..., 9],
+            contact_found=frame.contact_features[..., 10].bool(),
+            tangential_force_n=torch.zeros(batch, 2),
+            slip_speed_m_s=torch.zeros(batch, 2),
+            friction_utilization=torch.zeros(batch, 2),
+        )
+        return frame, truth
 
     def physics_teacher_target(self):
         return torch.zeros(self.num_envs, 2)

@@ -216,6 +216,11 @@ class HoloMotionK1MJLabTask:
         return self.physics_bridge.privileged_contact_truth()
 
     @torch.no_grad()
+    def privileged_teacher_observation(self):
+        """One simulator read shared by the Teacher and asymmetric Critic."""
+        return self.physics_bridge.privileged_read()
+
+    @torch.no_grad()
     def physics_teacher_target(self) -> torch.Tensor:
         if self.physics_randomization is None:
             raise RuntimeError("slow-physics Teacher requires domain randomization")

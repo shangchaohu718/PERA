@@ -7,7 +7,8 @@ import torch
 from .k1_policy_backends import build_k1_networks
 from .holomotion_original_algorithm import flat_observations_to_tensordict, OriginalHoloMotionK1Algorithm
 from .holomotion_physics_runtime import (
-    FrozenPhysicsPolicy, FrozenTeacherPhysicsPolicy, load_physics_checkpoint,
+    FrozenPhysicsPolicy, FrozenTeacherPhysicsPolicy, FrozenTeacherObservationPolicy,
+    load_physics_checkpoint,
     validate_task_contract, evaluate_physics_policy,
 )
 
@@ -101,8 +102,14 @@ class FrozenK1BasePolicy:
 def frozen_k1_policy(loaded, *, ablation="full"):
     runtime = runtime_configuration(loaded.payload)
     if "physics_schema" in loaded.payload:
-        if runtime.get("physics_control_mode", "student") == "teacher":
+        control_mode = runtime.get("physics_control_mode", "student")
+        if control_mode == "teacher":
             return FrozenTeacherPhysicsPolicy(
+                loaded.actor, loaded.privileged_teacher,
+                rollout_steps=runtime["rollout_steps"],
+                task_contract=runtime.get("task_contract"), ablation=ablation)
+        if control_mode == "teacher_observation":
+            return FrozenTeacherObservationPolicy(
                 loaded.actor, loaded.privileged_teacher,
                 rollout_steps=runtime["rollout_steps"],
                 task_contract=runtime.get("task_contract"), ablation=ablation)
@@ -131,5 +138,7 @@ def resume_k1_trainer(checkpoint, task, *, holomotion_root=None, **physics_histo
     return trainer
 
 
-def evaluate_k1_policy(policy, task, *, steps):
-    return evaluate_physics_policy(policy, task, steps=steps)
+def evaluate_k1_policy(policy, task, *, steps, stop_on_first_done=False):
+    return evaluate_physics_policy(
+        policy, task, steps=steps, stop_on_first_done=stop_on_first_done
+    )

@@ -73,9 +73,13 @@ def parse_args() -> argparse.Namespace:
         help="freeze an original HoloMotion run checkpoint and train a new privileged Teacher")
     parser.add_argument("--frozen-teacher-from", type=Path,
         help=("load only a trained privileged Teacher into a fresh Actor experiment; "
-              "freeze the Teacher and train the randomly initialized Actor plus residual"))
+              "freeze the Teacher and train a randomly initialized Actor using either "
+              "the legacy residual or --teacher-latent-observation"))
     parser.add_argument("--frozen-teacher-residual-limit", type=float, default=0.1,
         help="maximum absolute Teacher action residual for a fresh-Actor experiment (default: 0.1)")
+    parser.add_argument("--teacher-latent-observation", action="store_true",
+        help=("with --frozen-teacher-from, remove the action residual and feed the "
+              "frozen Teacher latent z directly into a custom PPO Actor"))
     parser.add_argument("--teacher-controls-residual", action="store_true",
         help=("start a privileged control experiment from a trained Teacher checkpoint: "
               "freeze base Actor/Teacher, discard the old residual, and train a new residual "
@@ -167,6 +171,10 @@ def parse_args() -> argparse.Namespace:
         parser.error("--resume, Teacher pretraining sources and --frozen-teacher-from are mutually exclusive")
     if args.teacher_controls_residual and args.resume is None:
         parser.error("--teacher-controls-residual requires --resume with a trained Teacher checkpoint")
+    if args.teacher_latent_observation and args.frozen_teacher_from is None:
+        parser.error("--teacher-latent-observation requires --frozen-teacher-from")
+    if args.teacher_latent_observation and args.teacher_controls_residual:
+        parser.error("Teacher latent observation and Teacher residual are mutually exclusive")
     if teacher_sources:
         if args.run_dir is not None or args.holomotion_config is not None or args.actor_config is not None:
             parser.error("Teacher pretraining restores its Actor from its selected Teacher source")
@@ -185,6 +193,8 @@ def parse_args() -> argparse.Namespace:
             parser.error("--frozen-teacher-from requires a randomly initialized Actor, not imported Actor weights")
         args.physics_teacher = True
         args.physics_teacher_architecture = "transformer"
+        if args.teacher_latent_observation and args.actor in (None, "holomotion"):
+            parser.error("--teacher-latent-observation currently requires a custom Actor such as --actor mlp")
     if args.resume is not None:
         if (args.resume_optimizer or args.run_dir is not None
                 or args.holomotion_config is not None or args.actor_config is not None):
@@ -322,6 +332,14 @@ def main() -> None:
         if (frozen_teacher_payload.get("physics_schema") != 5 or saved_teacher is None
                 or saved_teacher.get("updates", 0) < 1):
             raise ValueError("--frozen-teacher-from requires a trained schema-5 privileged Teacher checkpoint")
+        from unified_motion.privileged_teacher import PrivilegedTeacherConfig
+        frozen_teacher_config = PrivilegedTeacherConfig(**saved_teacher.get("config", {}))
+        if args.teacher_latent_observation and frozen_teacher_config.objective_version < 5:
+            raise ValueError(
+                "--teacher-latent-observation requires a shared Critic/Teacher v5 checkpoint"
+            )
+        if not args.teacher_latent_observation and frozen_teacher_config.objective_version >= 4:
+            raise ValueError("Teacher v4/v5 cannot use the legacy action residual")
         physics_enabled = True
         saved_contract = saved_runtime.get("task_contract")
         contract = HoloMotionOnnxContract(**saved_contract) if saved_contract is not None else None
@@ -372,7 +390,7 @@ def main() -> None:
         sampler,
         physics_randomization=((None if saved_runtime.get("physics_randomization") is None else
             HoloMotionPhysicsRandomizationConfig(**saved_runtime["physics_randomization"]))
-            if resume_payload is not None else
+            if resume_payload is not None or frozen_teacher_payload is not None else
             HoloMotionPhysicsRandomizationConfig(
                 friction_range=tuple(args.physics_friction_range),
                 trunk_mass_scale_range=tuple(args.physics_mass_scale_range))
@@ -424,17 +442,37 @@ def main() -> None:
                     )
                 )
             else:
+                teacher_latent_dim = None
+                if frozen_teacher_payload is not None and args.teacher_latent_observation:
+                    teacher_latent_dim = int(
+                        saved_runtime["dynamics_config"]["latent_width"])
+                critic_privileged_dim = None
+                if frozen_teacher_payload is not None and args.teacher_latent_observation:
+                    from unified_motion.privileged_teacher import PrivilegedTeacherConfig
+                    teacher_contract = PrivilegedTeacherConfig(
+                        **frozen_teacher_payload["privileged_teacher"]["config"])
+                    critic_privileged_dim = teacher_contract.critic_privileged_dim(
+                        int(saved_runtime["dynamics_config"]["system_id_dim"]))
                 algorithm = create_custom_k1_algorithm(
-                    custom_actor_config(args.actor, args.actor_config), device=device)
-            physics_options = {} if not physics_enabled else dict(
-                dynamics_config=dict(
+                    custom_actor_config(
+                        args.actor, args.actor_config,
+                        teacher_latent_dim=teacher_latent_dim,
+                        critic_privileged_dim=critic_privileged_dim),
+                    device=device)
+            dynamics_options = dict(
                     physics_width=args.physics_width,
                     memory_width=args.physics_memory_width,
                     latent_width=args.physics_latent_width,
                     hidden_dim=args.physics_hidden_dim,
                     scene_encoder=args.physics_scene_encoder,
                     graph_layers=args.physics_graph_layers,
-                    contact_object_indices=[-1,-1] if args.physics_scene_encoder == "gnn" else None),
+                    contact_object_indices=[-1,-1] if args.physics_scene_encoder == "gnn" else None)
+            if frozen_teacher_payload is not None:
+                dynamics_options = dict(saved_runtime["dynamics_config"])
+                for key in ("robot", "system_id_dim", "teacher_student", "uncertainty"):
+                    dynamics_options.pop(key, None)
+            physics_options = {} if not physics_enabled else dict(
+                dynamics_config=dynamics_options,
                 dynamics_burn_in_steps=args.physics_burn_in_steps,
                 dynamics_train_steps=args.physics_train_steps,
                 confidence_warmup_steps=args.physics_confidence_warmup_steps,
@@ -474,10 +512,13 @@ def main() -> None:
                 from unified_motion.holomotion_physics_runtime import validate_task_contract
                 validate_task_contract(runtime_configuration(frozen_teacher_payload), task)
                 trainer.restore_privileged_teacher(frozen_teacher_payload)
-                trainer.prepare_teacher_control(
-                    freeze_base_actor=False,
-                    residual_limit=args.frozen_teacher_residual_limit,
-                )
+                if args.teacher_latent_observation:
+                    trainer.prepare_teacher_observation()
+                else:
+                    trainer.prepare_teacher_control(
+                        freeze_base_actor=False,
+                        residual_limit=args.frozen_teacher_residual_limit,
+                    )
         from unified_motion.llm.advisor import apply_trial_adjustment, tuning_snapshot, start_training_trial
         start_iteration = 0 if resume_payload is None else resume_payload["iter"]+1
         if args.resume_optimizer:
@@ -594,7 +635,8 @@ def main() -> None:
             advisor.close()
 
 
-def custom_actor_config(backend, path=None):
+def custom_actor_config(backend, path=None, *, teacher_latent_dim=None,
+                        critic_privileged_dim=None):
     values = {} if path is None else yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not isinstance(values, dict):
         raise ValueError("Actor config must be a YAML mapping")
@@ -602,6 +644,16 @@ def custom_actor_config(backend, path=None):
     selected = values.pop("backbone", backend)
     if ("transformer" if selected == "dense" else selected) != backend:
         raise ValueError("Actor config backbone disagrees with --actor")
+    if teacher_latent_dim is not None:
+        configured = values.get("teacher_latent_dim", teacher_latent_dim)
+        if configured != teacher_latent_dim:
+            raise ValueError("Actor config teacher_latent_dim disagrees with frozen Teacher")
+        values["teacher_latent_dim"] = teacher_latent_dim
+    if critic_privileged_dim is not None:
+        configured = values.get("critic_privileged_dim", critic_privileged_dim)
+        if configured != critic_privileged_dim:
+            raise ValueError("Actor config critic_privileged_dim disagrees with frozen Teacher")
+        values["critic_privileged_dim"] = critic_privileged_dim
     return K1ActorConfig(backbone=backend, **values)
 
 

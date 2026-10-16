@@ -15,6 +15,8 @@ class FootGroundTeacherConfig:
     foot_current_dim: int
     dof: int = 22
     reference_intent_dim: int = 0
+    latent_dim: int = 0
+    latent_group_dims: tuple[int, int, int] = (0, 0, 0)
     width: int = 128
     foot_width: int = 48
     heads: int = 4
@@ -28,8 +30,19 @@ class FootGroundTeacherConfig:
                      "heads", "layers", "context_steps"):
             if not isinstance(getattr(self, name), int) or getattr(self, name) < 1:
                 raise ValueError(f"{name} must be a positive integer")
-        if not isinstance(self.reference_intent_dim, int) or self.reference_intent_dim < 0:
-            raise ValueError("reference_intent_dim must be a non-negative integer")
+        for name in ("reference_intent_dim", "latent_dim"):
+            if not isinstance(getattr(self, name), int) or getattr(self, name) < 0:
+                raise ValueError(f"{name} must be a non-negative integer")
+        if not isinstance(self.latent_group_dims, (tuple, list)) or \
+                len(self.latent_group_dims) != 3 or \
+                any(not isinstance(value, int) or value < 0
+                    for value in self.latent_group_dims):
+            raise ValueError("latent_group_dims must contain three non-negative integers")
+        grouped = any(self.latent_group_dims)
+        if grouped and (any(value == 0 for value in self.latent_group_dims)
+                        or sum(self.latent_group_dims) != self.latent_dim):
+            raise ValueError("grouped contact/force/dynamics dimensions must be positive "
+                             "and sum to latent_dim")
         if self.width % self.heads or self.width % 2:
             raise ValueError("width must be even and divisible by heads")
         if not 0 <= self.dropout < 1:
@@ -46,6 +59,8 @@ class FootGroundTeacher(nn.Module):
     """
 
     CONTACT_OUTPUT_WIDTH = 1 + 4 + 3 + 3 + 1 + 2 + 1 + 1 + 2 + 1
+    CONTACT_STATE_OUTPUT_WIDTH = 1 + 4 + 3 + 3 + 1 + 2 + 1
+    FORCE_OUTPUT_WIDTH = 1 + 2 + 1
 
     def __init__(self, config: FootGroundTeacherConfig):
         super().__init__()
@@ -67,14 +82,41 @@ class FootGroundTeacher(nn.Module):
         )
         self.transformer = nn.TransformerEncoder(
             layer, cfg.layers, enable_nested_tensor=False)
+        # latent_dim=0 is the exact V1/V2 checkpoint-compatible architecture.
+        # A positive value creates an explicit actor-facing bottleneck.  Every
+        # physical decoder then consumes z (plus only a fixed foot-side ID),
+        # never the 128-D Transformer hidden state or raw foot features.
+        self.latent_head = nn.Identity() if cfg.latent_dim == 0 else nn.Sequential(
+            nn.LayerNorm(cfg.width), nn.Linear(cfg.width, cfg.latent_dim), nn.Tanh())
+        self.grouped_latent = any(cfg.latent_group_dims)
+        decoder_width = cfg.width if cfg.latent_dim == 0 else cfg.latent_dim
+        contact_decoder_width = (cfg.latent_group_dims[0]
+                                 if self.grouped_latent else decoder_width)
+        contact_input_width = (decoder_width + cfg.foot_width + 2
+                               if cfg.latent_dim == 0 else decoder_width + 2)
+        if self.grouped_latent:
+            contact_input_width = contact_decoder_width + 2
         self.contact_head = nn.Sequential(
-            nn.LayerNorm(cfg.width + cfg.foot_width + 2),
-            nn.Linear(cfg.width + cfg.foot_width + 2, cfg.width), nn.SiLU(),
-            nn.Linear(cfg.width, self.CONTACT_OUTPUT_WIDTH),
+            nn.LayerNorm(contact_input_width),
+            nn.Linear(contact_input_width, cfg.width), nn.SiLU(),
+            nn.Linear(cfg.width, (self.CONTACT_STATE_OUTPUT_WIDTH
+                                  if self.grouped_latent else self.CONTACT_OUTPUT_WIDTH)),
         )
-        self.load_head = nn.Sequential(nn.LayerNorm(cfg.width), nn.Linear(cfg.width, 2))
+        if self.grouped_latent:
+            force_width = cfg.latent_group_dims[1]
+            self.force_head = nn.Sequential(
+                nn.LayerNorm(force_width + 2),
+                nn.Linear(force_width + 2, cfg.width), nn.SiLU(),
+                nn.Linear(cfg.width, self.FORCE_OUTPUT_WIDTH),
+            )
+        else:
+            self.force_head = None
+        load_width = cfg.latent_group_dims[1] if self.grouped_latent else decoder_width
+        dynamics_width = cfg.latent_group_dims[2] if self.grouped_latent else decoder_width
+        self.load_head = nn.Sequential(
+            nn.LayerNorm(load_width), nn.Linear(load_width, 2))
         self.dynamics_head = nn.Sequential(
-            nn.LayerNorm(cfg.width), nn.Linear(cfg.width, cfg.width), nn.SiLU(),
+            nn.LayerNorm(dynamics_width), nn.Linear(dynamics_width, cfg.width), nn.SiLU(),
             nn.Linear(cfg.width, 2 * cfg.dof + 3),
         )
 
@@ -82,6 +124,95 @@ class FootGroundTeacher(nn.Module):
         """Parameters used to audit contact/dynamics gradient interference."""
         yield from self.input_projection.parameters()
         yield from self.transformer.parameters()
+        yield from self.latent_head.parameters()
+
+    def decode_physics(self, latent_z: torch.Tensor,
+                       foot_embedding: torch.Tensor | None = None,
+                       ) -> dict[str, torch.Tensor]:
+        """Decode all physical heads from an explicit z.
+
+        New bottleneck models require only ``z``; the side identifier is fixed
+        structure created here. ``foot_embedding`` exists solely for exact
+        legacy checkpoint compatibility when ``latent_dim == 0``.
+        """
+        cfg = self.config
+        expected_width = cfg.width if cfg.latent_dim == 0 else cfg.latent_dim
+        if latent_z.ndim != 3 or latent_z.shape[-1] != expected_width:
+            raise ValueError(f"latent_z must be [B,T,{expected_width}]")
+        lead = latent_z.shape[:2]
+        side = torch.eye(2, device=latent_z.device, dtype=latent_z.dtype)
+        side = side.view(1, 1, 2, 2).expand(*lead, 2, 2)
+        if self.grouped_latent:
+            contact_z, force_z, dynamics_z = torch.split(
+                latent_z, self.config.latent_group_dims, dim=-1)
+            repeated = contact_z.unsqueeze(-2).expand(
+                *lead, 2, self.config.latent_group_dims[0])
+        else:
+            contact_z = force_z = dynamics_z = latent_z
+            repeated = latent_z.unsqueeze(-2).expand(*lead, 2, expected_width)
+        if cfg.latent_dim == 0:
+            if foot_embedding is None or foot_embedding.shape != lead + (2, cfg.foot_width):
+                raise ValueError("legacy decoder requires [B,T,2,foot_width] embedding")
+            contact_input = torch.cat((repeated, foot_embedding, side), -1)
+        else:
+            if foot_embedding is not None:
+                raise ValueError("explicit-z decoder does not accept raw foot embedding")
+            contact_input = torch.cat((repeated, side), -1)
+        contact = self.contact_head(contact_input)
+        cursor = 0
+
+        def take(width):
+            nonlocal cursor
+            result = contact[..., cursor:cursor + width]
+            cursor += width
+            return result
+
+        output = {
+            "contact_logits": take(1).squeeze(-1),
+            "contact_mode_logits": take(4),
+            "contact_point_local": take(3),
+            "contact_normal": F.normalize(take(3), dim=-1, eps=1e-8),
+            "relative_velocity_normal": take(1).squeeze(-1),
+            "relative_velocity_tangent": take(2),
+            "slip_speed": F.softplus(take(1).squeeze(-1)),
+        }
+        expected_contact_width = (self.CONTACT_STATE_OUTPUT_WIDTH
+                                  if self.grouped_latent else self.CONTACT_OUTPUT_WIDTH)
+        if self.grouped_latent:
+            repeated_force = force_z.unsqueeze(-2).expand(
+                *lead, 2, self.config.latent_group_dims[1])
+            force = self.force_head(torch.cat((repeated_force, side), -1))
+            force_cursor = 0
+
+            def take_force(width):
+                nonlocal force_cursor
+                result = force[..., force_cursor:force_cursor + width]
+                force_cursor += width
+                return result
+
+            output.update(
+                normal_force=F.softplus(take_force(1).squeeze(-1)),
+                tangential_force=take_force(2),
+                contact_impulse=F.softplus(take_force(1).squeeze(-1)),
+            )
+            if force_cursor != self.FORCE_OUTPUT_WIDTH:
+                raise RuntimeError("force head layout mismatch")
+        else:
+            output.update(
+                normal_force=F.softplus(take(1).squeeze(-1)),
+                tangential_force=take(2),
+                contact_impulse=F.softplus(take(1).squeeze(-1)),
+            )
+        output["foot_load_ratio"] = self.load_head(force_z).softmax(-1)
+        if cursor != expected_contact_width:
+            raise RuntimeError("contact head layout mismatch")
+        dynamics = self.dynamics_head(dynamics_z)
+        output.update(
+            delta_joint_velocity=dynamics[..., :cfg.dof],
+            delta_root_angular_velocity=dynamics[..., cfg.dof:cfg.dof + 3],
+            joint_velocity_residual=dynamics[..., cfg.dof + 3:],
+        )
+        return output
 
     def _mask(self, episode_start: torch.Tensor) -> torch.Tensor:
         batch, steps = episode_start.shape
@@ -135,35 +266,12 @@ class FootGroundTeacher(nn.Module):
         if encoding.shape[-1] < cfg.width:
             encoding = F.pad(encoding, (0, cfg.width - encoding.shape[-1]))
         hidden = self.transformer(hidden + encoding[None], mask=self._mask(episode_start))
-        repeated = hidden.unsqueeze(-2).expand(*lead, 2, cfg.width)
-        contact = self.contact_head(torch.cat((repeated, foot, side), -1))
-        cursor = 0
-
-        def take(width):
-            nonlocal cursor
-            result = contact[..., cursor:cursor + width]
-            cursor += width
-            return result
-
-        output = {
-            "contact_logits": take(1).squeeze(-1),
-            "contact_mode_logits": take(4),
-            "contact_point_local": take(3),
-            "contact_normal": F.normalize(take(3), dim=-1, eps=1e-8),
-            "relative_velocity_normal": take(1).squeeze(-1),
-            "relative_velocity_tangent": take(2),
-            "slip_speed": F.softplus(take(1).squeeze(-1)),
-            "normal_force": F.softplus(take(1).squeeze(-1)),
-            "tangential_force": take(2),
-            "contact_impulse": F.softplus(take(1).squeeze(-1)),
-            "foot_load_ratio": self.load_head(hidden).softmax(-1),
-        }
-        if cursor != self.CONTACT_OUTPUT_WIDTH:
-            raise RuntimeError("contact head layout mismatch")
-        dynamics = self.dynamics_head(hidden)
-        output.update(
-            delta_joint_velocity=dynamics[..., :cfg.dof],
-            delta_root_angular_velocity=dynamics[..., cfg.dof:cfg.dof + 3],
-            joint_velocity_residual=dynamics[..., cfg.dof + 3:],
-        )
+        latent_z = self.latent_head(hidden)
+        output = self.decode_physics(
+            latent_z, foot_embedding=(foot if cfg.latent_dim == 0 else None))
+        output["latent_z"] = latent_z
+        if self.grouped_latent:
+            (output["latent_z_contact"], output["latent_z_force"],
+             output["latent_z_dynamics"]) = torch.split(
+                 latent_z, cfg.latent_group_dims, dim=-1)
         return output

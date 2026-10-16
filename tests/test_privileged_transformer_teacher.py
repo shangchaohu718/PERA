@@ -3,7 +3,11 @@ from dataclasses import replace
 import pytest
 import torch
 
-from unified_motion.privileged_teacher import PrivilegedTeacherConfig, PrivilegedTransformerTeacher
+from unified_motion.privileged_teacher import (
+    GROUPED_PHYSICS_LATENT, PrivilegedTeacherConfig, PrivilegedTransformerTeacher,
+    teacher_physics_inputs, teacher_critic_privilege,
+    teacher_shared_critic_inputs, teacher_supervision,
+)
 from unified_motion.robot_contract import get_robot_contract
 from unified_motion.k1_training import create_custom_k1_algorithm, create_k1_trainer
 from unified_motion.k1_policy_backends import K1ActorConfig
@@ -121,11 +125,161 @@ def test_v3_teacher_only_trains_multistep_heads():
     assert before != state_fingerprint(trainer.privileged_teacher.future_transitions)
 
 
+def test_v4_teacher_uses_clean_physics_and_trains_interaction_heads():
+    torch.manual_seed(3104)
+    fixture = task()
+    frame, contacts = fixture.privileged_teacher_observation()
+    robot = fixture.bridge.robot
+    cfg = PrivilegedTeacherConfig(objective_version=4, width=16, heads=2,
+        layers=1, context_steps=4, train_envs=2, warmup_updates=1,
+        prediction_horizons=(1, 2))
+    parameters = fixture.physics_teacher_target()
+    packed = teacher_physics_inputs(frame, contacts, parameters, robot, cfg)
+    privilege = teacher_critic_privilege(frame, contacts, parameters, cfg)
+    assert packed.shape == (3, 173)
+    assert privilege.shape == (3, 98)
+
+    algorithm = create_custom_k1_algorithm(
+        K1ActorConfig(backbone='mlp', d_model=16, hidden_dim=24, n_layers=1))
+    trainer = create_k1_trainer(algorithm, fixture, physics=True, teacher=True,
+        privileged_teacher_config=dict(objective_version=4, width=16, heads=2,
+            layers=1, context_steps=4, train_envs=2, warmup_updates=1,
+            prediction_horizons=(1, 2)),
+        dynamics_config=dict(physics_width=4, memory_width=4, latent_width=2, hidden_dim=8),
+        ppo_config=HoloMotionPPOConfig(num_learning_epochs=1, num_mini_batches=2,
+            aux_state_pred_enabled=False, inactive_expert_margin_enabled=False),
+        dynamics_burn_in_steps=2, dynamics_train_steps=4, dynamics_epochs=1)
+    trainer.prepare_teacher_only()
+    before = state_fingerprint(trainer.privileged_teacher.interaction)
+    metrics = None
+    for _ in range(2):
+        rollout = trainer.collect(3)
+        assert rollout.privileged_teacher_next_contact_physics.shape == (2, 3, 2, 4)
+        assert rollout.privileged_teacher_next_contact_modes.shape == (2, 3, 2)
+        metrics = trainer.update_teacher_only(rollout)
+    assert metrics is not None
+    assert before != state_fingerprint(trainer.privileged_teacher.interaction)
+
+
+def test_v5_teacher_encoder_input_exactly_matches_asymmetric_critic_information():
+    fixture = task()
+    frame, contacts = fixture.privileged_teacher_observation()
+    parameters = fixture.physics_teacher_target()
+    critic = torch.randn(fixture.num_envs, 843)
+    cfg = PrivilegedTeacherConfig(objective_version=5, width=16, heads=2, layers=1)
+    privilege = teacher_critic_privilege(frame, contacts, parameters, cfg)
+    packed = teacher_shared_critic_inputs(critic, frame, contacts, parameters, cfg)
+    assert packed.shape == (fixture.num_envs, 941)
+    torch.testing.assert_close(packed[..., :843], critic)
+    torch.testing.assert_close(packed[..., 843:], privilege)
+
+
+def test_k1_v5_uses_split_941d_encoder_and_routed_grouped_z64():
+    robot = get_robot_contract('k1_22dof')
+    cfg = PrivilegedTeacherConfig(
+        objective_version=5, critic_dim=843, contact_slots=2, object_slots=4,
+        width=16, heads=2, layers=1, context_steps=4,
+        latent_groups=GROUPED_PHYSICS_LATENT)
+    model = PrivilegedTransformerTeacher(robot, 64, 2, cfg)
+    assert (model.state_reference_projection[1].in_features,
+            model.state_reference_projection[1].out_features) == (843, 16)
+    assert (model.physics_projection[1].in_features,
+            model.physics_projection[1].out_features) == (98, 16)
+    assert (model.input_projection[1].in_features,
+            model.input_projection[1].out_features) == (32, 16)
+    assert tuple((name, head[1].out_features)
+                 for name, head in model.latent_head.items()) == GROUPED_PHYSICS_LATENT
+
+    inputs = torch.randn(2, 3, 941)
+    starts = torch.tensor([[True, False, False], [True, False, False]])
+    actions = torch.randn(2, 3, 22)
+    core = torch.randn(2, 3, 53)
+    core[..., 6:9] = torch.nn.functional.normalize(core[..., 6:9], dim=-1)
+    output = model(inputs, starts, actions, core)
+    assert output['latent'].shape == (2, 3, 64)
+    assert output['contact_logits'].shape == (2, 3, 2)
+    assert output['contact_physics'].shape == (2, 3, 2, 4)
+    assert output['contact_mode_logits'].shape == (2, 3, 2, 3)
+
+    def active_groups(key, selector=lambda value: value):
+        model.zero_grad(set_to_none=True)
+        selected = selector(model(inputs, starts, actions, core)[key])
+        selected.square().mean().backward()
+        return {
+            name for name, head in model.latent_head.items()
+            if head[1].weight.grad is not None
+            and torch.count_nonzero(head[1].weight.grad).item()
+        }
+
+    assert active_groups('contact_logits') == {'contact'}
+    assert active_groups(
+        'contact_physics', lambda value: value[..., (0, 1, 3)]) == {'force'}
+    assert active_groups(
+        'contact_physics', lambda value: value[..., 2]) == {'kinematics'}
+    assert active_groups('next_core') == {'kinematics', 'dynamics'}
+    assert active_groups('system_id') == {'dynamics'}
+
+
+def test_grouped_latent_contract_round_trips_through_saved_config():
+    cfg = PrivilegedTeacherConfig(
+        objective_version=5,
+        latent_groups=[['contact', 8], ['force', 16],
+                       ['kinematics', 16], ['dynamics', 24]])
+    assert cfg.latent_groups == GROUPED_PHYSICS_LATENT
+    restored = PrivilegedTeacherConfig.from_saved(cfg.__dict__)
+    assert restored == cfg
+    with pytest.raises(ValueError, match='contact8'):
+        PrivilegedTeacherConfig(
+            objective_version=5, latent_groups=(('contact', 64),))
+
+
+def test_parameter_reconstruction_auxiliary_supervises_system_id():
+    shape = (1, 3)
+    core = torch.zeros(*shape, 53)
+    parameters = torch.ones(*shape, 2)
+    system_id = torch.zeros(*shape, 2, requires_grad=True)
+    output = {
+        'delta_core': torch.zeros_like(core),
+        'contact_logits': torch.zeros(*shape, 2),
+        'contact_physics': torch.zeros(*shape, 2, 4),
+        'contact_mode_logits': torch.zeros(*shape, 2, 3),
+        'system_id': system_id,
+    }
+    cfg = PrivilegedTeacherConfig(
+        objective_version=5, width=16, heads=2, layers=1,
+        parameter_reconstruction_weight=.1,
+        latent_groups=GROUPED_PHYSICS_LATENT)
+    loss = teacher_supervision(
+        output, core, torch.ones_like(core, dtype=torch.bool),
+        torch.zeros(*shape, 2), torch.ones(*shape, 2, dtype=torch.bool),
+        parameters, torch.ones(*shape, dtype=torch.bool), cfg,
+        current_core=core, contact_physics=torch.zeros(*shape, 2, 4),
+        contact_modes=torch.zeros(*shape, 2, dtype=torch.long))
+    loss.backward()
+    assert torch.count_nonzero(system_id.grad).item() == system_id.numel()
+    with pytest.raises(ValueError, match='parameter_reconstruction_weight'):
+        PrivilegedTeacherConfig(parameter_reconstruction_weight=-.1)
+
+
 def make_trainer():
     algorithm = create_custom_k1_algorithm(K1ActorConfig(backbone='mlp', d_model=16, hidden_dim=24, n_layers=1))
     return create_k1_trainer(algorithm, task(), physics=True, teacher=True,
         privileged_teacher_config=dict(width=16, heads=2, layers=1, context_steps=4, train_envs=2, warmup_updates=1),
         dynamics_config=dict(physics_width=4, memory_width=4, latent_width=2, hidden_dim=8),
+        ppo_config=HoloMotionPPOConfig(num_learning_epochs=1, num_mini_batches=2,
+            aux_state_pred_enabled=False, inactive_expert_margin_enabled=False),
+        dynamics_burn_in_steps=2, dynamics_train_steps=4, dynamics_epochs=1)
+
+
+def make_teacher_observation_trainer():
+    algorithm = create_custom_k1_algorithm(K1ActorConfig(
+        backbone='mlp', d_model=16, hidden_dim=24, n_layers=1,
+        teacher_latent_dim=2, critic_privileged_dim=98))
+    return create_k1_trainer(algorithm, task(), physics=True, teacher=True,
+        privileged_teacher_config=dict(objective_version=5, width=16, heads=2, layers=1,
+            context_steps=4, train_envs=2, warmup_updates=1),
+        dynamics_config=dict(physics_width=4, memory_width=4,
+            latent_width=2, hidden_dim=8),
         ppo_config=HoloMotionPPOConfig(num_learning_epochs=1, num_mini_batches=2,
             aux_state_pred_enabled=False, inactive_expert_margin_enabled=False),
         dynamics_burn_in_steps=2, dynamics_train_steps=4, dynamics_epochs=1)
@@ -318,6 +472,50 @@ def test_frozen_teacher_can_train_a_fresh_base_actor_and_residual():
         trainer.privileged_teacher, trainer.privileged_teacher_ema)
     assert dynamics_before == state_fingerprint(
         trainer.dynamics, trainer.actor_dynamics, trainer.confidence)
+
+
+def test_frozen_teacher_latent_is_direct_actor_observation(tmp_path):
+    torch.manual_seed(2302)
+    trainer = make_teacher_observation_trainer()
+    trainer.privileged_teacher_updates = 1
+    teacher_before = state_fingerprint(
+        trainer.privileged_teacher, trainer.privileged_teacher_ema)
+    actor_before = state_fingerprint(trainer.actor.base_actor)
+    trainer.prepare_teacher_observation()
+    assert trainer._physics_control_mode == 'teacher_observation'
+    assert not hasattr(trainer.actor, 'physics_residual')
+    rollout = trainer.collect(3)
+    assert rollout.teacher_latent.shape == (3, 3, 2)
+    assert rollout.critic_privileged.shape == (3, 3, 98)
+    assert rollout.physics_features is None
+    assert rollout.physics_observation is None
+    assert rollout.teacher_candidate_actions is None
+    with torch.no_grad():
+        replay = trainer._actor_forward(
+            flat_observations_to_tensordict(
+                rollout.actor_observation, rollout.critic_observation),
+            actions=rollout.actions, mode='sequence_logp',
+            attn_mask=build_episode_causal_mask(rollout.dones.squeeze(-1)),
+            update_obs_norm=False, teacher_latent=rollout.teacher_latent)
+    torch.testing.assert_close(
+        replay.get('actions_log_prob'), rollout.old_log_prob, rtol=1e-5, atol=1e-6)
+    trainer.update(rollout)
+    assert trainer.update_dynamics(rollout) is None
+    assert actor_before != state_fingerprint(trainer.actor)
+    assert teacher_before == state_fingerprint(
+        trainer.privileged_teacher, trainer.privileged_teacher_ema)
+
+    path = trainer.save_checkpoint(tmp_path/'teacher_observation.pt', iteration=2)
+    loaded = load_k1_checkpoint(path)
+    runtime = loaded.payload['physics_runtime_config']
+    assert runtime['physics_control_mode'] == 'teacher_observation'
+    assert runtime['physics_actor_config'] is None
+    assert loaded.payload['physics_residual_state_dict'] == {}
+    resumed = resume_k1_trainer(path, task())
+    assert resumed._physics_control_mode == 'teacher_observation'
+    assert resumed.collect(2).teacher_latent.shape == (3, 2, 2)
+    report = evaluate_k1_policy(frozen_k1_policy(loaded), task(), steps=3)
+    assert report['weights_unchanged']
 
 
 def test_teacher_gradients_do_not_reach_student_or_input_truth():

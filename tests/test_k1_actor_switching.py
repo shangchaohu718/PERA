@@ -192,6 +192,17 @@ def test_cli_accepts_frozen_teacher_with_fresh_custom_actor(monkeypatch):
     assert config.physics_teacher
 
 
+def test_cli_accepts_teacher_latent_as_custom_actor_observation(monkeypatch):
+    from tools.train_holomotion_k1_mjlab import parse_args
+    monkeypatch.setattr("sys.argv", ["train_k1_mjlab.py", "--actor", "mlp",
+        "--frozen-teacher-from", "teacher.pt", "--teacher-latent-observation",
+        "--task-contract", "contract.json", "--asset-root", "assets",
+        "--motion", "motion.npz", "--output-dir", "new_run", "--iterations", "2"])
+    config = parse_args()
+    assert config.teacher_latent_observation
+    assert config.actor == "mlp"
+
+
 def test_cli_rejects_frozen_teacher_with_imported_actor(monkeypatch):
     from tools.train_holomotion_k1_mjlab import parse_args
     monkeypatch.setattr("sys.argv", ["train_k1_mjlab.py", "--actor", "holomotion",

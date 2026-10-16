@@ -154,7 +154,11 @@ class HoloMotionPPORollout:
     privileged_teacher_env_ids: torch.Tensor | None = None
     privileged_teacher_contacts: torch.Tensor | None = None
     privileged_teacher_contact_mask: torch.Tensor | None = None
+    privileged_teacher_next_contact_physics: torch.Tensor | None = None
+    privileged_teacher_next_contact_modes: torch.Tensor | None = None
     teacher_candidate_actions: torch.Tensor | None = None
+    teacher_latent: torch.Tensor | None = None
+    critic_privileged: torch.Tensor | None = None
 
 
 @dataclass(frozen=True)
@@ -320,12 +324,15 @@ class HoloMotionMJLabPPO:
         *,
         physics_features: torch.Tensor | None = None,
         physics_confidence: torch.Tensor | None = None,
+        teacher_latent: torch.Tensor | None = None,
         **kwargs: Any,
     ) -> Any:
         if physics_features is not None:
             kwargs["physics_features"] = physics_features
         if physics_confidence is not None:
             kwargs["physics_confidence"] = physics_confidence
+        if teacher_latent is not None:
+            kwargs["teacher_latent"] = teacher_latent
         return self.actor(data, **kwargs)
 
     @staticmethod
@@ -431,9 +438,13 @@ class HoloMotionMJLabPPO:
                         task_contract=None if contract is None else asdict(contract),
                         physics_randomization=None if randomization is None else asdict(randomization)))
             if hasattr(self, "dynamics"):
+                control_mode = getattr(self, '_physics_control_mode', 'student')
+                has_residual = hasattr(self.actor, "physics_residual")
                 payload.update(
                     physics_schema=3,
-                    physics_residual_state_dict=self.actor.physics_residual.state_dict(),
+                    physics_residual_state_dict=(
+                        self.actor.physics_residual.state_dict() if has_residual else {}
+                    ),
                     dynamics_state_dict=self.dynamics.state_dict(),
                     actor_dynamics_state_dict=self.actor_dynamics.state_dict(),
                     dynamics_optimizer_state_dict=self.dynamics_optimizer.state_dict(),
@@ -457,11 +468,12 @@ class HoloMotionMJLabPPO:
                         physics_update_config=asdict(self.update_config),
                         confidence_state_dict=self.confidence.state_dict(),
                         physics_runtime_config=dict(schema=2, network_config=self._network_config,
-                            physics_actor_config=asdict(self.actor.config),
-                            physics_control_mode=getattr(self, '_physics_control_mode', 'student'),
+                            physics_actor_config=(asdict(self.actor.config)
+                                                  if has_residual else None),
+                            physics_control_mode=control_mode,
                             teacher_action_proposal=(
                                 "base_mean_pre_sample"
-                                if getattr(self, '_physics_control_mode', 'student') == 'teacher'
+                                if control_mode == 'teacher'
                                 else None
                             ),
                             dynamics_config=dynamics_configuration(self.dynamics),
@@ -583,7 +595,11 @@ class HoloMotionMJLabPPO:
                 if (payload["physics_update_config"] != asdict(self.update_config)
                         or PhysicsConfidenceConfig(**runtime["confidence_config"]) != self.confidence.config):
                     raise ValueError("physics update/confidence configuration differs from this run")
-                if (runtime["physics_actor_config"] != asdict(self.actor.config)
+                expected_actor_config = (
+                    None if runtime.get("physics_control_mode") == "teacher_observation"
+                    else asdict(self.actor.config)
+                )
+                if (runtime["physics_actor_config"] != expected_actor_config
                         or runtime["dynamics_config"] != dynamics_configuration(self.dynamics)
                         or runtime["network_config"] != self._network_config):
                     raise ValueError("physics checkpoint model configuration differs from this run")
@@ -608,9 +624,12 @@ class HoloMotionMJLabPPO:
         self.actor_optimizer.load_state_dict(payload["actor_optimizer_state_dict"])
         self.critic_optimizer.load_state_dict(payload["critic_optimizer_state_dict"])
         if hasattr(self, "dynamics"):
-            self.actor.physics_residual.load_state_dict(
-                payload["physics_residual_state_dict"], strict=True
-            )
+            if hasattr(self.actor, "physics_residual"):
+                self.actor.physics_residual.load_state_dict(
+                    payload["physics_residual_state_dict"], strict=True
+                )
+            elif payload["physics_residual_state_dict"]:
+                raise ValueError("Teacher-observation checkpoint unexpectedly has residual weights")
             self.dynamics.load_state_dict(payload["dynamics_state_dict"], strict=True)
             self.actor_dynamics.load_state_dict(
                 payload["actor_dynamics_state_dict"], strict=True
@@ -862,6 +881,10 @@ class HoloMotionMJLabPPO:
                     if rollout.physics_confidence is None
                     else rollout.physics_confidence[ids]
                 )
+                teacher_latent = (
+                    None if rollout.teacher_latent is None
+                    else rollout.teacher_latent[ids]
+                )
                 actor_out = self._actor_forward(
                     data,
                     actions=actions,
@@ -870,9 +893,14 @@ class HoloMotionMJLabPPO:
                     update_obs_norm=False,
                     physics_features=features,
                     physics_confidence=confidence,
+                    teacher_latent=teacher_latent,
                 )
                 batch, steps = actions.shape[:2]
-                critic_out = self.critic(data.flatten(0, 1), update_obs_norm=False)
+                critic_kwargs = {}
+                if rollout.critic_privileged is not None:
+                    critic_kwargs["critic_privileged"] = rollout.critic_privileged[ids].flatten(0, 1)
+                critic_out = self.critic(
+                    data.flatten(0, 1), update_obs_norm=False, **critic_kwargs)
                 value = critic_out.get("values").reshape(batch, steps, 1)
                 new_log_prob = actor_out.get("actions_log_prob")
                 entropy = actor_out.get("entropy")

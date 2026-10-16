@@ -71,7 +71,7 @@ def main() -> None:
     for item in runs:
         teacher = Path(item["teacher"])
         if not teacher.exists():
-            run([
+            train_command = [
                 str(args.launcher), str(train_tool), "--manifest", item["manifest"],
                 "--output-dir", item["output_dir"], "--epochs", str(epochs),
                 "--seed", str(item["seed"]), "--device", args.device,
@@ -80,7 +80,12 @@ def main() -> None:
                 "--task-profile", item["task_profile"], "--replay-updates",
                 str(optimization["replay_updates"]), "--gradient-audit-every",
                 str(optimization["gradient_audit_every"]),
-            ])
+                "--latent-dim", str(item.get("latent_dim", 0)),
+            ]
+            if "latent_group_dims" in item:
+                train_command.extend(
+                    ["--latent-group-dims", *map(str, item["latent_group_dims"])])
+            run(train_command)
         run([
             str(args.launcher), str(eval_tool), "--checkpoint", item["teacher"],
             "--manifest", item["manifest"], "--split", "validation",

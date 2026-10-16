@@ -1,0 +1,36 @@
+# Stage 1: privileged Teacher on the official HoloMotion G1 29-DoF contract.
+model:
+  robot_id: g1_29dof
+  # Grouped z64: contact8 + force16 + kinematics16 + dynamics24.
+  latent_width: 64
+  actor_width: 256
+  actor_hidden_dim: 256
+  reference_steps: 10
+  init_std: 1.0
+  system_id_dim: 2
+teacher:
+  # V5: Teacher and asymmetric Critic consume the exact same tensor:
+  # official HoloMotion Critic 1046D + physics privilege 126D = 1172D.
+  objective_version: 5
+  critic_dim: 1046
+  # Stable order: left foot, right foot, left wrist, right wrist.
+  contact_slots: 4
+  object_slots: 4
+  width: 128
+  heads: 8
+  layers: 4
+  context_steps: 64
+  train_envs: 64
+  learning_rate: 0.0001
+  ema_decay: 0.98
+  warmup_updates: 20
+  validation_fraction: 0.25
+  minimum_validation_samples: 16
+  minimum_prediction_gain: 0.05
+  minimum_action_gain: 0.01
+  prediction_horizons: [1, 4, 8]
+  multistep_weight: 0.5
+  interaction_weight: 0.25
+  contact_mode_weight: 0.1
+  contact_slip_threshold_m_s: 0.05
+  delta_whitening: false

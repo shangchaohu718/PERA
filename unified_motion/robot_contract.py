@@ -18,11 +18,10 @@
 依赖：Python >= 3.10、PyTorch
 """
 
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
 import torch
-
 
 # ========== 一、各机器人关节名单 ==========
 
@@ -85,6 +84,58 @@ _G1_RIGHT_ARM_23 = (
     "right_wrist_roll_joint",
 )
 
+_G1_LEFT_ARM_29 = _G1_LEFT_ARM_23 + (
+    "left_wrist_pitch_joint",
+    "left_wrist_yaw_joint",
+)
+_G1_RIGHT_ARM_29 = _G1_RIGHT_ARM_23 + (
+    "right_wrist_pitch_joint",
+    "right_wrist_yaw_joint",
+)
+
+# Candidate G1 dexterous-hand asset used by the project: seven actuated joints
+# per hand (thumb 3, middle 2, index 2).  These are real action dimensions, not
+# aliases for the wrist joints already present in the 29DoF body contract.
+_G1_LEFT_HAND_7 = (
+    "left_hand_thumb_0_joint",
+    "left_hand_thumb_1_joint",
+    "left_hand_thumb_2_joint",
+    "left_hand_middle_0_joint",
+    "left_hand_middle_1_joint",
+    "left_hand_index_0_joint",
+    "left_hand_index_1_joint",
+)
+_G1_RIGHT_HAND_7 = (
+    "right_hand_thumb_0_joint",
+    "right_hand_thumb_1_joint",
+    "right_hand_thumb_2_joint",
+    "right_hand_middle_0_joint",
+    "right_hand_middle_1_joint",
+    "right_hand_index_0_joint",
+    "right_hand_index_1_joint",
+)
+
+# Isaac Lab's bundled Unitree G1 USD uses its own 37-DoF articulation contract:
+# 23 body/arm joints plus seven named finger joints on each hand.  It does not
+# expose the 29-DoF MJCF wrist naming, so it must have a distinct robot id.
+_ISAAC_G1_LEFT_ARM_HAND = (
+    "left_shoulder_pitch_joint",
+    "left_shoulder_roll_joint",
+    "left_shoulder_yaw_joint",
+    "left_elbow_pitch_joint",
+    "left_elbow_roll_joint",
+    "left_five_joint",
+    "left_three_joint",
+    "left_six_joint",
+    "left_four_joint",
+    "left_zero_joint",
+    "left_one_joint",
+    "left_two_joint",
+)
+_ISAAC_G1_RIGHT_ARM_HAND = tuple(
+    name.replace("left_", "right_", 1) for name in _ISAAC_G1_LEFT_ARM_HAND
+)
+
 # G1 23DoF：双腿 12 + 腰部 1 + 双臂 10 = 23。
 G1_23DOF_JOINT_NAMES: tuple[str, ...] = (
     _G1_LEG_JOINT_NAMES
@@ -98,10 +149,26 @@ G1_23DOF_JOINT_NAMES: tuple[str, ...] = (
 G1_29DOF_JOINT_NAMES: tuple[str, ...] = (
     _G1_LEG_JOINT_NAMES
     + ("waist_yaw_joint", "waist_roll_joint", "waist_pitch_joint")
-    + _G1_LEFT_ARM_23
-    + ("left_wrist_pitch_joint", "left_wrist_yaw_joint")
-    + _G1_RIGHT_ARM_23
-    + ("right_wrist_pitch_joint", "right_wrist_yaw_joint")
+    + _G1_LEFT_ARM_29
+    + _G1_RIGHT_ARM_29
+)
+
+# G1 43DoF：29DoF 全身 + 左右手各 7 个主动关节。顺序与选定的
+# g1_29dof_with_hand MJCF 一致，手指跟在各自手臂之后。
+G1_43DOF_JOINT_NAMES: tuple[str, ...] = (
+    _G1_LEG_JOINT_NAMES
+    + ("waist_yaw_joint", "waist_roll_joint", "waist_pitch_joint")
+    + _G1_LEFT_ARM_29
+    + _G1_LEFT_HAND_7
+    + _G1_RIGHT_ARM_29
+    + _G1_RIGHT_HAND_7
+)
+
+ISAAC_G1_37DOF_JOINT_NAMES: tuple[str, ...] = (
+    _G1_LEG_JOINT_NAMES
+    + ("torso_joint",)
+    + _ISAAC_G1_LEFT_ARM_HAND
+    + _ISAAC_G1_RIGHT_ARM_HAND
 )
 
 
@@ -237,6 +304,14 @@ class RobotContract:
 K1_CONTRACT = RobotContract("Booster K1 22DoF", "trunk", K1_JOINT_NAMES)
 G1_23DOF_CONTRACT = RobotContract("Unitree G1 23DoF", "pelvis", G1_23DOF_JOINT_NAMES)
 G1_29DOF_CONTRACT = RobotContract("Unitree G1 29DoF", "pelvis", G1_29DOF_JOINT_NAMES)
+G1_43DOF_CONTRACT = RobotContract(
+    "Unitree G1 29DoF + dual 7DoF hands", "pelvis", G1_43DOF_JOINT_NAMES
+)
+ISAAC_G1_37DOF_CONTRACT = RobotContract(
+    "Isaac Lab Unitree G1 with dual 7DoF hands",
+    "pelvis",
+    ISAAC_G1_37DOF_JOINT_NAMES,
+)
 
 _ROBOT_REGISTRY: dict[str, RobotContract] = {}
 
@@ -275,9 +350,8 @@ def list_robot_contracts() -> tuple[str, ...]:
 register_robot("k1_22dof", K1_CONTRACT)
 register_robot("g1_23dof", G1_23DOF_CONTRACT)
 register_robot("g1_29dof", G1_29DOF_CONTRACT)
+register_robot("g1_43dof", G1_43DOF_CONTRACT)
+register_robot("g1_37dof_isaac", ISAAC_G1_37DOF_CONTRACT)
 
 
 # ========== 五、不依赖仿真器的最小自测 ==========
-
-
-

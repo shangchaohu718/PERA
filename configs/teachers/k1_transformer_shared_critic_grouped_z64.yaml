@@ -1,0 +1,36 @@
+# K1 privileged Teacher aligned with the validated G1 grouped-latent design.
+#
+# Input at each causal time step:
+#   HoloMotion K1 Critic 843D + exact physical privilege 98D = 941D.
+# Output:
+#   contact8 + force16 + kinematics16 + dynamics24 = grouped z64.
+objective_version: 5
+critic_dim: 843
+contact_slots: 2
+object_slots: 4
+width: 128
+heads: 8
+layers: 4
+context_steps: 64
+train_envs: 64
+learning_rate: 0.0001
+ema_decay: 0.98
+warmup_updates: 20
+validation_fraction: 0.25
+minimum_validation_samples: 16
+minimum_prediction_gain: 0.05
+minimum_action_gain: 0.01
+prediction_horizons: [1, 4, 8]
+multistep_weight: 0.5
+interaction_weight: 0.25
+contact_mode_weight: 0.1
+# Force dynamics24 to retain the randomized friction/mass pair instead of
+# allowing next-state prediction to ignore those two privileged coordinates.
+parameter_reconstruction_weight: 0.1
+contact_slip_threshold_m_s: 0.05
+delta_whitening: false
+latent_groups:
+  - [contact, 8]
+  - [force, 16]
+  - [kinematics, 16]
+  - [dynamics, 24]

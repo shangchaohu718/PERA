@@ -3,8 +3,11 @@ source_root: /home/tcl/Desktop/start/dance-evaluator and tracker/k1_moonwalk
 bundle_root: /home/tcl/Desktop/start/HoloMotion-UM
 launcher: scripts/run_isaac51_k1.sh
 collector: /home/tcl/Desktop/start/HoloMotion-UM/tools/collect_foot_ground_counterfactual_isaac.py
+merger: /home/tcl/Desktop/start/HoloMotion-UM/tools/merge_foot_ground_counterfactual_serial.py
+execution_mode: independent_process_replay
 phase_labels: motions/phase_labels_61_64_50hz_v2.npz
 output_dir: /home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_campaign
+raw_output_dir: /home/tcl/Desktop/start/HoloMotion-UM/data/foot_ground_v2/counterfactual_campaign_serial_raw
 seeds: [730201, 730202, 730203]
 deltas_rad: [0.01, 0.02, 0.04]
 context_steps: 32

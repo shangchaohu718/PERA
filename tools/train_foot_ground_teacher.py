@@ -39,8 +39,13 @@ def main():
                         default="v1")
     parser.add_argument("--replay-updates", type=int, default=1)
     parser.add_argument("--gradient-audit-every", type=int, default=100)
+    parser.add_argument("--latent-dim", type=int, default=0,
+                        help="explicit physics bottleneck width; 0 preserves V1/V2 architecture")
+    parser.add_argument("--latent-group-dims", type=int, nargs=3, default=(0, 0, 0),
+                        metavar=("CONTACT", "FORCE", "DYNAMICS"),
+                        help="optional disjoint z groups; must sum to --latent-dim")
     args = parser.parse_args()
-    if args.epochs < 1 or args.replay_updates < 1 or args.seed < 0:
+    if args.epochs < 1 or args.replay_updates < 1 or args.seed < 0 or args.latent_dim < 0:
         parser.error("epochs/replay-updates must be positive and seed non-negative")
     if args.device.startswith("cuda") and not torch.cuda.is_available():
         raise RuntimeError("CUDA requested but unavailable; no fallback run was started")
@@ -58,6 +63,8 @@ def main():
         student_observation_dim=probe.student_observation.shape[-1],
         privileged_current_dim=probe.privileged_current.shape[-1],
         foot_current_dim=probe.foot_current.shape[-1],
+        latent_dim=args.latent_dim,
+        latent_group_dims=tuple(args.latent_group_dims),
         reference_intent_dim=(0 if probe.reference_intent is None
                               else probe.reference_intent.shape[-1]),
     )
@@ -89,6 +96,11 @@ def main():
         "reference_intent_contract": (
             "none" if config.reference_intent_dim == 0 else
             "current reference phase and planned foot roles at t; no realized t+1 labels"
+        ),
+        "latent_contract": (
+            "legacy implicit transformer hidden" if config.latent_dim == 0 else
+            f"explicit z[{config.latent_dim}] groups={config.latent_group_dims}; every "
+            "physics decoder consumes only its z group plus a fixed left/right side identifier"
         ),
     }
     (args.output_dir / "protocol.json").write_text(json.dumps(protocol, indent=2))

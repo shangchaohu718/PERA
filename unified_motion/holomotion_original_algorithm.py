@@ -1,9 +1,11 @@
-"""Load the original trainable HoloMotion K1 actor/critic for mjlab.
+"""Load original trainable HoloMotion actor/critic checkpoints.
 
 The network and PPO implementations stay owned by the audited, vendored
 HoloMotion snapshot.  This module only reconstructs the resolved run configuration,
-converts the local flat 506/843 observation contracts back to HoloMotion's
-TensorDict schema, and strictly restores safetensors checkpoints.
+converts flat observations back to HoloMotion's TensorDict schema, and strictly
+restores safetensors checkpoints.  Dimensions are derived from the resolved
+robot config so official G1 29-DoF weights are not forced through the K1
+22-DoF contract.
 """
 
 from __future__ import annotations
@@ -74,6 +76,7 @@ def _split_terms(
     current: tuple[tuple[str, int], ...],
     future: tuple[tuple[str, int], ...],
     expected_dim: int,
+    future_steps: int = 10,
 ) -> dict[str, torch.Tensor]:
     if observation.ndim not in (2, 3) or observation.shape[-1] != expected_dim:
         raise ValueError(
@@ -87,9 +90,9 @@ def _split_terms(
         result[f"unified/{name}"] = observation[..., offset : offset + width]
         offset += width
     for name, width in future:
-        size = 10 * width
+        size = future_steps * width
         result[f"unified/{name}"] = observation[..., offset : offset + size].reshape(
-            *observation.shape[:-1], 10, width
+            *observation.shape[:-1], future_steps, width
         )
         offset += size
     if offset != expected_dim:
@@ -97,9 +100,59 @@ def _split_terms(
     return result
 
 
+def _term_widths(dof: int, num_bodies: int):
+    if type(dof) is not int or dof < 1:
+        raise ValueError("dof must be a positive integer")
+    if type(num_bodies) is not int or num_bodies < 1:
+        raise ValueError("num_bodies must be a positive integer")
+    actor_current = tuple(
+        (name, dof if width == 22 else width)
+        for name, width in ACTOR_CURRENT_TERM_WIDTHS
+    )
+    actor_future = tuple(
+        (name, dof if width == 22 else width)
+        for name, width in ACTOR_FUTURE_TERM_WIDTHS
+    )
+    critic_current = tuple(
+        (name, (
+            6 * num_bodies if width == 138 else
+            3 * num_bodies if width == 69 else
+            dof if width == 22 else width
+        ))
+        for name, width in CRITIC_CURRENT_TERM_WIDTHS
+    )
+    critic_future = tuple(
+        (name, dof if width == 22 else width)
+        for name, width in CRITIC_FUTURE_TERM_WIDTHS
+    )
+    return actor_current, actor_future, critic_current, critic_future
+
+
+def original_holomotion_observation_dims(
+    dof: int, num_bodies: int, *, future_steps: int = 10
+) -> tuple[int, int]:
+    """Return official flat Actor/Critic widths for a robot morphology."""
+    if type(future_steps) is not int or future_steps < 1:
+        raise ValueError("future_steps must be a positive integer")
+    actor_current, actor_future, critic_current, critic_future = _term_widths(
+        dof, num_bodies
+    )
+    actor_dim = sum(width for _, width in actor_current) + future_steps * sum(
+        width for _, width in actor_future
+    )
+    critic_dim = sum(width for _, width in critic_current) + future_steps * sum(
+        width for _, width in critic_future
+    )
+    return actor_dim, critic_dim
+
+
 def flat_observations_to_tensordict(
     actor_observation: torch.Tensor,
     critic_observation: torch.Tensor,
+    *,
+    dof: int = 22,
+    num_bodies: int = 23,
+    future_steps: int = 10,
 ) -> Any:
     """Restore the TensorDict leaves consumed by the original wrappers."""
     if actor_observation.shape[:-1] != critic_observation.shape[:-1]:
@@ -116,18 +169,26 @@ def flat_observations_to_tensordict(
             "the original HoloMotion algorithm requires tensordict"
         ) from error
 
+    actor_current, actor_future, critic_current, critic_future = _term_widths(
+        dof, num_bodies
+    )
+    actor_dim, critic_dim = original_holomotion_observation_dims(
+        dof, num_bodies, future_steps=future_steps
+    )
     leaves = _split_terms(
         actor_observation,
-        current=ACTOR_CURRENT_TERM_WIDTHS,
-        future=ACTOR_FUTURE_TERM_WIDTHS,
-        expected_dim=506,
+        current=actor_current,
+        future=actor_future,
+        expected_dim=actor_dim,
+        future_steps=future_steps,
     )
     leaves.update(
         _split_terms(
             critic_observation,
-            current=CRITIC_CURRENT_TERM_WIDTHS,
-            future=CRITIC_FUTURE_TERM_WIDTHS,
-            expected_dim=843,
+            current=critic_current,
+            future=critic_future,
+            expected_dim=critic_dim,
+            future_steps=future_steps,
         )
     )
     return TensorDict(leaves, batch_size=list(actor_observation.shape[:-1]))
@@ -245,7 +306,14 @@ def initialize_original_holomotion_k1_algorithm(
     )
 
 
-def build_original_holomotion_networks(network_config, *, device="cpu", holomotion_root=None):
+def build_original_holomotion_networks(
+    network_config,
+    *,
+    device="cpu",
+    holomotion_root=None,
+    robot_dof: int = 22,
+    num_bodies: int = 23,
+):
     """Reconstruct the audited network classes from resolved, inert metadata."""
     root = (Path(holomotion_root) if holomotion_root is not None else
             Path(__file__).resolve().parents[1] / "third_party/HoloMotion/source")
@@ -258,9 +326,16 @@ def build_original_holomotion_networks(network_config, *, device="cpu", holomoti
     if (actor_cfg["type"] != "ReferenceRoutedGroupedMoETransformerPolicy"
             or critic_cfg["type"] != "MLP"):
         raise ValueError("unsupported HoloMotion checkpoint network types")
+    actor_dim, critic_dim = original_holomotion_observation_dims(
+        robot_dof, num_bodies
+    )
     sample = flat_observations_to_tensordict(
-        torch.zeros(1, 506, device=device), torch.zeros(1, 843, device=device))
-    actor = PPOTFRefRouterActor(actor_cfg["obs_schema"], actor_cfg, 22,
+        torch.zeros(1, actor_dim, device=device),
+        torch.zeros(1, critic_dim, device=device),
+        dof=robot_dof,
+        num_bodies=num_bodies,
+    )
+    actor = PPOTFRefRouterActor(actor_cfg["obs_schema"], actor_cfg, robot_dof,
         float(network_config["init_noise_std"]), obs_example=sample).to(device)
     critic = PPOCritic(critic_cfg["obs_schema"], critic_cfg, obs_example=sample).to(device)
     return actor, critic
@@ -273,7 +348,23 @@ def load_original_holomotion_k1_algorithm(
     checkpoint_name: str = "model_9999",
     device: str | torch.device = "cpu",
 ) -> OriginalHoloMotionK1Algorithm:
-    """Strictly reconstruct and load the original trainable K1 modules."""
+    """Backward-compatible entry point; morphology is read from run config."""
+    return load_original_holomotion_algorithm(
+        holomotion_root=holomotion_root,
+        run_dir=run_dir,
+        checkpoint_name=checkpoint_name,
+        device=device,
+    )
+
+
+def load_original_holomotion_algorithm(
+    *,
+    holomotion_root: str | Path,
+    run_dir: str | Path,
+    checkpoint_name: str = "model_9999",
+    device: str | torch.device = "cpu",
+) -> OriginalHoloMotionK1Algorithm:
+    """Strictly load an official K1 or G1 run using its morphology metadata."""
     root = Path(holomotion_root).expanduser().resolve()
     run = Path(run_dir).expanduser().resolve()
     config_path = run / "config.yaml"
@@ -299,6 +390,13 @@ def load_original_holomotion_k1_algorithm(
         ) from error
 
     config = OmegaConf.load(config_path)
+    robot_dof = int(config.robot.actions_dim)
+    observation_dof = int(config.robot.dof_obs_size)
+    num_bodies = int(config.robot.num_bodies)
+    if robot_dof != observation_dof:
+        raise ValueError(
+            "official HoloMotion loader requires actions_dim == dof_obs_size"
+        )
     actor_cfg = OmegaConf.to_container(config.modules.actor, resolve=True)
     critic_cfg = OmegaConf.to_container(config.modules.critic, resolve=True)
     algo_cfg = OmegaConf.to_container(config.algo.config, resolve=True)
@@ -318,7 +416,12 @@ def load_original_holomotion_k1_algorithm(
     network_config = dict(actor=actor_cfg, critic=critic_cfg,
                           init_noise_std=float(algo_cfg["init_noise_std"]))
     actor, critic = build_original_holomotion_networks(
-        network_config, device=target, holomotion_root=root)
+        network_config,
+        device=target,
+        holomotion_root=root,
+        robot_dof=robot_dof,
+        num_bodies=num_bodies,
+    )
 
     for name, module in (("actor", actor), ("critic", critic)):
         state = load_file(

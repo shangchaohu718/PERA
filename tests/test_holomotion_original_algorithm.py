@@ -6,6 +6,7 @@ from unified_motion.holomotion_original_algorithm import (
     CRITIC_CURRENT_TERM_WIDTHS,
     CRITIC_FUTURE_TERM_WIDTHS,
     flat_observations_to_tensordict,
+    original_holomotion_observation_dims,
 )
 
 
@@ -55,3 +56,17 @@ def test_sequence_observations_preserve_batch_and_time_dimensions():
     assert data["unified/actor_dof_pos"].shape == (2, 3, 22)
     assert data["unified/actor_ref_dof_pos_fut"].shape == (2, 3, 10, 22)
     assert data["unified/critic_ref_dof_pos_fut"].shape == (2, 3, 10, 22)
+
+
+def test_official_g1_29dof_observation_schema_is_dynamic():
+    actor_dim, critic_dim = original_holomotion_observation_dims(29, 30)
+    assert (actor_dim, critic_dim) == (604, 1046)
+    data = flat_observations_to_tensordict(
+        torch.zeros(2, actor_dim),
+        torch.zeros(2, critic_dim),
+        dof=29,
+        num_bodies=30,
+    )
+    assert data["unified/actor_dof_pos"].shape == (2, 29)
+    assert data["unified/actor_ref_dof_pos_fut"].shape == (2, 10, 29)
+    assert data["unified/critic_global_robot_bodylink_lin_vel_flat"].shape == (2, 90)

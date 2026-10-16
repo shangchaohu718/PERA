@@ -224,6 +224,58 @@ def test_reference_intent_model_contract_is_explicit_and_causal():
         raise AssertionError("intent-enabled model accepted a missing intent tensor")
 
 
+def test_explicit_z_is_the_only_learned_input_to_physics_decoders():
+    batch = _batch()
+    model = FootGroundTeacher(FootGroundTeacherConfig(
+        7, 5, 6, latent_dim=32, width=16, foot_width=8, heads=2, layers=1))
+    output = model(batch.student_observation, batch.privileged_current,
+                   batch.executed_action, batch.foot_current, batch.episode_start)
+    assert output["latent_z"].shape == (2, 5, 32)
+    decoded = model.decode_physics(output["latent_z"])
+    for name, value in decoded.items():
+        torch.testing.assert_close(value, output[name])
+    try:
+        model.decode_physics(output["latent_z"], torch.zeros(2, 5, 2, 8))
+    except ValueError as error:
+        assert "does not accept raw foot" in str(error)
+    else:
+        raise AssertionError("explicit-z decoder accepted a raw-foot bypass")
+
+
+def test_grouped_z_routes_disjoint_contact_force_and_dynamics_decoders():
+    batch = _batch()
+    model = FootGroundTeacher(FootGroundTeacherConfig(
+        7, 5, 6, latent_dim=64, latent_group_dims=(16, 16, 32),
+        width=16, foot_width=8, heads=2, layers=1))
+    output = model(batch.student_observation, batch.privileged_current,
+                   batch.executed_action, batch.foot_current, batch.episode_start)
+    assert output["latent_z"].shape == (2, 5, 64)
+    assert output["latent_z_contact"].shape[-1] == 16
+    assert output["latent_z_force"].shape[-1] == 16
+    assert output["latent_z_dynamics"].shape[-1] == 32
+    decoded = model.decode_physics(output["latent_z"])
+    for name, value in decoded.items():
+        torch.testing.assert_close(value, output[name])
+
+    z = output["latent_z"].clone()
+    contact_changed = z.clone()
+    contact_changed[..., :16] += .1
+    force_changed = z.clone()
+    force_changed[..., 16:32] += .1
+    dynamics_changed = z.clone()
+    dynamics_changed[..., 32:] += .1
+    base = model.decode_physics(z)
+    c = model.decode_physics(contact_changed)
+    f = model.decode_physics(force_changed)
+    d = model.decode_physics(dynamics_changed)
+    torch.testing.assert_close(c["normal_force"], base["normal_force"])
+    torch.testing.assert_close(c["delta_joint_velocity"], base["delta_joint_velocity"])
+    torch.testing.assert_close(f["contact_logits"], base["contact_logits"])
+    torch.testing.assert_close(f["delta_joint_velocity"], base["delta_joint_velocity"])
+    torch.testing.assert_close(d["contact_logits"], base["contact_logits"])
+    torch.testing.assert_close(d["normal_force"], base["normal_force"])
+
+
 def test_counterfactual_metrics_detect_action_ignored_teacher():
     contact = torch.ones(2, 3, 2, dtype=torch.bool)
     truth_v = torch.zeros(2, 3, 2, 2)

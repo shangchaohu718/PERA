@@ -36,6 +36,8 @@ class K1ActorConfig:
     lru_state_dim: int | None = None
     lru_scan: str = "parallel"
     moe_balance_coef: float = .01
+    teacher_latent_dim: int = 0
+    critic_privileged_dim: int = 0
 
     def __post_init__(self):
         if self.backbone == "dense":
@@ -44,6 +46,10 @@ class K1ActorConfig:
             raise ValueError("custom K1 backbone must be mlp/transformer/moe/gru/lstm/lru")
         if not math.isfinite(self.moe_balance_coef) or self.moe_balance_coef < 0:
             raise ValueError("moe_balance_coef must be finite and non-negative")
+        if type(self.teacher_latent_dim) is not int or self.teacher_latent_dim < 0:
+            raise ValueError("teacher_latent_dim must be a non-negative integer")
+        if type(self.critic_privileged_dim) is not int or self.critic_privileged_dim < 0:
+            raise ValueError("critic_privileged_dim must be a non-negative integer")
         if self.backbone != "lru" and (self.lru_state_dim is not None or self.lru_scan != "parallel"):
             raise ValueError("lru settings require the lru backbone")
         self.policy_config()  # Reuse the existing core's dimension/type validation.
@@ -77,12 +83,26 @@ class K1CustomActor(nn.Module):
         self.reference_encoder = nn.Linear(40, width)
         self.reference_position = nn.Parameter(torch.zeros(10, width))
         nn.init.normal_(self.reference_position, std=.01)
-        self.backbone = (_mlp(width+10*(width+1), config.hidden_dim, width)
+        mlp_input = width + 10*(width+1) + (width if config.teacher_latent_dim else 0)
+        self.backbone = (_mlp(mlp_input, config.hidden_dim, width)
                          if config.backbone == "mlp" else build_reference_backbone(config.policy_config()))
         self.mean_head = nn.Linear(width, 22)
         nn.init.normal_(self.mean_head.weight, std=.01)
         nn.init.zeros_(self.mean_head.bias)
         self.log_std = nn.Parameter(torch.full((22,), math.log(config.init_std)))
+        # Robot/reference/physics are encoded independently.  For the MLP, z is
+        # kept as an explicit third branch all the way into the policy trunk;
+        # temporal backbones use a learned concatenation fusion for the state
+        # token instead of the old ambiguous element-wise addition.
+        self.teacher_latent_encoder = (
+            nn.Sequential(nn.LayerNorm(config.teacher_latent_dim),
+                          nn.Linear(config.teacher_latent_dim, width, bias=False))
+            if config.teacher_latent_dim else None
+        )
+        self.teacher_state_fusion = (
+            nn.Sequential(nn.Linear(2*width, width), nn.LayerNorm(width))
+            if config.teacher_latent_dim and config.backbone != "mlp" else None
+        )
         self._cache = None
         self._starts = None
 
@@ -99,7 +119,7 @@ class K1CustomActor(nn.Module):
             raise RuntimeError("reset Actor runtime before clearing rows")
         self._starts[ids] = True
 
-    def _encode(self, data):
+    def _encode(self, data, teacher_latent=None):
         current = _terms(data, ACTOR_CURRENT_TERM_WIDTHS)
         future = _terms(data, ACTOR_FUTURE_TERM_WIDTHS)
         if current.shape[-1] != 106 or future.shape != current.shape[:-1]+(10, 40):
@@ -107,17 +127,32 @@ class K1CustomActor(nn.Module):
         if not torch.isfinite(current).all() or not torch.isfinite(future).all():
             raise ValueError("non-finite K1 Actor observations")
         state = self.current_encoder(current)
+        if self.teacher_latent_encoder is None:
+            if teacher_latent is not None:
+                raise ValueError("Actor was not configured for a Teacher latent observation")
+        else:
+            expected = current.shape[:-1] + (self.config.teacher_latent_dim,)
+            if (not isinstance(teacher_latent, torch.Tensor)
+                    or teacher_latent.shape != expected
+                    or teacher_latent.device != current.device
+                    or teacher_latent.dtype != current.dtype
+                    or not torch.isfinite(teacher_latent).all()):
+                raise ValueError(f"teacher_latent must be finite with shape {expected}")
+            physics = self.teacher_latent_encoder(teacher_latent)
+            if self.teacher_state_fusion is not None:
+                state = self.teacher_state_fusion(torch.cat((state, physics), -1))
         refs = self.reference_encoder(future)+self.reference_position
-        return EncodedMotion("k1_22dof", state, refs,
-            torch.ones(refs.shape[:-1], device=refs.device, dtype=torch.bool))
+        return (EncodedMotion("k1_22dof", state, refs,
+                    torch.ones(refs.shape[:-1], device=refs.device, dtype=torch.bool)),
+                physics if self.teacher_latent_encoder is not None else None)
 
     def forward(self, data, actions=None, mode="sampling", attn_mask=None,
-                update_obs_norm=False):
+                update_obs_norm=False, *, teacher_latent=None):
         if update_obs_norm:
             raise ValueError("custom K1 inputs use the fixed task scaling; no running normalization")
         if mode not in ("sampling", "inference", "sequence_logp"):
             raise ValueError("unknown K1 Actor mode")
-        encoded = self._encode(data)
+        encoded, physics = self._encode(data, teacher_latent)
         lead = encoded.state_token.shape[:-1]
         if mode == "sequence_logp":
             if len(lead) != 2:
@@ -133,7 +168,8 @@ class K1CustomActor(nn.Module):
             if not torch.equal(expected, attn_mask):
                 raise ValueError("mask must describe causal, contiguous episodes")
             if self.config.backbone == "mlp":
-                features = self.backbone(encoded.flatten_for_mlp())
+                features = self.backbone(torch.cat((encoded.flatten_for_mlp(), physics), -1)
+                                         if physics is not None else encoded.flatten_for_mlp())
                 balance = features.new_zeros(())
             else:
                 output = self.backbone(encoded, valid_mask=torch.ones_like(starts), episode_start=starts)
@@ -144,7 +180,8 @@ class K1CustomActor(nn.Module):
             if self.training:
                 raise RuntimeError("Actor sampling requires eval mode")
             if self.config.backbone == "mlp":
-                features = self.backbone(encoded.flatten_for_mlp())
+                features = self.backbone(torch.cat((encoded.flatten_for_mlp(), physics), -1)
+                                         if physics is not None else encoded.flatten_for_mlp())
             else:
                 output, self._cache = self.backbone.step(encoded, env_ids=tuple(range(lead[0])),
                     cache=self._cache, episode_start=self._starts)
@@ -167,20 +204,36 @@ class K1CustomActor(nn.Module):
 
 
 class K1CustomCritic(nn.Module):
-    def __init__(self, hidden_dim):
+    def __init__(self, hidden_dim, privileged_dim=0):
         super().__init__()
-        self.net = _mlp(843, hidden_dim, 1)
+        self.privileged_dim = privileged_dim
+        self.net = _mlp(843+privileged_dim, hidden_dim, 1)
 
-    def forward(self, data, update_obs_norm=False):
+    def forward(self, data, update_obs_norm=False, *, critic_privileged=None):
         current = _terms(data, CRITIC_CURRENT_TERM_WIDTHS)
         future = torch.cat([data.get("unified/"+name).flatten(-2)
                             for name, _ in CRITIC_FUTURE_TERM_WIDTHS], dim=-1)
-        data.set("values", self.net(torch.cat((current, future), dim=-1)))
+        inputs = torch.cat((current, future), dim=-1)
+        if self.privileged_dim:
+            expected = inputs.shape[:-1] + (self.privileged_dim,)
+            if (not isinstance(critic_privileged, torch.Tensor)
+                    or critic_privileged.shape != expected
+                    or critic_privileged.device != inputs.device
+                    or critic_privileged.dtype != inputs.dtype
+                    or not torch.isfinite(critic_privileged).all()):
+                raise ValueError(f"critic_privileged must be finite with shape {expected}")
+            inputs = torch.cat((inputs, critic_privileged), -1)
+        elif critic_privileged is not None:
+            raise ValueError("Critic was not configured for privileged physics")
+        data.set("values", self.net(inputs))
         return data
 
 
 def custom_network_config(config):
-    return dict(schema=1, backend=config.backbone, observation_schema="holomotion_k1_506_843_v1",
+    privileged = bool(config.critic_privileged_dim)
+    return dict(schema=2 if privileged else 1, backend=config.backbone,
+                observation_schema=("holomotion_k1_506_843_plus_physics_v2" if privileged
+                                    else "holomotion_k1_506_843_v1"),
                 custom_actor=asdict(config))
 
 
@@ -189,10 +242,15 @@ def build_k1_networks(network_config, *, device="cpu", holomotion_root=None):
     backend = network_config.get("backend", "holomotion")
     if backend == "holomotion":
         return build_original_holomotion_networks(network_config, device=device, holomotion_root=holomotion_root)
-    if (network_config.get("schema") != 1 or
-            network_config.get("observation_schema") != "holomotion_k1_506_843_v1"):
+    schema = network_config.get("schema")
+    expected = ("holomotion_k1_506_843_plus_physics_v2" if schema == 2
+                else "holomotion_k1_506_843_v1")
+    if schema not in (1, 2) or network_config.get("observation_schema") != expected:
         raise ValueError("unknown custom K1 network schema")
     config = K1ActorConfig(**network_config["custom_actor"])
     if backend != config.backbone:
         raise ValueError("checkpoint Actor backend declarations disagree")
-    return K1CustomActor(config).to(device).eval(), K1CustomCritic(config.hidden_dim).to(device).eval()
+    if (schema == 2) != bool(config.critic_privileged_dim):
+        raise ValueError("network schema and Critic privilege declaration disagree")
+    return (K1CustomActor(config).to(device).eval(),
+            K1CustomCritic(config.hidden_dim, config.critic_privileged_dim).to(device).eval())
