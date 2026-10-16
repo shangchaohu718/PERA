@@ -9,8 +9,8 @@ model:
   init_std: 1.0
   system_id_dim: 2
 teacher:
-  # V5: Teacher and asymmetric Critic consume the exact same tensor:
-  # official HoloMotion Critic 1046D + physics privilege 126D = 1172D.
+  # V5: 1046D HoloMotion context + 126D physical suffix. The 56D contact
+  # portion is lagged by one step; t/t+4/t+8 contact truth is label-only.
   objective_version: 5
   critic_dim: 1046
   # Stable order: left foot, right foot, left wrist, right wrist.
@@ -32,5 +32,7 @@ teacher:
   multistep_weight: 0.5
   interaction_weight: 0.25
   contact_mode_weight: 0.1
+  future_contact_weight: 0.25
+  contact_input_lag: 1
   contact_slip_threshold_m_s: 0.05
   delta_whitening: false

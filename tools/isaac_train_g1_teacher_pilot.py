@@ -35,7 +35,9 @@ from unified_motion.privileged_teacher import (  # noqa: E402
     teacher_supervision,
 )
 from unified_motion.robot_contract import get_robot_contract  # noqa: E402
-from tools.train_g1_teacher_multimotion import multistep_supervision  # noqa: E402
+from tools.train_g1_teacher_multimotion import (  # noqa: E402
+    contact_sequences, future_contact_supervision, multistep_supervision,
+)
 
 
 SLOTS = (
@@ -293,6 +295,10 @@ class IsaacTeacherCollector:
             raise RuntimeError("missing pre-step Teacher sample")
         self._pending["action"] = action[0].detach().cpu().clone()
         self._pending["next_core"] = self._core()[0].detach().cpu().clone()
+        next_contacts, next_found = self._contacts()
+        self._pending["next_contacts"] = next_contacts.detach().cpu().clone()
+        self._pending["next_found"] = next_found.detach().cpu().clone()
+        self._pending["next_contact_valid"] = (~dones.reshape(-1)[0]).detach().cpu().clone()
         self.frames.append(self._pending)
         self._pending = None
         self._next_is_start = bool(dones.reshape(-1)[0])
@@ -313,7 +319,7 @@ class IsaacTeacherCollector:
         replay_path = OUTPUT_DIR / f"{replay_name}.pt"
         stacked = self._stacked()
         torch.save({
-            "schema": 1,
+            "schema": 2,
             "robot": "g1_29dof",
             "motion_name": replay_name,
             "source_motion_name": source_motion_name,
@@ -345,19 +351,22 @@ class IsaacTeacherCollector:
     @staticmethod
     def _window(stacked, start, end, device):
         critic = stacked["critic"][start:end].unsqueeze(0).to(device)
-        contact = stacked["contacts"][start:end].unsqueeze(0).to(device)
-        found = stacked["found"][start:end].unsqueeze(0).to(device)
+        contact_history, history_found, contact, found, contact_valid = contact_sequences(
+            stacked, start, end, device)
         length = end - start
         params = stacked["params"][start:end].unsqueeze(0).to(device)
         privilege = torch.cat((
-            contact.flatten(-2), torch.zeros(1, length, 68, device=device), params,
+            contact_history.flatten(-2), torch.zeros(1, length, 68, device=device), params,
         ), -1)
         starts = stacked["start"][start:end].unsqueeze(0).to(device).bool()
         starts[:, 0] = True
         return dict(
             inputs=torch.cat((critic, privilege), -1),
+            contact_history=contact_history,
+            history_found=history_found,
             contact=contact,
             found=found,
+            contact_valid=contact_valid,
             params=params,
             starts=starts,
             actions=stacked["action"][start:end].unsqueeze(0).to(device),
@@ -400,13 +409,14 @@ class IsaacTeacherCollector:
                 counts[index] += predicted_error.numel()
             predicted_contact = output["contact_logits"].sigmoid() >= 0.5
             truth_contact = batch["found"]
-            tp += float((predicted_contact & truth_contact).sum())
-            fp += float((predicted_contact & ~truth_contact).sum())
-            fn += float((~predicted_contact & truth_contact).sum())
-            correct += float((predicted_contact == truth_contact).sum())
-            total += float(truth_contact.numel())
+            contact_mask = batch["contact_valid"].unsqueeze(-1).expand_as(truth_contact)
+            tp += float((predicted_contact & truth_contact & contact_mask).sum())
+            fp += float((predicted_contact & ~truth_contact & contact_mask).sum())
+            fn += float((~predicted_contact & truth_contact & contact_mask).sum())
+            correct += float(((predicted_contact == truth_contact) & contact_mask).sum())
+            total += float(contact_mask.sum())
             physics_target = batch["contact"][..., (9, 11, 12, 13)]
-            active = truth_contact.unsqueeze(-1).expand_as(physics_target)
+            active = (truth_contact & contact_mask).unsqueeze(-1).expand_as(physics_target)
             physics_sse += torch.where(
                 active, (output["contact_physics"] - physics_target).square(), 0.0
             ).sum((0, 1, 2))
@@ -415,8 +425,8 @@ class IsaacTeacherCollector:
                 batch["contact"][..., 12] > config.contact_slip_threshold_m_s,
                 2, 1), 0)
             predicted_modes = output["contact_mode_logits"].argmax(-1)
-            mode_correct += float((predicted_modes == modes).sum())
-            mode_total += float(modes.numel())
+            mode_correct += float(((predicted_modes == modes) & contact_mask).sum())
+            mode_total += float(contact_mask.sum())
         pred_mse = pred_sse / counts.clamp_min(1)
         persist_mse = persist_sse / counts.clamp_min(1)
         precision = tp / max(tp + fp, 1.0)
@@ -433,13 +443,13 @@ class IsaacTeacherCollector:
                         1.0 - pred_mse[i] / persist_mse[i].clamp_min(1.0e-12)),
                 } for i, name in enumerate(group_names)
             },
-            "current_contact_reconstruction": {
+            "next_contact_prediction": {
                 "accuracy": correct / max(total, 1.0),
                 "precision": precision,
                 "recall": recall,
                 "f1": 2.0 * precision * recall / max(precision + recall, 1.0e-12),
                 "mode_accuracy": mode_correct / max(mode_total, 1.0),
-                "note": "current-contact target is also present in privileged input",
+                "note": "targets are t+1; contact inputs are strictly t-1 or older",
             },
             "active_contact_physics_rmse": dict(zip(
                 ("normal_force_div100", "tangential_force_div100", "slip_speed_m_s", "friction_utilization"),
@@ -465,6 +475,7 @@ class IsaacTeacherCollector:
             object_slots=4, width=128, heads=8, layers=4,
             context_steps=64, train_envs=1, learning_rate=1.0e-4,
             parameter_reconstruction_weight=0.1,
+            future_contact_weight=0.25, contact_input_lag=1,
             latent_groups=GROUPED_PHYSICS_LATENT,
         )
         teacher = PrivilegedTransformerTeacher(
@@ -481,28 +492,17 @@ class IsaacTeacherCollector:
             start = (0 if maximum_start == 0 else int(torch.randint(
                 maximum_start + 1, (), generator=generator)))
             end = min(start + sequence, len(self.frames))
-            critic = stacked["critic"][start:end].unsqueeze(0).to(device)
-            contact = stacked["contacts"][start:end].unsqueeze(0).to(device)
-            found = stacked["found"][start:end].unsqueeze(0).to(device)
-            params = stacked["params"][start:end].unsqueeze(0).to(device)
-            privilege = torch.cat((
-                contact.flatten(-2),
-                torch.zeros(1, end - start, 68, device=device),
-                params,
-            ), -1)
-            inputs = torch.cat((critic, privilege), -1)
-            starts = stacked["start"][start:end].unsqueeze(0).to(device).bool()
-            starts[:, 0] = True
-            actions = stacked["action"][start:end].unsqueeze(0).to(device)
-            core = stacked["core"][start:end].unsqueeze(0).to(device)
-            next_core = stacked["next_core"][start:end].unsqueeze(0).to(device)
+            batch = self._window(stacked, start, end, device)
+            contact, found, params = batch["contact"], batch["found"], batch["params"]
+            inputs, starts = batch["inputs"], batch["starts"]
+            actions, core, next_core = batch["actions"], batch["core"], batch["next_core"]
             contact_physics = contact[..., (9, 11, 12, 13)]
             modes = torch.where(found, torch.where(
                 contact[..., 12] > config.contact_slip_threshold_m_s, 2, 1), 0).long()
             output = teacher(inputs, starts, actions, core)
             loss = teacher_supervision(
                 output, next_core, torch.ones_like(next_core, dtype=torch.bool),
-                found.float(), torch.ones_like(found), params,
+                found.float(), batch["contact_valid"].unsqueeze(-1).expand_as(found), params,
                 torch.ones(1, end - start, dtype=torch.bool, device=device),
                 config, current_core=core, contact_physics=contact_physics,
                 contact_modes=modes,
@@ -512,6 +512,8 @@ class IsaacTeacherCollector:
                     "core": core, "next_core": next_core, "starts": starts,
                     "actions": actions,
                 }, config)
+            loss = loss + config.future_contact_weight * future_contact_supervision(
+                teacher, output, batch, config)
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             if update == updates - 1:

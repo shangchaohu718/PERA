@@ -44,6 +44,8 @@ class PrivilegedTeacherConfig:
     interaction_weight: float = .25
     contact_mode_weight: float = .1
     parameter_reconstruction_weight: float = 0.
+    future_contact_weight: float = 0.
+    contact_input_lag: int = 0
     contact_slip_threshold_m_s: float = .05
     delta_whitening: bool = False
     delta_whitening_std_floor: float = 1e-3
@@ -80,11 +82,13 @@ class PrivilegedTeacherConfig:
                 or not math.isfinite(self.multistep_weight) or self.multistep_weight < 0):
             raise ValueError('multistep_weight must be finite and non-negative')
         for name in ('interaction_weight', 'contact_mode_weight',
-                     'parameter_reconstruction_weight'):
+                     'parameter_reconstruction_weight', 'future_contact_weight'):
             value = getattr(self, name)
             if (isinstance(value, bool) or not isinstance(value, (int, float))
                     or not math.isfinite(value) or value < 0):
                 raise ValueError(f'{name} must be finite and non-negative')
+        if type(self.contact_input_lag) is not int or self.contact_input_lag < 0:
+            raise ValueError('contact_input_lag must be a non-negative integer')
         if (isinstance(self.contact_slip_threshold_m_s, bool)
                 or not isinstance(self.contact_slip_threshold_m_s, (int, float))
                 or not math.isfinite(self.contact_slip_threshold_m_s)
@@ -400,12 +404,29 @@ class PrivilegedTransformerTeacher(nn.Module):
                 nn.Linear(cfg.width, cfg.contact_slots*7),
             )
         self.future_transitions = nn.ModuleDict()
+        self.future_contact_heads = nn.ModuleDict()
         if cfg.objective_version >= 3:
             for horizon in cfg.prediction_horizons:
                 if horizon > 1:
                     self.future_transitions[str(horizon)] = nn.Sequential(
                         nn.Linear(core_dim+transition_latent_width+horizon*robot.dof, cfg.width),
                         nn.SiLU(), nn.Linear(cfg.width, core_dim))
+                    if cfg.future_contact_weight and self.latent_groups:
+                        action_width = horizon * robot.dof
+                        self.future_contact_heads[str(horizon)] = nn.ModuleDict({
+                            'contact': nn.Sequential(
+                                nn.Linear(core_dim + 8 + action_width, cfg.width), nn.SiLU(),
+                                nn.Linear(cfg.width, cfg.contact_slots)),
+                            'force': nn.Sequential(
+                                nn.Linear(core_dim + 16 + action_width, cfg.width), nn.SiLU(),
+                                nn.Linear(cfg.width, cfg.contact_slots * 3)),
+                            'slip': nn.Sequential(
+                                nn.Linear(core_dim + 16 + action_width, cfg.width), nn.SiLU(),
+                                nn.Linear(cfg.width, cfg.contact_slots)),
+                            'mode': nn.Sequential(
+                                nn.Linear(core_dim + 8 + 16 + action_width, cfg.width), nn.SiLU(),
+                                nn.Linear(cfg.width, cfg.contact_slots * 3)),
+                        })
         identification_width = 24 if self.latent_groups else latent_width
         self.identification = nn.Linear(identification_width, system_id_dim)
         self._delta_horizon_index = {}
@@ -560,6 +581,36 @@ class PrivilegedTransformerTeacher(nn.Module):
         result = current_core.detach()+delta
         gravity = _safe_unit(result[..., 6:9], current_core[..., 6:9].detach())
         return torch.cat((result[..., :6], gravity, result[..., 9:]), -1)
+
+    def predict_future_contacts(self, latent, action_window, current_core, *, horizon):
+        """Predict future contact state/forces without reading target-frame truth."""
+        key = str(horizon)
+        if key not in self.future_contact_heads:
+            raise ValueError('future contact prediction is not configured for this horizon')
+        if action_window.shape != latent.shape[:-1] + (horizon, self.robot.dof):
+            raise ValueError('future contact action window has incompatible shape')
+        if current_core.shape != latent.shape[:-1] + (9 + 2*self.robot.dof,):
+            raise ValueError('future contact current_core has incompatible shape')
+        contact_z = self.latent_group(latent, 'contact')
+        force_z = self.latent_group(latent, 'force')
+        kinematics_z = self.latent_group(latent, 'kinematics')
+        actions = action_window.detach().flatten(-2)
+        current = current_core.detach()
+        heads = self.future_contact_heads[key]
+        contact_logits = heads['contact'](torch.cat((current, contact_z, actions), -1))
+        force = heads['force'](
+            torch.cat((current, force_z, actions), -1)).unflatten(
+                -1, (self.config.contact_slots, 3))
+        slip = heads['slip'](
+            torch.cat((current, kinematics_z, actions), -1)).unsqueeze(-1)
+        mode = heads['mode'](torch.cat(
+            (current, contact_z, kinematics_z, actions), -1)).unflatten(
+                -1, (self.config.contact_slots, 3))
+        return {
+            'contact_logits': contact_logits,
+            'contact_physics': torch.cat((force[..., :2], slip, force[..., 2:]), -1),
+            'contact_mode_logits': mode,
+        }
 
 
 def teacher_supervision(output, next_core, core_valid, contacts, contact_mask, parameters, valid,

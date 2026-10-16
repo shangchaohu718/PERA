@@ -13,8 +13,10 @@ Isaac Lab 内置的 `G1_CFG` 是另一套 37DoF 机构，本分支不再将它�
 配置：`configs/teachers/g1_29dof_holomotion_physics_teacher.yaml`。
 
 模型使用 `PrivilegedTransformerTeacher` 的 V5 共享特权输入合同。Teacher 和 Critic 接收
-完全相同的 1172维张量：官方 HoloMotion G1 Critic 的 1046维状态/参考/误差信息，加上
-126维精确接触、物体槽和慢物理参数。二者拥有独立 Encoder 和梯度，Critic 的 value loss
+完全相同宽度的 1172维张量：官方 HoloMotion G1 Critic 的 1046维状态/参考/误差信息，加上
+126维滞后接触历史、物体槽和慢物理参数。接触后缀只能来自 `t-1` 或更早时刻；`t+1/t+4/t+8`
+接触标志、法向力、切向力、滑移速度和摩擦利用率只作为监督标签，禁止同时进入对应输入。
+二者拥有独立 Encoder 和梯度，Critic 的 value loss
 不会修改 Teacher 的物理 latent。`G1TeacherActorModel(phase="teacher_training")` 会冻结
 Actor/Critic，只开放在线 Teacher 参数；
 每次优化器更新后调用 `update_teacher_ema()` 发布平滑权重。
@@ -33,6 +35,11 @@ Actor读取完整64维。当前监督包含滑移速度，Isaac提供可靠的�
 
 Teacher 预留 4 个稳定接触槽，顺序为左脚、右脚、左腕、右腕；未来 G1 bridge 必须按此顺序
 提供接触真值，不能仍沿用 K1 只有左右脚的两槽输入。
+
+接触监督遵循严格时间边界：`(state_t, action_t, contact_{t-1})` 预测 `contact_{t+1}`；
+4/8步接触头额外读取对应的已执行动作窗口，预测 `contact_{t+4}` 和 `contact_{t+8}`。
+早期实验 checkpoint 曾把 `contact_t` 同时作为输入和标签，其接触重建指标属于目标泄漏，
+只可保留作状态转移预训练，不得报告为接触力预测结果。
 
 Teacher 的动作宽度为 29，normalized core 宽度为 `9 + 2*29 = 67`。checkpoint 同时保存
 机器人 ID、两个模型配置、阶段和权重，防止把 K1/23/29/43DoF 权重静默装入 Isaac 模型。

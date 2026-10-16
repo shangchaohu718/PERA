@@ -10,6 +10,7 @@ import sys
 import time
 
 import torch
+from torch.nn import functional as F
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -28,12 +29,18 @@ from unified_motion.robot_contract import get_robot_contract  # noqa: E402
 
 def load_replay(path: Path) -> dict:
     saved = torch.load(path, map_location="cpu", weights_only=False)
-    if saved.get("schema") != 1 or saved.get("robot") != "g1_29dof":
+    if saved.get("schema") not in (1, 2) or saved.get("robot") != "g1_29dof":
         raise ValueError(f"unsupported G1 Teacher replay: {path}")
     frames = saved["frames"]
     required = {"critic", "core", "contacts", "found", "start", "action", "next_core"}
-    if not required.issubset(frames) or set(frames) - required - {"params"}:
+    optional = {"params", "next_contacts", "next_found", "next_contact_valid"}
+    if not required.issubset(frames) or set(frames) - required - optional:
         raise ValueError(f"replay fields mismatch in {path}: {set(frames)}")
+    if ("next_contacts" in frames) != ("next_found" in frames):
+        raise ValueError(f"replay must provide both next contact tensors: {path}")
+    if saved.get("schema") == 2 and not {
+            "next_contacts", "next_found", "next_contact_valid"}.issubset(frames):
+        raise ValueError(f"schema-2 replay requires explicit next contact validity: {path}")
     if "params" not in frames:
         # Backward-compatible nominal-physics replay. New randomized replays
         # always persist the exact normalized pair.
@@ -49,24 +56,66 @@ def load_replay(path: Path) -> dict:
     }
 
 
+def contact_sequences(frames: dict, start: int, end: int, device: torch.device):
+    """Return strictly lagged inputs and next-frame contact supervision."""
+    current = frames["contacts"][start:end]
+    current_found = frames["found"][start:end]
+    starts = frames["start"][start:end].bool()
+    history = torch.zeros_like(current)
+    history_found = torch.zeros_like(current_found)
+    if start > 0:
+        history[0] = frames["contacts"][start - 1]
+        history_found[0] = frames["found"][start - 1]
+    if end - start > 1:
+        history[1:] = frames["contacts"][start:end - 1]
+        history_found[1:] = frames["found"][start:end - 1]
+    history[starts] = 0
+    history_found[starts] = False
+
+    valid = torch.ones(end - start, dtype=torch.bool)
+    if "next_contacts" in frames:
+        target = frames["next_contacts"][start:end]
+        target_found = frames["next_found"][start:end]
+        valid = frames.get(
+            "next_contact_valid", torch.ones_like(frames["start"], dtype=torch.bool)
+        )[start:end].bool().clone()
+    else:
+        # Schema-1 recovery: frame t+1 was recorded as the following frame's
+        # pre-step contact. The final replay frame has no recoverable target.
+        target = torch.zeros_like(current)
+        target_found = torch.zeros_like(current_found)
+        available = min(end, frames["contacts"].shape[0] - 1) - start
+        if available > 0:
+            target[:available] = frames["contacts"][start + 1:start + 1 + available]
+            target_found[:available] = frames["found"][start + 1:start + 1 + available]
+            valid[:available] &= ~frames["start"][start + 1:start + 1 + available].bool()
+        if end == frames["contacts"].shape[0]:
+            valid[-1] = False
+    return tuple(value.unsqueeze(0).to(device) for value in (
+        history, history_found, target, target_found, valid))
+
+
 def make_window(replay: dict, start: int, sequence: int, device: torch.device) -> dict:
     frames = replay["frames"]
     end = min(start + sequence, frames["core"].shape[0])
     critic = frames["critic"][start:end].unsqueeze(0).to(device)
-    contact = frames["contacts"][start:end].unsqueeze(0).to(device)
-    found = frames["found"][start:end].unsqueeze(0).to(device)
+    contact_history, history_found, contact, found, contact_valid = contact_sequences(
+        frames, start, end, device)
     length = end - start
     params = frames["params"][start:end].unsqueeze(0).to(device)
     privilege = torch.cat((
-        contact.flatten(-2), torch.zeros(1, length, 68, device=device), params,
+        contact_history.flatten(-2), torch.zeros(1, length, 68, device=device), params,
     ), -1)
     starts = frames["start"][start:end].unsqueeze(0).to(device).bool()
     # Every sampled window is an independent Transformer sequence.
     starts[:, 0] = True
     return {
         "inputs": torch.cat((critic, privilege), -1),
+        "contact_history": contact_history,
+        "history_found": history_found,
         "contact": contact,
         "found": found,
+        "contact_valid": contact_valid,
         "params": params,
         "starts": starts,
         "actions": frames["action"][start:end].unsqueeze(0).to(device),
@@ -101,6 +150,48 @@ def multistep_supervision(teacher, output: dict, batch: dict, config) -> torch.T
                 mask, predicted[..., section] - truth[..., section].detach(), 0.0)
             group_losses.append(error.square().sum() / mask.sum().clamp_min(1))
         terms.append(torch.stack(group_losses).mean())
+    return torch.stack(terms).mean() if terms else batch["core"].new_zeros(())
+
+
+def future_contact_supervision(teacher, output: dict, batch: dict, config) -> torch.Tensor:
+    """Supervise t+4/t+8 contacts using future actions and future-only labels."""
+    terms = []
+    steps = batch["core"].shape[1]
+    for horizon in config.prediction_horizons:
+        length = steps - horizon + 1
+        if horizon <= 1 or length < 1:
+            continue
+        actions = torch.stack([
+            batch["actions"][:, offset:length + offset]
+            for offset in range(horizon)
+        ], -2)
+        prediction = teacher.predict_future_contacts(
+            output["latent"][:, :length], actions, batch["core"][:, :length],
+            horizon=horizon)
+        found = batch["found"][:, horizon - 1:length + horizon - 1]
+        contact = batch["contact"][:, horizon - 1:length + horizon - 1]
+        valid = batch["contact_valid"][:, horizon - 1:length + horizon - 1]
+        for offset in range(1, horizon):
+            valid = valid & ~batch["starts"][:, offset:length + offset]
+        mask = valid.unsqueeze(-1).expand_as(found)
+        contact_loss = F.binary_cross_entropy_with_logits(
+            prediction["contact_logits"], found.float(), reduction="none")
+        physics_target = contact[..., (9, 11, 12, 13)]
+        physics_mask = mask.unsqueeze(-1).expand_as(physics_target)
+        physics_loss = torch.where(
+            physics_mask,
+            (prediction["contact_physics"] - physics_target.detach()).square(), 0.0,
+        ).sum() / physics_mask.sum().clamp_min(1)
+        modes = torch.where(found, torch.where(
+            contact[..., 12] > config.contact_slip_threshold_m_s, 2, 1), 0).long()
+        mode_loss = F.cross_entropy(
+            prediction["contact_mode_logits"].flatten(0, -2), modes.flatten(),
+            reduction="none").unflatten(0, modes.shape)
+        terms.append(
+            torch.where(mask, contact_loss, 0.0).sum() / mask.sum().clamp_min(1)
+            + config.interaction_weight * physics_loss
+            + config.contact_mode_weight * (
+                torch.where(mask, mode_loss, 0.0).sum() / mask.sum().clamp_min(1)))
     return torch.stack(terms).mean() if terms else batch["core"].new_zeros(())
 
 
@@ -173,11 +264,12 @@ def evaluate(teacher, replay: dict, config, device, sequence: int) -> dict:
                 sums["count"][index] += error.numel()
         predicted = output["contact_logits"].sigmoid() >= 0.5
         truth = batch["found"]
-        tp += float((predicted & truth).sum())
-        fp += float((predicted & ~truth).sum())
-        fn += float((~predicted & truth).sum())
-        correct += float((predicted == truth).sum())
-        total += float(truth.numel())
+        contact_mask = batch["contact_valid"].unsqueeze(-1).expand_as(truth)
+        tp += float((predicted & truth & contact_mask).sum())
+        fp += float((predicted & ~truth & contact_mask).sum())
+        fn += float((~predicted & truth & contact_mask).sum())
+        correct += float(((predicted == truth) & contact_mask).sum())
+        total += float(contact_mask.sum())
     pred_mse = pred_sse / counts.clamp_min(1)
     persist_mse = persist_sse / counts.clamp_min(1)
     zero_parameter_mse = zero_parameter_sse / counts.clamp_min(1)
@@ -199,12 +291,12 @@ def evaluate(teacher, replay: dict, config, device, sequence: int) -> dict:
                     zero_parameter_mse[i].clamp_min(1.0e-12)),
             } for i, name in enumerate(names)
         },
-        "current_contact_reconstruction": {
+        "next_contact_prediction": {
             "accuracy": correct / max(total, 1.0),
             "precision": precision,
             "recall": recall,
             "f1": 2.0 * precision * recall / max(precision + recall, 1.0e-12),
-            "note": "current-contact target is present in privileged input",
+            "note": "targets are t+1; contact inputs are strictly t-1 or older",
         },
         "physics_parameter_reconstruction": {
             "friction_rmse_normalized": float(
@@ -277,6 +369,7 @@ def main() -> None:
             object_slots=4, width=128, heads=8, layers=4,
             context_steps=64, train_envs=1, learning_rate=1.0e-4,
             parameter_reconstruction_weight=(0.1 if has_randomized_physics else 0.0),
+            future_contact_weight=0.25, contact_input_lag=1,
             latent_groups=GROUPED_PHYSICS_LATENT,
         )
         teacher = PrivilegedTransformerTeacher(
@@ -300,12 +393,15 @@ def main() -> None:
             output = teacher(batch["inputs"], batch["starts"], batch["actions"], batch["core"])
             loss = teacher_supervision(
                 output, batch["next_core"], torch.ones_like(batch["next_core"], dtype=torch.bool),
-                batch["found"].float(), torch.ones_like(batch["found"]), batch["params"],
+                batch["found"].float(), batch["contact_valid"].unsqueeze(-1).expand_as(
+                    batch["found"]), batch["params"],
                 torch.ones(1, batch["core"].shape[1], dtype=torch.bool, device=device),
                 config, current_core=batch["core"], contact_physics=contact_physics,
                 contact_modes=modes,
             )
             loss = loss + config.multistep_weight * multistep_supervision(
+                teacher, output, batch, config)
+            loss = loss + config.future_contact_weight * future_contact_supervision(
                 teacher, output, batch, config)
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
