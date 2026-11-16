@@ -20,6 +20,9 @@ def main():
                 problems.append("Missing or changed README media: " + row["path"])
             if path.suffix == ".mp4":
                 allowed_videos.add(row["path"])
+    base_training = ROOT / "src/blinkmimic/train.py"
+    if base_training.exists():
+        problems.append("Base-policy training is outside this release: src/blinkmimic/train.py")
     paths = list(ROOT.rglob("*.py"))
     code = []
     for p in paths:
@@ -71,7 +74,7 @@ def main():
     problems += ["Duplicate source: " + str(v) for v in repeated]
     result = dict(
         python_files=len(code),
-        native_runtime_copies=len(list(ROOT.glob("**/blinkmimic/train.py"))),
+        base_training_included=base_training.exists(),
         duplicate_large_python_files=repeated,
         problems=problems,
         CUDA_initialized=False,

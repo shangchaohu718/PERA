@@ -4,13 +4,11 @@
 
 **Plug-in Experts for Robotic Actions in Continual Whole-Body Control**
 
-一个冻结的 HoloMotion 底座，按需启用独立训练的任务专家。
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [项目网站源码](https://github.com/shangchaohu718/PERA/tree/main/website) · [模型](docs/MODELS.md) · [安装](docs/ENVIRONMENT.md)
 
 </div>
 
-PERA 以 HoloMotion 官方 G1 v1.4 `model_14000` 为公共底座，独立训练新增任务 FFN 和 router。公共 Actor 与任务上下文编码器冻结。同一个 Actor 可安装多个任务专家；每个机器人最多开启一个专家，并使用独立时序缓存。
+PERA 的开源版本基于 HoloMotion 官方 G1 v1.4 `model_14000` 权重，提供任务专家、推理代码与场景复现资源。
 
 ## 技能展示
 

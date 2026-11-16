@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pera-g1"
 version = "0.1.0"
-description = "Frozen HoloMotion G1 policies with independently trained task FFNs"
+description = "PERA: Plug-in Experts for Robotic Actions in Continual Whole-Body Control"
 readme = "README.md"
 authors = [
   {name = "Shangchao Hu"},

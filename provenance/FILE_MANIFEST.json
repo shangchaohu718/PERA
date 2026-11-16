@@ -279,27 +279,9 @@
       "origin": "release_interface_tooling_documentation_config_or_evidence"
     },
     {
-      "path": "configs/base_continue128.json",
-      "bytes": 1610,
-      "sha256": "34dd38071dc8a66732a3accb8d0101c045cd13f26b098544ef8d1df053376c85",
-      "origin": "adapted_or_selected"
-    },
-    {
       "path": "configs/base_retention_baseline.json",
       "bytes": 14069,
       "sha256": "389c64866f9f9f4a154cba49cda1313ccc1f7e07d69f36eba581cfc7f78ec58a",
-      "origin": "release_interface_tooling_documentation_config_or_evidence"
-    },
-    {
-      "path": "configs/base_smoke.json",
-      "bytes": 1548,
-      "sha256": "aff5a984e4cd6c174a9962f87b5e2687bbf21424221d263a3c7e959ecccf79b6",
-      "origin": "release_interface_tooling_documentation_config_or_evidence"
-    },
-    {
-      "path": "configs/base_train.json",
-      "bytes": 1559,
-      "sha256": "328038336401cce8914a5fa430c77da7ba93303f93818c15671d381ba7fbd5f0",
       "origin": "release_interface_tooling_documentation_config_or_evidence"
     },
     {
@@ -1479,12 +1461,6 @@
       "origin": "adapted_or_selected"
     },
     {
-      "path": "src/blinkmimic/buffer.py",
-      "bytes": 6027,
-      "sha256": "6999ab22bfc1b625f92eebac9d7b518bd5bfe6c1b5e11d7f1bd2c2e7cf42df48",
-      "origin": "adapted_or_selected"
-    },
-    {
       "path": "src/blinkmimic/dr.py",
       "bytes": 16273,
       "sha256": "4b297c9267c4196e827c57ac035553c4761a81774dbe1c2d048842a42978a38b",
@@ -1494,12 +1470,6 @@
       "path": "src/blinkmimic/env.py",
       "bytes": 26616,
       "sha256": "8957e43dd84b460b51a1ac07efb5945f66b4ab0daf2cda5863c2984f46304845",
-      "origin": "adapted_or_selected"
-    },
-    {
-      "path": "src/blinkmimic/evaluate.py",
-      "bytes": 10509,
-      "sha256": "f5ca3f774dccdcf04118a960d88d3e2e3f6e96e0c22488f0b006ed2c3b638be9",
       "origin": "adapted_or_selected"
     },
     {
@@ -1527,18 +1497,6 @@
       "origin": "adapted_or_selected"
     },
     {
-      "path": "src/blinkmimic/mirror.py",
-      "bytes": 1855,
-      "sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
-      "origin": "adapted_or_selected"
-    },
-    {
-      "path": "src/blinkmimic/moe_diagnostics.py",
-      "bytes": 4061,
-      "sha256": "9692275d6edf38352dc09dd46dfc09d6fa6c1374a134a1c21e829208b7b0aae5",
-      "origin": "adapted_or_selected"
-    },
-    {
       "path": "src/blinkmimic/moe_policy.py",
       "bytes": 8829,
       "sha256": "39ac23e72b9b2443cf6c1ee139ac388849cbfdf2eccdb3fe66e6928812cd8fa5",
@@ -1557,18 +1515,6 @@
       "origin": "adapted_or_selected"
     },
     {
-      "path": "src/blinkmimic/objective.py",
-      "bytes": 1229,
-      "sha256": "412b5514c44a962decff63a4197118981288e1939ef6bdf41a073d359376d20d",
-      "origin": "adapted_or_selected"
-    },
-    {
-      "path": "src/blinkmimic/optim.py",
-      "bytes": 12854,
-      "sha256": "88dd08c569e25c623d2e185e298860c8193a97f8a5e12e6f22cd6185169d6ac8",
-      "origin": "adapted_or_selected"
-    },
-    {
       "path": "src/blinkmimic/robot.py",
       "bytes": 3020,
       "sha256": "cbe7b13aa47faa96171c4d7531a1f5bb701df25326384a036867396e349f20cd",
@@ -1581,21 +1527,9 @@
       "origin": "adapted_or_selected"
     },
     {
-      "path": "src/blinkmimic/router_calibration.py",
-      "bytes": 2186,
-      "sha256": "4a6063eeb567a376054fa48ef929e75d10b49eb996d315ed3eeafca5452c8bbf",
-      "origin": "adapted_or_selected"
-    },
-    {
       "path": "src/blinkmimic/sensing.py",
       "bytes": 11982,
       "sha256": "911f8ae1aedce2745095247a36354b17ff66c8dfc2001189bfd98f9ae75fbc31",
-      "origin": "adapted_or_selected"
-    },
-    {
-      "path": "src/blinkmimic/train.py",
-      "bytes": 61968,
-      "sha256": "a361856a880ce469011373123f759c70a5fbf13bd5215bd9c088f1e5fd1fc864",
       "origin": "adapted_or_selected"
     },
     {
@@ -1941,5 +1875,6 @@
       "origin": "release_interface_tooling_documentation_config_or_evidence"
     }
   ],
-  "binary_weights_index": "resources/weights_manifest.json"
+  "binary_weights_index": "resources/weights_manifest.json",
+  "release_scope": "Base training and unused base-only support files excluded on 2026-11-16"
 }

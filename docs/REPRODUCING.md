@@ -1,5 +1,7 @@
 # Reproduction protocols and limitations
 
+For the HoloMotion-based open-source release, follow [SCENE_REPRODUCTION.md](SCENE_REPRODUCTION.md). Base pretraining is not included. The expert-training protocols below describe archived research experiments and require their own compatible base and resources.
+
 > Current release selection: official HoloMotion G1 v1.4 `model_14000` and the matching plugins in `resources/holomotion_weights_manifest.json`. See [HoloMotion release status](HOLOMOTION_RELEASE_STATUS.md). Self-trained MoE-MLP / v2.4 configurations and weights described below are historical artifacts, not the default release.
 
 ## Scope of v2.4
@@ -7,12 +9,6 @@
 The main model is the 608-observation / 730-goal / 29-action G1 MoE-MLP with ten observation frames. Its eight routed experts use Top-2 selection, plus one shared FFN. A frozen expansion adds one context-aware FFN and router. Choice uses corrected float32 scores; mixture probabilities use raw selected logits. Initial admission calibration is a probe target, not a forced quota during training. Learned router bias is clamped nonpositive; the separately calibrated fixed selection offset is not a continuous residual gate.
 
 `src/pera/routing.py` is the sole competitive implementation used by retained PPO and DAgger workflows. `src/pera/fusion.py` is the explicitly labeled continuous-fusion comparison. Historical formats are thin wrappers in `reproduction/`; checkpoint field names remain compatible. The shared FFN participates exactly once.
-
-## Base pretraining
-
-`configs/base_continue128.json` is the actual continuation configuration, including the original hardware-dependent total-wall-time limit. It needs the 8,626 parent checkpoint, all 128 motions and the calibrated bank. `base_train.json` uses the same architecture and training settings without a parent and without the wall-time cap; it is a from-scratch recipe, not an exact reproduction of the staged paper lineage. `base_smoke.json` is a short physical smoke configuration.
-
-Base train selection used declared training/retention/router criteria. The original 16 held-out motion groups were evaluated separately and did not select the checkpoint. The data contracts preserve those identities. Reusing an exact split does not remove hardware and stochastic training variation.
 
 ## Expert PPO
 

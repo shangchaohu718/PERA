@@ -114,16 +114,37 @@ def main():
         parser.error("Output exists; use a new name to preserve earlier packages")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     entries = []
+    payloads = {}
+    stored_payloads = 0
     with tarfile.open(args.output, "w:gz", dereference=True) as archive:
         for name in files:
             data = (ROOT / name).read_bytes()
             item = tarfile.TarInfo("PERA/" + name)
-            item.size = len(data)
+            digest = hashlib.sha256(data).hexdigest()
             item.mode = 0o644
-            archive.addfile(item, io.BytesIO(data))
-            entries.append(
-                dict(path=name, bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
-            )
+            # Only immutable binary resources share archive payloads; editable
+            # source, configuration and license files remain independent files.
+            deduplicate = Path(name).suffix.lower() in {
+                ".npz",
+                ".pt",
+                ".onnx",
+                ".stl",
+                ".obj",
+                ".png",
+                ".jpg",
+                ".jpeg",
+            }
+            if deduplicate and digest in payloads:
+                item.type = tarfile.LNKTYPE
+                item.linkname = payloads[digest]
+                archive.addfile(item)
+            else:
+                item.size = len(data)
+                archive.addfile(item, io.BytesIO(data))
+                stored_payloads += 1
+                if deduplicate:
+                    payloads[digest] = item.name
+            entries.append(dict(path=name, bytes=len(data), sha256=digest))
         payload = (
             json.dumps(
                 {
@@ -142,6 +163,7 @@ def main():
         json.dumps(
             dict(
                 files=len(files),
+                stored_payload_files=stored_payloads,
                 bytes=args.output.stat().st_size,
                 sha256=hashlib.sha256(args.output.read_bytes()).hexdigest(),
                 official_base_bundled=False,

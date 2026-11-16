@@ -1,0 +1,81 @@
+{
+  "schema": "pera.release_scope.v1",
+  "scope": "HoloMotion-based open-source release",
+  "base_training_included": false,
+  "removed_base_training_and_unused_support": [
+    {
+      "path": "src/blinkmimic/train.py",
+      "sha256": "a361856a880ce469011373123f759c70a5fbf13bd5215bd9c088f1e5fd1fc864",
+      "bytes": 61968
+    },
+    {
+      "path": "src/blinkmimic/buffer.py",
+      "sha256": "6999ab22bfc1b625f92eebac9d7b518bd5bfe6c1b5e11d7f1bd2c2e7cf42df48",
+      "bytes": 6027
+    },
+    {
+      "path": "src/blinkmimic/objective.py",
+      "sha256": "412b5514c44a962decff63a4197118981288e1939ef6bdf41a073d359376d20d",
+      "bytes": 1229
+    },
+    {
+      "path": "src/blinkmimic/optim.py",
+      "sha256": "88dd08c569e25c623d2e185e298860c8193a97f8a5e12e6f22cd6185169d6ac8",
+      "bytes": 12854
+    },
+    {
+      "path": "src/blinkmimic/router_calibration.py",
+      "sha256": "4a6063eeb567a376054fa48ef929e75d10b49eb996d315ed3eeafca5452c8bbf",
+      "bytes": 2186
+    },
+    {
+      "path": "src/blinkmimic/moe_diagnostics.py",
+      "sha256": "9692275d6edf38352dc09dd46dfc09d6fa6c1374a134a1c21e829208b7b0aae5",
+      "bytes": 4061
+    },
+    {
+      "path": "src/blinkmimic/mirror.py",
+      "sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
+      "bytes": 1855
+    },
+    {
+      "path": "src/blinkmimic/evaluate.py",
+      "sha256": "f5ca3f774dccdcf04118a960d88d3e2e3f6e96e0c22488f0b006ed2c3b638be9",
+      "bytes": 10509
+    },
+    {
+      "path": "configs/base_train.json",
+      "sha256": "328038336401cce8914a5fa430c77da7ba93303f93818c15671d381ba7fbd5f0",
+      "bytes": 1559
+    },
+    {
+      "path": "configs/base_continue128.json",
+      "sha256": "34dd38071dc8a66732a3accb8d0101c045cd13f26b098544ef8d1df053376c85",
+      "bytes": 1610
+    },
+    {
+      "path": "configs/base_smoke.json",
+      "sha256": "aff5a984e4cd6c174a9962f87b5e2687bbf21424221d263a3c7e959ecccf79b6",
+      "bytes": 1548
+    }
+  ],
+  "runtime_helpers_retained": "Motion loading, kinematics, observations, rotations, inference compatibility and expert-training simulation helpers. Original attribution is retained.",
+  "original_research_tree_modified": false,
+  "tests_passed": 17,
+  "cli_base_training_removed": true,
+  "prior_full_replay_imported_runtime_files_unchanged": 79,
+  "short_physical_probe": {
+    "scene_count": 7,
+    "seconds": 0.9999999999999966,
+    "resident_expert_count": 25,
+    "teacher_action_queries": 0,
+    "isolation": {
+      "steps": 8,
+      "actual_official_weights": true,
+      "single_vs_shared_action_max_abs": 0.0,
+      "forward_vs_reverse_action_max_abs": 0.0,
+      "distinct_attention_cache_storage": true
+    },
+    "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d"
+  }
+}

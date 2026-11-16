@@ -21,7 +21,6 @@ WORKFLOWS = {
     "retain-full": "experiments.blink_stairs_full_finetune_20261106.evaluate_retention",
     "transfer-prepare": "experiments.martial_transfer_v1_20261106.prepare",
     "transfer-eval": "experiments.martial_transfer_v1_20261106.evaluate",
-    "evaluate-base": "blinkmimic.evaluate",
 }
 
 
@@ -103,11 +102,6 @@ def main():
     c.add_argument("--device", default="cpu")
     e = sub.add_parser("experts", help="List installed experts in a composed Actor")
     e.add_argument("--checkpoint", type=Path, required=True)
-    t = sub.add_parser("train-base", help="Run the historical self-trained base recipe")
-    t.add_argument("--config", type=Path, default=ROOT / "configs/base_train.json")
-    t.add_argument("--output", type=Path, required=True)
-    t.add_argument("--resume", type=Path)
-    t.add_argument("--dry-run", action="store_true")
     r = sub.add_parser(
         "reproduce", help="Run a historical v2.4 workflow; pass workflow arguments after --"
     )
@@ -159,30 +153,6 @@ def main():
                 )
             )
         return 0
-    if a.command == "train-base":
-        cfg = json.loads(a.config.read_text())
-        cfg["log_dir"] = str(a.output.resolve())
-        if a.resume:
-            cfg["resume"] = str(a.resume.resolve())
-        for k in ["motion_dir", "resume"]:
-            if cfg.get(k) and not Path(cfg[k]).is_absolute():
-                cfg[k] = str(ROOT / cfg[k])
-        cmd = [sys.executable, "-m", "blinkmimic.train"]
-        for k, v in cfg.items():
-            if v is True:
-                cmd.append("--" + k)
-            elif v is not None and v is not False:
-                cmd.extend(["--" + k, str(v)])
-        if a.dry_run:
-            print(json.dumps(cmd, indent=2))
-            return 0
-        if not Path(cfg["motion_dir"]).is_dir():
-            p.error("Base motions are absent; see docs/RESOURCES.md")
-        if (a.output / "args.json").exists():
-            p.error(
-                "Output already contains a run; use a new directory or an explicit resume workflow"
-            )
-        return subprocess.call(cmd, cwd=ROOT, env=environment())
     args = a.arguments[1:] if a.arguments[:1] == ["--"] else a.arguments
     if not any(x in args for x in ["--help", "-h"]) and a.workflow not in ["transfer-prepare"]:
         if not (ROOT / "checkpoints/base/best.pt").is_file():

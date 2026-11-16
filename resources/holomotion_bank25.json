@@ -19,6 +19,6 @@
   "maximum_active_experts_per_inference": 1,
   "standalone_physical_scene_count": 15,
   "fresh_install_verified": true,
-  "release": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116",
+  "release": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116-clean",
   "release_asset": "PERA-HoloMotion-25experts-15scenes.tar.gz"
 }

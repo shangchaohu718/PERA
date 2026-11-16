@@ -14,13 +14,6 @@
     "modified": true
   },
   {
-    "source": "scripts/run_blink_g1_expand128.py",
-    "destination": "configs/base_continue128.json",
-    "source_sha256": "7b19fc07b54218ef9bb6c0fe9c940eb28e6fc93618393c31c496966ccf1194c7",
-    "destination_sha256": "34dd38071dc8a66732a3accb8d0101c045cd13f26b098544ef8d1df053376c85",
-    "modified": true
-  },
-  {
     "source": "experiments/blink_moe_g1_expand128_20261106/data/heldout_contract.json",
     "destination": "configs/data/heldout16.json",
     "source_sha256": "9799cc3698eb82c4ef5c0996a19c81d9ed036ef7fbbd89d0b8f70f103d631908",
@@ -791,13 +784,6 @@
     "modified": false
   },
   {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/buffer.py",
-    "destination": "src/blinkmimic/buffer.py",
-    "source_sha256": "10545c931d8b738731e72a18a44dd866379157708a7430dc8a51f912464b1990",
-    "destination_sha256": "6999ab22bfc1b625f92eebac9d7b518bd5bfe6c1b5e11d7f1bd2c2e7cf42df48",
-    "modified": true
-  },
-  {
     "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/dr.py",
     "destination": "src/blinkmimic/dr.py",
     "source_sha256": "62e1258cdbf34ca39133af57bbf5aeb63faf7e96e47bf120b02d9b8eeb7c3a66",
@@ -809,13 +795,6 @@
     "destination": "src/blinkmimic/env.py",
     "source_sha256": "94cebe50bcaa2f57e8cb7fe793be288de3e60dcf14693ff6627905e9da959aa8",
     "destination_sha256": "8957e43dd84b460b51a1ac07efb5945f66b4ab0daf2cda5863c2984f46304845",
-    "modified": true
-  },
-  {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/evaluate.py",
-    "destination": "src/blinkmimic/evaluate.py",
-    "source_sha256": "8ef17661991878398694be8d38245706330b494175433dc2ef1710a313cbe482",
-    "destination_sha256": "f5ca3f774dccdcf04118a960d88d3e2e3f6e96e0c22488f0b006ed2c3b638be9",
     "modified": true
   },
   {
@@ -847,20 +826,6 @@
     "modified": true
   },
   {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/mirror.py",
-    "destination": "src/blinkmimic/mirror.py",
-    "source_sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
-    "destination_sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
-    "modified": false
-  },
-  {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/moe_diagnostics.py",
-    "destination": "src/blinkmimic/moe_diagnostics.py",
-    "source_sha256": "092e3ece6930fbad7c534510a417c9292c3aa7ab10df6cb2f011b6883e3f58f6",
-    "destination_sha256": "9692275d6edf38352dc09dd46dfc09d6fa6c1374a134a1c21e829208b7b0aae5",
-    "modified": true
-  },
-  {
     "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/moe_policy.py",
     "destination": "src/blinkmimic/moe_policy.py",
     "source_sha256": "a967695e7ff60edf9ef18479e05d393007662b6be441b203c8475a9bd21ab4bd",
@@ -882,20 +847,6 @@
     "modified": true
   },
   {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/objective.py",
-    "destination": "src/blinkmimic/objective.py",
-    "source_sha256": "ae4964f37c17bc18a9efd973ed55de7dce7cfd7ac499ed25ea3e82e7c6c5e8bf",
-    "destination_sha256": "412b5514c44a962decff63a4197118981288e1939ef6bdf41a073d359376d20d",
-    "modified": true
-  },
-  {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/optim.py",
-    "destination": "src/blinkmimic/optim.py",
-    "source_sha256": "f1358c1aebd14e4215766dccdd614cfa3cf5b8abc9c85e5b888d0661adef1816",
-    "destination_sha256": "88dd08c569e25c623d2e185e298860c8193a97f8a5e12e6f22cd6185169d6ac8",
-    "modified": true
-  },
-  {
     "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/robot.py",
     "destination": "src/blinkmimic/robot.py",
     "source_sha256": "660eb1dfc74fa32e565cac9375bea171c93908c530fbdb9e6cf5b363f6f24a91",
@@ -910,24 +861,10 @@
     "modified": true
   },
   {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/router_calibration.py",
-    "destination": "src/blinkmimic/router_calibration.py",
-    "source_sha256": "0a3e43f1f3fe9466ac8801b81fd8d196ef1215df901bd611f9722ed7f1366890",
-    "destination_sha256": "4a6063eeb567a376054fa48ef929e75d10b49eb996d315ed3eeafca5452c8bbf",
-    "modified": true
-  },
-  {
     "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/sensing.py",
     "destination": "src/blinkmimic/sensing.py",
     "source_sha256": "765a7931039c9ebe7f524a28f60571647721bbc0503522db2589b09e4698c378",
     "destination_sha256": "911f8ae1aedce2745095247a36354b17ff66c8dfc2001189bfd98f9ae75fbc31",
-    "modified": true
-  },
-  {
-    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/train.py",
-    "destination": "src/blinkmimic/train.py",
-    "source_sha256": "59ae399ebed1bae0d084fbd10913bdae6781c8f5d416c9df4a5c80be10d97908",
-    "destination_sha256": "a361856a880ce469011373123f759c70a5fbf13bd5215bd9c088f1e5fd1fc864",
     "modified": true
   },
   {

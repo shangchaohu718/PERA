@@ -1,27 +1,21 @@
 # Implementation map
 
-PERA expands a frozen G1 MoE controller with task-specific FFN experts and competitive routing.
+This open-source release of PERA is based on the official HoloMotion G1 v1.4 weights.
 
 | Component | Code | Role |
 |---|---|---|
-| Public interface | `src/pera/__main__.py` | Explicit training/evaluation commands; no default jobs or downloads |
-| G1 base | `src/blinkmimic/networks.py`, `moe_policy.py` | MoE-MLP Actor, eight Top-2 public experts and one shared FFN |
-| Base learning | `src/blinkmimic/train.py`, `env.py`, `mdp.py` | Real MuJoCo-Warp collection, world model, policy learning and tracking rewards |
-| Expansion | `src/pera/routing.py` | One new FFN/router, actual 9-way Top-2 selection, frozen public state and cached feature replay |
-| Task context | `src/pera/context.py` | Canonical context-aware FFN and competitive routing, shared with independent training |
-| Expert bank | `src/pera/switching.py`, `configs/expert_bank.json` | One public Actor, 30 installed experts, explicit mutually exclusive switches and self-contained inference export |
-| Shared-world demo | `src/pera/multi_robot.py`, `showcase.py`, `interaction_showcase.py`, `configs/showcase.json` | Independent robot histories, grouped dispatch through one Actor, one shared MuJoCo physics state |
-| Fusion ablation | `src/pera/fusion.py` | Separate continuous-fusion comparison; not competitive admission |
-| Robot contract | `src/pera/robot.py`, `configs/robot.json` | Joint order, defaults, action scales, reference and sensor metadata |
-| Martial PPO | `reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/` | Isaac Lab rollout, separate Critic, 24 Actor updates per iteration |
-| Reward definitions | `reproduction/roundhouse_impl.py`, `configs/martial_isaac.yaml` | Original retained martial reward code and recipe |
-| Multi-teacher distillation | `reproduction/experiments/g1_competitive_suite31_v1/` | BC, online DAgger, teacher adapters, actual update accounting and retention evaluation |
-| External task bridges | `src/modumotion_g1/`, selected `reproduction/scripts/` | Named joints, sensor context, teacher native physics and action conversion |
-| Stairs A/B | `reproduction/experiments/blink_stairs_routing_ab_20261106/` | Matched competitive/fusion training and evaluation |
-| Full-Actor extension | `reproduction/experiments/blink_stairs_full_finetune_20261106/` | Explicitly unfreezes public weights; separate checkpoint format |
-| Transfer extension | `reproduction/experiments/martial_transfer_v1_20261106/` | Fixed-checkpoint unseen-motion study; additional data required |
-| Historical integration | `integrations/HoloMotion/` | Selected HoloMotion modules for Isaac/reference compatibility, not the primary MLP base |
+| Public interface | `src/pera/__main__.py` | Scene demonstrations, checks and explicit experiment entry points |
+| Official base | `src/modumotion_g1/official.py`, `integrations/HoloMotion/` | Load the official Actor and preserve its observation/action contract |
+| Task FFN/router | `src/modumotion_g1/domain_moe.py` | Matching domain parameters and original checkpoint routing |
+| Expert bank | `src/pera/holomotion_bank.py` | One Actor holding 25 experts; at most one domain active per call |
+| Robot memory | `src/pera/multi_robot.py`, `holomotion_showcase.py` | Shared weights with independent temporal caches |
+| Scene runtime | `src/pera/interaction_showcase.py`, `multirate_showcase.py`, `compact_showcase.py` | Scene physics, task observations, action mapping and rendering |
+| Fifteen-scene suite | `tools/replay_suite.py`, `configs/reproduction_suite15.json` | Sequential replay, measured reports and videos |
+| Motion and geometry helpers | `src/blinkmimic/motion.py`, `kinematics.py`, `mdp.py`, `rotations.py`, `sensing.py` | Motion loading, kinematics, observations and sensor conventions |
+| External task bridges | `src/modumotion_g1/`, selected `reproduction/experiments/` | Native teacher interfaces, task context and expert-training adapters |
+| Distribution checks | `tools/build_scene_release.py`, `verify_scene_files.py`, `check_holomotion_release.py` | Hash-verified resources and archive construction |
+| Project website | `website/` | Editable website and individual recorded task demonstrations |
 
-The date-bearing directories preserve the original experiment identities and checkpoint schemas. Public commands use stable workflow names. Compatibility wrappers delegate to the canonical routing module; there is only one native base runtime.
+Base-policy pretraining is excluded. The remaining `blinkmimic` modules provide runtime utilities and compatibility for retained expert experiments; their original attribution is preserved in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). They do not select the public Actor used by the HoloMotion demonstrations.
 
-Upstream source repositories remain external and pinned in `resources/upstreams.json`. Original weights, motion arrays, meshes, generated replay, logs and videos are excluded. `provenance/source_files.json` maps retained source origins to the final files; `provenance/VALIDATION.json` records checks and their limits.
+Historical competitive routing, A/B experiments and fixed-checkpoint evaluation code are retained separately from the official-base scene implementation. Their formats and protocols are not interchangeable. Current release scope is recorded in [RELEASE_SCOPE.json](../provenance/RELEASE_SCOPE.json).

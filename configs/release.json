@@ -38,5 +38,7 @@
   "website_migration": "provenance/WEBSITE_MIGRATION.json",
   "artifact_delivery_record": "provenance/RELEASE_DELIVERY.json",
   "authenticated_artifact_retrieval_verified": true,
-  "release_url": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116"
+  "release_url": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116-clean",
+  "release_scope": "HoloMotion-based open-source release; base-policy training excluded",
+  "scope_check": "provenance/RELEASE_SCOPE.json"
 }

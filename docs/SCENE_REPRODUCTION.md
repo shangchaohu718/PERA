@@ -51,7 +51,7 @@ overwritten. See [the upstream download and license guide](HOLOMOTION_DOWNLOAD.m
 Invited users with an authenticated GitHub CLI can download the paired source and resource archive:
 
 ```bash
-gh release download holomotion-20261116 --repo shangchaohu718/PERA \
+gh release download holomotion-20261116-clean --repo shangchaohu718/PERA \
   --pattern 'PERA-HoloMotion-25experts-15scenes.tar.gz' --pattern 'SHA256SUMS'
 sha256sum --check SHA256SUMS
 tar -xzf PERA-HoloMotion-25experts-15scenes.tar.gz

@@ -4,13 +4,11 @@
 
 **Plug-in Experts for Robotic Actions in Continual Whole-Body Control**
 
-One frozen HoloMotion base. Independently trained task experts.
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [Website source](https://github.com/shangchaohu718/PERA/tree/main/website) · [Models](docs/MODELS.md) · [Setup](docs/ENVIRONMENT.md)
 
 </div>
 
-PERA extends the official HoloMotion G1 v1.4 `model_14000` policy with independently trained task FFNs and routers. The public Actor and task context encoders remain frozen. One shared Actor can hold multiple task experts; each robot enables at most one expert and has its own temporal state.
+The open-source release of PERA is based on the official HoloMotion G1 v1.4 `model_14000` weights and provides task experts, inference code, and scene reproduction resources.
 
 ## Skill gallery
 
