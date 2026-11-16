@@ -31,5 +31,6 @@
   "uploaded": true,
   "uploaded_source_commit": "502f64bcc5cb3152084d6c3d1055ed7a11ab64cd",
   "website_files_uploaded": 430,
-  "source_and_media_uploaded": true
+  "source_and_media_uploaded": true,
+  "readme_identity": "Paper title; open-source release explicitly based on official HoloMotion weights"
 }
