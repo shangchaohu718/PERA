@@ -5,7 +5,13 @@
   "destination": "https://github.com/shangchaohu718/PERA",
   "source_blob_count": 430,
   "changed_for_canonical_repository": [
+    "website/README.md",
     "website/docs/github-pages-actions.yml.example",
+    "website/public/data/curve.csv",
+    "website/public/data/expert-catalog.json",
+    "website/public/data/roundhouse.csv",
+    "website/public/media/catalog31/pmt_optimized_scene0-on.json",
+    "website/scripts/check_catalog.mjs",
     "website/src/content.js",
     "website/tools/deploy-pages.mjs"
   ],
@@ -21,5 +27,9 @@
   "website_gallery_recordings_verified": 40,
   "website_gallery_task_count": 20,
   "build_passed": true,
-  "workflow_delivery": "templates_only; publishing token lacks workflow scope"
+  "workflow_delivery": "templates_only; publishing token lacks workflow scope",
+  "uploaded": true,
+  "uploaded_source_commit": "502f64bcc5cb3152084d6c3d1055ed7a11ab64cd",
+  "website_files_uploaded": 430,
+  "source_and_media_uploaded": true
 }

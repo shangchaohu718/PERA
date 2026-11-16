@@ -13,7 +13,7 @@
   "excluded_bundles": [
     "checkpoints/composed/pera_30_experts.pt"
   ],
-  "stage": "isolated_15scene_replay_passed_release_prepared",
+  "stage": "private_release_published_authenticated_download_verified",
   "standalone_reproduction_verified": true,
   "training_reproduction_verified": false,
   "official_base_distribution": "external_user_download_only",
@@ -35,5 +35,8 @@
   "fresh_install_verified": true,
   "reproduction_suite": "configs/reproduction_suite15.json",
   "website": "website/",
-  "website_migration": "provenance/WEBSITE_MIGRATION.json"
+  "website_migration": "provenance/WEBSITE_MIGRATION.json",
+  "artifact_delivery_record": "provenance/RELEASE_DELIVERY.json",
+  "authenticated_artifact_retrieval_verified": true,
+  "release_url": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116"
 }
