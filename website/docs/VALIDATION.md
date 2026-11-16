@@ -1,3 +1,5 @@
+> Current repository subpath: `/PERA/`. The `/PERA/` production build and 40 recording checks passed during the release cleanup. The earlier sections below preserve historical browser checks, including the former `/PERA-g1/` path; they are not current deployment configuration. See [the website guide](../README.md).
+
 # Website verification
 
 Earlier sections are an audit history. The 2026-11-06 section at the end describes the current website.

@@ -5,7 +5,6 @@ import copy
 import importlib.util
 import json
 import sys
-from pathlib import Path
 
 from pera.paths import ROOT
 

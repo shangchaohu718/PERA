@@ -1,6 +1,6 @@
 # Data and checkpoint resources
 
-> Current release selection: official HoloMotion G1 v1.4 `model_14000` and the matching plugins in `resources/holomotion_weights_manifest.json`. See [HoloMotion release status](HOLOMOTION_RELEASE_STATUS.md). Self-trained MoE-MLP / v2.4 configurations and weights described below are historical artifacts, not the default release.
+> Current release selection: official HoloMotion G1 v1.4 `model_14000` and the matching plugins in `resources/holomotion_weights_manifest.json`. See [HoloMotion release status](../HOLOMOTION_RELEASE_STATUS.md). Self-trained MoE-MLP / v2.4 configurations and weights described below are historical artifacts, not the default release.
 
 This is a source release. Large binary assets are intentionally separate and ignored by Git. `resources/manifest.json` records expected destinations, SHA256 hashes, byte counts and relative source identities. `resources/upstreams.json` pins the Git source repositories. `resources/mimicx_release.json` pins the paired MimicX asset/policy revisions and release indexes.
 
@@ -41,7 +41,7 @@ The new PERA base and private retarget exports do not yet have public release UR
 | ATHLETE | Original ATHLETE source, tennis assets, ONNX policy and frozen context normalization |
 | ULTRA | Original ULTRA runtime, released teacher, physical box meshes and original motion |
 
-The retained adapters preserve task-specific physical success definitions. The original teacher source is external, not replaced by a mock policy. Official HoloMotion v1.4 Actor/Critic weights are not bundled. Download them directly from the official model repository using [the download guide](HOLOMOTION_DOWNLOAD.md), placing them under `checkpoints/holomotion_v1.4/`. Twelve matching task plugins are staged locally under `checkpoints/holomotion_experts/`; see `resources/holomotion_weights_manifest.json`. No upload was performed. The historical self-trained resource manifest below does not cover this official-base selection.
+The retained adapters preserve task-specific physical success definitions. The original teacher source is external, not replaced by a mock policy. Official HoloMotion v1.4 Actor/Critic weights are not bundled. Download them directly from the official model repository using [the download guide](../HOLOMOTION_DOWNLOAD.md), placing them under `checkpoints/holomotion_v1.4/`. Twelve matching task plugins are staged locally under `checkpoints/holomotion_experts/`; see `resources/holomotion_weights_manifest.json`. No upload was performed. The historical self-trained resource manifest below does not cover this official-base selection.
 
 For Git sources, preview with `python tools/fetch_upstreams.py --plan`; fetch explicitly with `--fetch --only mjlab InstinctMJ instinct_rl PMT`. For the pinned MimicX files, run `PYTHONPATH=src python tools/fetch_mimicx_release.py` only when downloads are intended; this tool performs network acquisition. Nothing fetches weights while importing PERA or printing CLI help.
 
@@ -53,4 +53,4 @@ The PMT teacher was locally adapted; treating it as an untouched official releas
 
 ## Locally prepared model files
 
-The local review folder now includes the base and existing task/model checkpoints. See [model contents and historical evaluation status](MODELS.md) and `resources/weights_manifest.json`. These files are ignored by Git and have not been uploaded. Verify them with `python tools/verify_weights.py`.
+The local review folder now includes the base and existing task/model checkpoints. See [model contents and historical evaluation status](MODELS_20261113.md) and `resources/weights_manifest.json`. These files are ignored by Git and have not been uploaded. Verify them with `python tools/verify_weights.py`.

@@ -1,6 +1,8 @@
 """Fetch exact source commits, never environments, Torch or data by default."""
 
-import argparse, json, subprocess
+import argparse
+import json
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]

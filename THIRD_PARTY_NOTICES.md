@@ -62,8 +62,7 @@ SOFTWARE.
 
 The Python dependencies (mjlab, MuJoCo, MuJoCo Warp, NVIDIA Warp, PyTorch, matplotlib, Pillow) are installed from
 their own distributions under their own licenses (Apache-2.0, BSD-3-Clause and others) and are not redistributed here.
-The LAFAN1 motions (Ubisoft La Forge, CC BY-NC-ND 4.0) and the Unitree G1 description (BSD-3-Clause) must be obtained separately and are not redistributed here either; files derived from LAFAN1 (videos, GIFs,
-checkpoints) are not covered by this repository's MIT License.
+The historical LAFAN1 motion-array dataset (Ubisoft La Forge, CC BY-NC-ND 4.0) is not bundled. Files derived from LAFAN1 (videos, GIFs, checkpoints) are not covered by this repository's MIT License. The selected Unitree G1 model descriptions and ATHLETE deployment meshes are included for scene replay; retain their BSD-3-Clause notice in `licenses/Unitree.txt` and the accompanying source notices. Other upstream assets remain separately supplied as described by the scene resource manifests.
 
 ## HoloMotion and robot integration
 
@@ -75,7 +74,7 @@ checkpoints) are not covered by this repository's MIT License.
 
 ## External teachers
 
-InstinctMJ, instinct_rl, mjlab, PMT, MimicX, ATHLETE and ULTRA are separately supplied source/data/model projects. Their names identify provenance and compatibility, not an endorsement or transfer of their licenses. The release does not redistribute their pretrained weights or motion datasets. Pinned Git revisions and paired MimicX release revisions are in `resources/`.
+InstinctMJ, instinct_rl, mjlab, PMT, MimicX, ATHLETE and ULTRA identify the upstream source/data/model projects. Their names identify provenance and compatibility, not an endorsement or transfer of their licenses. Full teacher-policy bundles and original training datasets are not included. The selected runtime code, frozen context encoders and scene references included for inference are described below and in the scene manifests. Pinned Git revisions and paired MimicX release revisions are in `resources/`.
 
 ## Official HoloMotion model downloads
 
@@ -95,9 +94,9 @@ by the HoloMotion scene replay. Original notices are retained beside each subset
 |---|---|
 | ATHLETE | [MIT notice](vendor/ATHLETE/LICENSE.md) |
 | ULTRA | [Apache-2.0](vendor/ULTRA/LICENSE), [InterMimic notice](vendor/ULTRA/LICENSE-InterMimic) |
-| InstinctMJ | [license](vendor/InstinctMJ/LICENSE) |
+| InstinctMJ | [CC BY-NC 4.0](vendor/InstinctMJ/LICENSE) |
 | mjlab | [license](vendor/mjlab/LICENSE) |
-| instinct_rl | [BSD-3-Clause](vendor/instinct_rl/LICENSE) |
+| instinct_rl | [CC BY-NC 4.0](vendor/instinct_rl/LICENSE) |
 
 [Runtime source identities](resources/runtime_sources.json) pin the exact selected
 file bytes, upstream URLs and revisions. These are runtime subsets, not complete

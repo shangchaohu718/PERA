@@ -8,7 +8,6 @@ import onnx
 from onnx import numpy_helper
 from experiments.athlete_tennis_v1.distill import POLICY, torch, np
 from torch import nn
-from torch.nn import functional as F
 
 
 class BatchedTeacher(nn.Module):

@@ -8,17 +8,14 @@ markers are suppressed to keep the common MjModel immutable during stepping.
 
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
-import time
 
 from experiments.athlete_tennis_v1.distill import (
-    CONTRACT,
     POLICY,
     Bridge,
     BallAudit,
     cfg,
     torch,
     np,
-    mujoco,
     PerceptiveActorObservationInput,
     build_perceptive_actor_terms,
     TensorDict,

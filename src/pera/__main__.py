@@ -9,20 +9,6 @@ import subprocess
 import sys
 from .paths import ROOT
 
-WORKFLOWS = {
-    "distill": "experiments.g1_competitive_suite31_v1.pipeline",
-    "ppo": "experiments.blink_competitive_martial_ppo_v1_20261106.train",
-    "stairs-ab": "experiments.blink_stairs_routing_ab_20261106.train",
-    "consolidate": "experiments.blink_stairs_full_finetune_20261106.finetune",
-    "collect-old": "experiments.blink_stairs_full_finetune_20261106.collect_old",
-    "retain": "experiments.g1_competitive_suite31_v1.evaluate_retention",
-    "retain-ppo": "experiments.blink_competitive_martial_ppo_v1_20261106.evaluate_retention",
-    "retain-ab": "experiments.blink_stairs_routing_ab_20261106.evaluate_retention",
-    "retain-full": "experiments.blink_stairs_full_finetune_20261106.evaluate_retention",
-    "transfer-prepare": "experiments.martial_transfer_v1_20261106.prepare",
-    "transfer-eval": "experiments.martial_transfer_v1_20261106.evaluate",
-}
-
 
 def environment():
     env = os.environ.copy()
@@ -30,9 +16,9 @@ def environment():
         ROOT / "src",
         ROOT / "reproduction",
         ROOT / "integrations/HoloMotion",
-        ROOT / "third_party/mjlab/src",
-        ROOT / "third_party/InstinctMJ/src",
-        ROOT / "third_party/instinct_rl",
+        ROOT / "vendor/mjlab/src",
+        ROOT / "vendor/InstinctMJ/src",
+        ROOT / "vendor/instinct_rl",
     ]
     env["PYTHONPATH"] = os.pathsep.join(map(str, paths))
     env.setdefault("OMP_NUM_THREADS", "4")
@@ -87,26 +73,21 @@ def main():
         )
         return subprocess.call([sys.executable, "-m", module, *sys.argv[2:]], cwd=ROOT, env=env)
     p = argparse.ArgumentParser(
-        description="PERA HoloMotion release preparation. No default training or downloads."
+        description="PERA official HoloMotion scene replay and expert inspection."
     )
     sub = p.add_subparsers(dest="command", required=True)
     d = sub.add_parser("doctor", help="Inspect dependencies; no CUDA initialization")
     d.add_argument("--resources", action="store_true")
-    sub.add_parser("check", help="Run historical self-trained CPU routing/freeze contract checks")
+    sub.add_parser("check", help="Run CPU routing/freeze compatibility checks; no skill evaluation")
     sub.add_parser(
         "demo", help="Run shared-world multi-robot inference; use demo --help for options"
     )
-    c = sub.add_parser("compose", help="Compose historical self-trained competitive checkpoints")
-    c.add_argument("--config", type=Path, default=ROOT / "configs/expert_bank.json")
-    c.add_argument("--output", type=Path, required=True)
-    c.add_argument("--device", default="cpu")
-    e = sub.add_parser("experts", help="List installed experts in a composed Actor")
-    e.add_argument("--checkpoint", type=Path, required=True)
-    r = sub.add_parser(
-        "reproduce", help="Run a historical v2.4 workflow; pass workflow arguments after --"
+    e = sub.add_parser("experts", help="List the experts in the official HoloMotion bank")
+    e.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=ROOT / "checkpoints/holomotion_experts/pera_25skills.experts.pt",
     )
-    r.add_argument("workflow", choices=WORKFLOWS)
-    r.add_argument("arguments", nargs=argparse.REMAINDER)
     a = p.parse_args()
     if a.command == "doctor":
         return doctor(a.resources)
@@ -114,56 +95,28 @@ def main():
         from .smoke import main as check
 
         return check()
-    if a.command in {"compose", "experts"}:
-        from .switching import SwitchedActor, compose_config, file_digest
+    if a.command == "experts":
+        import torch
 
-        if a.command == "compose":
-            bank = compose_config(a.config, device=a.device)
-            bank.save_bundle(a.output)
-            print(
-                json.dumps(
-                    dict(
-                        checkpoint=str(a.output),
-                        sha256=file_digest(a.output),
-                        bytes=a.output.stat().st_size,
-                        expert_count=len(bank.expert_names),
-                        max_active_experts=1,
-                        active_expert=bank.active_expert,
-                    ),
-                    indent=2,
-                )
-            )
-        else:
-            bank = SwitchedActor.load_bundle(a.checkpoint)
-            print(
-                json.dumps(
-                    dict(
-                        max_active_experts=1,
-                        active_expert=bank.active_expert,
-                        experts=[
-                            dict(
-                                name=n,
-                                context_dim=bank.expert_specs[n]["context_dim"],
-                                enabled=bank.switches[n],
-                            )
-                            for n in bank.expert_names
-                        ],
-                    ),
-                    indent=2,
-                )
-            )
-        return 0
-    args = a.arguments[1:] if a.arguments[:1] == ["--"] else a.arguments
-    if not any(x in args for x in ["--help", "-h"]) and a.workflow not in ["transfer-prepare"]:
-        if not (ROOT / "checkpoints/base/best.pt").is_file():
+        payload = torch.load(a.checkpoint, map_location="cpu", weights_only=True)
+        if payload.get("format") != "pera_official_holomotion_bank_v1":
             p.error(
-                "Missing checkpoints/base/best.pt; see docs/RESOURCES.md or run doctor --resources"
+                "Expected the official HoloMotion expert bank; historical banks are unsupported"
             )
-    if a.workflow == "distill" and "--config" not in args:
-        args = ["--config", str(ROOT / "configs/distillation31.json"), *args]
-    return subprocess.call(
-        [sys.executable, "-m", WORKFLOWS[a.workflow], *args], cwd=ROOT, env=environment()
-    )
+        print(
+            json.dumps(
+                {
+                    "max_active_experts": payload["max_active_experts_per_inference"],
+                    "experts": [
+                        {"name": name, "context": entry["record"].get("context")}
+                        for name, entry in payload["experts"].items()
+                    ],
+                    "inspection_only": True,
+                },
+                indent=2,
+            )
+        )
+        return 0
 
 
 if __name__ == "__main__":

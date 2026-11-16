@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import copy
 from dataclasses import asdict, dataclass
-from pathlib import Path
 
 import numpy as np
 import torch
@@ -183,6 +182,9 @@ def build_cfg(task, num_envs, difficulty=(0.2, 0.5), seed=0):
 
 class ParkourTask:
     def __init__(self, task, num_envs=8, device="cuda:0", difficulty=(0.2, 0.5), seed=0, cfg=None):
+        from modumotion_g1.training_dependencies import require_instinct_teacher_sources
+
+        require_instinct_teacher_sources()
         import mujoco
         import yaml
         from instinct_mj.rl.supermimic.kinematics import G1Kinematics

@@ -18,4 +18,4 @@ Use `PERA_PYTHON=/path/to/python` before either shell launcher to select an exis
 
 The single-bank scene runs allocate about 1.6 GiB of PyTorch GPU memory on the checked RTX 5080; driver, rendering and other-process allocations are additional. Simulation can run slower than real time while producing original-speed video.
 
-See [the complete reproduction instructions](SCENE_REPRODUCTION.md). The [archived environment notes](history/ENVIRONMENT_20261113.md) concern earlier training profiles; they are not interchangeable with this replay environment. From-scratch teacher/student training reproduction is outside the current acceptance scope.
+See [the complete reproduction instructions](SCENE_REPRODUCTION.md). The [archived environment notes](https://github.com/shangchaohu718/PERA/blob/b7bdc1ab98a9af433a554140ea10124a19b5a27a/docs/history/ENVIRONMENT_20261113.md) concern earlier training profiles; they are not interchangeable with this replay environment. From-scratch teacher/student training reproduction is outside the current acceptance scope.

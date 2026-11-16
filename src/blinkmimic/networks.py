@@ -312,4 +312,4 @@ class Critic(nn.Module):
 
 
 # Independent G1 MoE experiment; the original dense policy remains available.
-from .moe_policy import Policy
+from .moe_policy import Policy  # noqa: E402,F401 -- public compatibility export

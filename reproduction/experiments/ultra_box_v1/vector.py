@@ -11,7 +11,6 @@ from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import io
 import json
-from pathlib import Path
 
 import mujoco
 import numpy as np

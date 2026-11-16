@@ -1,7 +1,6 @@
 """PMT native Isaac Lab task; import only after AppLauncher has started."""
 
 import json
-from pathlib import Path
 
 import torch
 from tensordict import TensorDict

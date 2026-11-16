@@ -1,6 +1,6 @@
 """Compatibility with original experiment checkpoints; routing is shared."""
 
-from pera.routing import CompetitiveMoE, Plugin, features, public_digest
+from pera.routing import CompetitiveMoE, Plugin, features, public_digest  # noqa: F401 -- compatibility exports
 from pera.routing import load_base as _load, initialize as _initialize
 
 FORMAT = "blink_g1_eight_plus_one_competitive_v1"

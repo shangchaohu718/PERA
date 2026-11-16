@@ -8,19 +8,19 @@
   "routing": "continuous_anchor_group_mixture_with_native_public_Top2",
   "maximum_active_experts_per_robot": 1,
   "excluded_weight_manifests": [
-    "resources/weights_manifest.json"
+    "resources/weights_manifest.json",
+    "resources/manifest.json"
   ],
   "excluded_bundles": [
     "checkpoints/composed/pera_30_experts.pt"
   ],
-  "stage": "private_clean_source_release_published_authenticated_download_verified",
+  "stage": "validated_scene_replay",
   "standalone_reproduction_verified": true,
   "training_reproduction_verified": false,
   "official_base_distribution": "external_user_download_only",
   "official_base_download": "resources/holomotion_base.json",
   "exclude_official_weights_from_release": true,
   "repository": "https://github.com/shangchaohu718/PERA",
-  "repository_private": true,
   "upload_plan": "docs/UPLOAD_PLAN.zh-CN.md",
   "readme_media": "provenance/README_MEDIA.json",
   "standalone_reproduction_scope": "fifteen_scene_replay_three_groups_isolated_installed_environment",
@@ -37,9 +37,24 @@
   "website": "website/",
   "website_migration": "provenance/WEBSITE_MIGRATION.json",
   "artifact_delivery_record": "provenance/RELEASE_DELIVERY.json",
-  "authenticated_artifact_retrieval_verified": true,
-  "release_url": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116-clean",
+  "release_url": "https://github.com/shangchaohu718/PERA/releases/tag/holomotion-20261116-reviewed",
   "release_scope": "HoloMotion-based open-source release; base-policy training excluded",
   "scope_check": "provenance/RELEASE_SCOPE.json",
-  "base_training_included": false
+  "base_training_included": false,
+  "excluded_source_paths": [
+    "resources/weights_manifest.json",
+    "resources/manifest.json",
+    "AGENTS.md",
+    "docs/history",
+    "provenance/history",
+    "website",
+    "tools/check_holomotion_bank.py",
+    "tools/compose_holomotion_bank.py",
+    "tools/prepare_compact_showcase.py",
+    "tools/prepare_object_showcase.py",
+    "tools/prepare_interaction_showcase.py",
+    "provenance/RELEASE_DELIVERY.json"
+  ],
+  "release_hygiene": "provenance/RELEASE_HYGIENE.json",
+  "artifact_delivery_record_scope": "Live repository receipt; excluded from the immutable scene archive."
 }

@@ -37,5 +37,16 @@ include = ["pera*", "blinkmimic*", "modumotion_g1*"]
 line-length = 100
 target-version = "py311"
 
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "B023"]
+
+[tool.ruff.lint.per-file-ignores]
+# These adapters bootstrap optional frameworks before importing their task APIs.
+"reproduction/experiments/athlete_tennis_v1/distill.py" = ["E402"]
+"reproduction/experiments/athlete_tennis_v1/evaluate_official.py" = ["E402"]
+"reproduction/experiments/g1_competitive_suite31_v1/model.py" = ["E402"]
+"reproduction/roundhouse_impl.py" = ["E402"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src", "reproduction", "integrations/HoloMotion"]

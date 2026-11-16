@@ -32,7 +32,7 @@ PERA 的开源版本基于 HoloMotion 官方 G1 v1.4 `model_14000` 权重，提�
 使用 Python 3.11，并安装[场景回放说明](docs/SCENE_REPRODUCTION.md)中的固定版本依赖。
 
 ```bash
-python -m pip install -r requirements/scene-replay.txt
+python -m pip install -r requirements/scene-replay.txt -c requirements/scene-replay.lock.txt
 ```
 
 ## 权重
@@ -57,7 +57,7 @@ python tools/check_holomotion_release.py --base-dir /path/to/holomotion-v1.4
 
 ## 运行
 
-受邀用户从 [PERA Releases](https://github.com/shangchaohu718/PERA/releases) 获取配套源码与场景包，按[安装说明](docs/SCENE_REPRODUCTION.md)准备依赖，并从原作者处下载官方基座后运行：
+从 [PERA Releases](https://github.com/shangchaohu718/PERA/releases) 获取配套源码与场景包（仓库为私有时需要受邀权限），按[安装说明](docs/SCENE_REPRODUCTION.md)准备依赖，并从原作者处下载官方基座后运行：
 
 ```bash
 bash scripts/replay_all_scenes.sh --base-dir /path/to/holomotion-v1.4 \
@@ -68,7 +68,7 @@ bash scripts/replay_all_scenes.sh --base-dir /path/to/holomotion-v1.4 \
 
 ## 项目网站
 
-网站源码和单场景素材位于本仓库的 [website/](https://github.com/shangchaohu718/PERA/tree/main/website)。PERA 保持私有；当前账号套餐不支持该私有仓库的 GitHub Pages，因此新地址尚未上线，旧网页暂时保留。首页与本自述文件不展示合并场景测试拼图。
+网站源码和单场景素材位于本仓库的 [website/](https://github.com/shangchaohu718/PERA/tree/main/website)。部署说明见 [网站文档](website/README.md)。首页与本自述文件不展示合并场景测试拼图。
 
 ## 验证范围
 
@@ -77,6 +77,8 @@ bash scripts/replay_all_scenes.sh --base-dir /path/to/holomotion-v1.4 \
 ## 引用
 
 如果你的研究使用了 PERA，请引用 [PERA](CITATION.cff)。
+
+InstinctMJ、instinct_rl 和 HUSKY 的部分组件适用非商业条款，详见[第三方声明](THIRD_PARTY_NOTICES.md)。
 
 ## 许可证
 

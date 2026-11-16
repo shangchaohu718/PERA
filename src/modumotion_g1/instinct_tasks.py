@@ -4,7 +4,6 @@ import hashlib
 import json
 import math
 import shutil
-from pathlib import Path
 
 from pera.paths import ROOT
 

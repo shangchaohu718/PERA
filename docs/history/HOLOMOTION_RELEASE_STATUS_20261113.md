@@ -4,7 +4,7 @@
 
 The missing scene runtime sources are now supplied as a licensed, hashed subset in `vendor/`. The seven-region 12-second student replay passed using only checkout-local project sources. All seven task traces exactly matched the prior demonstration. External model paths are supported; no official base weights were added to this folder.
 
-See [scene replay instructions](SCENE_REPRODUCTION.md), the exact environment in `requirements/scene-replay.txt`, and [current verification](../../provenance/SCENE_REPRODUCTION_CHECK.json). The scene archive has also passed a complete replay after extraction into an independent directory, with exact task-trace parity. Fresh dependency installation, public asset retrieval and full training reproduction remain separate, unverified gates. The earlier audit below is retained as history.
+See [scene replay instructions](../SCENE_REPRODUCTION.md), the exact environment in `requirements/scene-replay.txt`, and [current verification](../../provenance/SCENE_REPRODUCTION_CHECK.json). The scene archive has also passed a complete replay after extraction into an independent directory, with exact task-trace parity. Fresh dependency installation, public asset retrieval and full training reproduction remain separate, unverified gates. The earlier audit below is retained as history.
 
 ## Historical audit
 
@@ -20,7 +20,7 @@ frozen-base FFN/router plugins. The historical self-trained MoE-MLP and its
   [the weight manifest](../../resources/holomotion_weights_manifest.json).
 - Official Actor/Critic weights are not bundled. Users download them directly
   from the pinned official v1.4.0 release following
-  [the download guide](HOLOMOTION_DOWNLOAD.md). URLs, revision, sizes and SHA256
+  [the download guide](../HOLOMOTION_DOWNLOAD.md). URLs, revision, sizes and SHA256
   are recorded in [holomotion_base.json](../../resources/holomotion_base.json).
 - Before removing the two official weight copies, all 380 declared resources
   (1,926,644,302 bytes) passed SHA256 verification, and the Actor with 12 plugins
@@ -69,4 +69,4 @@ physical survival, task success, teacher comparison and old-motion retention
 must be evaluated separately. Current videos include labeled episode loops.
 
 Full machine-readable findings:
-[HOLOMOTION_RELEASE_AUDIT.json](../../provenance/HOLOMOTION_RELEASE_AUDIT.json).
+[HOLOMOTION_RELEASE_AUDIT.json](../../provenance/history/HOLOMOTION_RELEASE_AUDIT.json).

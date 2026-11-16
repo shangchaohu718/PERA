@@ -1,8 +1,8 @@
 # Runtime environments
 
-For the current HoloMotion scene replay, use [SCENE_REPRODUCTION.md](SCENE_REPRODUCTION.md) and `requirements/scene-replay.txt`. The verified replay environment is Python 3.11.13, Torch 2.9.1+cu128, NumPy 1.26.0, MuJoCo 3.11.0 and Warp 1.14.0. The older environment snapshots below describe historical packaging checks. They are not the current scene replay lock.
+For the current HoloMotion scene replay, use [SCENE_REPRODUCTION.md](../SCENE_REPRODUCTION.md) and `requirements/scene-replay.txt`. The verified replay environment is Python 3.11.13, Torch 2.9.1+cu128, NumPy 1.26.0, MuJoCo 3.11.0 and Warp 1.14.0. The older environment snapshots below describe historical packaging checks. They are not the current scene replay lock.
 
-> Current release selection: official HoloMotion G1 v1.4 `model_14000` and the matching plugins in `resources/holomotion_weights_manifest.json`. See [HoloMotion release status](HOLOMOTION_RELEASE_STATUS.md). Self-trained MoE-MLP / v2.4 configurations and weights described below are historical artifacts, not the default release.
+> Current release selection: official HoloMotion G1 v1.4 `model_14000` and the matching plugins in `resources/holomotion_weights_manifest.json`. See [HoloMotion release status](../HOLOMOTION_RELEASE_STATUS.md). Self-trained MoE-MLP / v2.4 configurations and weights described below are historical artifacts, not the default release.
 
 Use separate compatible interpreters for the CPU checks, native physics and Isaac PPO. No environment was installed or modified while assembling this package.
 

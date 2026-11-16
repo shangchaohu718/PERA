@@ -92,6 +92,9 @@ def stairs_reference_end(
 
 def register_stairs_ppo_terms():
     """Register uniquely named terms with the original config resolvers."""
+    from modumotion_g1.training_dependencies import require_isaaclab
+
+    require_isaaclab()
     import isaaclab.envs.mdp.terminations as native_terminations
     from holomotion.src.env.isaaclab_components import isaaclab_rewards
 

@@ -7,7 +7,7 @@
   </material>
 
   <mujoco>
-    <compiler meshdir="../meshes" discardvisual="false"/>
+    <compiler meshdir="../../vendor/ATHLETE/robots/replay_unitree_description/" strippath="false" discardvisual="false"/>
   </mujoco>
 
   <!-- [CAUTION] uncomment when convert to mujoco -->

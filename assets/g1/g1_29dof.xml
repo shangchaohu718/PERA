@@ -1,5 +1,5 @@
 <mujoco model="g1_29dof_rev_1_0">
-  <compiler angle="radian" meshdir="./"/>
+  <compiler angle="radian" meshdir="../../vendor/ATHLETE/robots/replay_unitree_description/"/>
 
   <asset>
     <mesh name="pelvis" content_type="model/stl" file="meshes/pelvis.STL"/>

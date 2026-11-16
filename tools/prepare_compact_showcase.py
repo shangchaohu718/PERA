@@ -15,8 +15,14 @@ def digest(path):
 
 
 def export_rough(source, task_name="rough", device="cuda:0"):
-    import sys, copy, json, dataclasses, inspect, shutil
-    import numpy as np, torch
+    import sys
+    import copy
+    import json
+    import dataclasses
+    import inspect
+    import shutil
+    import numpy as np
+    import torch
 
     R = ROOT
     S = source
@@ -124,7 +130,10 @@ def export_rough(source, task_name="rough", device="cuda:0"):
 
 
 def crop_rough(task_name="rough"):
-    import numpy as np, mujoco, json, xml.etree.ElementTree as ET
+    import numpy as np
+    import mujoco
+    import json
+    import xml.etree.ElementTree as ET
 
     folder = ROOT / "data/showcase" / f"{task_name}_native/scene"
     src = folder / "scene.xml"

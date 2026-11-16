@@ -1,6 +1,10 @@
 """Static package audit. No simulator, CUDA, network or model loading."""
 
-import ast, collections, hashlib, json, re
+import ast
+import collections
+import hashlib
+import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -246,9 +246,10 @@ class TrackingSim:
         m, c = self.motion, self.spec.dr
         p, R, v, w, q, qd = (x.clone() for x in m.ref_state(frames))
         if self.reset_noise:
-            u = lambda half: torch.stack(
-                [torch.empty(n, device=dev).uniform_(-h, h) for h in half], -1
-            )  # noqa: E731
+
+            def u(half):
+                return torch.stack([torch.empty(n, device=dev).uniform_(-h, h) for h in half], -1)
+
             p = p + u(c.reset_pos)
             R = so3_exp(u(c.reset_rot)) @ R
             v = v + u(c.reset_lin_vel)
@@ -313,9 +314,10 @@ class TrackingSim:
             bins = m.frame_bin[frames]
         p, R, v, w, q, qd = (x.clone() for x in m.ref_state(frames))
         if self.reset_noise:
-            u = lambda half: torch.stack(
-                [torch.empty(N, device=dev).uniform_(-h, h) for h in half], -1
-            )  # noqa: E731
+
+            def u(half):
+                return torch.stack([torch.empty(N, device=dev).uniform_(-h, h) for h in half], -1)
+
             p = p + u(c.reset_pos)
             R = so3_exp(u(c.reset_rot)) @ R
             v = v + u(c.reset_lin_vel)

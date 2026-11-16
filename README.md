@@ -32,7 +32,7 @@ The open-source release of PERA is based on the official HoloMotion G1 v1.4 `mod
 Use Python 3.11 and the pinned [scene replay environment](docs/SCENE_REPRODUCTION.md).
 
 ```bash
-python -m pip install -r requirements/scene-replay.txt
+python -m pip install -r requirements/scene-replay.txt -c requirements/scene-replay.lock.txt
 ```
 
 ## Models
@@ -57,7 +57,7 @@ Each run shares one Actor with all 25 experts resident. Each robot selects one t
 
 ## Reproduce the scenes
 
-Authenticated access to the private repository and its release is required. Obtain the paired source/resource archive from [Releases](https://github.com/shangchaohu718/PERA/releases), then follow the [installation and verification guide](docs/SCENE_REPRODUCTION.md). Download official base weights from the upstream publisher separately.
+If the repository is private, invited access is required. Obtain the paired source/resource archive from [Releases](https://github.com/shangchaohu718/PERA/releases), then follow the [installation and verification guide](docs/SCENE_REPRODUCTION.md). Download official base weights from the upstream publisher separately.
 
 ```bash
 bash scripts/replay_all_scenes.sh --base-dir /path/to/holomotion-v1.4 \
@@ -68,7 +68,7 @@ This command runs the three scene groups in sequence and writes videos and measu
 
 ## Website
 
-Website source and media are in [website/](https://github.com/shangchaohu718/PERA/tree/main/website), in this same PERA repository. The repository remains private. Pages hosting is currently blocked by the account plan; the previous public website is retained during migration. Shared-world test mosaics are not homepage media.
+Website source and media are in [website/](https://github.com/shangchaohu718/PERA/tree/main/website), in this same PERA repository. Deployment instructions are in the [website guide](website/README.md). Shared-world test mosaics are not homepage media.
 
 ## Verification scope
 
@@ -77,6 +77,8 @@ The original seven-region replay matched the previous student demonstration exac
 ## Citation
 
 If you use PERA in your research, please cite [PERA](CITATION.cff).
+
+Third-party InstinctMJ, instinct_rl and HUSKY components include noncommercial terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ## License
 

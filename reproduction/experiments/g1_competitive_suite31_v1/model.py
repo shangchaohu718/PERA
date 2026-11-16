@@ -4,8 +4,9 @@ No legacy Transformer weights are loaded into this student. Legacy adapters
 supply named-joint physical state/reference and frozen task context only.
 """
 
-import hashlib, json, math
-from pathlib import Path
+import hashlib
+import json
+import math
 from types import SimpleNamespace
 from .runtime_deps import ensure_fk_parser
 
@@ -13,7 +14,6 @@ ensure_fk_parser()
 
 import torch
 from torch import nn
-from blinkmimic import networks
 from blinkmimic.rotations import quat_to_mat, mat_to_6d, yaw_mat, so3_log
 from . import routing_base as base
 

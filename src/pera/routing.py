@@ -136,7 +136,10 @@ def policy_from_args(a, device="cpu"):
     robot = get_robot("g1")
     if a["robot"] != "g1":
         raise ValueError("Only G1 checkpoints are supported")
-    widths = lambda n: tuple(map(int, a[n].split(",")))
+
+    def widths(n):
+        return tuple(map(int, a[n].split(",")))
+
     networks.AMP_DTYPE = torch.bfloat16 if a.get("amp") == "bf16" else None
     pi = Policy(
         608,

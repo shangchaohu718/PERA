@@ -1,14 +1,16 @@
 """The demo CLI must reject the archived base before starting a simulator."""
 
 import sys
+import json
 
 import pytest
 
 from pera import __main__ as cli
-from pera.paths import ROOT
 
 
-def test_demo_rejects_self_trained_default_before_launch(monkeypatch, capsys):
+def test_demo_rejects_self_trained_default_before_launch(monkeypatch, capsys, tmp_path):
+    config = tmp_path / "incompatible.json"
+    config.write_text(json.dumps({"base_family": "self_trained"}))
     monkeypatch.setattr(
         sys,
         "argv",
@@ -16,7 +18,7 @@ def test_demo_rejects_self_trained_default_before_launch(monkeypatch, capsys):
             "pera",
             "demo",
             "--config",
-            str(ROOT / "configs/showcase_competitive_archived.json"),
+            str(config),
             "--output",
             "runs/unused",
         ],

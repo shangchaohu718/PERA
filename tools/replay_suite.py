@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d"
@@ -31,6 +32,9 @@ def main():
         report_path.write_text(json.dumps(summary, indent=2) + "\n")
 
     save()
+    started = time.monotonic()
+    if args.video:
+        print("Offscreen recording: no simulation window will open.", flush=True)
     try:
         for group in suite["groups"]:
             target = out / group["id"]
@@ -56,7 +60,11 @@ def main():
                 command += ["--base-dir", str(args.base_dir.resolve())]
             if args.video:
                 command += ["--video"]
-            print(f"Running {group['id']}: {group['seconds']} simulated seconds", flush=True)
+            print(
+                f"Running {group['id']}: {group['seconds']} simulated seconds; "
+                f"log: {out / (group['id'] + '.log')}",
+                flush=True,
+            )
             with (out / (group["id"] + ".log")).open("w") as log:
                 subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True)
             report = json.loads((target / "report.json").read_text())
@@ -99,6 +107,11 @@ def main():
                     "completed_reference_intervals": task["completed_reference_intervals"],
                 }
             save()
+            print(
+                f"Completed {group['id']}; elapsed {time.monotonic() - started:.0f}s; "
+                f"results: {target}",
+                flush=True,
+            )
         if len(summary["scenes"]) != suite["unique_scene_count"]:
             raise RuntimeError("Scene roster differs from the declared suite")
         summary["status"] = "passed"

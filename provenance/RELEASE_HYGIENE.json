@@ -1,0 +1,303 @@
+{
+  "schema": "pera.release_hygiene.v1",
+  "status": "scene_archive_validation_passed",
+  "base_family": "holomotion_official_g1_v1.4",
+  "expert_count": 25,
+  "scene_count": 15,
+  "original_research_tree_modified": false,
+  "historical_source_revision": "b7bdc1ab98a9af433a554140ea10124a19b5a27a",
+  "retired_workflows": [
+    "self_trained_suite31",
+    "self_trained_martial_ppo",
+    "stairs_routing_ab",
+    "full_actor_finetuning",
+    "martial_transfer"
+  ],
+  "retired_source_copies_preserved": true,
+  "excluded_weight_manifests": [
+    "resources/weights_manifest.json",
+    "resources/manifest.json"
+  ],
+  "internal_agent_instructions_bundled": false,
+  "official_weights_bundled": false,
+  "training_reproduction_verified": false,
+  "pytest": {
+    "passed": 22,
+    "plain_python_m_pytest_without_PYTHONPATH": true,
+    "also_passed_from_extracted_archive": true
+  },
+  "lint": {
+    "rules": [
+      "E4",
+      "E7",
+      "E9",
+      "F",
+      "B023"
+    ],
+    "passed": true,
+    "bootstrap_import_order_preserved": true
+  },
+  "mesh_models_loaded_from_canonical_vendor_geometry": [
+    "assets/g1/g1_29dof.xml",
+    "assets/g1/g1_29dof_rev_1_0.urdf"
+  ],
+  "media_policy": "Keep README GIF previews and existing independent website recordings; no media replacement or artificial deduplication claims.",
+  "physical_replay": {
+    "status": "passed",
+    "scene_count": 15,
+    "groups": [
+      {
+        "id": "interaction",
+        "simulated_seconds": 12.000000000003581,
+        "actor_instances": 1,
+        "resident_expert_count": 25,
+        "teacher_action_queries": 0,
+        "max_active_experts_per_inference": 1,
+        "checkout_only_project_sources": true,
+        "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+        "expert_bank_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f",
+        "isolation": {
+          "steps": 8,
+          "actual_official_weights": true,
+          "single_vs_shared_action_max_abs": 0.0,
+          "forward_vs_reverse_action_max_abs": 0.0,
+          "distinct_attention_cache_storage": true
+        },
+        "torch_cuda_peak_allocated_MiB": 1635.779296875,
+        "raw_report_sha256": "eabb58a9198217df564ef26f72b29169585d44bbd5606ff42756780e80baccd4",
+        "tasks": [
+          {
+            "id": "ultra_largebox",
+            "control_records": 720,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          },
+          {
+            "id": "roll_vault_wall",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.1627001166343689
+          },
+          {
+            "id": "parkour_gaps",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          },
+          {
+            "id": "athlete_tennis",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          },
+          {
+            "id": "mimicx_descent",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.1306142956018448
+          },
+          {
+            "id": "mimicx_stairs",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.23643340170383453
+          },
+          {
+            "id": "husky_skateboard",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          }
+        ]
+      },
+      {
+        "id": "motion_terrain",
+        "simulated_seconds": 24.000000000003052,
+        "actor_instances": 1,
+        "resident_expert_count": 25,
+        "teacher_action_queries": 0,
+        "max_active_experts_per_inference": 1,
+        "checkout_only_project_sources": true,
+        "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+        "expert_bank_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f",
+        "isolation": {
+          "steps": 8,
+          "actual_official_weights": true,
+          "single_vs_shared_action_max_abs": 0.0,
+          "forward_vs_reverse_action_max_abs": 0.0,
+          "distinct_attention_cache_storage": true
+        },
+        "torch_cuda_peak_allocated_MiB": 1640.603515625,
+        "raw_report_sha256": "f746de61c61debb563136cd428b81faa7d95d503c57dc1e19e70910d60523add",
+        "tasks": [
+          {
+            "id": "mimicx_dance",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.18731684982776642
+          },
+          {
+            "id": "mimicx_kungfu",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.2254970222711563
+          },
+          {
+            "id": "mimicx_football",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.16411162912845612
+          },
+          {
+            "id": "roll_vault_no_wall",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": false,
+            "root_error_max_m": 0.1657000482082367,
+            "root_error_max_absolute_trace_difference_m": 0.014716312289237976
+          },
+          {
+            "id": "mimicx_descent",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.08740337938070297
+          },
+          {
+            "id": "mimicx_stairs",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.22449226677417755
+          },
+          {
+            "id": "husky_skateboard",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          },
+          {
+            "id": "parkour_rough",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          },
+          {
+            "id": "athlete_tennis",
+            "control_records": 1200,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          }
+        ]
+      },
+      {
+        "id": "body",
+        "simulated_seconds": 11.999999999999755,
+        "actor_instances": 1,
+        "resident_expert_count": 25,
+        "teacher_action_queries": 0,
+        "max_active_experts_per_inference": 1,
+        "checkout_only_project_sources": true,
+        "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+        "expert_bank_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f",
+        "isolation": {
+          "steps": 8,
+          "actual_official_weights": true,
+          "single_vs_shared_action_max_abs": 0.0,
+          "forward_vs_reverse_action_max_abs": 0.0,
+          "distinct_attention_cache_storage": true
+        },
+        "torch_cuda_peak_allocated_MiB": 1635.48486328125,
+        "raw_report_sha256": "c734e0c8b29159a4e7981c1ce05ee8cab3f3feebe95f3effa3deeb5b2437a0c8",
+        "tasks": [
+          {
+            "id": "diveroll_lab_no_wall",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.4471871256828308
+          },
+          {
+            "id": "diveroll_ramp_no_wall",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": false,
+            "root_error_max_m": 0.51700758934021,
+            "root_error_max_absolute_trace_difference_m": 0.004585683345794678
+          },
+          {
+            "id": "jump_sit_no_wall",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": 0.18783394992351532
+          },
+          {
+            "id": "athlete_tennis",
+            "control_records": 600,
+            "tracking_lost_frames": 0,
+            "records_equal_to_previous_replay": true,
+            "root_error_max_m": null
+          }
+        ]
+      }
+    ],
+    "runtime_files_equal_between_tested_archive_and_final_source": 78,
+    "non_bitwise_trace_comparisons": [
+      {
+        "group": "motion_terrain",
+        "id": "roll_vault_no_wall",
+        "control_records": 1200,
+        "tracking_lost_frames": 0,
+        "records_equal_to_previous_replay": false,
+        "root_error_max_m": 0.1657000482082367,
+        "root_error_max_absolute_trace_difference_m": 0.014716312289237976
+      },
+      {
+        "group": "body",
+        "id": "diveroll_ramp_no_wall",
+        "control_records": 600,
+        "tracking_lost_frames": 0,
+        "records_equal_to_previous_replay": false,
+        "root_error_max_m": 0.51700758934021,
+        "root_error_max_absolute_trace_difference_m": 0.004585683345794678
+      }
+    ],
+    "scope": "Three independent groups with explicit episode loops; not 15 uninterrupted transitions, a success-rate study or training reproduction."
+  },
+  "fresh_environment_install_this_cleanup": false,
+  "previous_isolated_install_evidence": "provenance/ISOLATED_ENVIRONMENT.json",
+  "markdown_relative_links": {
+    "documents": 25,
+    "broken": 0
+  },
+  "website": {
+    "base_path": "/PERA/",
+    "build": "passed",
+    "recordings_verified": 40,
+    "browser_interaction_retested": false
+  },
+  "archive_static_verification": {
+    "files": 892,
+    "missing": 0,
+    "changed": 0,
+    "scope": "physical-test candidate before documentation/evidence finalization"
+  },
+  "third_party_notice_corrections": [
+    "InstinctMJ and instinct_rl labels match their bundled CC BY-NC 4.0 license texts",
+    "Bundled Unitree descriptions/meshes and frozen scene assets are accurately distinguished from external full teacher models and training datasets"
+  ]
+}

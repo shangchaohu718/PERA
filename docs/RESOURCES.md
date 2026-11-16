@@ -1,6 +1,6 @@
 # Resources
 
-The canonical source and resource release is [shangchaohu718/PERA](https://github.com/shangchaohu718/PERA). It remains private; invited users need authenticated access.
+The canonical source and resource release is [shangchaohu718/PERA](https://github.com/shangchaohu718/PERA). If the repository is private, invited users need authenticated access; a public repository permits public downloads.
 
 ## Scene release
 
@@ -35,4 +35,4 @@ The 15 scenes run as three independent groups. All 25 expert networks are instal
 
 PERA source contributions use the root MIT license. Third-party code, geometry, motions, frozen encoders and learned models retain their applicable upstream terms; see [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). HUSKY resources include noncommercial restrictions. This package is not a blanket MIT license for all assets.
 
-[Archived resource notes](history/RESOURCES_20261113.md) describe prior self-trained and training-data experiments; they are not required for the current student replay.
+[Archived resource notes](https://github.com/shangchaohu718/PERA/blob/b7bdc1ab98a9af433a554140ea10124a19b5a27a/docs/history/RESOURCES_20261113.md) describe prior self-trained and training-data experiments; they are not required for the current student replay.

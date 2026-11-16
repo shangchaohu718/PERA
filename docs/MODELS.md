@@ -33,4 +33,4 @@ All 25 experts stay resident; each call selects zero or one. Other domain FFNs d
 
 The [skill catalogue](HOLOMOTION_SKILLS.zh-CN.md) distinguishes the 15 packaged scene replays from the remaining historical task experts. Network-output parity has been checked for all 25; that alone is not a physical success-rate evaluation.
 
-[Archived model notes](history/MODELS_20261113.md) describe earlier research families and are not the current release recipe.
+[Archived model notes](https://github.com/shangchaohu718/PERA/blob/b7bdc1ab98a9af433a554140ea10124a19b5a27a/docs/history/MODELS_20261113.md) describe earlier research families and are not the current release recipe.

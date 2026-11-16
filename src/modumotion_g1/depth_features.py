@@ -1,7 +1,8 @@
+"""Only the released frozen depth feature bridge; no world-model runner."""
+
 import hashlib
 from pathlib import Path
 
-"""Only the released frozen depth feature bridge; no world-model runner."""
 from torch import nn
 from instinct_rl.utils.utils import get_obs_slice
 

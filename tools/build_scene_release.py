@@ -13,6 +13,16 @@ OFFICIAL_PREFIX = "checkpoints/holomotion_v1.4/"
 
 def release_files(root):
     selected = set()
+    selection = json.loads((root / "configs/release.json").read_text())
+    excluded = tuple(
+        selection.get("excluded_source_paths", []) + selection.get("excluded_weight_manifests", [])
+    )
+
+    def excluded_source(name):
+        return any(
+            name == prefix or name.startswith(prefix.rstrip("/") + "/") for prefix in excluded
+        )
+
     allowed_media = {
         row["path"]
         for row in json.loads((root / "provenance/README_MEDIA.json").read_text())["files"]
@@ -28,12 +38,13 @@ def release_files(root):
         "tests",
         "docs",
         "licenses",
-        ".github",
         "requirements",
         "provenance",
         "assets",
     ]:
         for path in (root / name).rglob("*"):
+            if excluded_source(path.relative_to(root).as_posix()):
+                continue
             if not path.is_file() or any(
                 p in {"__pycache__", ".pytest_cache", ".ruff_cache"}
                 for p in path.relative_to(root).parts
@@ -56,7 +67,6 @@ def release_files(root):
         "CITATION.cff",
         ".gitignore",
         ".gitattributes",
-        "AGENTS.md",
     ]:
         if (root / name).is_file():
             selected.add(name)
@@ -96,6 +106,8 @@ def release_files(root):
             raise ValueError(f"Missing or changed asset: {name}")
         selected.add(name)
     for name in selected:
+        if excluded_source(name):
+            raise ValueError(f"Excluded source included: {name}")
         if (
             name.startswith(OFFICIAL_PREFIX)
             or name.startswith("checkpoints/base/")

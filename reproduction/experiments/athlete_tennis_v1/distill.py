@@ -27,7 +27,6 @@ from tensordict import TensorDict
 from athlete.scripts.play_student_onnx import _StandaloneStudentSimulation
 from athlete.scripts.tennis_physics import STANDARD_TENNIS_PHYSICS as PHYSICS
 from experiments.athlete_tennis_v1.evaluate_official import cfg, POLICY, summarize
-from experiments.athlete_tennis_v1.target_g1 import action_contract
 from modumotion_g1.domain_moe import (
     add_domain,
     domain_parameters,
@@ -383,14 +382,17 @@ def calibrate():
         original = sim.policy
 
         class Record:
+            def __init__(self, policy):
+                self.policy = policy
+
             def __getattr__(self, key):
-                return getattr(original, key)
+                return getattr(self.policy, key)
 
             def __call__(self, obs):
                 observations.append(obs.copy())
-                return original(obs)
+                return self.policy(obs)
 
-        sim.policy = Record()
+        sim.policy = Record(original)
         for _ in range(1000):
             if sim.step().episode_complete:
                 sim.start_next_strike_cycle()
@@ -703,8 +705,6 @@ def main():
             assert set(int(s["step"]) for s in optimizer.state.values()) == {prior["actor_updates"]}
             progress(status="resume_ready", replay_samples=len(bank["target"]))
 
-        learning_started = time.monotonic()
-        update_time = 0.0
         total_update_seconds = 0.0
 
         def fit(count, round_id):

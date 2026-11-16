@@ -46,12 +46,12 @@ python tools/fetch_official_base.py --output /path/to/holomotion-v1.4 --download
 Already verified files are reused. Existing files with unexpected hashes are not
 overwritten. See [the upstream download and license guide](HOLOMOTION_DOWNLOAD.md).
 
-## Obtain the private release
+## Obtain the scene release
 
-Invited users with an authenticated GitHub CLI can download the paired source and resource archive:
+Download the latest paired source and resource archive with GitHub CLI. Private repositories require invited, authenticated access:
 
 ```bash
-gh release download holomotion-20261116-clean --repo shangchaohu718/PERA \
+gh release download --repo shangchaohu718/PERA \
   --pattern 'PERA-HoloMotion-25experts-15scenes.tar.gz' --pattern 'SHA256SUMS'
 sha256sum --check SHA256SUMS
 tar -xzf PERA-HoloMotion-25experts-15scenes.tar.gz

@@ -44,7 +44,7 @@ def setup(task, seed, num_envs=512):
     # These are the same task registration and reset-cache refresh as the
     # publisher's run_policy.py, with only the requested parallelism changed.
     sys.path.insert(0, str(ASSETS / RELEASE / "runtime"))
-    import mjlab.tasks
+    import mjlab.tasks  # noqa: F401 -- register native tasks
     from mimicx.parkour.environment import install_initial_reference_refresh
 
     released = release_runner()

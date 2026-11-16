@@ -117,7 +117,6 @@ class MDP:
         # InstantTrack contact reward (training only): tracked-body indices of the feet, set by the trainer
         self.feet: list[int] = []
         import json
-        from pathlib import Path
 
         contract = json.loads((ROOT / "configs/data/train128.json").read_text())
         if contract["robot"] != "unitree_g1_29dof" or J != 29:
