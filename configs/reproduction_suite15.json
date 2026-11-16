@@ -1,0 +1,10 @@
+{
+  "schema": "pera.reproduction_suite.v1",
+  "expert_bank": "checkpoints/holomotion_experts/pera_25skills.experts.pt",
+  "unique_scene_count": 15,
+  "groups": [
+    {"id": "interaction", "config": "configs/showcase.json", "seconds": 12},
+    {"id": "motion_terrain", "config": "configs/showcase_extended.json", "seconds": 24},
+    {"id": "body", "config": "configs/showcase_body.json", "seconds": 12}
+  ]
+}

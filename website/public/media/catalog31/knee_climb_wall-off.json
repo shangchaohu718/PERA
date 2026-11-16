@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/knee_climb_wall-off",
+  "task": "knee_climb_wall",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-v1/knee_climb_wall/off/physics.npz",
+  "source_sha256": "58a6f2a73900454b826fa1ce43681867ac7ec908037a58ab9bf95c4d28d7ef18",
+  "duration_s": 6.8,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "fd0b70cb9750eef486dbf4b240bf68065106a6f61d3fbb53397626c0af676c55",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/knee_climb_wall/off/report.json",
+  "report_sha256": "a23d6cc2f4f08b3390678e4806504a7fdb4f7f76c4744c228e01f4b73f7bae1b",
+  "native_termination_s": 2.799999952316284,
+  "post_termination_seconds": 4,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 7002,
+  "plugin": "reports/instinct_all_tasks_dagger_v2/knee_climb_wall/run/training/round_020.domain.pt",
+  "plugin_sha256": "6510171899705d3b5abd51894a3da2eb9755bbb26cc5c68620f30238e97984d4",
+  "scene": "website/.render-work/catalog31-v1/knee_climb_wall/off/scene.mjb",
+  "scene_sha256": "47462a58689704c75c5027031c1d0a6215d06b91d4a3890b62e536c10a2c41c5"
+}

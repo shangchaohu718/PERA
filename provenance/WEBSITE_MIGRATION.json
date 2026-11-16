@@ -1,0 +1,25 @@
+{
+  "schema": "pera.website_migration.v1",
+  "source": "https://github.com/shangchaohu718/pera-project",
+  "source_tree": "af990f2cbff6b883a4ad5e537d4fa1aef8d1a677",
+  "destination": "https://github.com/shangchaohu718/PERA",
+  "source_blob_count": 430,
+  "changed_for_canonical_repository": [
+    "website/docs/github-pages-actions.yml.example",
+    "website/src/content.js",
+    "website/tools/deploy-pages.mjs"
+  ],
+  "original_repository_preserved": true,
+  "repository_private": true,
+  "homepage_shared_world_contact_sheets": false,
+  "pages_enabled": false,
+  "pages_error": {
+    "http_status": 422,
+    "message": "Your current plan does not support GitHub Pages for this repository."
+  },
+  "pages_base_path": "/PERA/",
+  "website_gallery_recordings_verified": 40,
+  "website_gallery_task_count": 20,
+  "build_passed": true,
+  "workflow_delivery": "templates_only; publishing token lacks workflow scope"
+}

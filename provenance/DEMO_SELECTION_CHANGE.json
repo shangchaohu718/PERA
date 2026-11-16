@@ -1,0 +1,16 @@
+{
+  "schema": "pera.demo_selection_change.v1",
+  "date": "2026-11-13",
+  "user_requirement": "All future demonstrations use official HoloMotion G1 v1.4 model_14000 and its matching trained experts; do not use the self-trained base.",
+  "selection": "configs/demo_policy.json",
+  "official_experts_verified_by_checkpoint_metadata": 4,
+  "matching_public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "matching_interface_sha256": "d03c249b9a7e874d1dd2267b4f65997125086aff1af451a8517f43af2fcd16b7",
+  "official_shared_world_adapter_status": "pending",
+  "previous_demo_entrypoints": "blocked before simulation launch",
+  "historical_weights_deleted": false,
+  "new_training": false,
+  "new_downloads": false,
+  "uploads": false,
+  "pytest": "15 passed"
+}

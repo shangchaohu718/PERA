@@ -1,0 +1,81 @@
+{
+  "moe_load_balance": {
+    "enabled": true,
+    "weight": 0.01
+  },
+  "inactive_expert_margin_to_topk": {
+    "enabled": true,
+    "weight": 1.0,
+    "ratio_floor": 0.1
+  },
+  "selected_expert_margin_to_unselected": {
+    "enabled": false,
+    "weight": 0.0,
+    "target": 0.0
+  },
+  "aux_router_switch_penalty": {
+    "enabled": false,
+    "weight": 0.0
+  },
+  "aux_router_command_recon": {
+    "enabled": false,
+    "weight": 0.0,
+    "hidden_dim": 0,
+    "term_prefix": "actor_ref_"
+  },
+  "router_expert_orthogonal": {
+    "enabled": false,
+    "weight": 0.0,
+    "min_active_usage": 0.001,
+    "eps": 1e-08
+  },
+  "moe_router": {
+    "routing_score_fn": "softmax",
+    "routing_scale": 1.0,
+    "use_dynamic_bias": true,
+    "bias_update_rate": 0.001,
+    "expert_bias_clip": 0.0
+  },
+  "num_fine_experts": 8,
+  "num_shared_experts": 1,
+  "top_k": 2,
+  "width": 256,
+  "expert_hidden": 128,
+  "router_embed_hidden": 512,
+  "router_obs_terms": [
+    "unified/actor_ref_gravity_projection_cur",
+    "unified/actor_ref_base_linvel_cur",
+    "unified/actor_ref_base_angvel_cur",
+    "unified/actor_ref_dof_pos_cur",
+    "unified/actor_ref_root_height_cur",
+    "unified/actor_ref_dof_pos_fut",
+    "unified/actor_ref_root_height_fut",
+    "unified/actor_ref_gravity_projection_fut",
+    "unified/actor_ref_base_linvel_fut",
+    "unified/actor_ref_base_angvel_fut",
+    "unified/actor_ref_future_yaw_delta_sin_cos",
+    "unified/actor_ref_future_root_ori_robot_frame_6d"
+  ],
+  "obs_norm": {
+    "enabled": true,
+    "epsilon": 1e-08,
+    "update_method": "ema",
+    "ema_momentum": 0.0001,
+    "update_at_train": true,
+    "update_at_eval": false,
+    "enable_clipping": true,
+    "clip_range": 10.0,
+    "sync_interval_steps": 4
+  },
+  "selection_calibration": {
+    "enabled": true,
+    "bank": "data/base/reference_bank.pt",
+    "every_iterations": 1,
+    "rounds": 8,
+    "target_slot_fraction": 0.125,
+    "fp32_router": true,
+    "affects_mixture_weights": false,
+    "fit_stride": 16,
+    "check_stride": 16
+  }
+}

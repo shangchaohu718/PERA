@@ -1,0 +1,3 @@
+# These small web exports must be real files in Pages builds, not LFS pointers.
+*.mp4 -filter -diff -merge -text
+*.webp -filter -diff -merge -text

@@ -1,0 +1,64 @@
+{
+  "schema": "pera.shared_world.v1",
+  "checkpoint": "checkpoints/composed/pera_30_experts.pt",
+  "robot_scene": "data/showcase/native_g1/scene.xml",
+  "physics_dt": 0.005,
+  "control_dt": 0.02,
+  "tasks": [
+    {
+      "id": "mimicx_descent",
+      "expert": "mimicx_descent",
+      "label": "Stair descent",
+      "motion": "data/showcase/descent/motion.npz",
+      "scene": "data/showcase/descent/scene.json",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "horizon": 240,
+      "context_dim": 0,
+      "scope": "Original reference with its fixed collision fixtures; shared-world port, not new skill acceptance"
+    }
+  ],
+  "joint_names": [
+    "left_hip_pitch_joint",
+    "left_hip_roll_joint",
+    "left_hip_yaw_joint",
+    "left_knee_joint",
+    "left_ankle_pitch_joint",
+    "left_ankle_roll_joint",
+    "right_hip_pitch_joint",
+    "right_hip_roll_joint",
+    "right_hip_yaw_joint",
+    "right_knee_joint",
+    "right_ankle_pitch_joint",
+    "right_ankle_roll_joint",
+    "waist_yaw_joint",
+    "waist_roll_joint",
+    "waist_pitch_joint",
+    "left_shoulder_pitch_joint",
+    "left_shoulder_roll_joint",
+    "left_shoulder_yaw_joint",
+    "left_elbow_joint",
+    "left_wrist_roll_joint",
+    "left_wrist_pitch_joint",
+    "left_wrist_yaw_joint",
+    "right_shoulder_pitch_joint",
+    "right_shoulder_roll_joint",
+    "right_shoulder_yaw_joint",
+    "right_elbow_joint",
+    "right_wrist_roll_joint",
+    "right_wrist_pitch_joint",
+    "right_wrist_yaw_joint"
+  ],
+  "resource_manifest": "resources/showcase_manifest.json",
+  "default_tasks": [
+    "mimicx_descent"
+  ],
+  "solver_iterations": 10,
+  "solver_ls_iterations": 20,
+  "base_family": "self_trained_g1_moe_mlp",
+  "public_sha256": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "archived_for_demonstrations": true
+}

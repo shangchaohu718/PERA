@@ -1,0 +1,24 @@
+{
+  "id": "catalog31/pmt_optimized_scene0-on",
+  "task": "pmt_optimized_scene0",
+  "expert_enabled": true,
+  "source": "reports/pmt_target_recovery_long_v1/video/student.mp4",
+  "source_sha256": "182bf41ae0978fc4ee77dbf0624dac37ce808335c51526958d40a6f93ce33c02",
+  "duration_s": 30.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "fcb4d0c1173d4a08b7abeae06d3250d5785c830363effde2820e3faf4d74b841",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/pmt_target_recovery_long_v1/video/report.json",
+  "report_sha256": "361511617c05208878853936bb95be7ca3ccadadc7205326f79d83edaffc7baf",
+  "plugin": "reports/pmt_target_recovery_long_v1/training/round_007.domain.pt"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/parkour_obstacles-on",
+  "task": "parkour_obstacles",
+  "expert_enabled": true,
+  "source": "website/.render-work/catalog31-v1/parkour_obstacles/on/physics.npz",
+  "source_sha256": "884128b9fc5f8cec92565e29e006d1831281430a53bd1a480deb0c6077e3294b",
+  "duration_s": 10.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "5183b6939363a2a49c7f295ba77118b7ad17e35a5b95af6034ec1f570ffc29ff",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/parkour_obstacles/on/report.json",
+  "report_sha256": "e4e7d1f1710a1ea0c76041c484f63b39fbd1e09603f6857f5266925516947902",
+  "native_termination_s": 10.000039100646973,
+  "post_termination_seconds": 0,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 8101,
+  "plugin": "reports/instinct_parkour_remaining_v3/obstacles/training/round_020.domain.pt",
+  "plugin_sha256": "17ec23a5479320cb5ad3649d57764b6b94eebbfc27c005b51cfc3ba9ee9fd1c8",
+  "scene": "website/.render-work/catalog31-v1/parkour_obstacles/on/scene.mjb",
+  "scene_sha256": "aa85eb5e46a7efb7ddac0b855505bc33bebfcc2bd82c29619f8ba85604128eef"
+}

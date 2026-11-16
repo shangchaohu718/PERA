@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_descent-on",
+  "task": "mimicx_descent",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/student.mp4",
+  "source_sha256": "c443420ff4bccb2ceaeaab516696fc9dc1cbc2c0315f44c03d52e517bbfb2606",
+  "duration_s": 4.8,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "11d5cc10ab2ef0c64a3f81fc1603179878f574df5be52435d6d2a943398741c5",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/final_student_4004.json",
+  "report_sha256": "1346f5ba11f9aa9da71e2747814882018113c59302fcd9c618728d207bb6016e",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

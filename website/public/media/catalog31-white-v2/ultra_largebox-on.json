@@ -1,0 +1,28 @@
+{
+  "id": "catalog31-white-v2/ultra_largebox-on",
+  "task": "ultra_largebox",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/final_student_trajectory.npz",
+  "source_sha256": "ac986636d4e3ab7aeaf07be1cfe612d239d699128c6330f94726058e5a8dd23b",
+  "duration_s": 10.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "57b178e44a501d7570810ca58e716b2bea3ed71508622aa7e19f4340ecdf2220",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/final_student.json",
+  "report_sha256": "82b5084c8d8eb937e495c56453799334335b5daa1e082e31dbf3394c12f453c8",
+  "scene": "third_party/ULTRA/ultra/data/assets/merge/largebox.xml",
+  "scene_sha256": "710620a2ad4504a19533ee044aded329879bbcc6ecae28c0e613faa729388219",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

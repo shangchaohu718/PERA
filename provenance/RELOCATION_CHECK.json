@@ -1,0 +1,24 @@
+{
+  "scope": "Independent copied source folder, launched from outside that folder, without original project or third_party paths on PYTHONPATH",
+  "results": [
+    {
+      "check": "help",
+      "exit_code": 0
+    },
+    {
+      "check": "doctor",
+      "exit_code": 0
+    },
+    {
+      "check": "contracts",
+      "exit_code": 0
+    },
+    {
+      "check": "base_dry_run",
+      "exit_code": 0
+    }
+  ],
+  "no_gpu_training": true,
+  "no_network": true,
+  "no_dry_run_files_created": true
+}

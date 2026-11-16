@@ -1,0 +1,158 @@
+export const base = import.meta.env.BASE_URL;
+export const asset = path => `${base}${path}`;
+export const project = {
+  "name": "PERA",
+  "subtitle": "Incremental Skill Learning for Humanoid Robots.",
+  "paper": "https://arxiv.org/html/2611.16188v1",
+  "code": "https://github.com/shangchaohu718/PERA",
+  "codeStatus": "Private repository",
+  "video": "media/scene-preview.mp4",
+  "authors": null,
+  "citation": null
+};
+export const skills = [
+  {
+    "id": "kick",
+    "label": "Roundhouse kick",
+    "tag": "Expert",
+    "number": "01",
+    "title": "A new move. A focused expert.",
+    "description": "The refined roundhouse Expert turns, kicks and recovers. This fresh-process replay uses a newer checkpoint than the earlier seven-clip experiment below.",
+    "note": "Seed 42 · nominal Isaac Lab physics · refined Expert",
+    "method": "Expert",
+    "duration": 5,
+    "fullId": "kick-full",
+    "fullLabel": "Watch full recording",
+    "fullNote": "Full recorded episode; fresh-process verification. Separate from the earlier quantitative seven-clip snapshot.",
+    "chapterStart": 0,
+    "chapterEnd": 5
+  },
+  {
+    "id": "moonwalk",
+    "label": "Moonwalk",
+    "tag": "Expert",
+    "number": "02",
+    "title": "Slide back. Stay in rhythm.",
+    "description": "The new moonwalk Expert alternates heel lifts and sliding feet. The selected 500-iteration checkpoint uses the same frozen public policy with its moonwalk expert enabled.",
+    "note": "Seed 42 · 500 iterations · model 499 · single reference motion",
+    "method": "Expert",
+    "duration": 6,
+    "fullId": "moonwalk-full",
+    "fullLabel": "Watch full recording",
+    "fullNote": "Full 17.8-second recorded closed-loop evaluation of the 500-iteration model_499 checkpoint. Same foot-friction protocol as the public-policy control. One reference and one seed; no generalization claim.",
+    "chapterStart": 5,
+    "chapterEnd": 11
+  },
+  {
+    "id": "roll",
+    "label": "Forward roll",
+    "tag": "Expert",
+    "number": "03",
+    "title": "Commit. Roll. Stand again.",
+    "description": "The forward-roll expert carries the G1 through inversion and back to standing. The matched replay retains the complete native task evaluation.",
+    "note": "Seed 7002 · continuous-course excerpt · 0.6 s entry blend",
+    "method": "Teacher-trained expert",
+    "duration": 4.8,
+    "fullId": "roll-full",
+    "fullLabel": "Watch full task segment",
+    "fullNote": "Complete forward-roll task segment from one successful continuous course, including preparation and recovery. This is not the full 279.7-second course.",
+    "chapterStart": 11,
+    "chapterEnd": 15.8
+  },
+  {
+    "id": "vault",
+    "label": "Obstacle vault",
+    "tag": "Expert",
+    "number": "04",
+    "title": "A whole-body way across.",
+    "description": "The G1 uses whole-body contact to roll over the original obstacle and regain its footing. The comparison retains the native task geometry and reset.",
+    "note": "Seed 7002 · continuous-course excerpt · original obstacle",
+    "method": "Teacher-trained expert",
+    "duration": 5.2,
+    "fullId": "vault-full",
+    "fullLabel": "Watch full task segment",
+    "fullNote": "Complete obstacle-vault task segment from one successful course. Explicit expert switching and a 0.6-second entry-action blend were used.",
+    "chapterStart": 15.8,
+    "chapterEnd": 21.0
+  },
+  {
+    "id": "skate",
+    "label": "Skateboard",
+    "tag": "Expert",
+    "number": "05",
+    "title": "Push. Step back. Glide.",
+    "description": "The pushing leg returns to the board before a two-foot glide. A fixed ground grid and contact shadows reveal the board’s displacement beneath the following camera.",
+    "note": "Seed 10102 · push-off and return-to-board cycle · original timing",
+    "method": "Teacher-trained expert",
+    "duration": 5.0,
+    "fullId": "skate-full",
+    "fullLabel": "Watch full recording",
+    "fullNote": "Full 30-second recorded environment from the turning evaluation. Starts in the native skate stance. No mounting or course handover claim.",
+    "chapterStart": 21.0,
+    "chapterEnd": 26.0
+  },
+  {
+    "id": "gaps",
+    "label": "Gap crossing",
+    "tag": "Expert",
+    "number": "06",
+    "title": "Make the next foothold count.",
+    "description": "The perceptive expert crosses the recorded gaps. Contrasting terrain, visible recesses and surface texture make each foothold and landing easy to follow.",
+    "note": "Seed 51001 · native gap-crossing rollout",
+    "method": "Teacher-trained expert",
+    "duration": 5.0,
+    "fullId": "gaps-full",
+    "fullLabel": "Watch full recording",
+    "fullNote": "Full ten-second student recording, with native terrain and original timing. A selected successful episode, not an estimate of success rate.",
+    "chapterStart": 26.0,
+    "chapterEnd": 31.0
+  },
+  {
+    "id": "steps",
+    "label": "High steps",
+    "tag": "Expert",
+    "number": "07",
+    "title": "Take it up a level.",
+    "description": "The high-step expert ascends the original stepped terrain and reaches the upper landing. The excerpt retains the approach, ascent and arrival.",
+    "note": "Seed 93001 · native high-step rollout",
+    "method": "Teacher-trained expert",
+    "duration": 5,
+    "fullId": "steps-full",
+    "fullLabel": "Watch full recording",
+    "fullNote": "Full ten-second student recording. Original step heights, terrain geometry and timing are preserved.",
+    "chapterStart": 31.0,
+    "chapterEnd": 36.0
+  },
+  {
+    "id": "tennis",
+    "label": "Tennis return",
+    "tag": "Student · experimental",
+    "number": "08",
+    "title": "Prepare. Return. Go again.",
+    "description": "Twenty continuous seconds following the robot at close range on the original court. Watch its preparation, restored hands, swing and recovery through repeated incoming balls.",
+    "note": "Seed 97001 · continuous incoming-ball cycles · original timing",
+    "method": "Experimental tennis student",
+    "duration": 20,
+    "fullId": "tennis-full",
+    "fullLabel": "Watch full recording",
+    "fullNote": "Full 40-second frozen-student recording, including successful returns and misses. Incoming balls are relaunched between cycles; the robot is not reset. Original ATHLETE physics, ball and racket trajectories; visual hands restored only for replay.",
+    "chapterStart": 36.0,
+    "chapterEnd": 56.0,
+    "sequence": true
+  }
+];
+export const montageDuration = skills.reduce((total, skill) => total + skill.duration, 0);
+
+export const heroPreview = {
+  id: 'scene-preview',
+  editedHighlights: true,
+  fullRecordings: [
+    { id: 'skate-full', label: 'Skateboard' },
+    { id: 'steps-full', label: 'High steps' },
+    { id: 'native-stairs-full', label: 'Stairs' },
+    { id: 'tennis-full', label: 'Tennis' },
+  ],
+  title: 'PERA · Four skills, four native scenes',
+  duration: 31,
+  note: 'Four selected excerpts from separate policy recordings, each in its own native scene: skateboard, rough terrain and high steps, stair ascent, and tennis. The same frozen public Actor runs task-specific experts. Original speed, direct cuts, no animated transitions.'
+};

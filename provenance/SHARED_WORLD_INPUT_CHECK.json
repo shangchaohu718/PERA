@@ -1,0 +1,42 @@
+{
+  "schema": "pera.shared_world_inputs.v1",
+  "status": "passed",
+  "task_count": 5,
+  "tasks": [
+    "mimicx_descent",
+    "mimicx_bench",
+    "mimicx_dance",
+    "mimicx_football",
+    "mimicx_tennis"
+  ],
+  "cases": [
+    {
+      "reference_offset": 0,
+      "observation_max_abs_error": 8.702278137207031e-06,
+      "goal_max_abs_error": 8.702278137207031e-06
+    },
+    {
+      "reference_offset": 1,
+      "observation_max_abs_error": 8.702278137207031e-06,
+      "goal_max_abs_error": 8.702278137207031e-06
+    },
+    {
+      "reference_offset": 30,
+      "observation_max_abs_error": 5.245208740234375e-06,
+      "goal_max_abs_error": 5.245208740234375e-06
+    },
+    {
+      "reference_offset": 150,
+      "observation_max_abs_error": 1.043081283569336e-05,
+      "goal_max_abs_error": 1.043081283569336e-05
+    },
+    {
+      "reference_offset": 800,
+      "observation_max_abs_error": 1.1324882507324219e-06,
+      "goal_max_abs_error": 1.1324882507324219e-06
+    }
+  ],
+  "scope": "Native policy observation/goal versus original suite31 named-joint adapter at fixed physical states, including reference boundaries; CPU only",
+  "initial_previous_action_matches_legacy_zero_action": true,
+  "reset_velocities_use_original_saved_arrays": true
+}

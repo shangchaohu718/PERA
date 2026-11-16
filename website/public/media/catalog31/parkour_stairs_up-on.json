@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/parkour_stairs_up-on",
+  "task": "parkour_stairs_up",
+  "expert_enabled": true,
+  "source": "website/.render-work/catalog31-v1/parkour_stairs_up/on/physics.npz",
+  "source_sha256": "6bcc8fa20ab5fd665f900fc3f217d8f04e34efa07ae3b5165829594d5aa694dd",
+  "duration_s": 10.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "58cc0209254a033d44261de0681cd1166e7f47b0ffa5bba218a25d31a513d9ee",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/parkour_stairs_up/on/report.json",
+  "report_sha256": "cbe68c7e05adcc7591715c7d5df42c468b2caa1fe96b7cad223b10ed957c95de",
+  "native_termination_s": 10.000039100646973,
+  "post_termination_seconds": 0,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 8101,
+  "plugin": "reports/instinct_parkour_stairs_refinement_v1/step_27000.domain.pt",
+  "plugin_sha256": "3c030b02de123202163d7ebc9354da63bfea97314677873c88c1140eb8e425bb",
+  "scene": "website/.render-work/catalog31-v1/parkour_stairs_up/on/scene.mjb",
+  "scene_sha256": "3691e43ebf1bd3c6ca30ffc339d4f1cad1e312350bc12a1bab6a0520ff8bba22"
+}

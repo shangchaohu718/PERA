@@ -1,0 +1,124 @@
+{
+  "schema": "pera.shared_world_run.v1",
+  "status": "completed",
+  "actor_instances": 1,
+  "mujoco_model_instances": 1,
+  "mujoco_data_instances": 1,
+  "robot_count": 5,
+  "installed_experts": 30,
+  "policy_tensor_bytes": 56133092,
+  "shared_world_nq": 180,
+  "shared_world_nv": 175,
+  "shared_world_nu": 145,
+  "max_active_experts_per_inference": 1,
+  "checkpoint_sha256": "ca8d17a384e874c799fe9e118e619c1a5b6da2170a19d441a867214c91a92f0c",
+  "public_sha256": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "actual_simulated_seconds": 16.0000000000011,
+  "control_steps": 800,
+  "physics_steps": 3200,
+  "teacher_action_queries": 0,
+  "root_state_overwrites_after_initialization": 0,
+  "resets_after_initialization": 0,
+  "elapsed_s": 15.146522073075175,
+  "device": "cuda:0",
+  "CUDA_initialized": true,
+  "torch_cuda_peak_allocated_MiB": 69.99462890625,
+  "summary": [
+    {
+      "task": "mimicx_descent",
+      "reference_frames": 240,
+      "reference_steps_observed": 240,
+      "reference_time_completed": true,
+      "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+      "mean_root_error_m": 0.054890424874611196,
+      "reference_interval_last_root_error_m": 0.0809376910328865,
+      "mean_joint_rmse_rad": 0.09062245804816485,
+      "task_success_accepted": false,
+      "acceptance": "Not assessed by original native task gate"
+    },
+    {
+      "task": "mimicx_bench",
+      "reference_frames": 58,
+      "reference_steps_observed": 58,
+      "reference_time_completed": true,
+      "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+      "mean_root_error_m": 0.10909363872307384,
+      "reference_interval_last_root_error_m": 0.10926138609647751,
+      "mean_joint_rmse_rad": 0.24754646041526876,
+      "task_success_accepted": false,
+      "acceptance": "Not assessed by original native task gate"
+    },
+    {
+      "task": "mimicx_dance",
+      "reference_frames": 783,
+      "reference_steps_observed": 783,
+      "reference_time_completed": true,
+      "first_reference_height_or_tilt_tolerance_exceeded_step": 194,
+      "mean_root_error_m": 1.6406914135964532,
+      "reference_interval_last_root_error_m": 2.1163246631622314,
+      "mean_joint_rmse_rad": 0.33680505084294926,
+      "task_success_accepted": false,
+      "acceptance": "Not assessed by original native task gate"
+    },
+    {
+      "task": "mimicx_football",
+      "reference_frames": 454,
+      "reference_steps_observed": 454,
+      "reference_time_completed": true,
+      "first_reference_height_or_tilt_tolerance_exceeded_step": 362,
+      "mean_root_error_m": 0.31728082501825916,
+      "reference_interval_last_root_error_m": 1.2103103399276733,
+      "mean_joint_rmse_rad": 0.21774308173404391,
+      "task_success_accepted": false,
+      "acceptance": "Not assessed by original native task gate"
+    },
+    {
+      "task": "mimicx_tennis",
+      "reference_frames": 518,
+      "reference_steps_observed": 518,
+      "reference_time_completed": true,
+      "first_reference_height_or_tilt_tolerance_exceeded_step": 401,
+      "mean_root_error_m": 0.28337191320366034,
+      "reference_interval_last_root_error_m": 0.8255376219749451,
+      "mean_joint_rmse_rad": 0.2396249763207316,
+      "task_success_accepted": false,
+      "acceptance": "Not assessed by original native task gate"
+    }
+  ],
+  "video": "overview.mp4",
+  "limitations": [
+    "First shared-world port of context-free tasks; other experts not yet ported",
+    "Physical task acceptance must be re-established after scene porting",
+    "Reference time completion and task success are distinct; post-reference holding is unvalidated",
+    "Football/tennis here are motion-tracking tasks, not physical ball interaction"
+  ],
+  "local_output": "runs/shared_world_five_no_beam_20261113",
+  "resource_usage": {
+    "sampled_process_gpu_peak_MiB": 535.0,
+    "samples": 56,
+    "method": "nvidia-smi compute process accounting for this CLI and its direct child, sampled every ~0.25 s; includes process context/rendering where attributed by driver; not an instantaneous peak"
+  },
+  "removed_from_showcase": [
+    "mimicx_forest"
+  ],
+  "checks": {
+    "pytest": "8 passed in 1.62s",
+    "static": {
+      "python_files": 166,
+      "native_runtime_copies": 1,
+      "problems": []
+    },
+    "ruff_format": "122 files already formatted",
+    "ruff_undefined_names": "passed",
+    "weights_verified_files": 36,
+    "source_checkpoint_bytes_modified": false,
+    "teacher_action_queries": 0,
+    "gpu_training_started": false,
+    "uploaded": false
+  },
+  "not_displayed_installed_experts": 25,
+  "remaining_scene_ports_excluding_removed_beam": 24,
+  "historical_run": true,
+  "followup_correction": "SHARED_WORLD_FIX_CHECK.json",
+  "followup_observer_check": "SHARED_WORLD_EXACT50_INPUT_CHECK.json"
+}

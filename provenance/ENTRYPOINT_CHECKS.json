@@ -1,0 +1,96 @@
+{
+  "scope": "CPU-hidden-GPU help/parser checks; uses existing native venv and locally available pinned upstream source, no environment installation and no simulation",
+  "results": [
+    {
+      "module": "pera",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.g1_competitive_suite31_v1.pipeline",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.g1_competitive_suite31_v1.worker",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_competitive_martial_ppo_v1_20261106.train",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "blinkmimic.train",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "blinkmimic.evaluate",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_stairs_routing_ab_20261106.train",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_stairs_full_finetune_20261106.finetune",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_stairs_full_finetune_20261106.collect_old",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.g1_competitive_suite31_v1.evaluate_retention",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_competitive_martial_ppo_v1_20261106.evaluate_retention",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_stairs_routing_ab_20261106.evaluate_retention",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.blink_stairs_full_finetune_20261106.evaluate_retention",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.martial_transfer_v1_20261106.evaluate",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    },
+    {
+      "module": "experiments.martial_transfer_v1_20261106.prepare",
+      "exit_code": 0,
+      "help_printed": true,
+      "error_tail": ""
+    }
+  ],
+  "runtime_profile": "Existing native venv; versions in ENVIRONMENTS.json; pinned local upstream source supplied explicitly"
+}

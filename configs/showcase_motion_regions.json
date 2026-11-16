@@ -1,0 +1,106 @@
+{
+  "schema": "pera.shared_world.v1",
+  "robot_scene": "data/showcase/native_g1/scene.xml",
+  "physics_dt": 0.005,
+  "control_dt": 0.02,
+  "tasks": [
+    {
+      "id": "mimicx_stairs",
+      "expert": "mimicx_stairs",
+      "label": "Stair ascent",
+      "motion": "data/showcase/stairs/motion.npz",
+      "scene": "data/showcase/stairs/scene.json",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "horizon": 449,
+      "context_dim": 0
+    },
+    {
+      "id": "mimicx_kungfu",
+      "expert": "mimicx_kungfu",
+      "label": "Martial arts",
+      "motion": "data/showcase/kungfu/motion.npz",
+      "scene": null,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "horizon": 1061,
+      "context_dim": 0
+    },
+    {
+      "id": "mimicx_dance",
+      "expert": "mimicx_dance",
+      "label": "Dance",
+      "motion": "data/showcase/dance/motion.npz",
+      "scene": null,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "horizon": 783,
+      "context_dim": 0
+    },
+    {
+      "id": "mimicx_football",
+      "expert": "mimicx_football",
+      "label": "Ball-control motion",
+      "motion": "data/showcase/football/motion.npz",
+      "scene": null,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "horizon": 454,
+      "context_dim": 0
+    }
+  ],
+  "joint_names": [
+    "left_hip_pitch_joint",
+    "left_hip_roll_joint",
+    "left_hip_yaw_joint",
+    "left_knee_joint",
+    "left_ankle_pitch_joint",
+    "left_ankle_roll_joint",
+    "right_hip_pitch_joint",
+    "right_hip_roll_joint",
+    "right_hip_yaw_joint",
+    "right_knee_joint",
+    "right_ankle_pitch_joint",
+    "right_ankle_roll_joint",
+    "waist_yaw_joint",
+    "waist_roll_joint",
+    "waist_pitch_joint",
+    "left_shoulder_pitch_joint",
+    "left_shoulder_roll_joint",
+    "left_shoulder_yaw_joint",
+    "left_elbow_joint",
+    "left_wrist_roll_joint",
+    "left_wrist_pitch_joint",
+    "left_wrist_yaw_joint",
+    "right_shoulder_pitch_joint",
+    "right_shoulder_roll_joint",
+    "right_shoulder_yaw_joint",
+    "right_elbow_joint",
+    "right_wrist_roll_joint",
+    "right_wrist_pitch_joint",
+    "right_wrist_yaw_joint"
+  ],
+  "resource_manifest": "resources/compact_showcase_manifest.json",
+  "default_tasks": [
+    "mimicx_stairs",
+    "mimicx_kungfu",
+    "mimicx_dance",
+    "mimicx_football"
+  ],
+  "solver_iterations": 10,
+  "solver_ls_iterations": 20,
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d"
+}

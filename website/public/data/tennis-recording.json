@@ -1,0 +1,188 @@
+{
+  "seed": 97001,
+  "simulation_seconds": 40.0,
+  "requested_seconds": 40.0,
+  "wall_seconds": 9.968332331976853,
+  "teacher_queries": 0,
+  "teacher_executed_steps": 0,
+  "student_executed_steps": 2000,
+  "expert_weight_mean": 0.5354903907924891,
+  "joint_target_rmse_rad_on_collected_states": null,
+  "first_unstable_time_s": null,
+  "min_pelvis_height_m": 0.6883704114926361,
+  "min_pelvis_up_z": 0.8940731744212692,
+  "cycles": [
+    {
+      "cycle": 0,
+      "racket_contact": true,
+      "net_crossing": {
+        "position": [
+          3.5,
+          0.2160314588540879,
+          1.9143222159623383
+        ],
+        "clears_net": true
+      },
+      "first_bounce_after_hit": {
+        "position": [
+          6.639881154993471,
+          0.004677911881701165,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": true,
+        "target_error_xy_m": 1.639887827066929
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 1,
+      "racket_contact": true,
+      "net_crossing": null,
+      "first_bounce_after_hit": {
+        "position": [
+          3.257469658510859,
+          -0.5841379086907863,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": false,
+        "target_error_xy_m": 1.8378327147430769
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 2,
+      "racket_contact": true,
+      "net_crossing": {
+        "position": [
+          3.5,
+          -0.08305715444694096,
+          1.2504513700059636
+        ],
+        "clears_net": true
+      },
+      "first_bounce_after_hit": {
+        "position": [
+          4.976618996145969,
+          -0.20184778460479255,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": true,
+        "target_error_xy_m": 0.20319743967650025
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 3,
+      "racket_contact": true,
+      "net_crossing": {
+        "position": [
+          3.5,
+          -0.23230265364474706,
+          1.8127453599942311
+        ],
+        "clears_net": true
+      },
+      "first_bounce_after_hit": {
+        "position": [
+          7.012700505165442,
+          -0.7738798176726811,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": true,
+        "target_error_xy_m": 2.1563518487701225
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 4,
+      "racket_contact": true,
+      "net_crossing": {
+        "position": [
+          3.5,
+          -0.13287006131413542,
+          1.0478424562844355
+        ],
+        "clears_net": true
+      },
+      "first_bounce_after_hit": {
+        "position": [
+          4.824918924771251,
+          -0.03918108775813734,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": true,
+        "target_error_xy_m": 0.17941165107418677
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 5,
+      "racket_contact": false,
+      "net_crossing": null,
+      "first_bounce_after_hit": null,
+      "complete_cycle": true
+    },
+    {
+      "cycle": 6,
+      "racket_contact": true,
+      "net_crossing": {
+        "position": [
+          3.5,
+          -0.7279777340526865,
+          1.2586054441586683
+        ],
+        "clears_net": true
+      },
+      "first_bounce_after_hit": {
+        "position": [
+          5.842643341367412,
+          -0.1444979501557899,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": true,
+        "target_error_xy_m": 0.8549429561965305
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 7,
+      "racket_contact": true,
+      "net_crossing": {
+        "position": [
+          3.5,
+          -1.136821164935094,
+          1.5435821586978093
+        ],
+        "clears_net": true
+      },
+      "first_bounce_after_hit": {
+        "position": [
+          5.652286745778244,
+          -0.8231806312559742,
+          0.033600000000000005
+        ],
+        "inside_opponent_singles_half": true,
+        "target_error_xy_m": 1.0502877464737723
+      },
+      "complete_cycle": true
+    },
+    {
+      "cycle": 8,
+      "racket_contact": false,
+      "net_crossing": null,
+      "first_bounce_after_hit": null,
+      "complete_cycle": false
+    }
+  ],
+  "robot_resets_between_balls": 0,
+  "incoming_sampling_failure": null,
+  "full_requested_duration_survived": true,
+  "plugin": "reports/athlete_tennis_v1/body_window_continue_10k_v1/round_10.domain.pt",
+  "plugin_sha256": "8442ea717c2872a26d7faaf4e4774599c5afcf4ed49045c2aa30bfedf6bfba8e",
+  "normalization_sha256": "e3590d6a3161d339f60ebd211a317589711a7c5ee7d57f6d42374bcf6faac283",
+  "public_actor_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "training_updates": 0,
+  "visual_hands_during_simulation": false,
+  "recorded_first_frame_s": 0.02,
+  "source_report": "reports/athlete_tennis_v1/body_window_continue_10k_v1/report.json"
+}

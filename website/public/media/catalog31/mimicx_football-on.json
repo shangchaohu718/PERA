@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_football-on",
+  "task": "mimicx_football",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_football/attempt_1/student.mp4",
+  "source_sha256": "7664188576c0a6ea62cb0a9707dae389914241d7d0b11ca8d79c96f04efb285b",
+  "duration_s": 9.067,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "85859ac940739a42f6e6dbcdd123698fec7f1d6548a66ab59637b35202ecb5b7",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_football/attempt_1/final_student_4004.json",
+  "report_sha256": "b5a648a5b822b75dabc422027be5a01407c6939928efa9a75c8278862bf6795d",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

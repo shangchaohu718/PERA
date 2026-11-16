@@ -1,0 +1,84 @@
+{
+  "schema": "pera.interaction_arena.v1",
+  "runtime": "interaction",
+  "checkpoint": "checkpoints/composed/pera_30_experts.pt",
+  "descent_config": "configs/showcase_descent.json",
+  "physics_dt": 0.0025,
+  "control_dt": 0.02,
+  "tasks": [
+    {
+      "id": "mimicx_descent",
+      "expert": "mimicx_descent",
+      "kind": "descent",
+      "label": "Stair descent",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "floor": [
+        5,
+        6,
+        0
+      ]
+    },
+    {
+      "id": "husky_skateboard",
+      "expert": "husky_skateboard",
+      "kind": "skate",
+      "label": "Skateboard",
+      "resources": "data/showcase/skate_native",
+      "origin": [
+        0,
+        16,
+        0
+      ],
+      "floor": [
+        14,
+        6,
+        5
+      ]
+    },
+    {
+      "id": "athlete_tennis",
+      "expert": "athlete_tennis",
+      "kind": "tennis",
+      "label": "Tennis court / ball return",
+      "resources": "data/showcase/tennis_native",
+      "origin": [
+        30,
+        16,
+        0
+      ],
+      "floor": [
+        8,
+        5,
+        4
+      ]
+    },
+    {
+      "id": "roll_vault_no_wall",
+      "expert": "roll_vault_no_wall",
+      "kind": "vault",
+      "label": "Vault / live depth",
+      "resources": "data/showcase/vault_native",
+      "origin": [
+        14,
+        0,
+        0
+      ],
+      "floor": [
+        5,
+        6,
+        0
+      ]
+    }
+  ],
+  "resource_manifests": [
+    "resources/showcase_manifest.json",
+    "resources/interaction_showcase_manifest.json"
+  ],
+  "base_family": "self_trained_g1_moe_mlp",
+  "public_sha256": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "archived_for_demonstrations": true
+}

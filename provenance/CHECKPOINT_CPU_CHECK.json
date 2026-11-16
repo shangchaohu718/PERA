@@ -1,0 +1,15 @@
+{
+  "checkpoint_sha256": "fc5df7ad6ec83cce71853a30314e6c4c0109baab144308084279ded0679cb2eb",
+  "iteration": 11000,
+  "CPU_FP32_public_output_bitwise_equal": true,
+  "tested_synthetic_observations": 8,
+  "trainable_tensors": [
+    "moe.plugin.gate_up",
+    "moe.plugin.down",
+    "moe.plugin.router.weight",
+    "moe.plugin.router.bias"
+  ],
+  "public_digest": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "CUDA_initialized": false,
+  "physical_rollout_performed": false
+}

@@ -1,0 +1,64 @@
+{
+  "experiment": "husky_skateboard_dagger_v2",
+  "teacher_source": "third_party/HUSKY",
+  "teacher_checkpoint": "ckpts/test.onnx",
+  "public_actor": "official HoloMotion G1 v1.4 model_14000",
+  "new_domain": "husky_skateboard",
+  "method": "BC_then_online_DAgger",
+  "frozen": [
+    "public Actor including observation normalization, attention, public experts/router, output head, noise",
+    "HUSKY released observation normalizer and 128D proprioceptive encoder"
+  ],
+  "trainable": [
+    "new FFN gate_up",
+    "new FFN down",
+    "new router weight",
+    "new router bias"
+  ],
+  "student_action_dimensions": 29,
+  "original_teacher_action_dimensions": 23,
+  "six_added_wrist_teacher_targets": "zero physical joint position",
+  "physics": "original HUSKY dynamic articulated skateboard; six physical G1 wrist hinges added from HoloMotion joint axes/ranges, zero teacher targets with torque-limited PD",
+  "context": "128D frozen HUSKY proprioceptive encoder; five-frame actual executed action/state history, requested speed and absolute heading, 6s phase",
+  "reference": "constant HUSKY initial joint pose plus requested velocity/heading; no teacher future actions/states",
+  "uses_vision": false,
+  "fixed_merge_bias": 0.0,
+  "soft_residual_cap": false,
+  "training": {
+    "bc_updates": 2000,
+    "dagger_rounds": 20,
+    "updates_per_round": 1000,
+    "actual_adam_budget": 22000,
+    "preflight_steps_separate": 64,
+    "num_envs": 8,
+    "collection_seconds": 12,
+    "max_replay_samples": 60000,
+    "learning_rate": 0.0001,
+    "batch_size": 512,
+    "teacher_execution_probability": "BC:1; DAgger:max(0,0.8-0.1*round), zero for final 12 rounds"
+  },
+  "evaluation": {
+    "teacher": "8 straight and 8 turn episodes of 30s, with small initial position/joint perturbations",
+    "student": "heldout seeds, 8 straight and 8 turn episodes of 30s",
+    "gates": {
+      "minimum_pelvis_height_m": 0.45,
+      "maximum_tilt_rad": 1.0,
+      "maximum_pelvis_board_distance_m": 0.8,
+      "minimum_board_displacement_m": "0.25*duration_s",
+      "minimum_foot_board_contact_fraction": 0.1,
+      "minimum_wheel_ground_contact_fraction": 0.1,
+      "mujoco_warnings": 0
+    },
+    "resets_after_start": 0,
+    "not_covered": [
+      "mounting from the floor",
+      "ten-task course handover",
+      "exact speed tracking",
+      "domain-randomized terrain",
+      "real robot"
+    ]
+  },
+  "public_release_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "freeze_order": "Install FrozenPublicActor before any forward, including baseline; compare against release digest captured immediately after checkpoint load.",
+  "invalid_prior_experiment": "reports/husky_skateboard_dagger_v1/INVALID.json"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "pera.official_base_download.v1",
+  "repo_id": "HorizonRobotics/HoloMotion_models",
+  "revision": "e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a",
+  "subfolder": "HoloMotion_motion_tracking_model_v1.4.0",
+  "model_page": "https://huggingface.co/HorizonRobotics/HoloMotion_models",
+  "official_folder_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/tree/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0",
+  "model_card_license": "cc-by-nc-sa-4.0",
+  "distribution": "external_user_download_only",
+  "files": [
+    {
+      "path": "checkpoints/holomotion_v1.4/config.yaml",
+      "sha256": "f2bdcd26b7436123ce07478ac88dec5d0657a2a6b134e8114545434be3cb8b62",
+      "bytes": 48160,
+      "upstream_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/resolve/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0/config.yaml"
+    },
+    {
+      "path": "checkpoints/holomotion_v1.4/model_14000/actor/model.safetensors",
+      "sha256": "e698ae9dc88b131ab8cbd0c9acbace741eabff6ab984cc699cbc42316b7f7542",
+      "bytes": 1636251760,
+      "upstream_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/resolve/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0/model_14000/actor/model.safetensors"
+    },
+    {
+      "path": "checkpoints/holomotion_v1.4/model_14000/critic/model.safetensors",
+      "sha256": "9892bb1cd171ec3ead919e524eda23d294c9694c8e0330b721a65cd397de50d8",
+      "bytes": 59001428,
+      "upstream_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/resolve/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0/model_14000/critic/model.safetensors"
+    }
+  ]
+}

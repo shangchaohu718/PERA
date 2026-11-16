@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/diveroll_ramp_wall-off",
+  "task": "diveroll_ramp_wall",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-v1/diveroll_ramp_wall/off/physics.npz",
+  "source_sha256": "e0018f018ddc9aedca375e163c7699849f626a015ce17c219c42074cbaeb79c3",
+  "duration_s": 7.667,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "526d0014dc22351a77d868a4c70ba6cd1dd6c8b7db8f471b7b3d4001cb5ee300",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/diveroll_ramp_wall/off/report.json",
+  "report_sha256": "3ca9c7721d0076ebf62b2fb2b80106a310bd88bd39977faf958ee63af490af61",
+  "native_termination_s": 3.619999885559082,
+  "post_termination_seconds": 4,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 7002,
+  "plugin": "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_wall/run/training/round_020.domain.pt",
+  "plugin_sha256": "f9a4443c6145095e90da6d059be507ddab13ac756454c8863a101b3876314945",
+  "scene": "website/.render-work/catalog31-v1/diveroll_ramp_wall/off/scene.mjb",
+  "scene_sha256": "0405b301f178e839df932e1aa470ce54b27bd066713734c7d9122a4dfbd19eb5"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/roll_vault_wall-on",
+  "task": "roll_vault_wall",
+  "expert_enabled": true,
+  "source": "website/.render-work/catalog31-v1/roll_vault_wall/on/physics.npz",
+  "source_sha256": "98d6fa991bd999660ba54f2d98e233b2928e6c20ccae26d0a27d7020c4b23c99",
+  "duration_s": 10.5,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "4decd88979b54286e787885b9055ad5486724d66b9e04a23f576ad24dfefef11",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/roll_vault_wall/on/report.json",
+  "report_sha256": "a8a7219c2cc96b6c3bc812449b1c2754cab39af4810832f1e74a9e3a02243c44",
+  "native_termination_s": 10.460000038146973,
+  "post_termination_seconds": 0,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 7002,
+  "plugin": "reports/instinct_all_tasks_dagger_v2/roll_vault_wall/run/training/round_020.domain.pt",
+  "plugin_sha256": "94e65d3f948849b78720dba4db3d8c2ca0f7f28682eeb34e0338b594449f271c",
+  "scene": "website/.render-work/catalog31-v1/roll_vault_wall/on/scene.mjb",
+  "scene_sha256": "4d49941dae8818eaae7cdb8517c42997bf4c72aa4b0a45b01ce16716f0bcdec7"
+}

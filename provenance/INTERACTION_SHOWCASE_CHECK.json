@@ -1,0 +1,315 @@
+{
+  "schema": "pera.interaction_showcase_check.v1",
+  "status": "completed_with_student_failures",
+  "local_run": "runs/arena_four_20261113/final_video_v3",
+  "video": "runs/arena_four_20261113/final_video_v3/overview.mp4",
+  "video_seconds": 12,
+  "video_frames": 300,
+  "actor_instances": 1,
+  "physics_worlds": 1,
+  "student_control_steps": 600,
+  "physics_steps": 4800,
+  "physics_dt": 0.0025,
+  "mujoco_version": "3.11.0",
+  "auxiliary_native_mirrors": 4,
+  "auxiliary_robot_physics_steps": 0,
+  "teacher_action_queries": 0,
+  "new_training": false,
+  "checkpoint_sha256": "ca8d17a384e874c799fe9e118e619c1a5b6da2170a19d441a867214c91a92f0c",
+  "public_sha256": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "expert_fault_events": [
+    {
+      "task": "athlete_tennis",
+      "time_s": 0.8399999999999931,
+      "reason": "nonfinite_expert_action",
+      "fallback": "public_only"
+    }
+  ],
+  "reset_events": [
+    {
+      "task": "mimicx_descent",
+      "time_s": 4.8000000000000504,
+      "tracking_lost": false
+    },
+    {
+      "task": "mimicx_descent",
+      "time_s": 9.600000000000232,
+      "tracking_lost": false
+    },
+    {
+      "task": "roll_vault_no_wall",
+      "time_s": 10.440000000000065,
+      "tracking_lost": false
+    }
+  ],
+  "tennis_cycles": [
+    {
+      "cycle": 0,
+      "racket_contact": false,
+      "net_crossing": null,
+      "first_bounce_after_hit": null,
+      "complete_cycle": true
+    },
+    {
+      "cycle": 1,
+      "racket_contact": false,
+      "net_crossing": null,
+      "first_bounce_after_hit": null,
+      "complete_cycle": true
+    }
+  ],
+  "summary": [
+    {
+      "expert": "mimicx_descent",
+      "first_height_tilt_loss_s": null,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08538894355297089
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08403557538986206
+        }
+      ],
+      "last": {
+        "time_s": 11.999999999999755,
+        "episode": 3,
+        "frame": 120,
+        "root_error_m": 0.02476668544113636,
+        "tracking_lost": false,
+        "pelvis_height_m": 0.8622220754623413
+      },
+      "original_task_gate_accepted": false
+    },
+    {
+      "expert": "husky_skateboard",
+      "first_height_tilt_loss_s": null,
+      "completed_reference_intervals": [],
+      "last": {
+        "time_s": 11.999999999999755,
+        "episode": 1,
+        "frame": 600,
+        "root_error_m": null,
+        "tracking_lost": false,
+        "pelvis_height_m": 0.7078034281730652,
+        "board_displacement_m": 14.638618128963888,
+        "board_distance_m": 0.19399800288842486,
+        "native_mirror_foot_board_contact": true,
+        "native_mirror_wheel_ground_contact": true
+      },
+      "original_task_gate_accepted": false
+    },
+    {
+      "expert": "athlete_tennis",
+      "first_height_tilt_loss_s": 0.7599999999999948,
+      "completed_reference_intervals": [],
+      "last": {
+        "time_s": 11.999999999999755,
+        "episode": 1,
+        "frame": 600,
+        "root_error_m": null,
+        "tracking_lost": true,
+        "pelvis_height_m": 0.07099073380231857
+      },
+      "original_task_gate_accepted": false
+    },
+    {
+      "expert": "roll_vault_no_wall",
+      "first_height_tilt_loss_s": null,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.43922579288482666
+        }
+      ],
+      "last": {
+        "time_s": 11.999999999999755,
+        "episode": 2,
+        "frame": 78,
+        "root_error_m": 0.023230304941534996,
+        "tracking_lost": false,
+        "pelvis_height_m": 0.8121348023414612,
+        "depth_pixel_std": 0.193276047706604
+      },
+      "original_task_gate_accepted": false
+    }
+  ],
+  "checks": {
+    "pytest": "13 passed in1.63s",
+    "static_python_files": 169,
+    "weights_verified_files": 36,
+    "uploaded": false,
+    "source_experiment_modified": false,
+    "ruff_format": "180 files already formatted"
+  },
+  "source_inputs": {
+    "tennis_initial_observation_max_abs_error": 0.0,
+    "tennis_initial_goal_max_abs_error": 0.0,
+    "tennis_initial_context_max_abs_error": 0.0,
+    "tennis_initial_action_max_abs_error": 0.0,
+    "native_tennis_cpu_first_unstable_s": 0.66,
+    "depth32_encoder_uses_exported_native_state": true,
+    "depth_native_initial_mean": 0.80856127,
+    "depth_port_initial_mean": 0.80916572,
+    "depth_port_initial_std": 0.19304797
+  },
+  "resource_files": 158,
+  "resource_bytes": 86102159,
+  "notes": [
+    "Finite patches replace infinite floors; zero density preserves masses. Actor control20ms; common2.5msphysics differs from descent/skate/vault native5ms.",
+    "Backdrop and light changes are display-only and excluded from depth camera.",
+    "Nonfinite expert action rejected before execution; faulted tennis slot switches to public-only, visibly labeled. No teacher takeover.",
+    "Vault reference interval completion and height/tilt survival do not establish full task acceptance; endpoint error about0.439m.",
+    "Main overview and four close cameras render the same live world; live vault depth is actually encoded and supplied to the router/FFN.",
+    "No all30-scene acceptance, DR generalization, autonomous routing or no-reset recovery claim.",
+    "The early0.36s tennis failure was an intermediate port attempt with incorrect first-observation/launch/action-history timing. Those errors were corrected to zero initial input/action difference; final failure time is0.84s."
+  ],
+  "port_check": {
+    "mimicx_descent": {
+      "actuator_gainprm": 0.0,
+      "actuator_biasprm": 0.0,
+      "dof_armature": 0.0,
+      "dof_damping": 0.0,
+      "body_mass": 0.0,
+      "body_inertia": 0.0,
+      "geom_size": 45.0,
+      "dynamic_body_mass_max_abs": 0.0,
+      "geom_changes": [
+        {
+          "name": "ground",
+          "native_size": [
+            50.0,
+            50.0,
+            0.1
+          ],
+          "shared_size": [
+            5.0,
+            6.0,
+            0.05
+          ],
+          "native_type": 0,
+          "shared_type": 6
+        }
+      ],
+      "pelvis_pose_error": 0.0
+    },
+    "husky_skateboard": {
+      "actuator_gainprm": 0.0,
+      "actuator_biasprm": 0.0,
+      "dof_armature": 0.0,
+      "dof_damping": 0.0,
+      "body_mass": 0.0,
+      "body_inertia": 0.0,
+      "geom_size": 14.0,
+      "dynamic_body_mass_max_abs": 0.0,
+      "geom_changes": [
+        {
+          "name": "terrain",
+          "native_size": [
+            0.0,
+            0.0,
+            0.01
+          ],
+          "shared_size": [
+            14.0,
+            6.0,
+            0.05
+          ],
+          "native_type": 0,
+          "shared_type": 6
+        }
+      ],
+      "pelvis_pose_error": 0.0
+    },
+    "athlete_tennis": {
+      "actuator_gainprm": 0.0,
+      "actuator_biasprm": 0.0,
+      "dof_armature": 2.500000000071889e-08,
+      "dof_damping": 0.0,
+      "body_mass": 0.0,
+      "body_inertia": 0.0,
+      "geom_size": 27.0,
+      "dynamic_body_mass_max_abs": 0.0,
+      "geom_changes": [
+        {
+          "name": "tennis_court/surround",
+          "native_size": [
+            35.0,
+            25.0,
+            0.1
+          ],
+          "shared_size": [
+            8.0,
+            5.0,
+            0.05
+          ],
+          "native_type": 0,
+          "shared_type": 6
+        },
+        {
+          "name": "terrain",
+          "native_size": [
+            0.0,
+            0.0,
+            0.01
+          ],
+          "shared_size": [
+            8.0,
+            5.0,
+            0.05
+          ],
+          "native_type": 0,
+          "shared_type": 6
+        }
+      ],
+      "pelvis_pose_error": 0.0
+    },
+    "roll_vault_no_wall": {
+      "actuator_gainprm": 0.0,
+      "actuator_biasprm": 0.0,
+      "dof_armature": 0.0,
+      "dof_damping": 0.0,
+      "body_mass": 0.0,
+      "body_inertia": 0.0,
+      "geom_size": 0.0,
+      "dynamic_body_mass_max_abs": 0.0,
+      "geom_changes": [],
+      "pelvis_pose_error": 7.077671781985373e-16
+    },
+    "camera": {
+      "point": [
+        14.089926846422278,
+        -0.08436491320804033,
+        1.3789108841244326
+      ],
+      "direction_center": [
+        -0.07063612182754833,
+        -0.7201637421894697,
+        -0.6901991234627818
+      ],
+      "distance_min": 0.017442431632202087,
+      "distance_max": 0.040738301385138544,
+      "misses": 0,
+      "too_near": 1296,
+      "hits": {
+        "roll_vault_no_wall/_arena_geom_80": 1296
+      },
+      "new_image_std": 0.19304797053337097,
+      "new_image_mean": 0.8091657161712646,
+      "encoder_parity_max_abs": 0.00211334228515625
+    }
+  },
+  "checked_at": "2026-11-13T02:53:43.423146+00:00",
+  "source_sha256": {
+    "src/pera/interaction_showcase.py": "85a8500c6a173914f097e081443edfce8cfeaea2e47b247cbce0c6992efded64",
+    "src/pera/multi_robot.py": "88a4d852c80effc4f96b229368474fb846e6cb9578e5b124cad4c2148cec05a0",
+    "src/modumotion_g1/husky_skateboarding.py": "577b93ed24d0635daaf2282a9e15d9518d06f195b32c5dbd7c45f1f3abcb8995",
+    "configs/showcase.json": "9222ff87fa6e942f59e2c316391a3e493277915090e80dcb4009755d4930d42d",
+    "configs/showcase_descent.json": "61c74f1cdf66f687476e4f24e7016a2d081bbcd3a16424e6193941b24f8f7b43",
+    "tools/prepare_interaction_showcase.py": "219ba529b4aa77d57f20b4b31c8f98f69f634e9b11d740c73622d51aae4c770d"
+  }
+}

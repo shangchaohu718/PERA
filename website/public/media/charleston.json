@@ -1,0 +1,35 @@
+{
+  "id": "charleston",
+  "name": "Charleston dance",
+  "directory": "reports/kungfubot_original_20261105/evaluation_cpu_state/isaaclab_eval_output_model_14000_references_h5",
+  "pattern": "Charleston_dance__*.npz",
+  "controller": "Frozen HoloMotion G1 v1.4 public policy; no PERA expert",
+  "role": "Public repertoire / hero",
+  "source_fps": 50,
+  "camera_distance": 2.5,
+  "source": "reports/kungfubot_original_20261105/evaluation_cpu_state/isaaclab_eval_output_model_14000_references_h5/Charleston_dance__start_0_len_1016.npz",
+  "source_sha256": "5f854c61f39945ef646233e0883d56dedd30e91bfcc7f67f9ec1bb1b463847d6",
+  "model": "HoloMotion/assets/robots/unitree/G1/29dof/g1_29dof_rev_1_0.xml",
+  "model_sha256": "df60bbf86809af184c244211dc9c7e3900c4119ed0d0dd28163b8ddb52e44e8e",
+  "source_frames": 1006,
+  "output_frames": 604,
+  "duration_s": 20.133333333333333,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "controller_rate_hz": 50,
+  "pose_interpolation": false,
+  "speed": 1,
+  "full_recorded_episode": true,
+  "video_sha256": "403a60661399b0a718f5478fed59ebd16ddfe96431d88abe11c2a58f0b1de605",
+  "rendering": "Archived Isaac Lab closed-loop robot states re-rendered in MuJoCo; no policy inference or reference-pose playback. Nearest-frame 50-to-30 Hz sampling, maximum time quantization 10 ms. Camera, lighting and ground appearance only.",
+  "camera": {
+    "azimuth_relative_to_initial_heading": 135,
+    "elevation": -16,
+    "distance": 2.5,
+    "lookat_height": 0.8
+  },
+  "master": ".render-work/charleston.master.mkv"
+}

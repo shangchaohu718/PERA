@@ -1,0 +1,29 @@
+{
+  "id": "catalog31-white-v2/mimicx_forest-on",
+  "task": "mimicx_forest",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_forest/attempt_1/final_student_4004_trajectory.npz",
+  "source_sha256": "5f1b5431f4e31860cd3183738a15bc9303af9b5bc0037c6eed5172aca9689058",
+  "duration_s": 8.1,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "6b07416e0ede8c018c6f3fbfc82ff9e6593454905a159aeb76bdd08a96cfe591",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_forest/attempt_1/final_student_4004.json",
+  "report_sha256": "e48db4bec0fa583a4ddcb0130ee8403d691150fdc6244cd0252ffba1ffe8eb0f",
+  "seed": 4004,
+  "scene": "reports/distillation_suite_v1/run_20261105_173125/mimicx_forest/attempt_1/native_scene.mjb",
+  "scene_sha256": "1c5da45d174d35c26bc720b0769afe53f23b3a3fe8dd0636fa24ea44328d7d86",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

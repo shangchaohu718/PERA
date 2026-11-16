@@ -1,0 +1,43 @@
+{
+  "name": "Gap crossing - Expert ON",
+  "expert": "Task expert ON",
+  "source": "website/.render-work/comparisons-v5/gaps-on/recording/physics.npz",
+  "source_sha256": "2c95d44908ec3b12ec5f86aaefd95556f399f246899e10a5184272a1a0b1e98d",
+  "report": "website/.render-work/comparisons-v5/gaps-on/report.json",
+  "report_sha256": "1f95f59081415a749ac763e74195e9eda22633637ee80803095a487ed43812a9",
+  "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+  "source_fps": 25.0,
+  "source_frames": 250,
+  "source_frame_offset": 0,
+  "source_recording_start_s": 0.0,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "camera": {
+    "azimuth": 135,
+    "elevation": -20,
+    "distance": 3.6
+  },
+  "scene_style": "terrain",
+  "lighting": "Studio v4: white sky; contrasting terrain, world-anchored skate grid, or original tennis-court colors according to scene. Original robot albedo retained.",
+  "all_terrain_geometry_retained": true,
+  "master": ".render-work/highlights-v5/gaps-on.master.mkv",
+  "rendering": "Exact recorded actual robot and object states. Nearest timestamp resampling only; maximum quantization is half of one source interval, plus source timestamp precision. No training, simulator stepping, teacher queries or reference-pose playback during rendering.",
+  "scene": "website/.render-work/comparisons-v5/gaps-on/recording/scene.mjb",
+  "scene_sha256": "82ed8336a79cbad20ff2a399eb060f0b3fc0b699872eb9c5244c00098ba23eeb",
+  "id": "gaps-on-full",
+  "full_recorded_episode": true,
+  "full_task_segment": false,
+  "partial_excerpt": false,
+  "excerpt_start_s": 0,
+  "excerpt_end_s": 10.0,
+  "source_start_s": 0.0,
+  "source_end_s": 10.0,
+  "output_frames": 300,
+  "duration_s": 10.0,
+  "video_sha256": "4c9b178e43c6cc253a138589302e4289b5407bd506cd3fb59a5b456889b7a646"
+}

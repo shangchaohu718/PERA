@@ -1,0 +1,104 @@
+{
+  "schema": "pera.holomotion_interaction_arena.v1",
+  "runtime": "interaction",
+  "descent_config": "configs/showcase_descent.json",
+  "physics_dt": 0.0025,
+  "control_dt": 0.02,
+  "tasks": [
+    {
+      "id": "diveroll_lab_no_wall",
+      "expert": "diveroll_lab_no_wall",
+      "kind": "vault",
+      "label": "Forward roll",
+      "resources": "data/showcase/diveroll_lab_no_wall_native",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "floor": [
+        2.8,
+        3,
+        0,
+        -1.5
+      ],
+      "close_distance": 4.3
+    },
+    {
+      "id": "diveroll_ramp_no_wall",
+      "expert": "diveroll_ramp_no_wall",
+      "kind": "vault",
+      "label": "Ramp roll",
+      "resources": "data/showcase/diveroll_ramp_no_wall_native",
+      "origin": [
+        6,
+        0,
+        0
+      ],
+      "floor": [
+        2.8,
+        3,
+        0,
+        -1.5
+      ],
+      "close_distance": 4.3
+    },
+    {
+      "id": "jump_sit_no_wall",
+      "expert": "jump_sit_no_wall",
+      "kind": "vault",
+      "label": "Jump to sit",
+      "resources": "data/showcase/jump_sit_no_wall_native",
+      "origin": [
+        12,
+        0,
+        0
+      ],
+      "floor": [
+        2.8,
+        3,
+        0,
+        -1.5
+      ],
+      "close_distance": 4.3
+    },
+    {
+      "id": "athlete_tennis",
+      "expert": "athlete_tennis",
+      "kind": "tennis",
+      "label": "Tennis returns",
+      "resources": "data/showcase/tennis_native",
+      "origin": [
+        4,
+        7,
+        0
+      ],
+      "floor": [
+        5.25,
+        3,
+        3.25
+      ]
+    }
+  ],
+  "resource_manifests": [
+    "resources/body_showcase_manifest.json",
+    "resources/interaction_showcase_manifest.json"
+  ],
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "demo_policy": "configs/demo_policy.json",
+  "compact": true,
+  "motion_config": "configs/showcase_motion_regions.json",
+  "overview_camera": {
+    "lookat": [
+      7,
+      3,
+      0.8
+    ],
+    "distance": 22,
+    "azimuth": 90,
+    "elevation": -65
+  },
+  "clean_presentation": true,
+  "show_depth_panel": false
+}

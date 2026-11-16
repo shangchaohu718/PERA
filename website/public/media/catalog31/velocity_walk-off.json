@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/velocity_walk-off",
+  "task": "velocity_walk",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-v1/velocity_walk/off/physics.npz",
+  "source_sha256": "e7db4c8bb12f64be61030a13b2676fe2d54e93549123492b31acad2c2cbdeda7",
+  "duration_s": 30.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "b0b95bd408eb7b4579685f37623336bb54671a58c57a7ccd978f9d56213fd641",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/velocity_walk/off/report.json",
+  "report_sha256": "8814cabc175ae38cf9e6bbcfb486909717af06c251e2b7b71617cecf8fd3c824",
+  "native_termination_s": 30.00049591064453,
+  "post_termination_seconds": 0,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 8101,
+  "plugin": "reports/velocity_walk_v3/training/round_020.domain.pt",
+  "plugin_sha256": "289f569dee6b118ab44d30afc1057f45bc97e5f0d6b50f19281a8d482715cb29",
+  "scene": "website/.render-work/catalog31-v1/velocity_walk/off/scene.mjb",
+  "scene_sha256": "33fee96fe687e1f43155a0e1f387eb51a74146d5dc6add6d11259a2e824a9bd5"
+}

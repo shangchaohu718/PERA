@@ -1,0 +1,43 @@
+{
+  "name": "High steps",
+  "expert": "BC + DAgger expert",
+  "source": "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/recording/physics.npz",
+  "source_sha256": "5e99e2d222b02ebf5f12a0d9cf053ec6f63286cfad9798bcc6b7cf026c1beb58",
+  "report": "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/report.json",
+  "report_sha256": "a774923ede0631b497ae40ad88e0f3a3b5c05f731768df70f31bbb7a0906cf3f",
+  "scope": "One recorded student rollout, seed 93001. All original steps retained; the five-second excerpt includes ascent and arrival. Original ten-second recording available.",
+  "source_fps": 25.0,
+  "source_frames": 250,
+  "source_frame_offset": 0,
+  "source_recording_start_s": 0.0,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "camera": {
+    "azimuth": 135,
+    "elevation": -18,
+    "distance": 3.6
+  },
+  "scene_style": "terrain",
+  "lighting": "Studio v4: white sky; contrasting terrain, world-anchored skate grid, or original tennis-court colors according to scene. Original robot albedo retained.",
+  "all_terrain_geometry_retained": true,
+  "master": ".render-work/highlights-v4/steps.master.mkv",
+  "rendering": "Exact recorded actual robot and object states. Nearest timestamp resampling only; maximum quantization is half of one source interval, plus source timestamp precision. No training, simulator stepping, teacher queries or reference-pose playback during rendering.",
+  "scene": "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/recording/scene.mjb",
+  "scene_sha256": "a3d0f3e06f4889c906c8af2debe8e190330020a70c31a278316f2c82aee6088b",
+  "id": "steps-full",
+  "full_recorded_episode": true,
+  "full_task_segment": false,
+  "partial_excerpt": false,
+  "excerpt_start_s": 0,
+  "excerpt_end_s": 10.0,
+  "source_start_s": 0.0,
+  "source_end_s": 10.0,
+  "output_frames": 300,
+  "duration_s": 10.0,
+  "video_sha256": "b4d91f1f4594984150138c90057a1a4ff0bf9ddeecc217a42676e311947dc823"
+}

@@ -1,0 +1,1679 @@
+project_name: HoloMotionMotrackV1.4
+experiment_name: training/motion_tracking/v1_4_0_finetune
+num_envs: 8192
+headless: true
+motion_h5_path: ???
+checkpoint: null
+num_processes: 32
+main_process: true
+process_id: 0
+timestamp: ${now:%Y%m%d_%H%M%S}
+base_dir: outputs
+experiment_dir: ${base_dir}/${project_name}/${timestamp}-${experiment_name}
+save_dir: ${experiment_dir}/.hydra
+output_dir: ${experiment_dir}/output
+experiment_save_dir: ${experiment_dir}
+_group_:
+  enabled: false
+  model_type: holomotion
+  headless: false
+  record_video: false
+  video_width: 1280
+  video_height: 720
+  video_fps: 30
+  camera_tracking: true
+  camera_height_offset: 0.3
+  camera_distance: 4.0
+  camera_azimuth: 150.0
+  camera_elevation: -20.0
+  robot_xml_path: null
+  motion_npz_dir: null
+  motion_npz_path: null
+  ckpt_onnx_path: null
+  ckpt_onnx_root_dir: null
+  ckpt_onnx_names: null
+  dump_npzs: true
+  calc_per_clip_metrics: false
+  generate_report: false
+  metric_calculation: per_clip
+  dof_mode: '23'
+  failure_pos_err_thresh_m: 0.25
+  ray_actors_per_gpu: 16
+  ray_auto_reduce_actors_per_gpu: true
+  ray_actor_startup_probe_timeout_s: 300
+  ray_multi_ckpt_mode: split
+  use_gpu: true
+algo:
+  _target_: holomotion.src.algo.ppo_tf.PPOTF
+  _recursive_: false
+  config:
+    enable_online_eval: false
+    num_learning_iterations: 10000
+    log_interval: 5
+    save_interval: 1000
+    export_policy: true
+    onnx_name_suffix: null
+    use_kv_cache: true
+    eval_interval: null
+    load_optimizer: true
+    headless: ${headless}
+    mixed_precision: null
+    dynamo_backend: inductor
+    init_at_random_ep_len: true
+    num_steps_per_env: 32
+    num_learning_epochs: 3
+    num_mini_batches: 24
+    clip_param: 0.2
+    gamma: 0.99
+    lam: 0.95
+    value_loss_coef: 1.0
+    entropy_coef: 0.005
+    anneal_entropy: false
+    zero_entropy_point: 1.0
+    max_grad_norm: 1.0
+    use_clipped_value_loss: true
+    desired_kl: 0.01
+    init_noise_std: 1.0
+    optimizer_type: AdamW
+    schedule: adaptive
+    actor_learning_rate: 3.0e-05
+    critic_learning_rate: 5.0e-05
+    adaptive_lr:
+      adapt_critic: false
+      lr_scaler: 1.2
+      kl_high_factor: 2.0
+      kl_low_factor: 0.5
+      min_learning_rate: 1.0e-06
+      max_learning_rate: 1.0
+    distributed_update:
+      mode: scalable
+      lr_scale:
+        mode: sqrt_world_size
+        reference_world_size: 1
+        max_scale: null
+      kl_early_stop:
+        enabled: true
+        signal: window_mean
+        window_size: 3
+        factor: 1.8
+        min_updates: 1
+    normalize_advantage_per_mini_batch: false
+    global_advantage_norm: true
+    sampling_strategy: weighted_bin
+    curriculum:
+      p_a_ratio: 0.5
+      ema_alpha_signal: 0.2
+      ema_alpha_rel_improve: 0.2
+      relative_eps: 1.0e-06
+      dump_whole_window_scores_json: false
+      dump_whole_window_scores_every_swaps: 10
+    weighted_bin:
+      bin_regex_patterns: []
+      dump_sampled_keys: false
+      dump_sampled_keys_interval: 1000
+    module_dict:
+      actor: ${modules.actor}
+      critic: ${modules.critic}
+    symmetry_loss:
+      enabled: false
+      coef: 0.1
+      dof_sign_by_name: ${robot.dof_sign_by_name}
+    kl_coef: 0.0
+    noise_std_type: log
+    fix_sigma: false
+    min_sigma: 0.01
+    max_sigma: 1.2
+    aux_state_pred:
+      enabled: true
+      w_keybody_contact: 0.01
+      w_base_lin_vel: 0.01
+      w_ref_keybody_rel_pos: 0.1
+      w_robot_keybody_rel_pos: 0.1
+      min_std: 0.01
+      max_std: 2.0
+      keybody_contact_names:
+      - left_hip_pitch_link
+      - right_hip_pitch_link
+      - left_knee_link
+      - right_knee_link
+      - left_ankle_roll_link
+      - right_ankle_roll_link
+      - left_elbow_link
+      - right_elbow_link
+      - left_wrist_yaw_link
+      - right_wrist_yaw_link
+      keybody_rel_pos_names:
+      - left_knee_link
+      - right_knee_link
+      - left_ankle_roll_link
+      - right_ankle_roll_link
+      - left_elbow_link
+      - right_elbow_link
+      - left_wrist_yaw_link
+      - right_wrist_yaw_link
+    inactive_expert_margin_to_topk:
+      enabled: true
+      weight: 10
+      ratio_floor: 0.1
+    aux_router_command_recon:
+      enabled: false
+      weight: 0.0
+      hidden_dim: 0
+      term_prefix: actor_ref_
+    aux_router_switch_penalty:
+      enabled: false
+      weight: 0.0
+    moe_load_balance:
+      enabled: false
+      weight: 0.0
+    router_expert_orthogonal:
+      enabled: false
+      weight: 0.0
+      min_active_usage: 0.001
+      eps: 1.0e-08
+    selected_expert_margin_to_unselected:
+      enabled: false
+      weight: 0.0
+      target: 0.0
+    moe_router:
+      routing_score_fn: softmax
+      routing_scale: 1.0
+      use_dynamic_bias: false
+      bias_update_rate: 0.001
+      expert_bias_clip: 0.0
+robot:
+  humanoid_type: unitree/G1/29dof
+  dof_obs_size: 29
+  actions_dim: 29
+  num_bodies: 30
+  num_extend_bodies: 0
+  undesired_contacts_regrex: ^(?!left_ankle_roll_link$)(?!right_ankle_roll_link$)(?!left_wrist_yaw_link$)(?!right_wrist_yaw_link$).+$
+  torso_name: torso_link
+  anchor_body: torso_link
+  key_bodies:
+  - pelvis
+  - left_hip_roll_link
+  - left_knee_link
+  - left_ankle_pitch_link
+  - right_hip_roll_link
+  - right_knee_link
+  - right_ankle_pitch_link
+  - torso_link
+  - left_shoulder_roll_link
+  - left_elbow_link
+  - left_wrist_yaw_link
+  - right_shoulder_roll_link
+  - right_elbow_link
+  - right_wrist_yaw_link
+  key_dofs:
+  - left_knee_joint
+  - right_knee_joint
+  - left_elbow_joint
+  - right_elbow_joint
+  dof_names:
+  - left_hip_pitch_joint
+  - left_hip_roll_joint
+  - left_hip_yaw_joint
+  - left_knee_joint
+  - left_ankle_pitch_joint
+  - left_ankle_roll_joint
+  - right_hip_pitch_joint
+  - right_hip_roll_joint
+  - right_hip_yaw_joint
+  - right_knee_joint
+  - right_ankle_pitch_joint
+  - right_ankle_roll_joint
+  - waist_yaw_joint
+  - waist_roll_joint
+  - waist_pitch_joint
+  - left_shoulder_pitch_joint
+  - left_shoulder_roll_joint
+  - left_shoulder_yaw_joint
+  - left_elbow_joint
+  - left_wrist_roll_joint
+  - left_wrist_pitch_joint
+  - left_wrist_yaw_joint
+  - right_shoulder_pitch_joint
+  - right_shoulder_roll_joint
+  - right_shoulder_yaw_joint
+  - right_elbow_joint
+  - right_wrist_roll_joint
+  - right_wrist_pitch_joint
+  - right_wrist_yaw_joint
+  arm_dof_names:
+  - left_shoulder_pitch_joint
+  - left_shoulder_roll_joint
+  - left_shoulder_yaw_joint
+  - left_elbow_joint
+  - left_wrist_roll_joint
+  - left_wrist_pitch_joint
+  - left_wrist_yaw_joint
+  - right_shoulder_pitch_joint
+  - right_shoulder_roll_joint
+  - right_shoulder_yaw_joint
+  - right_elbow_joint
+  - right_wrist_roll_joint
+  - right_wrist_pitch_joint
+  - right_wrist_yaw_joint
+  waist_dof_names:
+  - waist_yaw_joint
+  - waist_roll_joint
+  - waist_pitch_joint
+  leg_dof_names:
+  - left_hip_pitch_joint
+  - left_hip_roll_joint
+  - left_hip_yaw_joint
+  - left_knee_joint
+  - left_ankle_pitch_joint
+  - left_ankle_roll_joint
+  - right_hip_pitch_joint
+  - right_hip_roll_joint
+  - right_hip_yaw_joint
+  - right_knee_joint
+  - right_ankle_pitch_joint
+  - right_ankle_roll_joint
+  left_arm_dof_names:
+  - left_shoulder_pitch_joint
+  - left_shoulder_roll_joint
+  - left_shoulder_yaw_joint
+  - left_elbow_joint
+  - left_wrist_roll_joint
+  - left_wrist_pitch_joint
+  - left_wrist_yaw_joint
+  right_arm_dof_names:
+  - right_shoulder_pitch_joint
+  - right_shoulder_roll_joint
+  - right_shoulder_yaw_joint
+  - right_elbow_joint
+  - right_wrist_roll_joint
+  - right_wrist_pitch_joint
+  - right_wrist_yaw_joint
+  left_leg_dof_names:
+  - left_hip_pitch_joint
+  - left_hip_roll_joint
+  - left_hip_yaw_joint
+  - left_knee_joint
+  - left_ankle_pitch_joint
+  - left_ankle_roll_joint
+  right_leg_dof_names:
+  - right_hip_pitch_joint
+  - right_hip_roll_joint
+  - right_hip_yaw_joint
+  - right_knee_joint
+  - right_ankle_pitch_joint
+  - right_ankle_roll_joint
+  upper_body_dof_names: ${robot.arm_dof_names}
+  lower_body_dof_names:
+  - left_hip_pitch_joint
+  - left_hip_roll_joint
+  - left_hip_yaw_joint
+  - left_knee_joint
+  - left_ankle_pitch_joint
+  - left_ankle_roll_joint
+  - right_hip_pitch_joint
+  - right_hip_roll_joint
+  - right_hip_yaw_joint
+  - right_knee_joint
+  - right_ankle_pitch_joint
+  - right_ankle_roll_joint
+  - waist_yaw_joint
+  - waist_roll_joint
+  - waist_pitch_joint
+  arm_body_names:
+  - left_shoulder_pitch_link
+  - left_shoulder_roll_link
+  - left_shoulder_yaw_link
+  - left_elbow_link
+  - left_wrist_roll_link
+  - left_wrist_pitch_link
+  - left_wrist_yaw_link
+  - right_shoulder_pitch_link
+  - right_shoulder_roll_link
+  - right_shoulder_yaw_link
+  - right_elbow_link
+  - right_wrist_roll_link
+  - right_wrist_pitch_link
+  - right_wrist_yaw_link
+  head_hand_bodies:
+  - torso_link
+  - left_wrist_yaw_link
+  - right_wrist_yaw_link
+  torso_body_names:
+  - waist_yaw_link
+  - waist_roll_link
+  - torso_link
+  leg_body_names:
+  - left_hip_pitch_link
+  - left_hip_roll_link
+  - left_hip_yaw_link
+  - left_knee_link
+  - left_ankle_pitch_link
+  - left_ankle_roll_link
+  - right_hip_pitch_link
+  - right_hip_roll_link
+  - right_hip_yaw_link
+  - right_knee_link
+  - right_ankle_pitch_link
+  - right_ankle_roll_link
+  left_arm_body_names:
+  - left_shoulder_pitch_link
+  - left_shoulder_roll_link
+  - left_shoulder_yaw_link
+  - left_elbow_link
+  - left_wrist_roll_link
+  - left_wrist_pitch_link
+  - left_wrist_yaw_link
+  right_arm_body_names:
+  - right_shoulder_pitch_link
+  - right_shoulder_roll_link
+  - right_shoulder_yaw_link
+  - right_elbow_link
+  - right_wrist_roll_link
+  - right_wrist_pitch_link
+  - right_wrist_yaw_link
+  left_leg_body_names:
+  - left_hip_pitch_link
+  - left_hip_roll_link
+  - left_hip_yaw_link
+  - left_knee_link
+  - left_ankle_pitch_link
+  - left_ankle_roll_link
+  right_leg_body_names:
+  - right_hip_pitch_link
+  - right_hip_roll_link
+  - right_hip_yaw_link
+  - right_knee_link
+  - right_ankle_pitch_link
+  - right_ankle_roll_link
+  body_names:
+  - pelvis
+  - left_hip_pitch_link
+  - left_hip_roll_link
+  - left_hip_yaw_link
+  - left_knee_link
+  - left_ankle_pitch_link
+  - left_ankle_roll_link
+  - right_hip_pitch_link
+  - right_hip_roll_link
+  - right_hip_yaw_link
+  - right_knee_link
+  - right_ankle_pitch_link
+  - right_ankle_roll_link
+  - waist_yaw_link
+  - waist_roll_link
+  - torso_link
+  - left_shoulder_pitch_link
+  - left_shoulder_roll_link
+  - left_shoulder_yaw_link
+  - left_elbow_link
+  - left_wrist_roll_link
+  - left_wrist_pitch_link
+  - left_wrist_yaw_link
+  - right_shoulder_pitch_link
+  - right_shoulder_roll_link
+  - right_shoulder_yaw_link
+  - right_elbow_link
+  - right_wrist_roll_link
+  - right_wrist_pitch_link
+  - right_wrist_yaw_link
+  init_state:
+    pos:
+    - 0.0
+    - 0.0
+    - 0.8
+    rot:
+    - 0.0
+    - 0.929
+    - 0.341
+    - 0.298
+    lin_vel:
+    - 0.0
+    - 0.0
+    - 0.0
+    ang_vel:
+    - 0.0
+    - 0.0
+    - 0.0
+    default_joint_angles:
+      left_hip_pitch_joint: -0.312
+      left_hip_roll_joint: 0.0
+      left_hip_yaw_joint: 0.0
+      left_knee_joint: 0.669
+      left_ankle_pitch_joint: -0.363
+      left_ankle_roll_joint: 0.0
+      right_hip_pitch_joint: -0.312
+      right_hip_roll_joint: 0.0
+      right_hip_yaw_joint: 0.0
+      right_knee_joint: 0.669
+      right_ankle_pitch_joint: -0.363
+      right_ankle_roll_joint: 0.0
+      waist_yaw_joint: 0.0
+      waist_roll_joint: 0.0
+      waist_pitch_joint: 0.1
+      left_shoulder_pitch_joint: 0.2
+      left_shoulder_roll_joint: 0.2
+      left_shoulder_yaw_joint: 0.0
+      left_elbow_joint: 0.6
+      left_wrist_roll_joint: 0.0
+      left_wrist_pitch_joint: 0.0
+      left_wrist_yaw_joint: 0.0
+      right_shoulder_pitch_joint: 0.2
+      right_shoulder_roll_joint: -0.2
+      right_shoulder_yaw_joint: 0.0
+      right_elbow_joint: 0.6
+      right_wrist_roll_joint: 0.0
+      right_wrist_pitch_joint: 0.0
+      right_wrist_yaw_joint: 0.0
+  actuators:
+    actuator_type: unitree_erfi
+    all_joints:
+      joint_names_expr:
+      - .*_hip_yaw_joint
+      - .*_hip_roll_joint
+      - .*_hip_pitch_joint
+      - .*_knee_joint
+      - .*_ankle_pitch_joint
+      - .*_ankle_roll_joint
+      - waist_yaw_joint
+      - waist_roll_joint
+      - waist_pitch_joint
+      - .*_shoulder_pitch_joint
+      - .*_shoulder_roll_joint
+      - .*_shoulder_yaw_joint
+      - .*_elbow_joint
+      - .*_wrist_roll_joint
+      - .*_wrist_pitch_joint
+      - .*_wrist_yaw_joint
+      effort_limit_sim:
+        .*_hip_yaw_joint: 88.0
+        .*_hip_roll_joint: 139.0
+        .*_hip_pitch_joint: 88.0
+        .*_knee_joint: 139.0
+        .*_ankle_pitch_joint: 50.0
+        .*_ankle_roll_joint: 50.0
+        waist_yaw_joint: 88.0
+        waist_roll_joint: 50.0
+        waist_pitch_joint: 50.0
+        .*_shoulder_pitch_joint: 25.0
+        .*_shoulder_roll_joint: 25.0
+        .*_shoulder_yaw_joint: 25.0
+        .*_elbow_joint: 25.0
+        .*_wrist_roll_joint: 25.0
+        .*_wrist_pitch_joint: 5.0
+        .*_wrist_yaw_joint: 5.0
+      velocity_limit_sim:
+        .*_hip_yaw_joint: 32.0
+        .*_hip_roll_joint: 20.0
+        .*_hip_pitch_joint: 32.0
+        .*_knee_joint: 20.0
+        .*_ankle_pitch_joint: 37.0
+        .*_ankle_roll_joint: 37.0
+        waist_yaw_joint: 32.0
+        waist_roll_joint: 37.0
+        waist_pitch_joint: 37.0
+        .*_shoulder_pitch_joint: 37.0
+        .*_shoulder_roll_joint: 37.0
+        .*_shoulder_yaw_joint: 37.0
+        .*_elbow_joint: 37.0
+        .*_wrist_roll_joint: 37.0
+        .*_wrist_pitch_joint: 22.0
+        .*_wrist_yaw_joint: 22.0
+      stiffness:
+        .*_hip_pitch_joint: 40.17923847
+        .*_hip_roll_joint: 99.09842778
+        .*_hip_yaw_joint: 40.17923847
+        .*_knee_joint: 99.09842778
+        .*_ankle_pitch_joint: 28.5012462
+        .*_ankle_roll_joint: 28.5012462
+        waist_yaw_joint: 40.17923847
+        waist_roll_joint: 28.5012462
+        waist_pitch_joint: 28.5012462
+        .*_shoulder_pitch_joint: 14.2506231
+        .*_shoulder_roll_joint: 14.2506231
+        .*_shoulder_yaw_joint: 14.2506231
+        .*_elbow_joint: 14.2506231
+        .*_wrist_roll_joint: 14.25062309787429
+        .*_wrist_pitch_joint: 16.77832748089279
+        .*_wrist_yaw_joint: 16.77832748089279
+      damping:
+        .*_hip_pitch_joint: 2.55788977
+        .*_hip_roll_joint: 6.30880185
+        .*_hip_yaw_joint: 2.55788977
+        .*_knee_joint: 6.30880185
+        .*_ankle_pitch_joint: 1.81444569
+        .*_ankle_roll_joint: 1.81444569
+        waist_yaw_joint: 2.55788977
+        waist_roll_joint: 1.81444569
+        waist_pitch_joint: 1.81444569
+        .*_shoulder_pitch_joint: 0.90722284
+        .*_shoulder_roll_joint: 0.90722284
+        .*_shoulder_yaw_joint: 0.90722284
+        .*_elbow_joint: 0.90722284
+        .*_wrist_roll_joint: 0.907222843292423
+        .*_wrist_pitch_joint: 1.06814150219
+        .*_wrist_yaw_joint: 1.06814150219
+      armature:
+        .*_hip_pitch_joint: 0.01017752
+        .*_hip_roll_joint: 0.025101925
+        .*_hip_yaw_joint: 0.01017752
+        .*_knee_joint: 0.025101925
+        .*_ankle_pitch_joint: 0.00721945
+        .*_ankle_roll_joint: 0.00721945
+        waist_yaw_joint: 0.01017752
+        waist_roll_joint: 0.00721945
+        waist_pitch_joint: 0.00721945
+        .*_shoulder_pitch_joint: 0.003609725
+        .*_shoulder_roll_joint: 0.003609725
+        .*_shoulder_yaw_joint: 0.003609725
+        .*_elbow_joint: 0.003609725
+        .*_wrist_roll_joint: 0.003609725
+        .*_wrist_pitch_joint: 0.00425
+        .*_wrist_yaw_joint: 0.00425
+    action_scale:
+      .*_hip_pitch_joint: 0.548
+      .*_hip_roll_joint: 0.351
+      .*_hip_yaw_joint: 0.548
+      .*_knee_joint: 0.351
+      .*_ankle_pitch_joint: 0.439
+      .*_ankle_roll_joint: 0.439
+      waist_yaw_joint: 0.548
+      waist_roll_joint: 0.439
+      waist_pitch_joint: 0.439
+      .*_shoulder_pitch_joint: 0.439
+      .*_shoulder_roll_joint: 0.439
+      .*_shoulder_yaw_joint: 0.439
+      .*_elbow_joint: 0.439
+      .*_wrist_roll_joint: 0.439
+      .*_wrist_pitch_joint: 0.075
+      .*_wrist_yaw_joint: 0.075
+  dof_sign_by_name:
+    left_hip_pitch_joint: 1.0
+    left_hip_roll_joint: -1.0
+    left_hip_yaw_joint: -1.0
+    left_knee_joint: 1.0
+    left_ankle_pitch_joint: 1.0
+    left_ankle_roll_joint: -1.0
+    right_hip_pitch_joint: 1.0
+    right_hip_roll_joint: -1.0
+    right_hip_yaw_joint: -1.0
+    right_knee_joint: 1.0
+    right_ankle_pitch_joint: 1.0
+    right_ankle_roll_joint: -1.0
+    waist_yaw_joint: -1.0
+    waist_roll_joint: -1.0
+    waist_pitch_joint: 1.0
+    left_shoulder_pitch_joint: 1.0
+    left_shoulder_roll_joint: -1.0
+    left_shoulder_yaw_joint: -1.0
+    left_elbow_joint: 1.0
+    left_wrist_roll_joint: -1.0
+    left_wrist_pitch_joint: 1.0
+    left_wrist_yaw_joint: -1.0
+    right_shoulder_pitch_joint: 1.0
+    right_shoulder_roll_joint: -1.0
+    right_shoulder_yaw_joint: -1.0
+    right_elbow_joint: 1.0
+    right_wrist_roll_joint: -1.0
+    right_wrist_pitch_joint: 1.0
+    right_wrist_yaw_joint: -1.0
+  asset:
+    collapse_fixed_joints: true
+    replace_cylinder_with_capsule: true
+    flip_visual_attachments: false
+    max_angular_velocity: 1000.0
+    max_linear_velocity: 1000.0
+    density: 0.001
+    angular_damping: 0.0
+    linear_damping: 0.0
+    asset_root: ./
+    urdf_file: assets/robots/${robot.humanoid_type}/g1_29dof_rev_1_0.urdf
+    assetFileName: assets/robots/${robot.humanoid_type}/g1_29dof_rev_1_0.xml
+    fix_base_link: false
+    force_usd_conversion: true
+  extend_config: []
+  motion:
+    asset:
+      assetRoot: ./
+      assetFileName: assets/robots/${robot.humanoid_type}/g1_29dof_rev_1_0.xml
+    sampling_strategy: ${algo.config.sampling_strategy}
+    weighted_bin: ${algo.config.weighted_bin}
+    curriculum: ${algo.config.curriculum}
+    dump_sampled_motion_keys: false
+    dump_sampled_motion_keys_interval: 1
+    dump_sampled_motion_keys_dir: sampled_motion_cache_keys
+    max_frame_length: 300
+    min_frame_length: 50
+    handpicked_motion_names: null
+    excluded_motion_names: null
+    world_frame_normalization: true
+    backend: hdf5_v2
+    train_hdf5_roots: ${train_hdf5_roots}
+    val_hdf5_roots: ${train_hdf5_roots}
+    dof_names: ${robot.dof_names}
+    body_names: ${robot.body_names}
+    key_bodies: ${robot.key_bodies}
+    extend_config: ${robot.extend_config}
+    dataloader:
+      num_workers: 2
+      prefetch_factor: 1
+      pin_memory: true
+      persistent_workers: false
+      timeout: 600
+    fk_robot_file_path: ${robot.asset.urdf_file}
+    cache:
+      batch_progress_bar: false
+      max_num_clips: ${num_envs}
+      device: cuda
+      swap_interval_steps: ${robot.motion.max_frame_length}
+      allowed_prefixes:
+      - ref_
+env:
+  _target_: holomotion.src.env.motion_tracking.MotionTrackingEnv
+  _recursive_: false
+  config:
+    experiment_name: ${experiment_name}
+    num_envs: ${num_envs}
+    env_spacing: 2.5
+    replicate_physics: true
+    headless: ${headless}
+    num_processes: ${num_processes}
+    main_process: ${main_process}
+    process_id: ${process_id}
+    ckpt_dir: null
+    disable_ref_viz: false
+    eval_log_dir: null
+    save_rendering_dir: ${experiment_dir}/renderings_training
+    robot: ${robot}
+    domain_rand: ${domain_rand}
+    rewards: ${rewards}
+    terrain: ${terrain}
+    obs: ${obs}
+    terminations: ${terminations}
+    simulation:
+      episode_length_s: 10
+      sim_freq: 200
+      control_decimation: 4
+      physx:
+        bounce_threshold_velocity: 0.5
+        gpu_max_rigid_patch_count: 327680
+    scene:
+      terrain: ${terrain}
+      lighting:
+        distant_light_intensity: 3000.0
+        dome_light_intensity: 1000.0
+      contact_sensor:
+        history_length: 3
+        force_threshold: 10.0
+        track_air_time: true
+        debug_vis: false
+    actions:
+      dof_pos:
+        type: joint_position
+        params:
+          asset_name: robot
+          joint_names:
+          - .*
+          use_default_offset: true
+          scale: ${robot.actuators.action_scale}
+    commands:
+      ref_motion:
+        type: MotionCommandCfg
+        params:
+          command_obs_name: bydmmc_ref_motion
+          motion_lib_cfg: ${robot.motion}
+          urdf_dof_names: ${robot.dof_names}
+          urdf_body_names: ${robot.body_names}
+          arm_dof_names: ${robot.arm_dof_names}
+          waist_dof_names: ${robot.waist_dof_names}
+          leg_dof_names: ${robot.leg_dof_names}
+          arm_body_names: ${robot.arm_body_names}
+          torso_body_names: ${robot.torso_body_names}
+          leg_body_names: ${robot.leg_body_names}
+          anchor_bodylink_name: ${robot.anchor_body}
+          asset_name: robot
+          debug_vis: true
+          root_pose_perturb_range: ${domain_rand.motion_init_perturb.root_pose_perturb_range}
+          root_vel_perturb_range: ${domain_rand.motion_init_perturb.root_vel_perturb_range}
+          dof_pos_perturb_range: ${domain_rand.motion_init_perturb.dof_pos_perturb_range}
+          dof_vel_perturb_range: ${domain_rand.motion_init_perturb.dof_vel_perturb_range}
+          resample_time_interval_s: 100
+          n_fut_frames: ${obs.n_fut_frames}
+          target_fps: 50
+    normalization:
+      clip_actions: 100.0
+      clip_observations: 100.0
+    resample_motion_when_training: true
+    curriculum:
+      enabled: false
+      robot_friction_completion_rate:
+        enabled: true
+        func: robot_friction_range_by_completion_rate
+        params:
+          num_updates: 5
+          cr_thresholds:
+          - 0.1
+          - 0.2
+          - 0.28
+          - 0.34
+          - 0.4
+          static_friction_target:
+          - 0.3
+          - 1.6
+          dynamic_friction_target:
+          - 0.3
+          - 1.2
+          body_names: .*
+          restitution_range:
+          - 0.0
+          - 0.5
+          num_buckets: 64
+      rigid_body_com_completion_rate:
+        enabled: true
+        func: rigid_body_com_by_completion_rate
+        params:
+          num_updates: 5
+          cr_thresholds:
+          - 0.1
+          - 0.2
+          - 0.28
+          - 0.34
+          - 0.4
+          state_prefix: _cr_curr
+          asset_name: robot
+          body_names: torso_link
+          com_range_target:
+            x:
+            - -0.025
+            - 0.025
+            y:
+            - -0.05
+            - 0.05
+            z:
+            - -0.05
+            - 0.05
+      default_dof_pos_bias_completion_rate:
+        enabled: true
+        func: default_dof_pos_bias_by_completion_rate
+        params:
+          num_updates: 5
+          cr_thresholds:
+          - 0.1
+          - 0.2
+          - 0.28
+          - 0.34
+          - 0.4
+          state_prefix: _cr_curr
+          joint_names:
+          - .*
+          pos_distribution_params_target:
+          - -0.01
+          - 0.01
+          operation: add
+          distribution: uniform
+      push_by_setting_velocity_completion_rate:
+        enabled: true
+        func: isaaclab_mdp.modify_term_cfg
+        params:
+          address: events.push_by_setting_velocity.params
+          modify_fn: push_by_setting_velocity_range_by_completion_rate
+          modify_params:
+            num_updates: 3
+            cr_thresholds:
+            - 0.2
+            - 0.3
+            - 0.4
+            velocity_range_target:
+              x:
+              - -0.5
+              - 0.5
+              y:
+              - -0.5
+              - 0.5
+              z:
+              - -0.2
+              - 0.2
+              roll:
+              - -0.52
+              - 0.52
+              pitch:
+              - -0.52
+              - 0.52
+              yaw:
+              - -0.78
+              - 0.78
+      randomize_actuator_gains_completion_rate:
+        enabled: true
+        func: randomize_actuator_gains_by_completion_rate
+        params:
+          num_updates: 3
+          cr_thresholds:
+          - 0.2
+          - 0.3
+          - 0.4
+          asset_name: robot
+          body_names: .*
+          stiffness_distribution_params_target:
+          - 0.9
+          - 1.1
+          damping_distribution_params_target:
+          - 0.9
+          - 1.1
+          operation: scale
+          distribution: uniform
+      action_rate_l2_completion_rate:
+        enabled: true
+        func: reward_term_weight_by_completion_rate
+        params:
+          reward_term_name: action_rate_l2
+          final_weight: -0.1
+          start_scale: 0.1
+          num_updates: 5
+          cr_thresholds:
+          - 0.1
+          - 0.2
+          - 0.28
+          - 0.34
+          - 0.4
+      joint_pos_limits_completion_rate:
+        enabled: true
+        func: reward_term_weight_by_completion_rate
+        params:
+          reward_term_name: joint_pos_limits
+          final_weight: -10.0
+          start_scale: 0.1
+          num_updates: 5
+          cr_thresholds:
+          - 0.1
+          - 0.2
+          - 0.28
+          - 0.34
+          - 0.4
+      undesired_contacts_completion_rate:
+        enabled: true
+        func: reward_term_weight_by_completion_rate
+        params:
+          reward_term_name: undesired_contacts
+          final_weight: -0.1
+          start_scale: 0.1
+          num_updates: 5
+          cr_thresholds:
+          - 0.1
+          - 0.2
+          - 0.28
+          - 0.34
+          - 0.4
+terminations:
+  time_out:
+    time_out: true
+  ref_gravity_projection_far:
+    params:
+      threshold: 0.8
+      ref_prefix: ${rewards._config.reward_prefix}
+obs:
+  context_length: 1
+  n_fut_frames: 10
+  target_fps: 50
+  actor_obs_prefix: ref_
+  critic_obs_prefix: ref_
+  obs_groups:
+    unified:
+      atomic_obs_list:
+      - actor_ref_gravity_projection_cur:
+          func: ref_gravity_projection_cur
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_gravity_projection_cur.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_gravity_projection_cur.n_max}
+      - actor_ref_gravity_projection_fut:
+          func: ref_gravity_projection_fut
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_gravity_projection_fut.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_gravity_projection_fut.n_max}
+      - actor_ref_base_linvel_cur:
+          func: ref_base_linvel_cur
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_base_linvel_cur.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_base_linvel_cur.n_max}
+              n_min_z: ${domain_rand.obs_noise.actor_ref_base_linvel_cur.n_min_z}
+              n_max_z: ${domain_rand.obs_noise.actor_ref_base_linvel_cur.n_max_z}
+      - actor_ref_base_linvel_fut:
+          func: ref_base_linvel_fut
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_base_linvel_fut.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_base_linvel_fut.n_max}
+              n_min_z: ${domain_rand.obs_noise.actor_ref_base_linvel_fut.n_min_z}
+              n_max_z: ${domain_rand.obs_noise.actor_ref_base_linvel_fut.n_max_z}
+      - actor_ref_base_angvel_cur:
+          func: ref_base_angvel_cur
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_base_angvel_cur.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_base_angvel_cur.n_max}
+              n_min_z: ${domain_rand.obs_noise.actor_ref_base_angvel_cur.n_min_z}
+              n_max_z: ${domain_rand.obs_noise.actor_ref_base_angvel_cur.n_max_z}
+      - actor_ref_base_angvel_fut:
+          func: ref_base_angvel_fut
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_base_angvel_fut.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_base_angvel_fut.n_max}
+              n_min_z: ${domain_rand.obs_noise.actor_ref_base_angvel_fut.n_min_z}
+              n_max_z: ${domain_rand.obs_noise.actor_ref_base_angvel_fut.n_max_z}
+      - actor_ref_dof_pos_cur:
+          func: ref_dof_pos_cur
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_dof_pos_cur.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_dof_pos_cur.n_max}
+      - actor_ref_dof_pos_fut:
+          func: ref_dof_pos_fut
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_dof_pos_fut.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_dof_pos_fut.n_max}
+      - actor_ref_root_height_cur:
+          func: ref_root_height_cur
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_root_height_cur.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_root_height_cur.n_max}
+      - actor_ref_root_height_fut:
+          func: ref_root_height_fut
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_ref_root_height_fut.n_min}
+              n_max: ${domain_rand.obs_noise.actor_ref_root_height_fut.n_max}
+      - actor_projected_gravity:
+          func: projected_gravity
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_projected_gravity.n_min}
+              n_max: ${domain_rand.obs_noise.actor_projected_gravity.n_max}
+      - actor_rel_robot_root_ang_vel:
+          func: rel_robot_root_ang_vel
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_rel_robot_root_ang_vel.n_min}
+              n_max: ${domain_rand.obs_noise.actor_rel_robot_root_ang_vel.n_max}
+      - actor_dof_pos:
+          func: dof_pos
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_dof_pos.n_min}
+              n_max: ${domain_rand.obs_noise.actor_dof_pos.n_max}
+      - actor_dof_vel:
+          func: dof_vel
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          noise:
+            type: AdditiveUniformNoiseCfg
+            params:
+              n_min: ${domain_rand.obs_noise.actor_dof_vel.n_min}
+              n_max: ${domain_rand.obs_noise.actor_dof_vel.n_max}
+      - actor_last_action:
+          func: last_action
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+      - critic_ref_dof_pos_cur:
+          func: ref_dof_pos_cur
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_ref_dof_pos_fut:
+          func: ref_dof_pos_fut
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - critic_ref_root_height_fut:
+          func: ref_root_height_fut
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - critic_ref_root_height_cur:
+          func: ref_root_height_cur
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_global_anchor_diff:
+          func: global_anchor_diff
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_ref_motion_cur_heading_aligned_root_pos:
+          func: ref_motion_cur_heading_aligned_root_pos
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_ref_motion_fut_heading_aligned_root_pos:
+          func: ref_motion_fut_heading_aligned_root_pos
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - critic_ref_motion_cur_heading_aligned_root_rot6d:
+          func: ref_motion_cur_heading_aligned_root_rot6d
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_ref_motion_fut_heading_aligned_root_rot6d:
+          func: ref_motion_fut_heading_aligned_root_rot6d
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - critic_ref_motion_cur_heading_aligned_root_lin_vel:
+          func: ref_motion_cur_heading_aligned_root_lin_vel
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_ref_motion_fut_heading_aligned_root_lin_vel:
+          func: ref_motion_fut_heading_aligned_root_lin_vel
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - critic_ref_motion_cur_heading_aligned_root_ang_vel:
+          func: ref_motion_cur_heading_aligned_root_ang_vel
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+      - critic_ref_motion_fut_heading_aligned_root_ang_vel:
+          func: ref_motion_fut_heading_aligned_root_ang_vel
+          params:
+            ref_prefix: ${obs.critic_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - critic_rel_robot_root_lin_vel:
+          func: rel_robot_root_lin_vel
+      - critic_rel_robot_root_ang_vel:
+          func: rel_robot_root_ang_vel
+      - critic_global_robot_bodylink_lin_vel_flat:
+          func: global_robot_bodylink_lin_vel_flat
+      - critic_global_robot_bodylink_ang_vel_flat:
+          func: global_robot_bodylink_ang_vel_flat
+      - critic_root_rel_robot_bodylink_pos_flat:
+          func: root_rel_robot_bodylink_pos_flat
+      - critic_root_rel_robot_bodylink_rot_mat_flat:
+          func: root_rel_robot_bodylink_rot_mat_flat
+      - critic_dof_pos:
+          func: dof_pos
+      - critic_dof_vel:
+          func: dof_vel
+      - critic_last_action:
+          func: last_action
+      additional_atomic_obs_list:
+      - actor_ref_robot_yaw_error_sin_cos:
+          func: ref_robot_yaw_error_sin_cos
+          history_length: ${obs.context_length}
+          flatten_history_dim: false
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+      - actor_ref_future_yaw_delta_sin_cos:
+          func: ref_future_yaw_delta_sin_cos
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      - actor_ref_future_root_ori_robot_frame_6d:
+          func: ref_future_root_ori_robot_frame_6d
+          params:
+            ref_prefix: ${obs.actor_obs_prefix}
+            num_frames: ${obs.n_fut_frames}
+      enable_corruption: true
+      concatenate_terms: false
+rewards:
+  _config:
+    reward_prefix: ref_
+  is_alive:
+    weight: 0.5
+    params: {}
+  root_pos_xy_tracking_exp:
+    weight: 0.0
+    params:
+      std: 0.2
+      ref_prefix: ${rewards._config.reward_prefix}
+  root_rot_tracking_exp:
+    weight: 0.0
+    params:
+      std: 0.4
+      ref_prefix: ${rewards._config.reward_prefix}
+  root_rel_keybodylink_pos_tracking_l2_exp:
+    weight: 1.0
+    params:
+      keybody_names: ${robot.key_bodies}
+      std: 0.3
+      ref_prefix: ${rewards._config.reward_prefix}
+  root_rel_keybodylink_rot_tracking_l2_exp:
+    weight: 1.0
+    params:
+      keybody_names: ${robot.key_bodies}
+      std: 0.4
+      ref_prefix: ${rewards._config.reward_prefix}
+  root_lin_vel_tracking_rel_ratio_exp:
+    weight: 2.0
+    params:
+      std: 1.0
+      eps: 0.1
+      ref_prefix: ${rewards._config.reward_prefix}
+  root_ang_vel_tracking_rel_ratio_exp:
+    weight: 2.0
+    params:
+      std: 1.0
+      eps: 0.1
+      ref_prefix: ${rewards._config.reward_prefix}
+  local_reward_point_body_pos_tracking_exp:
+    weight: 5.0
+    params:
+      std: 0.1
+      ref_prefix: ${rewards._config.reward_prefix}
+      reward_point_body:
+      - torso_link
+      - left_wrist_yaw_link
+      - right_wrist_yaw_link
+      - left_ankle_roll_link
+      - right_ankle_roll_link
+      reward_point_body_offset:
+      - - 0.0
+        - 0.0
+        - 0.5
+      - - 0.0
+        - 0.0
+        - 0.0
+      - - 0.0
+        - 0.0
+        - 0.0
+      - - 0.0
+        - 0.0
+        - 0.0
+      - - 0.0
+        - 0.0
+        - 0.0
+      point_weights:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+  global_keybodylink_lin_vel_tracking_l2_exp:
+    weight: 1.0
+    params:
+      keybody_names: ${robot.key_bodies}
+      std: 1.0
+      ref_prefix: ${rewards._config.reward_prefix}
+  global_keybodylink_ang_vel_tracking_l2_exp:
+    weight: 1.0
+    params:
+      keybody_names: ${robot.key_bodies}
+      std: 3.14
+      ref_prefix: ${rewards._config.reward_prefix}
+  action_rate_l2:
+    weight: -0.1
+    params: {}
+  joint_pos_limits:
+    weight: -10.0
+    params:
+      asset_cfg:
+        _target_: isaaclab.managers.scene_entity_cfg.SceneEntityCfg
+        name: robot
+        joint_names:
+        - .*
+  undesired_contacts:
+    weight: -0.1
+    params:
+      threshold: 1.0
+      sensor_cfg:
+        _target_: isaaclab.managers.scene_entity_cfg.SceneEntityCfg
+        name: contact_forces
+        body_names:
+        - ${robot.undesired_contacts_regrex}
+domain_rand:
+  action_delay:
+    enabled: true
+    min_delay: 0
+    max_delay: 2
+  erfi:
+    enabled: false
+    rfi_probability: 0.5
+    rfi_lim: 0.1
+    randomize_rfi_lim: true
+    rfi_lim_range:
+    - 0.5
+    - 1.5
+    rao_lim: 0.1
+  obs_noise:
+    actor_ref_gravity_projection_cur:
+      n_min: 0.0
+      n_max: 0.0
+    actor_ref_gravity_projection_fut:
+      n_min: 0.0
+      n_max: 0.0
+    actor_ref_base_linvel_cur:
+      n_min: 0.0
+      n_max: 0.0
+      n_min_z: 0.0
+      n_max_z: 0.0
+    actor_ref_base_linvel_fut:
+      n_min: 0.0
+      n_max: 0.0
+      n_min_z: 0.0
+      n_max_z: 0.0
+    actor_ref_base_angvel_cur:
+      n_min: 0.0
+      n_max: 0.0
+      n_min_z: 0.0
+      n_max_z: 0.0
+    actor_ref_base_angvel_fut:
+      n_min: 0.0
+      n_max: 0.0
+      n_min_z: 0.0
+      n_max_z: 0.0
+    actor_ref_dof_pos_cur:
+      n_min: 0.0
+      n_max: 0.0
+    actor_ref_dof_pos_fut:
+      n_min: 0.0
+      n_max: 0.0
+    actor_ref_root_height_cur:
+      n_min: 0.0
+      n_max: 0.0
+    actor_ref_root_height_fut:
+      n_min: 0.0
+      n_max: 0.0
+    actor_ref_keybody_rel_pos_cur:
+      n_min: -0.1
+      n_max: 0.1
+    actor_ref_keybody_rel_pos_fut:
+      n_min: -0.1
+      n_max: 0.1
+    actor_projected_gravity:
+      n_min: -0.1
+      n_max: 0.1
+    actor_rel_robot_root_ang_vel:
+      n_min: -0.2
+      n_max: 0.2
+    actor_dof_pos:
+      n_min: -0.01
+      n_max: 0.01
+    actor_dof_vel:
+      n_min: -0.5
+      n_max: 0.5
+  motion_init_perturb:
+    root_pose_perturb_range:
+      x:
+      - -0.05
+      - 0.05
+      y:
+      - -0.05
+      - 0.05
+      z:
+      - -0.01
+      - 0.01
+      roll:
+      - -0.1
+      - 0.1
+      pitch:
+      - -0.1
+      - 0.1
+      yaw:
+      - -0.2
+      - 0.2
+    root_vel_perturb_range:
+      x:
+      - -0.5
+      - 0.5
+      y:
+      - -0.5
+      - 0.5
+      z:
+      - -0.2
+      - 0.2
+      roll:
+      - -0.5
+      - 0.5
+      pitch:
+      - -0.5
+      - 0.5
+      yaw:
+      - -0.2
+      - 0.2
+    dof_pos_perturb_range:
+    - -0.1
+    - 0.1
+    dof_vel_perturb_range:
+    - 0.0
+    - 0.0
+  default_dof_pos_bias:
+    mode: startup
+    params:
+      joint_names:
+      - .*
+      pos_distribution_params:
+      - -0.01
+      - 0.01
+      operation: add
+      distribution: uniform
+  rigid_body_com:
+    mode: startup
+    params:
+      body_names: torso_link
+      com_range:
+        x:
+        - -0.075
+        - 0.075
+        y:
+        - -0.1
+        - 0.1
+        z:
+        - -0.1
+        - 0.1
+  randomize_mass:
+    mode: startup
+    params:
+      body_names:
+      - pelvis
+      - torso_link
+      mass_range:
+      - -1.0
+      - 2.0
+  rigid_body_material:
+    mode: startup
+    params:
+      body_names: .*
+      static_friction_range:
+      - 0.3
+      - 1.6
+      dynamic_friction_range:
+      - 0.3
+      - 1.2
+      restitution_range:
+      - 0.0
+      - 0.5
+      num_buckets: 64
+  push_by_setting_velocity:
+    mode: interval
+    interval_range_s:
+    - 1.0
+    - 3.0
+    params:
+      velocity_range:
+        x:
+        - -0.5
+        - 0.5
+        y:
+        - -0.5
+        - 0.5
+        z:
+        - -0.2
+        - 0.2
+        roll:
+        - -0.52
+        - 0.52
+        pitch:
+        - -0.52
+        - 0.52
+        yaw:
+        - -0.78
+        - 0.78
+  randomize_actuator_gains:
+    mode: startup
+    params:
+      asset_name: robot
+      body_names: .*
+      stiffness_distribution_params:
+      - 0.9
+      - 1.1
+      damping_distribution_params:
+      - 0.9
+      - 1.1
+      operation: scale
+      distribution: uniform
+terrain:
+  terrain_type: generator
+  prim_path: /World/ground
+  static_friction: 1.0
+  dynamic_friction: 1.0
+  restitution: 0.0
+  friction_combine_mode: multiply
+  restitution_combine_mode: multiply
+  debug_vis: false
+  max_init_terrain_level: 4
+  random_spawn: true
+  random_spawn_margin: 4.0
+  generator:
+    num_rows: 4
+    num_cols: 4
+    size:
+    - 20.0
+    - 20.0
+    border_width: 1000.0
+    horizontal_scale: 0.1
+    vertical_scale: 0.005
+    slope_threshold: null
+    difficulty_range:
+    - 0.0
+    - 1.0
+    color_scheme: height
+    sub_terrains:
+      rough:
+        type: random_uniform
+        proportion: 1.0
+        noise_range:
+        - 0.0
+        - 0.04
+        noise_step: 0.05
+        downsampled_scale: 1.0
+  visual_material:
+    type: color
+    diffuse_color:
+    - 0.25
+    - 0.25
+    - 0.25
+    metallic: 0.0
+    roughness: 0.5
+modules:
+  actor:
+    type: ReferenceRoutedGroupedMoETransformerPolicy
+    use_checkpointing: false
+    num_fine_experts: 1024
+    num_shared_experts: 1
+    top_k: 2
+    moe_loss_coef: 0.0
+    routing_score_fn: ${algo.config.moe_router.routing_score_fn}
+    routing_scale: ${algo.config.moe_router.routing_scale}
+    use_dynamic_bias: ${algo.config.moe_router.use_dynamic_bias}
+    bias_update_rate: ${algo.config.moe_router.bias_update_rate}
+    expert_bias_clip: ${algo.config.moe_router.expert_bias_clip}
+    routed_expert_usage_ema_decay: 0.99
+    routed_expert_usage_ema_dead_threshold: 1.0e-06
+    obs_embed_mlp_hidden: 2048
+    router_embed_mlp_hidden: 2048
+    router_obs_terms:
+    - unified/actor_ref_gravity_projection_cur
+    - unified/actor_ref_base_linvel_cur
+    - unified/actor_ref_base_angvel_cur
+    - unified/actor_ref_dof_pos_cur
+    - unified/actor_ref_root_height_cur
+    - unified/actor_ref_dof_pos_fut
+    - unified/actor_ref_root_height_fut
+    - unified/actor_ref_gravity_projection_fut
+    - unified/actor_ref_base_linvel_fut
+    - unified/actor_ref_base_angvel_fut
+    - unified/actor_ref_future_yaw_delta_sin_cos
+    - unified/actor_ref_future_root_ori_robot_frame_6d
+    d_model: 512
+    n_heads: 8
+    n_kv_heads: 4
+    use_gated_attn: true
+    n_layers: 1
+    dense_layer_at_first: false
+    ff_mult: 0.5
+    ff_mult_dense: 4
+    attn_dropout: 0.0
+    mlp_dropout: 0.0
+    max_ctx_len: 32
+    rope_max_seq_len: 8192
+    aux_sys_id_weight: 0.0
+    aux_dynamics_weight: 0.0
+    obs_norm:
+      enabled: true
+      epsilon: 1.0e-08
+      update_method: ema
+      ema_momentum: 0.0001
+      update_at_train: true
+      update_at_eval: false
+      enable_clipping: true
+      clip_range: 10.0
+      sync_interval_steps: 4
+    obs_schema:
+      flattened_obs:
+        seq_len: ${obs.context_length}
+        terms:
+        - unified/actor_ref_gravity_projection_cur
+        - unified/actor_ref_base_linvel_cur
+        - unified/actor_ref_base_angvel_cur
+        - unified/actor_ref_dof_pos_cur
+        - unified/actor_ref_root_height_cur
+        - unified/actor_ref_robot_yaw_error_sin_cos
+        - unified/actor_projected_gravity
+        - unified/actor_rel_robot_root_ang_vel
+        - unified/actor_dof_pos
+        - unified/actor_dof_vel
+        - unified/actor_last_action
+      flattened_obs_fut:
+        seq_len: ${obs.n_fut_frames}
+        terms:
+        - unified/actor_ref_dof_pos_fut
+        - unified/actor_ref_root_height_fut
+        - unified/actor_ref_gravity_projection_fut
+        - unified/actor_ref_base_linvel_fut
+        - unified/actor_ref_base_angvel_fut
+        - unified/actor_ref_future_yaw_delta_sin_cos
+        - unified/actor_ref_future_root_ori_robot_frame_6d
+    output_dim: robot_action_dim
+  critic:
+    type: MLP
+    obs_norm:
+      enabled: true
+      epsilon: 1.0e-08
+      update_method: ema
+      ema_momentum: 0.0001
+      update_at_train: true
+      update_at_eval: false
+      enable_clipping: true
+      clip_range: 10.0
+      sync_interval_steps: 4
+    hidden_norm: rmsnorm
+    layer_config:
+      hidden_dims:
+      - 2048
+      - 2048
+      - 2048
+      - 2048
+      activation: SiLU
+    obs_schema:
+      flattened_obs:
+        seq_len: 1
+        terms:
+        - unified/critic_ref_dof_pos_cur
+        - unified/critic_global_anchor_diff
+        - unified/critic_ref_motion_cur_heading_aligned_root_pos
+        - unified/critic_ref_motion_cur_heading_aligned_root_rot6d
+        - unified/critic_ref_motion_cur_heading_aligned_root_lin_vel
+        - unified/critic_ref_motion_cur_heading_aligned_root_ang_vel
+        - unified/critic_rel_robot_root_lin_vel
+        - unified/critic_rel_robot_root_ang_vel
+        - unified/critic_global_robot_bodylink_lin_vel_flat
+        - unified/critic_global_robot_bodylink_ang_vel_flat
+        - unified/critic_root_rel_robot_bodylink_pos_flat
+        - unified/critic_root_rel_robot_bodylink_rot_mat_flat
+        - unified/critic_dof_pos
+        - unified/critic_dof_vel
+        - unified/critic_last_action
+      flattened_obs_fut:
+        seq_len: ${obs.n_fut_frames}
+        terms:
+        - unified/critic_ref_dof_pos_fut
+        - unified/critic_ref_root_height_fut
+        - unified/critic_ref_motion_fut_heading_aligned_root_pos
+        - unified/critic_ref_motion_fut_heading_aligned_root_rot6d
+        - unified/critic_ref_motion_fut_heading_aligned_root_lin_vel
+        - unified/critic_ref_motion_fut_heading_aligned_root_ang_vel
+    output_dim: 1
+train_hdf5_roots:
+- root: ${holoretarget_h5_run_root}/train_amass/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_lafan1/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_motionmillion/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_noitom/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_pico4_ultra_enterprise/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_chingmu_bvh/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_bones_seed_smpl/final/holoretarget_h5
+  ratio: 0.1
+- root: ${holoretarget_h5_run_root}/train_custom_smplx/final/holoretarget_h5
+  ratio: 0.1
+mujoco_eval:
+  enabled: true
+  robot_xml_path: assets/robots/unitree/G1/29dof/scene_29dof.xml
+  dump_npzs: true
+  calc_per_clip_metrics: true
+  generate_report: true
+  ray_actors_per_gpu: 16
+  ray_multi_ckpt_mode: split
+  ckpt_onnx_names:
+  - model_13000.onnx
+  - model_15000.onnx
+  - model_17000.onnx
+  - model_19000.onnx
+  - model_21000.onnx
+  motion_npz_dir: null
+holoretarget_h5_run_root: /path/to/holoretarget_h5_runs

@@ -1,0 +1,43 @@
+{
+  "name": "Obstacle vault - Expert ON",
+  "expert": "Task expert ON",
+  "source": "website/.render-work/comparisons-v5/vault-on/physics.npz",
+  "source_sha256": "6918dbc51c82762975cb52aa860c34c8e1beb28af18de76c0d4895fa1c3b577a",
+  "report": "website/.render-work/comparisons-v5/vault-on/report.json",
+  "report_sha256": "fc8a8c02df14ca98d66c55abd2c4d90a39adfae60505b88c3e17c71364c3d54a",
+  "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+  "source_fps": 25.0,
+  "source_frames": 262,
+  "source_frame_offset": 0,
+  "source_recording_start_s": 0.0,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "camera": {
+    "azimuth": 135,
+    "elevation": -22,
+    "distance": 3.9
+  },
+  "scene_style": "terrain",
+  "lighting": "Studio v4: white sky; contrasting terrain, world-anchored skate grid, or original tennis-court colors according to scene. Original robot albedo retained.",
+  "all_terrain_geometry_retained": true,
+  "master": ".render-work/highlights-v5/vault-on.master.mkv",
+  "rendering": "Exact recorded actual robot and object states. Nearest timestamp resampling only; maximum quantization is half of one source interval, plus source timestamp precision. No training, simulator stepping, teacher queries or reference-pose playback during rendering.",
+  "scene": "website/.render-work/comparisons-v5/vault-on/scene.mjb",
+  "scene_sha256": "bfbe6d64b54e75a5b1b0c7743be5f1146bd6857ca2c3c87c81acd94f5ff5926b",
+  "id": "vault-on-full",
+  "full_recorded_episode": true,
+  "full_task_segment": false,
+  "partial_excerpt": false,
+  "excerpt_start_s": 0,
+  "excerpt_end_s": 10.5,
+  "source_start_s": 0.0,
+  "source_end_s": 10.5,
+  "output_frames": 315,
+  "duration_s": 10.5,
+  "video_sha256": "169662a0fc2a85b4646e0bace7bc568aab8787acbc1691c355c1c9c25398e2e4"
+}

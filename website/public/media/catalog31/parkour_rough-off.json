@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/parkour_rough-off",
+  "task": "parkour_rough",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-v1/parkour_rough/off/physics.npz",
+  "source_sha256": "c33e4d651eba2cfd030653e35df4b6424dee1f9b6eff735f0ddc4821a70fea6d",
+  "duration_s": 20.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "795e240cfb072e36c0ba29264af58526d3b3cd7b5f97f217468811b7c0cf1d3c",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/parkour_rough/off/report.json",
+  "report_sha256": "25054fc9f679229d1616136e9940b7a72242ec152f187a6731468366335984b6",
+  "native_termination_s": 20.000267028808594,
+  "post_termination_seconds": 0,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 8101,
+  "plugin": "reports/instinct_parkour_dagger_v1/rough/training/round_020.domain.pt",
+  "plugin_sha256": "9558326f4677f0f9594e7f25beb05ce0ca380bd0d5bdef3d55f738e18611d2e5",
+  "scene": "website/.render-work/catalog31-v1/parkour_rough/off/scene.mjb",
+  "scene_sha256": "e53ce912a2a3844104a8d417417ebecda05118ad74e96f8d93d186a012bc326f"
+}

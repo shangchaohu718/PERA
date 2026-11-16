@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390" fill="none">
+<title>PERA frozen public Actor with explicitly activated FFN and router experts</title>
+<desc>Simplified implemented anchor route. The frozen shared Actor's MoE FFN combines its public group with an enabled plug-in group. Existing attention, normalizers and output head remain frozen. Task experts extend the shared frozen policy.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#a1a1a6" stroke-width="1.2"/></marker></defs>
+<g font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1d1d1f">
+<rect x="247" y="39" width="625" height="293" rx="16" fill="#f5f5f7"/>
+<text x="274" y="70" font-size="12" letter-spacing="2" fill="#6e6e73">SHARED ACTOR · PUBLIC WEIGHTS FROZEN</text>
+<rect x="30" y="150" width="170" height="65" rx="8" stroke="#d2d2d7" fill="white"/><text x="115" y="178" text-anchor="middle">Observations</text><text x="115" y="198" text-anchor="middle" font-size="12" fill="#6e6e73">history + reference</text>
+<path fill="none" d="M200 183h70" stroke="#a1a1a6" marker-end="url(#arrow)"/>
+<rect x="277" y="150" width="150" height="65" rx="8" fill="white" stroke="#d2d2d7"/><text x="352" y="178" text-anchor="middle">Frozen features</text><text x="352" y="198" text-anchor="middle" font-size="12" fill="#6e6e73">Attention / shared layers</text>
+<path fill="none" d="M427 183h35v-57h40M462 183v65h40" stroke="#a1a1a6" marker-end="url(#arrow)"/>
+<rect x="511" y="94" width="180" height="65" rx="8" stroke="#d2d2d7" fill="white"/><text x="601" y="122" text-anchor="middle">Public MoE group</text><text x="601" y="142" text-anchor="middle" font-size="12" fill="#6e6e73">Existing experts + router</text>
+<rect x="511" y="216" width="180" height="65" rx="8" stroke="#0071e3" fill="#eaf3ff"/><text x="601" y="244" text-anchor="middle" fill="#0071e3">Plug-in FFN + router</text><text x="601" y="264" text-anchor="middle" font-size="12" fill="#0071e3">Only enabled experts participate</text>
+<path fill="none" d="M691 126h38v57h23M691 248h38v-65h23" stroke="#a1a1a6" marker-end="url(#arrow)"/>
+<rect x="760" y="150" width="86" height="65" rx="8" stroke="#d2d2d7" fill="white"/><text x="803" y="178" text-anchor="middle">Group</text><text x="803" y="198" text-anchor="middle">mixture</text>
+<path fill="none" d="M847 183h54" stroke="#a1a1a6" marker-end="url(#arrow)"/>
+<rect x="910" y="150" width="180" height="65" rx="8" stroke="#d2d2d7" fill="white"/><text x="1000" y="178" text-anchor="middle">Frozen output head</text><text x="1000" y="198" text-anchor="middle" font-size="12" fill="#6e6e73">Joint targets → environment</text>
+<text x="601" y="192" text-anchor="middle" font-size="12" fill="#0071e3">Explicit skill switch</text>
+<text x="560" y="369" text-anchor="middle" font-size="12" fill="#6e6e73">Simplified anchor-mode inference graph · Visual context enters perceptive plug-ins only · Disabled plug-ins are bypassed</text>
+</g></svg>

@@ -1,0 +1,29 @@
+{
+  "id": "catalog31-white-v2/mimicx_tennis-off",
+  "task": "mimicx_tennis",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_tennis/attempt_1/final_public_4004_trajectory.npz",
+  "source_sha256": "8e90cd1db4ab82e4472740615a4185c8934fa98bbb1b66a4a45d754f1af8b400",
+  "duration_s": 4.6,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "7500b5943edfdd7f816c426ec8ebb878607624487ff52a44592158af97f4b2fb",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_tennis/attempt_1/final_public_4004.json",
+  "report_sha256": "a8b109771c99b08fed12481bc99bb4a8985720c2d1a424ea10e567b2165a80e5",
+  "seed": 4004,
+  "scene": "reports/distillation_suite_v1/run_20261105_173125/mimicx_tennis/attempt_1/native_scene.mjb",
+  "scene_sha256": "06036908d27f443995f79d9ec465b35caf9028f514d5d8afa8ee5fc253b7c8a0",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

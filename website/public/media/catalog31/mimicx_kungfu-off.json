@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_kungfu-off",
+  "task": "mimicx_kungfu",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/public.mp4",
+  "source_sha256": "47b73916ec25dd3320e41e15495cb22333fa4f548b1d5dd9e11d11761e6a9ca2",
+  "duration_s": 3.234,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "1941e18a9f1d62019701aaa87970243da7b80547812a9eda5265515d9d70283f",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/final_public_4004.json",
+  "report_sha256": "fbf48dae25db18fada3bbe64288456a0995dbc762b8c64342dd218a04b78e259",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

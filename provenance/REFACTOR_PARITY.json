@@ -1,0 +1,40 @@
+{
+  "scope": "CPU FP32 synthetic states; original class and initializer definitions extracted without importing their simulator/environment bootstraps",
+  "cases": [
+    {
+      "original_source": "experiments/g1_competitive_suite31_v1/routing_base.py",
+      "source_sha256": "fe08d7eb42cd0a89946fa69e7837317f3fe87e3c73b4fc9c112651b3622ac970",
+      "mode": "competitive",
+      "initialized_plugin_tensors_bitwise_equal": true,
+      "active_forward_bitwise_equal": true,
+      "active_cached_prediction_bitwise_equal": true
+    },
+    {
+      "original_source": "experiments/blink_competitive_martial_ppo_v1_20261106/routing.py",
+      "source_sha256": "165a27d32272e7e18bbba13fba688b8cde73da8292a110f07c5c0545c8bc192b",
+      "mode": "competitive",
+      "initialized_plugin_tensors_bitwise_equal": true,
+      "active_forward_bitwise_equal": true,
+      "active_cached_prediction_bitwise_equal": true
+    },
+    {
+      "original_source": "experiments/blink_stairs_routing_ab_20261106/routing.py",
+      "source_sha256": "13448f8c902c19e829b19338894dfce19d51273674e8f4b985a7b7f201156a45",
+      "mode": "fusion",
+      "initialized_plugin_tensors_bitwise_equal": true,
+      "active_forward_bitwise_equal": true,
+      "active_cached_prediction_bitwise_equal": true
+    }
+  ],
+  "CUDA_initialized": false,
+  "physical_rollout_performed": false,
+  "context_extraction": {
+    "source": "experiments/g1_competitive_suite31_v1/model.py",
+    "source_sha256": "44faf5f8981ebdf2ce6e0b8607c1be4ee2b4ed90a09425fbd557b03647d171ec",
+    "classes": [
+      "ContextPlugin",
+      "ContextMoE"
+    ],
+    "AST_identical": true
+  }
+}

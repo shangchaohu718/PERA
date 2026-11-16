@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_forest-off",
+  "task": "mimicx_forest",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_forest/attempt_1/public.mp4",
+  "source_sha256": "bcf8213ffd623a138c5343d94f134970ae8f1122b2af14c48659026f432abe32",
+  "duration_s": 4.867,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "b3b8f425dd387891abdb3cf22fe72ca65aa643e2e0d5ecd7c7da391fb1599dba",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_forest/attempt_1/final_public_4004.json",
+  "report_sha256": "b10dad8230b5e03a008721342ccc1b6e1f76de62dc690a701c8af81f85c1eea4",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

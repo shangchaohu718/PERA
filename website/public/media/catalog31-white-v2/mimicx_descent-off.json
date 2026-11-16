@@ -1,0 +1,29 @@
+{
+  "id": "catalog31-white-v2/mimicx_descent-off",
+  "task": "mimicx_descent",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/final_public_4004_trajectory.npz",
+  "source_sha256": "40bd0c90abdf7a01de9e14324adecb524b554b778e458450476de3f05e1ec069",
+  "duration_s": 4.8,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "06216ea258e875e7762881d01f9a4a69b7978ee2eaff3d79a0251bbe4f1e2dbb",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/final_public_4004.json",
+  "report_sha256": "f7b746805c922ab6bd3b609ebf76f11b5b8feadac4aceded42f5836703517c46",
+  "seed": 4004,
+  "scene": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/native_scene.mjb",
+  "scene_sha256": "75c3c89497908873fe9b05159fdf844c6b7da66a8f0444efd340508e4222b46b",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

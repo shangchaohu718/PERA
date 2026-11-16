@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_bench-on",
+  "task": "mimicx_bench",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_bench/attempt_1/student.mp4",
+  "source_sha256": "e0891260130fdb0e04df3537b2eab07e263c3596d58920804669d22478d7d905",
+  "duration_s": 1.167,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "786771125a1a25fbbf666c654e8992ff98c88cf77b84e0c46baf34d39b874ccf",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_bench/attempt_1/final_student_4004.json",
+  "report_sha256": "3767b4e6642b409d66399d960c36f7ef151aaacf188d611b5be95ff2b532b248",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

@@ -1,0 +1,1123 @@
+[
+  {
+    "source": "experiments/blink_moe_g1_20261106/data/g1_description/g1_29dof.xml",
+    "destination": "assets/g1/g1_29dof.xml",
+    "source_sha256": "ffc611262394df44b2eb3caced0a802a1f821be5012f4086323ada02a14be4d8",
+    "destination_sha256": "016b804f4bf5da147f1b90a7b0a009d6ea6bf7242789de7f4f0beeb147b0fe4f",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_20261106/data/g1_description/g1_29dof_rev_1_0.urdf",
+    "destination": "assets/g1/g1_29dof_rev_1_0.urdf",
+    "source_sha256": "58c6bf2b1f4d2ecf10e853dfb4f3377234bed6329019382a3b5e28fd27ec56e9",
+    "destination_sha256": "28271c39ffa7f55e1efa8582d07efb3f070ebd1d7fd46d427ed3ee829d7e6560",
+    "modified": true
+  },
+  {
+    "source": "scripts/run_blink_g1_expand128.py",
+    "destination": "configs/base_continue128.json",
+    "source_sha256": "7b19fc07b54218ef9bb6c0fe9c940eb28e6fc93618393c31c496966ccf1194c7",
+    "destination_sha256": "34dd38071dc8a66732a3accb8d0101c045cd13f26b098544ef8d1df053376c85",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/data/heldout_contract.json",
+    "destination": "configs/data/heldout16.json",
+    "source_sha256": "9799cc3698eb82c4ef5c0996a19c81d9ed036ef7fbbd89d0b8f70f103d631908",
+    "destination_sha256": "8c41f645d47cc1cacefa0eae3676a4dbfba7385db4589996126661c0fe033287",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/data/contract.json",
+    "destination": "configs/data/train128.json",
+    "source_sha256": "ea8aeaba53d72e210eb64c21706e3e6306441196c9cb7ff985747df57a50b6b2",
+    "destination_sha256": "50f59c1a37458428bc34e1ddc14d26e9662e1e8e40784281e03c237c55a4a858",
+    "modified": true
+  },
+  {
+    "source": "configs/g1_competitive_suite31_v1.json",
+    "destination": "configs/distillation31.json",
+    "source_sha256": "bbe7b81c533b9beeda96142639af10dd4c50fae997457b18d6faf1da61b4ec9a",
+    "destination_sha256": "68f73fc2b72a856f6f209a841a38792d1daab25472c4c408ef3b300c00823f2f",
+    "modified": true
+  },
+  {
+    "source": "configs/g1_actor_io_contract.json",
+    "destination": "configs/g1_actor_io_contract.json",
+    "source_sha256": "a09f9b0a60ccdfcd24dc48aa3324603f93bb9ad5aaafa63e6aa4f83fa4f3cb2e",
+    "destination_sha256": "a09f9b0a60ccdfcd24dc48aa3324603f93bb9ad5aaafa63e6aa4f83fa4f3cb2e",
+    "modified": false
+  },
+  {
+    "source": "checkpoints/holomotion_v1.4/config.yaml",
+    "destination": "configs/holomotion_v1.4.yaml",
+    "source_sha256": "f2bdcd26b7436123ce07478ac88dec5d0657a2a6b134e8114545434be3cb8b62",
+    "destination_sha256": "f2bdcd26b7436123ce07478ac88dec5d0657a2a6b134e8114545434be3cb8b62",
+    "modified": false
+  },
+  {
+    "source": "configs/husky_skateboard_dagger_v2.json",
+    "destination": "configs/husky_skateboard_dagger_v2.json",
+    "source_sha256": "c4a84693ceb1ac06034b8d4508a9dd8561fa67753ec576531b9245d7e6a6d324",
+    "destination_sha256": "f7982bcc653cf9105d4b86220c4eb5916fdb00ecd1d5cffd258c534c33ddf837",
+    "modified": true
+  },
+  {
+    "source": "configs/instinct_parkour_dagger_v1.json",
+    "destination": "configs/instinct_parkour_dagger_v1.json",
+    "source_sha256": "9c7b45b109a5fb18afdf8f3bce17d9db74ecde990e89f547c89a9c3fae501b08",
+    "destination_sha256": "9c7b45b109a5fb18afdf8f3bce17d9db74ecde990e89f547c89a9c3fae501b08",
+    "modified": false
+  },
+  {
+    "source": "reports/competitive_kick_joint_order_v2/run_20261106_102650/training/config.yaml",
+    "destination": "configs/martial_isaac.yaml",
+    "source_sha256": "14155a5421cebda13e829d466c335abeb18adfe82e92ecf5eb2246553b3698bc",
+    "destination_sha256": "dcb0b9a8d9fd69be9cd21263a459aae97e1cfd256d932ef513ef36cf077eb94e",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/robot_contract.json",
+    "destination": "configs/robot.json",
+    "source_sha256": "2be1a56bfd8b4af9d912dab9a4105c48fb4fc83102d88f89ae62e6ef8e71a416",
+    "destination_sha256": "a6d966f040fd0f4fdaed18ce638ce043908eacc1be45e22411ad9b578ea17595",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/router_contract.json",
+    "destination": "configs/router.json",
+    "source_sha256": "75c41773dcc2225de6947616b7058ffd351ee0a793aaf134ebccfc659f3b1bc8",
+    "destination_sha256": "032b7d40488acd3d672fec2a1476b9aa24183db5d65991700435d1ee516fbab9",
+    "modified": true
+  },
+  {
+    "source": "configs/velocity_walk_dagger_v3.json",
+    "destination": "configs/velocity_walk_dagger_v3.json",
+    "source_sha256": "1cf69aa1d87c677f2461c6bebb9f69aefecffaf67e099f7678809261aeec42e3",
+    "destination_sha256": "1cf69aa1d87c677f2461c6bebb9f69aefecffaf67e099f7678809261aeec42e3",
+    "modified": false
+  },
+  {
+    "source": "HoloMotion/holomotion/src/algo/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/algo/__init__.py",
+    "source_sha256": "ec0b9ff3212c0162b4d58736ff5ded793cb4b0837ffa1ab5257c58be552a70eb",
+    "destination_sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/algo/algo_base.py",
+    "destination": "integrations/HoloMotion/holomotion/src/algo/algo_base.py",
+    "source_sha256": "0acc914bbe83e52062a66dcef12119022e40fc1e148da17be3e58fc60b333046",
+    "destination_sha256": "6f90e5bbfe6ca87984bf4213d1f8b77d821d35a588f546d478fe41f7c7063212",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/algo/algo_utils.py",
+    "destination": "integrations/HoloMotion/holomotion/src/algo/algo_utils.py",
+    "source_sha256": "c9f67f6a28622ed1857445509c02a5c9e86d5ac8990816dcef16b53bbf2c6d2a",
+    "destination_sha256": "d861aaf41a2930450d27e11609f9026e623d167011a45d15882608ff60cf6319",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/algo/ppo.py",
+    "destination": "integrations/HoloMotion/holomotion/src/algo/ppo.py",
+    "source_sha256": "4b37a5fdb4e76a170367a4a6354d0ce375fa62d22d79a06a0a4a95fa45e24a41",
+    "destination_sha256": "280902dc18def34a3e57d4d510a5ad9845ae04b221d70565dd8b2923212fe31c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/algo/ppo_tf.py",
+    "destination": "integrations/HoloMotion/holomotion/src/algo/ppo_tf.py",
+    "source_sha256": "5e2d23e076a97c8fadee33faa5dc0f7908a440363d2417b0e7eb0d882d22694b",
+    "destination_sha256": "1a6ac66102ea62085acf146ae6fe43f127d600d30ede835710a8b099011fe72a",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/__init__.py",
+    "source_sha256": "ec0b9ff3212c0162b4d58736ff5ded793cb4b0837ffa1ab5257c58be552a70eb",
+    "destination_sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/__init__.py",
+    "source_sha256": "fd2aaa51fe0def5c73524933c260638636fdc3970bf56852586305322c764a42",
+    "destination_sha256": "233bca259caaefa63cbcc35669090fdb0edffb0275109f33afabd5d62291df0d",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_actions.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_actions.py",
+    "source_sha256": "305e8bee6f272211275764e80a86d09c2d01d1c1fae53d99ef540dcbe39677ef",
+    "destination_sha256": "200f4b0d141e1b9025c70d4224f6639fd91461bf06bf09c7a1248cc704c60e9b",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_curriculum.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_curriculum.py",
+    "source_sha256": "5e39f012fa2ab65bbe10bff0206a303f8c7a23ad9cd21ceb204a466a3c803e81",
+    "destination_sha256": "3a18364d35472dfc429a4f8701b813ea6d0ca5246d6d1334acd03e116012a8ea",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_domain_rand.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_domain_rand.py",
+    "source_sha256": "7ef3c77029ed9cd224266e442a65e0c2e8b5416fd3170a975fb25b287a2741f4",
+    "destination_sha256": "849e608351dbedd2ccfe3483ba06386689e3e9dcc108a174d4d474a7ff601e88",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_motion_tracking_command.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_motion_tracking_command.py",
+    "source_sha256": "49ee2448c49a026ef24f3987aa5610d5a2b1a3afb6df4797cf3390314a36f1e2",
+    "destination_sha256": "da1c182c0cb7240715574bc7d0346225792e31670209a0e8dc0dbf8e5b8667c9",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_observation.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_observation.py",
+    "source_sha256": "b195e37f007197d0f5609f0c8cab35b0793897ae4b151a1a40da8bd6e90032f1",
+    "destination_sha256": "cf65fecc924ddd44bd8e554e7177203c9c5fa60e843522c2f30dfbf24a08969d",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_rewards.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_rewards.py",
+    "source_sha256": "eea52d8ab58c3aa4559aededfaf175816749fc236b62fc070ef06c8420d534a6",
+    "destination_sha256": "37dd058d14edede6b73a675f1609a51bd12bc79f421bbb380f0e257429ccb926",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_scene.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_scene.py",
+    "source_sha256": "ac18ac2b2b502e63a9f63eab0a09d244930ba4996151822d9358e941650a53b9",
+    "destination_sha256": "5a6101b3824b201dbd44e1bccee776651e80246f37aec6b9183625d910b5b240",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_simulator.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_simulator.py",
+    "source_sha256": "1011b1d582bbb68599ea9f43977f4caf0f3df17c4d2cdc897a6234365e9a8f62",
+    "destination_sha256": "1bb4cf025b7903e9bbae15ed397b8d68f7b80acae2afb1cf319ccce0affa9d9c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_termination.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_termination.py",
+    "source_sha256": "b393d22b40064f5e868423756a0d50c73da8513477501b9c70f3e6134e1d455b",
+    "destination_sha256": "76b0bfe211afffe5ca1e973644a096f355563a60db7aeccd290fb99f4bb652ca",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_terrain.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_terrain.py",
+    "source_sha256": "ddcb2cafea3c5c56b9cd3bfd6acf399bf6478310e4544453286912af67db9967",
+    "destination_sha256": "efeb4108e0d09c2aef83c8dba6bbadbb48e4fc52162f2add3847066eb954dcb2",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_utils.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_utils.py",
+    "source_sha256": "e2783bc515a79ceca9a9f1c7f9149b7189392bb8ed610b1454373264c7b42532",
+    "destination_sha256": "fb61eb727149e57d7b83b73573be16d387c87e106558769b6c270685be7f1f28",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_velocity_tracking_command.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_velocity_tracking_command.py",
+    "source_sha256": "12452f653404ea178239a51d517f4ae3135e0d89da68b1f699aebb5da1725237",
+    "destination_sha256": "3ddcebdd958ae3f6e961ce574a960371359c3b5c282d669db3ff85ca5870d638",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/isaaclab_components/unitree_actuators.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/unitree_actuators.py",
+    "source_sha256": "dccd0fa31b2f06579e6f0aa78a08c7c4faf22792fa077e8d295efb4c04d50d0f",
+    "destination_sha256": "bbcf7ae54d081cae0d0ce32c884fc2d03d2506806b52e52e21bdc8b86feda254",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/motion_tracking.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/motion_tracking.py",
+    "source_sha256": "3773fb832d6c1ea2043a30b8e6ad07d60d39bc1ad88b56f2ea14092a75a367b3",
+    "destination_sha256": "e1b8a5de8ebf047f006a399a08fea778660b126118472da604de2924a95c9e64",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/env/velocity_tracking.py",
+    "destination": "integrations/HoloMotion/holomotion/src/env/velocity_tracking.py",
+    "source_sha256": "6f8efcaf1f4cec0b8725812e156389b0d2bd98d543fd8fe614b91712a282f9cb",
+    "destination_sha256": "8e00f1fac6198df660a572e9f956c3c128dde5492fb13f11a0a2f5beb5132276",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/modules/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/modules/__init__.py",
+    "source_sha256": "ec0b9ff3212c0162b4d58736ff5ded793cb4b0837ffa1ab5257c58be552a70eb",
+    "destination_sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/modules/agent_modules.py",
+    "destination": "integrations/HoloMotion/holomotion/src/modules/agent_modules.py",
+    "source_sha256": "40fbb4c35df2316829848583d95d40fb806459a4153ea0f3bd5b3f0707b58ac5",
+    "destination_sha256": "5b1db8fa1f8f53177d5a762163545428d9f39b003c41c7b7607575acbaefe210",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/modules/network_modules.py",
+    "destination": "integrations/HoloMotion/holomotion/src/modules/network_modules.py",
+    "source_sha256": "d18fd38a8ac61418727441fc545b4db8fb8b60a9669b025b5204b09b288583b1",
+    "destination_sha256": "09a75825c4cd55c191d341008de540284d8372b2215206520e92fe51b4e704fa",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/motion_tracking/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/motion_tracking/__init__.py",
+    "source_sha256": "8bc68951adee97ab8b20f1dc01851a7021830f7eb1c4079d10634aa31b17f9cd",
+    "destination_sha256": "4a5ac8aa4a8c1ff6c0ef35f20025ac66acd9ad1c9734750de77f88002cc0658d",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/motion_tracking/actor_observation.py",
+    "destination": "integrations/HoloMotion/holomotion/src/motion_tracking/actor_observation.py",
+    "source_sha256": "9de26ef84ffa8f8e65ee413badcea8cbb07488b1067b386795dc5eb1581aa607",
+    "destination_sha256": "fa37127e8b78198da8151ed620d1a80d629090d7c5ca3d73493bf32923dd4f8a",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/motion_tracking/reference_observation.py",
+    "destination": "integrations/HoloMotion/holomotion/src/motion_tracking/reference_observation.py",
+    "source_sha256": "48e5c23715ef79f90c70a9cd566ce1380f735ac1a13bccbc476a544e7af41343",
+    "destination_sha256": "d85e333dd48cc72bfc782468c1431201a4e9acc83a473a5a4d32dd71def7afd6",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/training/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/training/__init__.py",
+    "source_sha256": "ec0b9ff3212c0162b4d58736ff5ded793cb4b0837ffa1ab5257c58be552a70eb",
+    "destination_sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/training/h5_dataloader.py",
+    "destination": "integrations/HoloMotion/holomotion/src/training/h5_dataloader.py",
+    "source_sha256": "d928c98dd84b240c4fd84373c1170ff4dd6075de487fc9c25fe6e3bcacbc5a3d",
+    "destination_sha256": "4b961a32a28bf490ec17a265f3a538169de9399613811744dcdb1664a595949f",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/training/reference_fk.py",
+    "destination": "integrations/HoloMotion/holomotion/src/training/reference_fk.py",
+    "source_sha256": "af211552908a3e41f89331148192914909c4b04899b7082f26c0d8cc72cdd40b",
+    "destination_sha256": "0da0c0118334a23869f57f3a8c613f2024addeab41b1d95897f5fbda09136ca4",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/__init__.py",
+    "source_sha256": "ec0b9ff3212c0162b4d58736ff5ded793cb4b0837ffa1ab5257c58be552a70eb",
+    "destination_sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/config.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/config.py",
+    "source_sha256": "dee0ef53c5faabb83f81c0f30a3cbb4f0d63046258646c6f2f44293fbacc09ad",
+    "destination_sha256": "56b3f51336b9833fd526b244203dbc73fd2b084c2b8396d633bf79a6195d9b02",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/frame_utils.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/frame_utils.py",
+    "source_sha256": "2c9619c17e1f27be16b9c8dc068716585c64d0907c08770e26855bc9109783f0",
+    "destination_sha256": "ae09633659c464a831f99138f54086cb5199128a2d37f233ca0acf07d526d3d1",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/g1_variants.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/g1_variants.py",
+    "source_sha256": "86886ab09cb631019557d7f14134110ecd86fa0132a7dcb7ece548892cdc2155",
+    "destination_sha256": "8992b804f1caac69efe9ba7d7c08656f3ff40840664de38e389e6242fdf765dd",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/isaac_utils/__init__.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/__init__.py",
+    "source_sha256": "ec0b9ff3212c0162b4d58736ff5ded793cb4b0837ffa1ab5257c58be552a70eb",
+    "destination_sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/isaac_utils/maths.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/maths.py",
+    "source_sha256": "407d9022fed5d4c9ffbb9b9098da890c6839bed5da021008bb39baa947f8779a",
+    "destination_sha256": "f71e0f6bfafc09093c0fcf12010e6f76e3a1ca1ea4df7a02c03d0e5b6024a406",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/isaac_utils/rotations.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/rotations.py",
+    "source_sha256": "27ae851202203a5be4526144e8a7344b313fba80f2d3c8050b5265d7dd1fc6bf",
+    "destination_sha256": "cb5512724680dee96b3c5d850e46223220467dd187b5874e045be5d441668593",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/isaac_utils/setup.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/setup.py",
+    "source_sha256": "044200b900d944b34569ec8bdc3972f9c92cc485e816ec5110d433228e273988",
+    "destination_sha256": "828f077635b5e550eafd7a983a7ebeab9d177a3df9f01f5ba928b8cf0d3b4f85",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/onnx_export.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/onnx_export.py",
+    "source_sha256": "3e7d9533b79dffad85c3be12e53b55f987cbeaf6130fb2c6a241a6d2d149b174",
+    "destination_sha256": "06acdf64cdc713dfb5f9a650fb613e1eaec73592502bf6b01d1d8b836d6c7f0c",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/reference_prefix.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/reference_prefix.py",
+    "source_sha256": "6cd6e1944b0792bc08512d54eda236bc79d536f865ef7c35ea42a303656910e0",
+    "destination_sha256": "c3d0d3fc737766b42b71f41d25be3720a405c3ec21698cae3e9f8193c8ad691a",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/torch_utils.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/torch_utils.py",
+    "source_sha256": "0754b20b634681e3aa1237429234e6ca7a9167ebbbbc40f944af98e998368b28",
+    "destination_sha256": "03af0593f18c77c2618dabd6afb793dc6d5fbe925a0013672cc7cbd94b5a29f1",
+    "modified": true
+  },
+  {
+    "source": "HoloMotion/holomotion/src/utils/unitree_g1_actuator_calculator.py",
+    "destination": "integrations/HoloMotion/holomotion/src/utils/unitree_g1_actuator_calculator.py",
+    "source_sha256": "2d072dec83e0478bf5a7da2a30e51c27702809db4f1691c234d5b623bb51e0a2",
+    "destination_sha256": "2269a4b153a3eadf2aef5989689871ee52f3cc2a598dc7fa8185c8a283aab247",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/batched_teacher.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/batched_teacher.py",
+    "source_sha256": "581250b8d9fd447b9e97135364ee7f055b100a4ccc774f153e6061657c4d5ba0",
+    "destination_sha256": "4386714435c81e133985cc40f910b79b3ac366a356a50e36baf97e5eb6487f57",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/compat.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/compat.py",
+    "source_sha256": "c24bfa51bed98fceb522567c8dac336def7ad8b4c2324db78c00ca54b5505b69",
+    "destination_sha256": "14dd019b61689def2974e481539621a86485c35c2de642c06d18d6f1e9906ad4",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/distill.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/distill.py",
+    "source_sha256": "8b64f3811ee4be648e9519572e21fe8ea5cfa077d912230d75cb6e540e254950",
+    "destination_sha256": "0f8f99bba4f142e6789dbe11c03bd7e0aa3ee83a40bbe104ce2c3d4e20b5799c",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/evaluate_official.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/evaluate_official.py",
+    "source_sha256": "b2ffd026ae98e35da5e57882998cbdea889531500801bfb3af5c1d95878f2cd5",
+    "destination_sha256": "168bdacf68e6cbd287e4d94ee3d5a2e2fb1e92ab876d38e632e8bb577af3d385",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/prepare.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/prepare.py",
+    "source_sha256": "e0f4760a365189e8200c9093a86efe6739e210aa006140d8172bef55435649ab",
+    "destination_sha256": "d848a6bc4620e366a4b0db11bcf5a55ca7eaa067ab2ed312f8bc581ed4645187",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/target_g1.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/target_g1.py",
+    "source_sha256": "4aee0e39ca6611b9096853ef9dbc2d88193123964a7225cf2fea9b4c14b6ed22",
+    "destination_sha256": "951807ead8a0389b84ed0060071e47db975138778aec70d74ee3bbd82691de52",
+    "modified": true
+  },
+  {
+    "source": "experiments/athlete_tennis_v1/vector_tennis.py",
+    "destination": "reproduction/experiments/athlete_tennis_v1/vector_tennis.py",
+    "source_sha256": "a5ae062e2534f35ae84b80e997368772333c7a57c8da672b2cc397be012c2096",
+    "destination_sha256": "b695cfc6f69f1aa49f2adcf56d40a9aae37e556304a359e183ec62a4a7f13872",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_competitive_martial_ppo_v1_20261106/common.py",
+    "destination": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/common.py",
+    "source_sha256": "09c04edc7ffd493ab9be101af127c66005c54b7d58928b042e6ab24ce487bfc6",
+    "destination_sha256": "2f4d8974e716e000d78ba4e328f0d68e6b053f551715961aa0a3e5f4f63db419",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_competitive_martial_ppo_v1_20261106/evaluate_retention.py",
+    "destination": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/evaluate_retention.py",
+    "source_sha256": "080dc3a1fb298dcd7de660d25dc5a27f28e8f7172c27b623fc1b3227ea7f727e",
+    "destination_sha256": "9c4314240a282bbcc0a8226fa5789d079a80feff0f0669922f62d7a01ebaa59b",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_competitive_martial_ppo_v1_20261106/prepare.py",
+    "destination": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/prepare.py",
+    "source_sha256": "40dafd9d43f48808ebc6400a1a1fb51ac00e3424ece47b9554d40580b4312f44",
+    "destination_sha256": "09883ecef04a26228cbe12e59821de0f7c3d28aaf4d1664e01d200c41bee100b",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_competitive_martial_ppo_v1_20261106/routing.py",
+    "destination": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/routing.py",
+    "source_sha256": "165a27d32272e7e18bbba13fba688b8cde73da8292a110f07c5c0545c8bc192b",
+    "destination_sha256": "7a8617bcd616b30e6472ff827839b1e6a2e03e7804cfdd823834770d97f52088",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_competitive_martial_ppo_v1_20261106/train.py",
+    "destination": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/train.py",
+    "source_sha256": "3538aa380ec0b5216cdd4a27531bca2e7cf1a6befb1ce5587e3adfcf86982df1",
+    "destination_sha256": "ad44d8956ed68add71dc9df46cc861b1327bf0c5b668685b14313b661430b86a",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_full_finetune_20261106/collect_old.py",
+    "destination": "reproduction/experiments/blink_stairs_full_finetune_20261106/collect_old.py",
+    "source_sha256": "86df0078ee07011341cbb950c4d320fe2675713ff2cc72f2f3316c3236a4a325",
+    "destination_sha256": "0ba253b31bb8620d6222b208c68335e7a0910d20aef28f382094fff4cb357df7",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_full_finetune_20261106/evaluate_retention.py",
+    "destination": "reproduction/experiments/blink_stairs_full_finetune_20261106/evaluate_retention.py",
+    "source_sha256": "afee22a208626f7babc07ee132a306a9379029e12c5c90006550bc0edac28a52",
+    "destination_sha256": "5b9e6156e598c6ae8ed50b6c171739ac2c23ae432a42519c7f2e292f2b968a69",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_full_finetune_20261106/finetune.py",
+    "destination": "reproduction/experiments/blink_stairs_full_finetune_20261106/finetune.py",
+    "source_sha256": "1be90d7ff75e3d95e3d27276a67127461dfb6bd15b0eadaef791d0d8ba8aee65",
+    "destination_sha256": "6a260d5144343c86c8c3cb762922ff58f1067d4ba8b587d5c0a85e869b47a626",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_full_finetune_20261106/model.py",
+    "destination": "reproduction/experiments/blink_stairs_full_finetune_20261106/model.py",
+    "source_sha256": "d719fca448758ec8758134ae71a561aadd820f13be60532d282dbbcb0471dfe5",
+    "destination_sha256": "1a3f6de3832b6b77aa020fa67b179e07c09852adc22275f01e7307818ef341c2",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_full_finetune_20261106/replay.py",
+    "destination": "reproduction/experiments/blink_stairs_full_finetune_20261106/replay.py",
+    "source_sha256": "be4aba105862a8cca4d9357f5844a44cc4a33a2eb4ba3c27c20ab98e23f27e3e",
+    "destination_sha256": "1618f8d2f2667544ec92ea4c4bdae7f0cb72adff9ec8af22c8785aae110506bb",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/audit_fusion.py",
+    "destination": "reproduction/experiments/blink_stairs_routing_ab_20261106/audit_fusion.py",
+    "source_sha256": "0d036187dcfc2148147722fe6ae35f5f97331e7f3b03a66cc9a69640fa20e96a",
+    "destination_sha256": "6d568c97464ecdb8235f2f57b667f556ef4a7472777b539f7ff0a1c110884da6",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/bridge.py",
+    "destination": "reproduction/experiments/blink_stairs_routing_ab_20261106/bridge.py",
+    "source_sha256": "a8aa897950913af40d0095751f69fae85f114eb3b57a702056c51fd77f6c1656",
+    "destination_sha256": "a6d798de47ed58fe5cdbd0e4ff18e37836de8184e65227144e4e2f6e03aa05d3",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/evaluate_retention.py",
+    "destination": "reproduction/experiments/blink_stairs_routing_ab_20261106/evaluate_retention.py",
+    "source_sha256": "c8fc8d6bfcf2eec9441fd1eb9f23b9c8c59305681f5c61a5eac27f708bd66da0",
+    "destination_sha256": "249fc67af43315b41d0c1de09b00bb34d90c3007f2a72855956cdf9923882d40",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/retention.py",
+    "destination": "reproduction/experiments/blink_stairs_routing_ab_20261106/retention.py",
+    "source_sha256": "1eeed56c19b96e8517d03d01ad13e931a4b3ee487eaa507bc53db0d4a4abed31",
+    "destination_sha256": "2c08138958e8af085d7cf1fd655497206570bfba42222425f8e379e576fe8acb",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/routing.py",
+    "destination": "reproduction/experiments/blink_stairs_routing_ab_20261106/routing.py",
+    "source_sha256": "13448f8c902c19e829b19338894dfce19d51273674e8f4b985a7b7f201156a45",
+    "destination_sha256": "f0f2969ac3b2ca474ec4b072e0634db8c807f3abbd610fdff949e0ff9c61bb81",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/train.py",
+    "destination": "reproduction/experiments/blink_stairs_routing_ab_20261106/train.py",
+    "source_sha256": "34a632f669496a251cba776c0c0ac375e2ce6107c7681c6685a41b9f56e469db",
+    "destination_sha256": "2bde17ab5cee72c99296e8d4add13911050908580a64332f4b2f11b61766936d",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/adapters.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/adapters.py",
+    "source_sha256": "38abc350e88e495b0f3e82d6fb20a511be3b9ab23132901c5c0b3bb28affc9b3",
+    "destination_sha256": "c9ff631e87ca5f65a3cd7e0ff5ff432b5cebecf323b41327f27f2a5f9ab53256",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/deduplication.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/deduplication.py",
+    "source_sha256": "667afcda68b35502701cf8e2766c053e89321de1d4a9ed14baddb778baa6773a",
+    "destination_sha256": "97d3eaf92dd2574b3068de5e31bd87c1d5db10509797f61bcef32e9e1a062c03",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/evaluate_retention.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/evaluate_retention.py",
+    "source_sha256": "53fcf22899a22a5ae9b97c1d094f2426539c80fbea0fbf428fb6cef7ececc74a",
+    "destination_sha256": "5ab916da38b172ff643dcfd9bc1491a3291dfe573ca406c7afd87bb24e6e9066",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/model.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/model.py",
+    "source_sha256": "44faf5f8981ebdf2ce6e0b8607c1be4ee2b4ed90a09425fbd557b03647d171ec",
+    "destination_sha256": "88a5943ef82423a42f130e8d70a6b9fc4ee6aba630b403e054293b4d925667e6",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/pipeline.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/pipeline.py",
+    "source_sha256": "9495b409704bcc9ecaa7ca550ea3a3f0801a69ecc72edc88d0225df8c2228eb9",
+    "destination_sha256": "6166a576a6776975cf306c134c31c69c5af5908b0d9df7f0fabd3c528beaa9d4",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/render_instinct.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/render_instinct.py",
+    "source_sha256": "0d374db9717110c7f8a9d61795c6e047a9baaa64502a8abd2e20e1b82c283a9d",
+    "destination_sha256": "a3b406b72d2fea38a20e0960b1dc5a7e9511a7705c8469f91602ea65f747b6e7",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/retention.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/retention.py",
+    "source_sha256": "11cd572816525dc34f38f4a2380f07548c6fe1dc08e793bf31af356cbfda943a",
+    "destination_sha256": "ab76b73b905b39eb22ebee4789d2a0cd88695e9fbbdac1d61e83ba3acb979bc1",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/robot_contract.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/robot_contract.py",
+    "source_sha256": "63ae295d96fd2435f9303f1e5be835815d5543be24824818a49a8b3c24fd233a",
+    "destination_sha256": "db61319adad32c81b37b86a23734561474be05d54be4c4ae9420194554099250",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/routing_base.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/routing_base.py",
+    "source_sha256": "fe08d7eb42cd0a89946fa69e7837317f3fe87e3c73b4fc9c112651b3622ac970",
+    "destination_sha256": "22840a643472e8c95cd7eda4fb77e2f81538a2c27f94dd176788dd7f7a4656b6",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/runtime_deps.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/runtime_deps.py",
+    "source_sha256": "4e2f1f89647d7a28e848c6573e7927a3e90969fe8a38e7a276545f1280327c67",
+    "destination_sha256": "de753cb2785ca2b967a402a9f5aa230d54df76ca19bd515b6eb25d0f9835c9d0",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/worker.py",
+    "destination": "reproduction/experiments/g1_competitive_suite31_v1/worker.py",
+    "source_sha256": "5f4a631c07c113b4f7a01df563d56179126e031ded3ca4c318ac1974e9050d04",
+    "destination_sha256": "b82259c978af7bafcb11536900522c9563b8a8ad331e4afc6105056db9ccea65",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/evaluate.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/evaluate.py",
+    "source_sha256": "0488ff5adf797a2e46823e8e948e69c8adb5354820bcc8d94c5ae894c12678ea",
+    "destination_sha256": "a9062ab6bb3e26e05a231a47ab6b08d55334a40a993f17a667ba4093d62777c0",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/null_control.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/null_control.py",
+    "source_sha256": "23172d6bd25cb64b5390ab1766816bd2ada5de5c5fdc691f251f3aa5f7262acb",
+    "destination_sha256": "091f1e21b470973087d93dd61d9a62df830041bb0ddfd662696962ab622fe1ca",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/prepare.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/prepare.py",
+    "source_sha256": "7cb7acb0835e8723ad2943cf1900afb44bb9609fdc77c7f9fba52a3ee86110c9",
+    "destination_sha256": "cff7b99e7d5412ec6613917c5d4419d33469be4b84be87f5e3444faebad1bf59",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/prepare_high_dynamic.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/prepare_high_dynamic.py",
+    "source_sha256": "3fd0e3b9a11ccfc53014e517b7aaab9067f9e2ed963af51fcebe7eb349379e3d",
+    "destination_sha256": "cd1f3dab19a60f6df055ec5c0284487f6b74e84d57761ec4f999c3bcc056e1de",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/recheck_completion.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/recheck_completion.py",
+    "source_sha256": "1897cbc09644d1d9611c73611fc0f1105327f2131f6ac8b6cd29d01f572bd162",
+    "destination_sha256": "29716aa9d9a9778c3090e6bfc5395f71c099cfde438be0dd0a8a87cd466ce917",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/summarize.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/summarize.py",
+    "source_sha256": "49aa89b8bfbec476fc02f26a8fe396ba3f0a69edc7a551c38601de1abc34d5c8",
+    "destination_sha256": "fd9d9ffb0128b0be9c8ec0aede6769c74a4b1e18c4088fdf9687ed1159598ab6",
+    "modified": true
+  },
+  {
+    "source": "experiments/martial_transfer_v1_20261106/summarize_high_dynamic.py",
+    "destination": "reproduction/experiments/martial_transfer_v1_20261106/summarize_high_dynamic.py",
+    "source_sha256": "ad0fdbff8fb95f1e34761959984780e6b8bf23e2ad7b3aba619c3e19c13dd2b0",
+    "destination_sha256": "aefba8cf150cae2567724b6587549318e62b0292f0f9c1aecd18ad368a93fa97",
+    "modified": true
+  },
+  {
+    "source": "experiments/mimicx_all_tasks_v1/runtime.py",
+    "destination": "reproduction/experiments/mimicx_all_tasks_v1/runtime.py",
+    "source_sha256": "8b5a0f136eaadacdfd234aabc1ab6a57fe4a5ed3e5e466dd70450122826248db",
+    "destination_sha256": "3e98df9fb90c8896fda91ed532595bdfd2cc0f713fb270356f90cb72df74e547",
+    "modified": true
+  },
+  {
+    "source": "experiments/pmt_dagger_v1/native.py",
+    "destination": "reproduction/experiments/pmt_dagger_v1/native.py",
+    "source_sha256": "09b0784df65f07220cdea36b1f0f7f476cc38427094a222d1d20715f948d08f5",
+    "destination_sha256": "5c20b5e425f2b17adbf109b5775d9e48c1ee72a67c29fcf8ded3f95798c0c035",
+    "modified": true
+  },
+  {
+    "source": "experiments/pmt_dagger_v1/prepare_assets.py",
+    "destination": "reproduction/experiments/pmt_dagger_v1/prepare_assets.py",
+    "source_sha256": "9baab6addbe02442cd254868b18655e7b7f3094cb6fccf869f7964c2d808b0af",
+    "destination_sha256": "648d7ed9d2f30142dfedbb861783e437c4d8431f2a3f7b3389af35d0d48e45aa",
+    "modified": true
+  },
+  {
+    "source": "experiments/pmt_dagger_v2/context.py",
+    "destination": "reproduction/experiments/pmt_dagger_v2/context.py",
+    "source_sha256": "fb6d884639fe13ab4307e1b3ba4dc7dd0184511f4b654f8ebb0ed601e41e0039",
+    "destination_sha256": "1899309e746b87ffdf4836f0f80be629874eee635e39fd93387c511534eb8a63",
+    "modified": true
+  },
+  {
+    "source": "experiments/pmt_dagger_v2/rollout.py",
+    "destination": "reproduction/experiments/pmt_dagger_v2/rollout.py",
+    "source_sha256": "f09e917b2f0c13b1b9d3aa947f79ad0355e12e6818e412d0ca72198092698873",
+    "destination_sha256": "d96d742cdb1fb7f40c8855df2a587a8b903d4373eb77f8ed2930ea270ae147af",
+    "modified": true
+  },
+  {
+    "source": "experiments/pmt_dagger_v5/target_robot.py",
+    "destination": "reproduction/experiments/pmt_dagger_v5/target_robot.py",
+    "source_sha256": "4b52deae3412ef56f6ab8249a5557da9c46cb875b9907e273aadc3d010e11d05",
+    "destination_sha256": "03d4bcf9530414172c3add31379cf31acbfb03b5addd46fb563e9f0272d3c2b3",
+    "modified": true
+  },
+  {
+    "source": "experiments/pmt_dagger_v5/task.py",
+    "destination": "reproduction/experiments/pmt_dagger_v5/task.py",
+    "source_sha256": "3404cdaa9ec76cb1c03a99847fe19df329c44014c8871f3395f3be74c0dad4ee",
+    "destination_sha256": "a0c09a21b8f64e7ccaa4811dd22d6a70b2cd724b76d955212eee886484d8698d",
+    "modified": true
+  },
+  {
+    "source": "experiments/ultra_box_v1/runtime.py",
+    "destination": "reproduction/experiments/ultra_box_v1/runtime.py",
+    "source_sha256": "cb5359adf649c23cc6eae04a6e3e0d555965dd89d7bd47643e2ab0b2c40e937c",
+    "destination_sha256": "64fd52fbf1a4eb7bff164178e5f4076b5638530269f10ff012f0917110e961d0",
+    "modified": true
+  },
+  {
+    "source": "experiments/ultra_box_v1/vector.py",
+    "destination": "reproduction/experiments/ultra_box_v1/vector.py",
+    "source_sha256": "19bd44a696c367cb034bb9b8bd2a6c840dd4ff71b2c99d180d4d9082949a2133",
+    "destination_sha256": "78985997639728442174b7a616fc9679acb29e2e9d4f66613c5d223a808a7980",
+    "modified": true
+  },
+  {
+    "source": "reports/roundhouse_expert_20261105/roundhouse_impl.py",
+    "destination": "reproduction/roundhouse_impl.py",
+    "source_sha256": "2201e4127bd5822b516fa40cd7ee1933364115b4d895a72d741f8766b31a2317",
+    "destination_sha256": "5a7b12b8c05a3aa10bc07d22481b2ff104e0602ea80a6db24562bc94ac072296",
+    "modified": true
+  },
+  {
+    "source": "scripts/husky_skateboard_dagger.py",
+    "destination": "reproduction/scripts/husky_skateboard_dagger.py",
+    "source_sha256": "7051f97679e89a15e984f1d7ffe15d4507f0cd6b4e2f6bb72d527cdd0fbe6446",
+    "destination_sha256": "8e71504bc25553ed302311d8af46b8e13832bb6fb8a15350324d795baa947e64",
+    "modified": true
+  },
+  {
+    "source": "scripts/instinct_dagger.py",
+    "destination": "reproduction/scripts/instinct_dagger.py",
+    "source_sha256": "98284a6749d3f997aa536f327a0cef8bbfa8b383515063e8e11bfb83aff9cafb",
+    "destination_sha256": "f22617f89537fa16c2993c44b09ddb40b3d2977469999ddd2742920212f81507",
+    "modified": true
+  },
+  {
+    "source": "scripts/parkour_dagger.py",
+    "destination": "reproduction/scripts/parkour_dagger.py",
+    "source_sha256": "6fc790c12ec3aa528d5ba8292b9652275a3b4ce77296794080da9340748272c3",
+    "destination_sha256": "1448e6f2f98fa9f897d943b70f985ead0ce189c3264673ed06b28d5859eb8c63",
+    "modified": true
+  },
+  {
+    "source": "scripts/velocity_walk_dagger.py",
+    "destination": "reproduction/scripts/velocity_walk_dagger.py",
+    "source_sha256": "f61b1ddf27609a18ed2851c39bb008e4750848a47dea61fed1262406b081666f",
+    "destination_sha256": "c05f3bd598d882e607d05c28739cc6b96df0a6b2cbe3b26ae3abd544412c2b79",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/__init__.py",
+    "destination": "src/blinkmimic/__init__.py",
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modified": false
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/buffer.py",
+    "destination": "src/blinkmimic/buffer.py",
+    "source_sha256": "10545c931d8b738731e72a18a44dd866379157708a7430dc8a51f912464b1990",
+    "destination_sha256": "6999ab22bfc1b625f92eebac9d7b518bd5bfe6c1b5e11d7f1bd2c2e7cf42df48",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/dr.py",
+    "destination": "src/blinkmimic/dr.py",
+    "source_sha256": "62e1258cdbf34ca39133af57bbf5aeb63faf7e96e47bf120b02d9b8eeb7c3a66",
+    "destination_sha256": "4b297c9267c4196e827c57ac035553c4761a81774dbe1c2d048842a42978a38b",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/env.py",
+    "destination": "src/blinkmimic/env.py",
+    "source_sha256": "94cebe50bcaa2f57e8cb7fe793be288de3e60dcf14693ff6627905e9da959aa8",
+    "destination_sha256": "8957e43dd84b460b51a1ac07efb5945f66b4ab0daf2cda5863c2984f46304845",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/evaluate.py",
+    "destination": "src/blinkmimic/evaluate.py",
+    "source_sha256": "8ef17661991878398694be8d38245706330b494175433dc2ef1710a313cbe482",
+    "destination_sha256": "f5ca3f774dccdcf04118a960d88d3e2e3f6e96e0c22488f0b006ed2c3b638be9",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/g1/__init__.py",
+    "destination": "src/blinkmimic/g1/__init__.py",
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modified": false
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/g1/g1_constants.py",
+    "destination": "src/blinkmimic/g1/g1_constants.py",
+    "source_sha256": "cd2917ff63cc6f22df9b2d32e4aef12a5e6c0c1cb2dae7557e86ac3442bebc23",
+    "destination_sha256": "85a5bb47925711e0db75a2b25b4bf93d48a8900cee171ad4c9539640287805bb",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/kinematics.py",
+    "destination": "src/blinkmimic/kinematics.py",
+    "source_sha256": "0194b4fe0302e21066c9874164b7350e555851f5af2c8a32f9992e068cb68648",
+    "destination_sha256": "a6b99845cf6432e81a9e96e19e4c7ae5d013f4e66e31e63d7dbaec590b06d9ee",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/mdp.py",
+    "destination": "src/blinkmimic/mdp.py",
+    "source_sha256": "ee3e7c94b33807fc87f3cdb51a34e09e4453a43cd0efab98af6260386a0a427d",
+    "destination_sha256": "6f8143eee3714cfe85ab1ae88f93e83e9e800bc45e611f7955a5348ca62911f2",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/mirror.py",
+    "destination": "src/blinkmimic/mirror.py",
+    "source_sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
+    "destination_sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
+    "modified": false
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/moe_diagnostics.py",
+    "destination": "src/blinkmimic/moe_diagnostics.py",
+    "source_sha256": "092e3ece6930fbad7c534510a417c9292c3aa7ab10df6cb2f011b6883e3f58f6",
+    "destination_sha256": "9692275d6edf38352dc09dd46dfc09d6fa6c1374a134a1c21e829208b7b0aae5",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/moe_policy.py",
+    "destination": "src/blinkmimic/moe_policy.py",
+    "source_sha256": "a967695e7ff60edf9ef18479e05d393007662b6be441b203c8475a9bd21ab4bd",
+    "destination_sha256": "39ac23e72b9b2443cf6c1ee139ac388849cbfdf2eccdb3fe66e6928812cd8fa5",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/motion.py",
+    "destination": "src/blinkmimic/motion.py",
+    "source_sha256": "9111d706be50e2205adced2bec1b46892cdec90e2fcbe9a1375fdfd4554c0c3e",
+    "destination_sha256": "081a2241b5676b494a05a2c7d5c05af17ae20b05598ed1ab07bead2e623d4e1f",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/networks.py",
+    "destination": "src/blinkmimic/networks.py",
+    "source_sha256": "7cc5857098410593b90713c6fd9b7f481259958e9bb4e5f07bb956dbdf89a686",
+    "destination_sha256": "be73c3d3b382cd0a5dbc5d1bdeac907dc18c5dc11b462b37fed21442e46b9097",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/objective.py",
+    "destination": "src/blinkmimic/objective.py",
+    "source_sha256": "ae4964f37c17bc18a9efd973ed55de7dce7cfd7ac499ed25ea3e82e7c6c5e8bf",
+    "destination_sha256": "412b5514c44a962decff63a4197118981288e1939ef6bdf41a073d359376d20d",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/optim.py",
+    "destination": "src/blinkmimic/optim.py",
+    "source_sha256": "f1358c1aebd14e4215766dccdd614cfa3cf5b8abc9c85e5b888d0661adef1816",
+    "destination_sha256": "88dd08c569e25c623d2e185e298860c8193a97f8a5e12e6f22cd6185169d6ac8",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/robot.py",
+    "destination": "src/blinkmimic/robot.py",
+    "source_sha256": "660eb1dfc74fa32e565cac9375bea171c93908c530fbdb9e6cf5b363f6f24a91",
+    "destination_sha256": "cbe7b13aa47faa96171c4d7531a1f5bb701df25326384a036867396e349f20cd",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/rotations.py",
+    "destination": "src/blinkmimic/rotations.py",
+    "source_sha256": "c06b07af580994a4bc71d650cd9d186e4249499ebdd0bc67833e7388cf7ae6ad",
+    "destination_sha256": "b5e198a3f84915dae184b355bcbc877798d09b9effe95956a04973a200357c66",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/router_calibration.py",
+    "destination": "src/blinkmimic/router_calibration.py",
+    "source_sha256": "0a3e43f1f3fe9466ac8801b81fd8d196ef1215df901bd611f9722ed7f1366890",
+    "destination_sha256": "4a6063eeb567a376054fa48ef929e75d10b49eb996d315ed3eeafca5452c8bbf",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/sensing.py",
+    "destination": "src/blinkmimic/sensing.py",
+    "source_sha256": "765a7931039c9ebe7f524a28f60571647721bbc0503522db2589b09e4698c378",
+    "destination_sha256": "911f8ae1aedce2745095247a36354b17ff66c8dfc2001189bfd98f9ae75fbc31",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_moe_g1_expand128_20261106/native/blinkmimic/train.py",
+    "destination": "src/blinkmimic/train.py",
+    "source_sha256": "59ae399ebed1bae0d084fbd10913bdae6781c8f5d416c9df4a5c80be10d97908",
+    "destination_sha256": "a361856a880ce469011373123f759c70a5fbf13bd5215bd9c088f1e5fd1fc864",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/__init__.py",
+    "destination": "src/modumotion_g1/__init__.py",
+    "source_sha256": "a904068e17e1f8582c3fda854bf01b3672c53a2408f2c725a41366e7b6576812",
+    "destination_sha256": "a904068e17e1f8582c3fda854bf01b3672c53a2408f2c725a41366e7b6576812",
+    "modified": false
+  },
+  {
+    "source": "modumotion_g1/perceptive_supermimic.py",
+    "destination": "src/modumotion_g1/depth_features.py",
+    "source_sha256": "6d33e5d590f71151b3632418cc855653f51b7fdd43441e108ce88eaafd419afe",
+    "destination_sha256": "6a89a4ca2d11b6b1194e3108395b556716f97519d7be771e7a424c0fd1c05d95",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/domain_moe.py",
+    "destination": "src/modumotion_g1/domain_moe.py",
+    "source_sha256": "86a00a8914aa9987ba7a85e9afb34ff1ee646bed78003a7f7462399490088378",
+    "destination_sha256": "84d87a180751826c72b41aaf1c2d7df4cc7d6b0b12cc52dcacb392bd8ec6bdef",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/eval_algo.py",
+    "destination": "src/modumotion_g1/eval_algo.py",
+    "source_sha256": "faa2ae89fac7a86fba28596f79a910e9bb895259750c2d6a8f1bd27bdeb4d48b",
+    "destination_sha256": "77e7affb5a2e31ba57cbd7b0b321f80bfd2e9d84f5ce6ff1c50b3ef78a78e741",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/expert_registry.py",
+    "destination": "src/modumotion_g1/expert_registry.py",
+    "source_sha256": "bff37bdff0a989f007ce034006db8e1ba69934b5a87afd1e91736a4a1b4274e2",
+    "destination_sha256": "986f63effdcf90284dede6cea5eb94e932fa52d6d7d8a1cdef040f31496c5c53",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/feature_dagger.py",
+    "destination": "src/modumotion_g1/feature_dagger.py",
+    "source_sha256": "dbae9c46a530f9bb85c03cb48320eb1523220cbc1c54baa246e574985206056a",
+    "destination_sha256": "3e1c165dadd84497e6b21db27c607657353aa7f3136fa29227c17da72bb5c194",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/frozen_feature_ppo.py",
+    "destination": "src/modumotion_g1/frozen_feature_ppo.py",
+    "source_sha256": "01b92e4a6ec7ad07d03f3a0d78c7baf8aa18b22d287a54934096b1430df6332b",
+    "destination_sha256": "0356fc460e6962d887aa8ba580ff1e9ad4438f9d2e6fb834451e045f7dbfd237",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/husky_skateboarding.py",
+    "destination": "src/modumotion_g1/husky_skateboarding.py",
+    "source_sha256": "e9f88554ed70c6b5e56f200f5e846486ad53ef45e0d2137130882a97e04c52b5",
+    "destination_sha256": "577b93ed24d0635daaf2282a9e15d9518d06f195b32c5dbd7c45f1f3abcb8995",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/instinct_dagger.py",
+    "destination": "src/modumotion_g1/instinct_dagger.py",
+    "source_sha256": "24b4ca97b136170c469d15c9e42fd88964c5b1087470da6e2ce5d08d3fb6abb0",
+    "destination_sha256": "0c619e822cf3c950d92801eb7965e389c9f2f4c613a3dd7ce1e035b15843fbfe",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/instinct_tasks.py",
+    "destination": "src/modumotion_g1/instinct_tasks.py",
+    "source_sha256": "3ac519acd276010179a9549fd0fea3535648883611c52932111054014585ee93",
+    "destination_sha256": "a4d14945805ae6b60954db7f4377fc144cb68b2e67a0c30c96836c536eac84b8",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/mimicx_bridge.py",
+    "destination": "src/modumotion_g1/mimicx_bridge.py",
+    "source_sha256": "2c978325bc6aa7be6324c9aa1f36886bdcbaa3e4f8d51613cebe5514584169bc",
+    "destination_sha256": "8ae0a1ef4f9e36603e4dcdd9c9c94686fff5cf4626634e4a773d1ba5ca0acdc5",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/official.py",
+    "destination": "src/modumotion_g1/official.py",
+    "source_sha256": "03cef1bec929fdbf77ad3e32ee8ce63130086865602a33f201cbef586e988a3f",
+    "destination_sha256": "ca68673a05ba6951c12981a1147168b0d860a6cafc3028c6b4a840f42fdd1b24",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/parkour_distillation.py",
+    "destination": "src/modumotion_g1/parkour_distillation.py",
+    "source_sha256": "dd915a69bc772780f444b31de42391e1beb438e68a19c6d5fc36a7586d6851da",
+    "destination_sha256": "f72c36245e33745661ab08060045d58e036b453ff6be551d8599e469d9366452",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/parkour_extra.py",
+    "destination": "src/modumotion_g1/parkour_extra.py",
+    "source_sha256": "d51df9ecb276404c245b108ea50ad2b21d602bc17dcf486fed6333cb16661446",
+    "destination_sha256": "31a29b185e2ced079f9eac65b24b1c304355c403b68e8521d9ad0e89e0ddf99e",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/parkour_remaining.py",
+    "destination": "src/modumotion_g1/parkour_remaining.py",
+    "source_sha256": "83f16e3daf7d57b195bb2b03b7c1b6e08ac3e9b9d97b04be563a1efbf7caf132",
+    "destination_sha256": "face4675a28e481432b2d7a59df67bca9f1be6b0e85d05b75d03d2e3eca63231",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/parkour_remaining_rollout.py",
+    "destination": "src/modumotion_g1/parkour_remaining_rollout.py",
+    "source_sha256": "af8ddea89ea9e8a02be792a6f3dffe74377c70f609a008fc741b5c800c3ea409",
+    "destination_sha256": "da308e8b2ac0fce45c714097648e8119da7245c3456727c7b6d68b6115af0e47",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/perceptive_observations.py",
+    "destination": "src/modumotion_g1/perceptive_observations.py",
+    "source_sha256": "6a87ff138c7f992c1f2954b08acafd506e5179f2e92e97c56771544a3cf52905",
+    "destination_sha256": "42de4ea6014a42d259840c4a6ed02e0fea93e192a9579c1647b2b206a686809c",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/stairs_ppo_algo.py",
+    "destination": "src/modumotion_g1/stairs_ppo_algo.py",
+    "source_sha256": "f90375f105e3b8a6dbd0f14d30738bf61bcc42b043f53c5976800992e2fa394d",
+    "destination_sha256": "d1e37100ce713c1a440c74d96cadf69c9a57d3941b81aa41e62fd1e0e6630fc6",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/stairs_ppo_rewards.py",
+    "destination": "src/modumotion_g1/stairs_ppo_rewards.py",
+    "source_sha256": "123df252e4941c3b98c305edbe6e9d762ce0cfc0f5d1216786750d27d0b4d0d0",
+    "destination_sha256": "fd234d790bab7a39f01de818deeaf9f4cb0746698cd9d3e927480e6364d7e079",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/teacher_authorization.py",
+    "destination": "src/modumotion_g1/teacher_authorization.py",
+    "source_sha256": "b9e37e1a22ca5aeafb363ab2a03e29a4007722dfc5a1969848f94abffed6c489",
+    "destination_sha256": "2364b8ca6fc8dd63ddb986c5d31bc93115c80ab15a5f97d4c30351d6c4edfe6a",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/train_algo.py",
+    "destination": "src/modumotion_g1/train_algo.py",
+    "source_sha256": "edb558dfe6a8bea18a45c33a2623b780ca8ba73764a8579275893117c2b4c133",
+    "destination_sha256": "a401f9768f29856435e234fc60e0ac28959c090266cc287aa468a8db339c06e5",
+    "modified": true
+  },
+  {
+    "source": "modumotion_g1/velocity_walking.py",
+    "destination": "src/modumotion_g1/velocity_walking.py",
+    "source_sha256": "445d6a785531c89a9f4f31a48dbdedaefae9dc71c585a7f247c987df5bc9867d",
+    "destination_sha256": "90285ee2fe9dbc3b9dc659a7cd57cd1b14f8fc02769aedd91dce98c36d7bec11",
+    "modified": true
+  },
+  {
+    "source": "experiments/blink_stairs_routing_ab_20261106/routing.py",
+    "destination": "src/pera/fusion.py",
+    "source_sha256": "13448f8c902c19e829b19338894dfce19d51273674e8f4b985a7b7f201156a45",
+    "destination_sha256": "8255cac1f05dbd1d71b74390b7221cd0e57720d0fd875cb7e3db15a4589df33a",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/robot_contract.py",
+    "destination": "src/pera/robot.py",
+    "source_sha256": "63ae295d96fd2435f9303f1e5be835815d5543be24824818a49a8b3c24fd233a",
+    "destination_sha256": "796d5260ef2143e9ee7f2f4671712280991eda71b7e481fa7fe2441838c50c96",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/routing_base.py",
+    "destination": "src/pera/routing.py",
+    "source_sha256": "fe08d7eb42cd0a89946fa69e7837317f3fe87e3c73b4fc9c112651b3622ac970",
+    "destination_sha256": "b1f88f46f7dec98f9b86ba5a5c84a512465cbd993ce504e8582231986548c972",
+    "modified": true
+  },
+  {
+    "source": "scripts/bank_blink_g1_expand128.py",
+    "destination": "tools/build_reference_bank.py",
+    "source_sha256": "08ffd5718ffc8e78dbc983f42653fc288251effad5f5ced1c18bb7b5dd122b10",
+    "destination_sha256": "c08cda6b0c4859ab95132d19799d55fa3058294984407ec8298a6075c825ba86",
+    "modified": true
+  },
+  {
+    "source": "experiments/g1_competitive_suite31_v1/model.py",
+    "destination": "src/pera/context.py",
+    "source_sha256": "44faf5f8981ebdf2ce6e0b8607c1be4ee2b4ed90a09425fbd557b03647d171ec",
+    "destination_sha256": "fd26666ed983919e021c4302c1069fc93c8db2768dd15a295533366e0c659198",
+    "modified": true,
+    "extraction": "ContextPlugin and ContextMoE class definitions moved without AST changes"
+  }
+]

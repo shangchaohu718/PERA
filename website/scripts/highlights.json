@@ -1,0 +1,179 @@
+{
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "clips": [
+    {
+      "id": "kick",
+      "name": "Roundhouse kick",
+      "expert": "PPO expert \u00b7 refined checkpoint",
+      "kind": "isaac",
+      "source": "reports/roundhouse_refine_20261105/fresh_selected_a/selected_a/isaaclab_eval_output_model_14000_reference_h5/Roundhouse_kick__start_0_len_262.npz",
+      "source_fps": 50,
+      "highlight": [
+        0,
+        5
+      ],
+      "poster_time": 2.0,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -17,
+        "distance": 3.05
+      },
+      "report": "reports/roundhouse_refine_20261105/fresh_validation_status.json",
+      "scope": "One fresh-process replay, seed 42; refined model_349 expert. Distinct from the earlier seven-clip quantitative snapshot."
+    },
+    {
+      "id": "moonwalk",
+      "name": "Moonwalk",
+      "expert": "PPO expert - 500 iterations / model 499",
+      "kind": "isaac",
+      "source": "reports/moonwalk_expert_20261105/stage_500/expert_eval/isaaclab_eval_output_model_14000_reference_h5/g1_moonwalk_grounded_loop_v5_x3__start_0_len_900.npz",
+      "source_fps": 50,
+      "highlight": [
+        0,
+        6
+      ],
+      "poster_time": 2.0,
+      "camera": {
+        "azimuth": 100,
+        "elevation": -18,
+        "distance": 2.9
+      },
+      "report": "reports/moonwalk_expert_20261105/stage_500/summary.json",
+      "scope": "500-iteration PPO checkpoint, model_499; seed 42, one repeated training motion. Same frozen public Actor as the other skills, with a task-specific expert. One reference and seed; no generalization or old-skill preservation claim.",
+      "scene_style": "skate"
+    },
+    {
+      "id": "roll",
+      "name": "Forward roll",
+      "expert": "BC + DAgger expert",
+      "kind": "course",
+      "task": "diveroll_lab_no_wall",
+      "source": "reports/velocity_course_v11/seed7002/physical_replay.npz",
+      "scene": "reports/velocity_course_v11/seed7002/scene.mjb",
+      "highlight": [
+        1.9,
+        6.7
+      ],
+      "poster_time": 3.8,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -18,
+        "distance": 3.6
+      },
+      "report": "reports/velocity_course_v11/seed7002/final_summary.json",
+      "scope": "Full task segment of one successful continuous course, seed 7002, nominal physics; explicit expert switch and 0.6 s entry blend. Not a full-course or statistical success claim.",
+      "scene_style": "terrain"
+    },
+    {
+      "id": "vault",
+      "name": "Obstacle vault",
+      "expert": "BC + DAgger expert",
+      "kind": "course",
+      "task": "roll_vault_no_wall",
+      "source": "reports/velocity_course_v11/seed7002/physical_replay.npz",
+      "scene": "reports/velocity_course_v11/seed7002/scene.mjb",
+      "highlight": [
+        2.4,
+        7.6
+      ],
+      "poster_time": 4.3,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -22,
+        "distance": 3.9
+      },
+      "report": "reports/velocity_course_v11/seed7002/final_summary.json",
+      "scope": "Full task segment of one successful continuous course, seed 7002, nominal physics; original obstacle geometry retained. 0.6 s controller entry blend.",
+      "scene_style": "terrain"
+    },
+    {
+      "id": "skate",
+      "name": "Skateboard",
+      "expert": "BC + DAgger expert",
+      "kind": "native",
+      "source": "reports/husky_skateboard_dagger_v2/student_eval/eval_1/physics.npz",
+      "scene": "reports/husky_skateboard_dagger_v2/student_eval/eval_1/scene.mjb",
+      "highlight": [
+        0,
+        5
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 70,
+        "elevation": -27,
+        "distance": 3.05
+      },
+      "report": "reports/husky_skateboard_dagger_v2/student_eval/eval_1/report.json",
+      "scope": "Recorded environment 0 of the eight-environment turning evaluation, seed 10102. Starts on the board in native skate stance; no mounting or handover claim. Actual board qpos retained.",
+      "scene_style": "skate"
+    },
+    {
+      "id": "gaps",
+      "name": "Gap crossing",
+      "expert": "BC + DAgger expert",
+      "kind": "native",
+      "source": "reports/instinct_parkour_remaining_v3/gaps/student_51001/recording/physics.npz",
+      "scene": "reports/instinct_parkour_remaining_v3/gaps/student_51001/recording/scene.mjb",
+      "highlight": [
+        0.5,
+        5.5
+      ],
+      "poster_time": 2,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -20,
+        "distance": 3.6
+      },
+      "report": "reports/instinct_parkour_remaining_v3/gaps/student_51001/report.json",
+      "scope": "One recorded student rollout, seed 51001, native terrain and physics. All gaps and terrain remain intact; original ten-second recording available.",
+      "scene_style": "terrain"
+    },
+    {
+      "id": "steps",
+      "name": "High steps",
+      "expert": "BC + DAgger expert",
+      "kind": "native",
+      "source": "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/recording/physics.npz",
+      "scene": "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/recording/scene.mjb",
+      "highlight": [
+        0,
+        5
+      ],
+      "poster_time": 2,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -18,
+        "distance": 3.6
+      },
+      "report": "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/report.json",
+      "scope": "One recorded student rollout, seed 93001. All original steps retained; the five-second excerpt includes ascent and arrival. Original ten-second recording available.",
+      "scene_style": "terrain"
+    },
+    {
+      "id": "tennis",
+      "name": "Tennis return",
+      "expert": "Experimental tennis student",
+      "kind": "native",
+      "source": "website/.render-work/tennis-v3/physics.npz",
+      "scene": "website/.render-work/tennis-v3/scene.mjb",
+      "highlight": [
+        0,
+        20
+      ],
+      "poster_time": 2.1,
+      "camera": {
+        "azimuth": 125,
+        "elevation": -24,
+        "distance": 3.2
+      },
+      "report": "website/.render-work/tennis-v3/report.json",
+      "scope": "Continuous first 20 seconds of the frozen tennis student recording, seed 97001. Multiple incoming-ball cycles, including a failed return, with no robot resets or cuts. Incoming balls are relaunched between cycles; no opponent policy. Visual hands restored in replay; original court, ball and racket states retained.",
+      "scene_style": "tennis",
+      "closeup": false
+    }
+  ]
+}

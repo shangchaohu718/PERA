@@ -1,0 +1,31 @@
+{
+  "id": "catalog31-white-v2/pmt_optimized_scene0-off",
+  "task": "pmt_optimized_scene0",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-white-v2/pmt_optimized_scene0/off/physics.npz",
+  "source_sha256": "7777a784249a1b280ad9b79540ed1b66f99205f918cb6f0abb26e00fe31ddfa5",
+  "duration_s": 6.067,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "c52db59b5f643f273c5f1f0bf39bb28981034ccaec513fa6cf3383f6d05397ae",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "website/.render-work/catalog31-white-v2/pmt_optimized_scene0/off/report.json",
+  "report_sha256": "25467bbee3cf2e32b4404bea62c4ffe6c2323d89ab10bbb1fc84173bcb5e1842",
+  "seed": 7604,
+  "plugin": "reports/pmt_target_recovery_long_v1/training/round_007.domain.pt",
+  "plugin_sha256": "b585933984b355b813550a89f6e0b2e891b47a22a78d0992cb74d96a6e6ab1c5",
+  "scene": "website/.render-work/catalog31-white-v2/pmt_optimized_scene0/off/white-scene.xml",
+  "scene_sha256": "f12b8af763a6cd85df367aba8ac3910564946afab29a24a0a221ad4e3c2f2e3e",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

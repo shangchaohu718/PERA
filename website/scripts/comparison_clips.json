@@ -1,0 +1,400 @@
+{
+  "clips": [
+    {
+      "id": "moonwalk-off",
+      "name": "Moonwalk - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "isaac",
+      "source": "reports/moonwalk_expert_20261105/stage_500/public_eval/isaaclab_eval_output_model_14000_reference_h5/g1_moonwalk_grounded_loop_v5_x3__start_0_len_900.npz",
+      "source_fps": 50,
+      "highlight": [
+        0,
+        6
+      ],
+      "poster_time": 2.0,
+      "camera": {
+        "azimuth": 100,
+        "elevation": -18,
+        "distance": 2.9
+      },
+      "report": "reports/moonwalk_expert_20261105/stage_500/summary.json",
+      "scope": "Frozen released public policy on the same repeated moonwalk reference and the same modified foot-friction protocol as the expert. Seed 42; actual closed-loop states.",
+      "scene_style": "skate",
+      "family": "moonwalk"
+    },
+    {
+      "id": "roll-on",
+      "name": "Forward roll - Expert ON",
+      "expert": "Task expert ON",
+      "kind": "native",
+      "task": "diveroll_lab_no_wall",
+      "source": "website/.render-work/comparisons-v5/roll-on/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/roll-on/scene.mjb",
+      "highlight": [
+        0,
+        8.36
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -18,
+        "distance": 3.6
+      },
+      "report": "website/.render-work/comparisons-v5/roll-on/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "terrain",
+      "family": "roll",
+      "recorded_times": false
+    },
+    {
+      "id": "roll-off",
+      "name": "Forward roll - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "native",
+      "task": "diveroll_lab_no_wall",
+      "source": "website/.render-work/comparisons-v6/roll-off/physics.npz",
+      "scene": "website/.render-work/comparisons-v6/roll-off/scene.mjb",
+      "highlight": [
+        0,
+        7.64
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -18,
+        "distance": 3.6
+      },
+      "report": "website/.render-work/comparisons-v6/roll-off/report.json",
+      "scope": "Native evaluation ends at 3.64 s. Four further seconds show the same frozen public controller continuing without reset, solely to reveal the physical fall and aftermath; outside the scored evaluation.",
+      "scene_style": "terrain",
+      "family": "roll",
+      "recorded_times": false,
+      "failure_visualization": {
+        "native_termination_s": 3.6399998664855957,
+        "post_termination_seconds": 4.0,
+        "recording_seconds": 7.64,
+        "policy": "same frozen public policy, expert bypassed throughout",
+        "resets": 0,
+        "teacher_queries": 0,
+        "training_updates": 0,
+        "native_prefix_max_qpos_difference": 0.12998434901237488,
+        "manual_step_guard_cleared_after_native_termination": true,
+        "native_termination_terms_preserved": true,
+        "evaluation_result_unchanged": true,
+        "scope": "After native termination, continue the identical public controller for four seconds solely to show the physical fall and aftermath. This is outside the scored evaluation."
+      }
+    },
+    {
+      "id": "vault-on",
+      "name": "Obstacle vault - Expert ON",
+      "expert": "Task expert ON",
+      "kind": "native",
+      "task": "roll_vault_no_wall",
+      "source": "website/.render-work/comparisons-v5/vault-on/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/vault-on/scene.mjb",
+      "highlight": [
+        0,
+        10.48
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -22,
+        "distance": 3.9
+      },
+      "report": "website/.render-work/comparisons-v5/vault-on/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "terrain",
+      "family": "vault",
+      "recorded_times": false
+    },
+    {
+      "id": "vault-off",
+      "name": "Obstacle vault - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "native",
+      "task": "roll_vault_no_wall",
+      "source": "website/.render-work/comparisons-v6/vault-off/physics.npz",
+      "scene": "website/.render-work/comparisons-v6/vault-off/scene.mjb",
+      "highlight": [
+        0,
+        8.04
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -22,
+        "distance": 3.9
+      },
+      "report": "website/.render-work/comparisons-v6/vault-off/report.json",
+      "scope": "Native evaluation ends at 4.04 s. Four further seconds show the same frozen public controller continuing without reset, solely to reveal the physical fall and aftermath; outside the scored evaluation.",
+      "scene_style": "terrain",
+      "family": "vault",
+      "recorded_times": false,
+      "failure_visualization": {
+        "native_termination_s": 4.039999961853027,
+        "post_termination_seconds": 4.0,
+        "recording_seconds": 8.04,
+        "policy": "same frozen public policy, expert bypassed throughout",
+        "resets": 0,
+        "teacher_queries": 0,
+        "training_updates": 0,
+        "native_prefix_max_qpos_difference": 0.3465425968170166,
+        "manual_step_guard_cleared_after_native_termination": true,
+        "native_termination_terms_preserved": true,
+        "evaluation_result_unchanged": true,
+        "scope": "After native termination, continue the identical public controller for four seconds solely to show the physical fall and aftermath. This is outside the scored evaluation."
+      }
+    },
+    {
+      "id": "skate-on",
+      "name": "Skateboard - Expert ON",
+      "expert": "Task expert ON",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v5/skate-on/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/skate-on/scene.mjb",
+      "highlight": [
+        0,
+        5.0
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 70,
+        "elevation": -27,
+        "distance": 3.05
+      },
+      "report": "website/.render-work/comparisons-v5/skate-on/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "skate",
+      "family": "skate",
+      "recorded_times": false
+    },
+    {
+      "id": "skate-off",
+      "name": "Skateboard - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v5/skate-off/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/skate-off/scene.mjb",
+      "highlight": [
+        0,
+        5.0
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 70,
+        "elevation": -27,
+        "distance": 3.05
+      },
+      "report": "website/.render-work/comparisons-v5/skate-off/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert OFF; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "skate",
+      "family": "skate",
+      "recorded_times": false
+    },
+    {
+      "id": "gaps-on",
+      "name": "Gap crossing - Expert ON",
+      "expert": "Task expert ON",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v5/gaps-on/recording/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/gaps-on/recording/scene.mjb",
+      "highlight": [
+        0,
+        6.0
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -20,
+        "distance": 3.6
+      },
+      "report": "website/.render-work/comparisons-v5/gaps-on/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "terrain",
+      "family": "gaps",
+      "recorded_times": false
+    },
+    {
+      "id": "gaps-off",
+      "name": "Gap crossing - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v6/gaps-off/physics.npz",
+      "scene": "website/.render-work/comparisons-v6/gaps-off/scene.mjb",
+      "highlight": [
+        0,
+        9.2
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -20,
+        "distance": 3.6,
+        "fall_elevation": -65
+      },
+      "report": "website/.render-work/comparisons-v6/gaps-off/report.json",
+      "scope": "Native evaluation ends at 5.18 s. Four further seconds show the same frozen public controller continuing without reset, solely to reveal the physical fall and aftermath; outside the scored evaluation.",
+      "scene_style": "terrain",
+      "family": "gaps",
+      "recorded_times": false,
+      "failure_visualization": {
+        "native_termination_s": 5.179996013641357,
+        "post_termination_seconds": 4.0,
+        "recording_seconds": 9.2,
+        "policy": "same frozen public policy, expert bypassed throughout",
+        "resets": 0,
+        "teacher_queries": 0,
+        "training_updates": 0,
+        "native_prefix_max_qpos_difference": 1.780463457107544,
+        "manual_step_guard_cleared_after_native_termination": true,
+        "native_termination_terms_preserved": true,
+        "evaluation_result_unchanged": true,
+        "scope": "After native termination, continue the identical public controller for four seconds solely to show the physical fall and aftermath. This is outside the scored evaluation."
+      }
+    },
+    {
+      "id": "steps-on",
+      "name": "High steps - Expert ON",
+      "expert": "Task expert ON",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v5/steps-on/recording/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/steps-on/recording/scene.mjb",
+      "highlight": [
+        0,
+        5.0
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -18,
+        "distance": 3.6
+      },
+      "report": "website/.render-work/comparisons-v5/steps-on/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "terrain",
+      "family": "steps",
+      "recorded_times": false
+    },
+    {
+      "id": "steps-off",
+      "name": "High steps - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v6/steps-off/physics.npz",
+      "scene": "website/.render-work/comparisons-v6/steps-off/scene.mjb",
+      "highlight": [
+        0,
+        14.0
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 135,
+        "elevation": -18,
+        "distance": 3.6,
+        "fall_elevation": -65,
+        "fall_height": 0.3,
+        "fall_range": 0.5
+      },
+      "report": "website/.render-work/comparisons-v6/steps-off/report.json",
+      "scope": "Native evaluation ends at 10.00 s. Four further seconds show the same frozen public controller continuing without reset, solely to reveal the physical fall and aftermath; outside the scored evaluation.",
+      "scene_style": "terrain",
+      "family": "steps",
+      "recorded_times": false,
+      "failure_visualization": {
+        "native_termination_s": 10.000039100646973,
+        "post_termination_seconds": 4.0,
+        "recording_seconds": 14.0,
+        "policy": "same frozen public policy, expert bypassed throughout",
+        "resets": 0,
+        "teacher_queries": 0,
+        "training_updates": 0,
+        "native_prefix_max_qpos_difference": 1.6539592742919922,
+        "manual_step_guard_cleared_after_native_termination": true,
+        "native_termination_terms_preserved": true,
+        "evaluation_result_unchanged": true,
+        "scope": "After native termination, continue the identical public controller for four seconds solely to show the physical fall and aftermath. This is outside the scored evaluation."
+      }
+    },
+    {
+      "id": "tennis-off",
+      "name": "Tennis return - Expert OFF",
+      "expert": "Frozen public policy - Expert OFF",
+      "kind": "native",
+      "source": "website/.render-work/comparisons-v5/tennis-off/physics.npz",
+      "scene": "website/.render-work/comparisons-v5/tennis-off/scene.mjb",
+      "highlight": [
+        0,
+        20.0
+      ],
+      "poster_time": 0.6,
+      "camera": {
+        "azimuth": 125,
+        "elevation": -24,
+        "distance": 3.2
+      },
+      "report": "website/.render-work/comparisons-v5/tennis-off/report.json",
+      "scope": "Fresh frozen-policy standalone evaluation, expert OFF; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "scene_style": "tennis",
+      "closeup": false,
+      "family": "tennis",
+      "recorded_times": true,
+      "hands_validation": "website/.render-work/comparisons-v5/tennis-off/hands-validation.json"
+    }
+  ],
+  "pairs": {
+    "kick": {
+      "label": "Roundhouse kick",
+      "onId": "kick",
+      "offId": "roundhouse-base",
+      "note": "Same joint-motion reference and nominal physics. Refined expert versus the frozen public policy; camera origins are spatially aligned. The earlier quantitative comparison is shown separately below."
+    },
+    "moonwalk": {
+      "label": "Moonwalk",
+      "onId": "moonwalk",
+      "offId": "moonwalk-off",
+      "note": "Same reference motion, seed and foot-friction protocol. Switching restarts the selected real recording."
+    },
+    "roll": {
+      "label": "Forward roll",
+      "onId": "roll-on",
+      "offId": "roll-off",
+      "note": "Same task, seed and starting pose. Switching restarts the selected real recording.",
+      "initial_qpos_max_difference": 0.0
+    },
+    "vault": {
+      "label": "Obstacle vault",
+      "onId": "vault-on",
+      "offId": "vault-off",
+      "note": "Same task, seed and starting pose. Switching restarts the selected real recording.",
+      "initial_qpos_max_difference": 0.0
+    },
+    "skate": {
+      "label": "Skateboard",
+      "onId": "skate-on",
+      "offId": "skate-off",
+      "note": "Same task, seed and starting pose. Switching restarts the selected real recording.",
+      "initial_qpos_max_difference": 0.0
+    },
+    "gaps": {
+      "label": "Gap crossing",
+      "onId": "gaps-on",
+      "offId": "gaps-off",
+      "note": "Same task, seed and starting pose. Switching restarts the selected real recording.",
+      "initial_qpos_max_difference": 0.0
+    },
+    "steps": {
+      "label": "High steps",
+      "onId": "steps-on",
+      "offId": "steps-off",
+      "note": "Same task, seed and starting pose. Switching restarts the selected real recording.",
+      "initial_qpos_max_difference": 0.0
+    },
+    "tennis": {
+      "label": "Tennis return",
+      "onId": "tennis",
+      "offId": "tennis-off",
+      "note": "Same seed and incoming-ball launch protocol. Switching restarts the selected real recording."
+    }
+  }
+}

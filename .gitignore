@@ -1,0 +1,53 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.venv*/
+.env
+.env.*
+/runs/
+/logs/
+/reports/
+/checkpoints/
+/data/
+/resources/base/
+/resources/downloads/
+/resources/holomotion/
+/resources/motions/
+/resources/teachers/
+/third_party/*/
+/integrations/HoloMotion/assets/
+/assets/g1/meshes/
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.mjb
+*.mp4
+*.zip
+*.npz
+*.h5
+*.hdf5
+/build/
+/dist/
+
+# Desktop file-manager metadata
+.DS_Store
+Thumbs.db
+
+# Curated single-scene README videos
+!docs/media/box-carrying.mp4
+!docs/media/gap-crossing.mp4
+!docs/media/skateboard.mp4
+!docs/media/stairs.mp4
+!docs/media/tennis.mp4
+!docs/media/vault.mp4
+
+# Website assets migrated from the existing project homepage
+!website/public/**/*.mp4
+
+MUJOCO_LOG.TXT
+
+# Workflow templates are distributed under docs/workflows; current token lacks workflow scope.
+/.github/workflows/

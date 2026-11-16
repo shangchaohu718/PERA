@@ -1,0 +1,29 @@
+{
+  "id": "catalog31-white-v2/mimicx_football-on",
+  "task": "mimicx_football",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_football/attempt_1/final_student_4004_trajectory.npz",
+  "source_sha256": "6c8017f2a452ecc95e6dc3c359961971e6b8c2b826203898c5d8a29bb198eeab",
+  "duration_s": 9.1,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "b83112703a6a21f1c71634506147a5fc33d65441d608ce58c05ee5f4334ae863",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_football/attempt_1/final_student_4004.json",
+  "report_sha256": "b5a648a5b822b75dabc422027be5a01407c6939928efa9a75c8278862bf6795d",
+  "seed": 4004,
+  "scene": "reports/distillation_suite_v1/run_20261105_173125/mimicx_football/attempt_1/native_scene.mjb",
+  "scene_sha256": "06036908d27f443995f79d9ec465b35caf9028f514d5d8afa8ee5fc253b7c8a0",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

@@ -1,0 +1,385 @@
+{
+  "snapshot_date": "2026-11-05",
+  "sources": {
+    "roundhouse": {
+      "path": "reports/roundhouse_expert_20261105/summary.json",
+      "sha256": "0a4f4ee79f34299887781e39147f490c796c83b901b2cbd74eacc08b338afa23"
+    },
+    "climb": {
+      "path": "reports/instinct_dagger_v1/run/final_summary.json",
+      "sha256": "b2138ea0a25420d0c9d890aa57f3a5bee4077bf28c423a90d862728ca0f61904"
+    },
+    "training": {
+      "path": "reports/instinct_dagger_v1/run/training/report.json",
+      "sha256": "1347ac2343136a1eeb8fa96bcc99e033bc1ef0ad7f80d02e409335ed7770452f"
+    }
+  },
+  "roundhouse": {
+    "seed": 42,
+    "evaluation": "Phase-zero official Isaac Lab physics; no fall terminations; last 10 future-reference frames omitted.",
+    "expert_scope": "Single roundhouse plugin enabled on all seven clips for comparison; switch it off on other tasks for original public path.",
+    "clips": [
+      {
+        "name": "Roundhouse_kick",
+        "original": {
+          "frames": 252,
+          "mean_body_error_cm": 52.88991928100586,
+          "p95_body_error_cm": 99.87656503915787,
+          "peak_reference_ankle_height_m": 1.2033121585845947,
+          "actual_ankle_height_at_reference_peak_m": 0.5523232817649841,
+          "actual_peak_same_ankle_height_m": 0.5880354642868042,
+          "mean_root_xy_error_cm": 51.03711485862732,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": 1.84
+        },
+        "expert_enabled": {
+          "frames": 252,
+          "mean_body_error_cm": 10.891862213611603,
+          "p95_body_error_cm": 18.95101323723793,
+          "peak_reference_ankle_height_m": 1.2033121585845947,
+          "actual_ankle_height_at_reference_peak_m": 1.0392922163009644,
+          "actual_peak_same_ankle_height_m": 1.0502973794937134,
+          "mean_root_xy_error_cm": 9.576819092035294,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        }
+      },
+      {
+        "name": "Side_kick",
+        "original": {
+          "frames": 287,
+          "mean_body_error_cm": 19.258271157741547,
+          "p95_body_error_cm": 30.74014842510223,
+          "peak_reference_ankle_height_m": 1.3229507207870483,
+          "actual_ankle_height_at_reference_peak_m": 1.2309348583221436,
+          "actual_peak_same_ankle_height_m": 1.2309348583221436,
+          "mean_root_xy_error_cm": 18.489451706409454,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": 2.92
+        },
+        "expert_enabled": {
+          "frames": 287,
+          "mean_body_error_cm": 24.35116171836853,
+          "p95_body_error_cm": 43.68888974189758,
+          "peak_reference_ankle_height_m": 1.3229507207870483,
+          "actual_ankle_height_at_reference_peak_m": 1.2003122568130493,
+          "actual_peak_same_ankle_height_m": 1.2003122568130493,
+          "mean_root_xy_error_cm": 24.098147451877594,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": 2.88
+        }
+      },
+      {
+        "name": "Hooks_punch",
+        "original": {
+          "frames": 281,
+          "mean_body_error_cm": 7.799343764781952,
+          "p95_body_error_cm": 10.97840890288353,
+          "peak_reference_ankle_height_m": 0.09092062711715698,
+          "actual_ankle_height_at_reference_peak_m": 0.05606537684798241,
+          "actual_peak_same_ankle_height_m": 0.05708683654665947,
+          "mean_root_xy_error_cm": 6.205160170793533,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        },
+        "expert_enabled": {
+          "frames": 281,
+          "mean_body_error_cm": 9.583362936973572,
+          "p95_body_error_cm": 17.869897186756134,
+          "peak_reference_ankle_height_m": 0.09092062711715698,
+          "actual_ankle_height_at_reference_peak_m": 0.07904239743947983,
+          "actual_peak_same_ankle_height_m": 0.10550346225500107,
+          "mean_root_xy_error_cm": 8.706188201904297,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        }
+      },
+      {
+        "name": "Horse-stance_punch",
+        "original": {
+          "frames": 322,
+          "mean_body_error_cm": 5.036204308271408,
+          "p95_body_error_cm": 6.555365249514581,
+          "peak_reference_ankle_height_m": 0.11782992631196976,
+          "actual_ankle_height_at_reference_peak_m": 0.059758663177490234,
+          "actual_peak_same_ankle_height_m": 0.08798329532146454,
+          "mean_root_xy_error_cm": 3.77851165831089,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        },
+        "expert_enabled": {
+          "frames": 322,
+          "mean_body_error_cm": 6.378799676895142,
+          "p95_body_error_cm": 10.973199754953383,
+          "peak_reference_ankle_height_m": 0.11782992631196976,
+          "actual_ankle_height_at_reference_peak_m": 0.0851963460445404,
+          "actual_peak_same_ankle_height_m": 0.08648426085710526,
+          "mean_root_xy_error_cm": 5.278719589114189,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        }
+      },
+      {
+        "name": "Horse-stance_pose",
+        "original": {
+          "frames": 339,
+          "mean_body_error_cm": 6.55602291226387,
+          "p95_body_error_cm": 9.312305226922035,
+          "peak_reference_ankle_height_m": 0.27609431743621826,
+          "actual_ankle_height_at_reference_peak_m": 0.24496032297611237,
+          "actual_peak_same_ankle_height_m": 0.24496032297611237,
+          "mean_root_xy_error_cm": 6.3866570591926575,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        },
+        "expert_enabled": {
+          "frames": 339,
+          "mean_body_error_cm": 9.598981589078903,
+          "p95_body_error_cm": 16.883718669414517,
+          "peak_reference_ankle_height_m": 0.27609431743621826,
+          "actual_ankle_height_at_reference_peak_m": 0.2427765429019928,
+          "actual_peak_same_ankle_height_m": 0.2427765429019928,
+          "mean_root_xy_error_cm": 9.472057968378067,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        }
+      },
+      {
+        "name": "Bruce_Lee_pose",
+        "original": {
+          "frames": 539,
+          "mean_body_error_cm": 24.24922287464142,
+          "p95_body_error_cm": 48.77002954483032,
+          "peak_reference_ankle_height_m": 0.21506011486053467,
+          "actual_ankle_height_at_reference_peak_m": 0.03759016841650009,
+          "actual_peak_same_ankle_height_m": 0.11125060170888901,
+          "mean_root_xy_error_cm": 22.661229968070984,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": 5.42
+        },
+        "expert_enabled": {
+          "frames": 539,
+          "mean_body_error_cm": 14.505980908870697,
+          "p95_body_error_cm": 36.56274914741516,
+          "peak_reference_ankle_height_m": 0.21506011486053467,
+          "actual_ankle_height_at_reference_peak_m": 0.06729446351528168,
+          "actual_peak_same_ankle_height_m": 0.11059942841529846,
+          "mean_root_xy_error_cm": 12.097246944904327,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": 7.62
+        }
+      },
+      {
+        "name": "Charleston_dance",
+        "original": {
+          "frames": 1006,
+          "mean_body_error_cm": 8.465664833784103,
+          "p95_body_error_cm": 14.660923555493355,
+          "peak_reference_ankle_height_m": 0.39643576741218567,
+          "actual_ankle_height_at_reference_peak_m": 0.3518753945827484,
+          "actual_peak_same_ankle_height_m": 0.3533441722393036,
+          "mean_root_xy_error_cm": 7.535436004400253,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        },
+        "expert_enabled": {
+          "frames": 1006,
+          "mean_body_error_cm": 9.694863110780716,
+          "p95_body_error_cm": 20.542410761117935,
+          "peak_reference_ankle_height_m": 0.39643576741218567,
+          "actual_ankle_height_at_reference_peak_m": 0.3661392331123352,
+          "actual_peak_same_ankle_height_m": 0.36782652139663696,
+          "mean_root_xy_error_cm": 8.2146555185318,
+          "first_sustained_fall_s": null,
+          "first_sustained_tracking_loss_s": null
+        }
+      }
+    ],
+    "explicit_switch_check": {
+      "passed": true,
+      "domain_file": "reports/roundhouse_expert_20261105/training/model_249.domain.pt",
+      "public_hash_unchanged": true,
+      "off_matches_original_bit_exact": true,
+      "on_changes_actions_and_is_finite": true,
+      "disabled_ffn_and_router_bypassed": true,
+      "switch_preserves_live_attention_cache": true,
+      "scope": "Software switch acceptance on synthetic schema-correct observations; not physical recovery or old-action success rate."
+    }
+  },
+  "climb": {
+    "method": "official_InstinctMJ_teacher_BC_then_online_DAgger",
+    "scene": "official_50cm_knee_climb_no_wall",
+    "public_frozen": true,
+    "visual_encoder_frozen": true,
+    "teacher_frozen": true,
+    "actual_adam_steps": 22000,
+    "bc_adam_steps": 2000,
+    "dagger_adam_steps": 20000,
+    "trainable_parameters": 410145,
+    "evaluation": {
+      "teacher": {
+        "successful_episodes": 16,
+        "episodes": 16,
+        "mean_fraction_completed": 1.0,
+        "endpoint_distance_mean_m": 0.22349768318235874,
+        "endpoint_distance_max_m": 0.36429038643836975,
+        "teacher_action_queries_during_eval": 8864,
+        "mean_domain_weight": 0.0
+      },
+      "public": {
+        "successful_episodes": 0,
+        "episodes": 16,
+        "mean_fraction_completed": 0.2514666002243757,
+        "endpoint_distance_mean_m": 1.84989682585001,
+        "endpoint_distance_max_m": 1.9051120281219482,
+        "teacher_action_queries_during_eval": 0,
+        "mean_domain_weight": 0.0
+      },
+      "student": {
+        "successful_episodes": 16,
+        "episodes": 16,
+        "mean_fraction_completed": 1.0,
+        "endpoint_distance_mean_m": 0.2357224142178893,
+        "endpoint_distance_max_m": 0.3210301399230957,
+        "teacher_action_queries_during_eval": 0,
+        "mean_domain_weight": 0.999998927116394
+      }
+    },
+    "scope": "Real MuJoCo-Warp, official Play physics/noise, two new seeds. Native completion, endpoint error and videos are separate. No old-motion, multi-scene, visual ablation, ONNX or real-robot validation."
+  },
+  "curve": [
+    {
+      "updates": 2000,
+      "round": -1,
+      "phase": "BC",
+      "loss": 0.023529139769729226
+    },
+    {
+      "updates": 3000,
+      "round": 0,
+      "phase": "DAgger",
+      "loss": 0.010240843763574958
+    },
+    {
+      "updates": 4000,
+      "round": 1,
+      "phase": "DAgger",
+      "loss": 0.010017303402535618
+    },
+    {
+      "updates": 5000,
+      "round": 2,
+      "phase": "DAgger",
+      "loss": 0.009972271296195686
+    },
+    {
+      "updates": 6000,
+      "round": 3,
+      "phase": "DAgger",
+      "loss": 0.01136443893518299
+    },
+    {
+      "updates": 7000,
+      "round": 4,
+      "phase": "DAgger",
+      "loss": 0.012409923061728478
+    },
+    {
+      "updates": 8000,
+      "round": 5,
+      "phase": "DAgger",
+      "loss": 0.012995271731168032
+    },
+    {
+      "updates": 9000,
+      "round": 6,
+      "phase": "DAgger",
+      "loss": 0.013666451188735664
+    },
+    {
+      "updates": 10000,
+      "round": 7,
+      "phase": "DAgger",
+      "loss": 0.013268628291785716
+    },
+    {
+      "updates": 11000,
+      "round": 8,
+      "phase": "DAgger",
+      "loss": 0.012136651859618723
+    },
+    {
+      "updates": 12000,
+      "round": 9,
+      "phase": "DAgger",
+      "loss": 0.012467985657975078
+    },
+    {
+      "updates": 13000,
+      "round": 10,
+      "phase": "DAgger",
+      "loss": 0.011373695900663734
+    },
+    {
+      "updates": 14000,
+      "round": 11,
+      "phase": "DAgger",
+      "loss": 0.010853618323802949
+    },
+    {
+      "updates": 15000,
+      "round": 12,
+      "phase": "DAgger",
+      "loss": 0.010498279144987464
+    },
+    {
+      "updates": 16000,
+      "round": 13,
+      "phase": "DAgger",
+      "loss": 0.010076519437134265
+    },
+    {
+      "updates": 17000,
+      "round": 14,
+      "phase": "DAgger",
+      "loss": 0.009792643311433494
+    },
+    {
+      "updates": 18000,
+      "round": 15,
+      "phase": "DAgger",
+      "loss": 0.009504870786331594
+    },
+    {
+      "updates": 19000,
+      "round": 16,
+      "phase": "DAgger",
+      "loss": 0.009184248919598759
+    },
+    {
+      "updates": 20000,
+      "round": 17,
+      "phase": "DAgger",
+      "loss": 0.009248778435401618
+    },
+    {
+      "updates": 21000,
+      "round": 18,
+      "phase": "DAgger",
+      "loss": 0.008937966764904558
+    },
+    {
+      "updates": 22000,
+      "round": 19,
+      "phase": "DAgger",
+      "loss": 0.008685028148815036
+    }
+  ],
+  "limits": [
+    "PPO martial-arts evaluation: one seed (42), nominal Isaac Lab physics, no fall terminations, final 10 future-reference frames omitted.",
+    "Climbing evaluation: two held-out seeds (7002, 7003), eight environments each; fixed official 50 cm scene, native completion criteria.",
+    "The training curve is mean action-supervision loss per BC/DAgger round, not reward or a held-out performance curve.",
+    "Public-policy weights unchanged and software switch equivalence do not establish physical old-skill retention.",
+    "No real-robot evaluation, multi-seed martial-arts study or retention/visual ablation is supplied."
+  ]
+}

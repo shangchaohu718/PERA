@@ -1,0 +1,35 @@
+{
+  "git_repositories": [
+    {
+      "name": "InstinctMJ",
+      "url": "https://github.com/project-instinct/InstinctMJ.git",
+      "revision": "3f0952d36268c6aad299e256d27cc65d3bcc1434",
+      "destination": "third_party/InstinctMJ"
+    },
+    {
+      "name": "mjlab",
+      "url": "https://github.com/mujocolab/mjlab.git",
+      "revision": "0fb8a681136be94ffc636a3dd423cabb97d91f10",
+      "destination": "third_party/mjlab"
+    },
+    {
+      "name": "instinct_rl",
+      "url": "https://github.com/project-instinct/instinct_rl.git",
+      "revision": "3a2844890387eda6d93a4465cdef9e767aba8546",
+      "destination": "third_party/instinct_rl"
+    },
+    {
+      "name": "PMT",
+      "url": "https://github.com/Mondo-Robotics/PMT.git",
+      "revision": "1a92390077d329d22cbcdbf89c4a5c982003fbc8",
+      "destination": "third_party/PMT"
+    },
+    {
+      "name": "HUSKY",
+      "url": "https://github.com/TeleHuman/humanoid_skateboarding.git",
+      "revision": "d93833e80deff7f927c0b80ef9c435d8b5c488fe",
+      "destination": "third_party/HUSKY"
+    }
+  ],
+  "note": "No repository is cloned by default; run tools/fetch_upstreams.py --plan first."
+}

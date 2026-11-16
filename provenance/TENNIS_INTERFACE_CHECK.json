@@ -1,0 +1,59 @@
+{
+  "schema": "pera.tennis_interface_check.v1",
+  "status": "interface_timing_corrected_student_still_failed",
+  "device": "cpu",
+  "mujoco_version": "3.11.0",
+  "seed": 97001,
+  "new_training": false,
+  "policy_isolation": {
+    "solo_action_error": 0.0,
+    "reverse_action_error": 0.0
+  },
+  "joint_target_max_abs_error_rad": 1.3095530049245241e-08,
+  "first_control_fixed_action_qpos_max_abs": 4.6265279533179784e-07,
+  "bug": "Extra post-integration mj_forward changed ATHLETE IMU/FK observation timing. Tennis now preserves its native pre-integration derived fields while reading integrated qpos/qvel.",
+  "native_first_step_gyro_refresh_delta": 0.1542557362848505,
+  "second_observation_max_abs_after": 0.00016066431999206543,
+  "second_action_max_abs_after": 0.0,
+  "native_student": {
+    "first_unstable_s": 0.66,
+    "student_control_steps": 33,
+    "teacher_queries": 0
+  },
+  "postfix_shared_student": {
+    "simulation_seconds": 1.9999999999999685,
+    "first_nonfinite_expert_s": 0.6599999999999969,
+    "first_unstable_s": 0.8599999999999927,
+    "racket_contact": false,
+    "teacher_queries": 0
+  },
+  "teacher_diagnostic": {
+    "seconds": 3,
+    "teacher_queries": 150,
+    "native_racket_contact": true,
+    "shared_racket_contact": true,
+    "shared_first_unstable_s": null,
+    "note": "Official teacher controls tennis in this separate diagnostic. Not student evidence or a full success-rate evaluation."
+  },
+  "checkpoint_sha256": "ca8d17a384e874c799fe9e118e619c1a5b6da2170a19d441a867214c91a92f0c",
+  "public_sha256": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "tests": "14 passed",
+  "remaining_limits": [
+    "Saved competitive tennis plugin was already a failed training checkpoint after 2000 updates; it is not the earlier legacy-base tennis student.",
+    "Native and shared closed-loop trajectories still diverge; exact long-horizon port equivalence is not established.",
+    "Removing the observation-timing bug did not restore tennis student success.",
+    "Earlier final_video_v3 predates this fix."
+  ],
+  "local_evidence": [
+    "runs/arena_four_20261113/tennis_interface_diagnosis.json",
+    "runs/arena_four_20261113/native_vs_arena_physics.json",
+    "runs/arena_four_20261113/native_tennis_check.json",
+    "runs/arena_four_20261113/teacher_port_check.json",
+    "runs/arena_four_20261113/tennis_timing_fixed_student/report.json"
+  ],
+  "source_files": {
+    "src/pera/interaction_showcase.py": "93d7c0dc7c4d401650b2c35ffba5a2e59f039e9d6cc526a16fa8a39be8b97b0a",
+    "src/pera/multi_robot.py": "88a4d852c80effc4f96b229368474fb846e6cb9578e5b124cad4c2148cec05a0",
+    "tests/test_showcase_reset.py": "67f592ccd494c5dacf95c7cf79176ec00f4563fcbe9f7f7bbe2fe4a1d1c7ee11"
+  }
+}

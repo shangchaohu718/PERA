@@ -1,0 +1,186 @@
+{
+  "schema": "pera.holomotion_release_audit.v1",
+  "checked_at": "2026-11-13T16:57:13.575262+08:00",
+  "status": "not_ready_for_community_reproduction",
+  "selected_release": "configs/release.json",
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "local_actor_check": {
+    "status": "passed",
+    "base_family": "holomotion_official_g1_v1.4",
+    "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+    "base_loaded_from_release": true,
+    "expert_count": 12,
+    "experts": [
+      "athlete_tennis",
+      "husky_skateboard",
+      "mimicx_descent",
+      "roll_vault_no_wall",
+      "mimicx_stairs",
+      "mimicx_kungfu",
+      "mimicx_dance",
+      "mimicx_football",
+      "parkour_rough",
+      "ultra_largebox",
+      "roll_vault_wall",
+      "parkour_gaps"
+    ],
+    "all_parameters_frozen": true,
+    "synthetic_public_forward_finite": true,
+    "action_shape": [
+      1,
+      29
+    ],
+    "device": "cpu",
+    "teacher_action_queries": 0,
+    "physics_rollout_performed": false,
+    "training_reproduction_verified": false,
+    "performed_before_removing_official_weight_copies": true
+  },
+  "remote": {
+    "repository": "shangchaohu718/PERA-g1",
+    "url": "https://github.com/shangchaohu718/PERA-g1",
+    "private": true,
+    "main_commit": "182417bf1624e49b059036360c3544c4460f6cf3",
+    "main_tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+    "main_file_count": 0,
+    "releases": [
+      {
+        "tag": "base-g1-11000-v1",
+        "draft": true,
+        "asset_count": 0,
+        "base_family": "historical_self_trained_MoE_MLP"
+      }
+    ],
+    "verification": "Read-only gh repo view and GitHub REST contents, commit and releases endpoints; connector get_repo returned 404"
+  },
+  "local_weight_files": 13,
+  "local_weight_bytes": 29881158,
+  "weight_manifest": "resources/holomotion_weights_manifest.json",
+  "blockers": [
+    {
+      "id": "source_closure",
+      "detail": "Default standalone demo lacks the runtime paths reported in local_inputs. Current validated videos use a separately supplied native research tree."
+    },
+    {
+      "id": "distribution",
+      "detail": "No source files or model/data release attachments were present in the checked private remote. Public download links and asset installation are not established."
+    },
+    {
+      "id": "source_pins",
+      "detail": "ATHLETE and ULTRA runtime acquisition is not covered by resources/upstreams.json; their local extracted source must not be described as a verified pinned Git checkout."
+    },
+    {
+      "id": "clean_checkout",
+      "detail": "No isolated clean-checkout install and physical replay has been completed without the native research tree."
+    },
+    {
+      "id": "training",
+      "detail": "Default reproduce/compose/train-base workflows and the historical 30-expert bundle target the self-trained base. HoloMotion training recipes, teacher resources and original metrics are not yet packaged and verified end to end."
+    }
+  ],
+  "established": [
+    "Twelve official-base task plugins retained locally with SHA256 identities.",
+    "Official base downloads pinned to the publisher revision; remote weight SHA256/size and downloaded configuration bytes match the validated checkpoints.",
+    "Official Actor/Critic copies removed from the release folder; source research checkpoints preserved.",
+    "Prior CPU load of the official Actor with all 12 plugins passed frozen hash and finite-forward checks before removal.",
+    "378 currently present declared assets verify by SHA256; two intentional external base weights remain absent.",
+    "Prior native-root physical replay evidence remains in CLEAN_CAMERA_SHOWCASE_CHECK.json."
+  ],
+  "not_established": [
+    "12 pinned experts are not an inventory or acceptance of all historical skills.",
+    "CPU weight loading is not a physical skill evaluation or a clean-environment reproduction.",
+    "Seven-region video is not 30-expert skill acceptance, uninterrupted traversal, old-motion retention or teacher superiority."
+  ],
+  "side_effects": {
+    "uploaded": false,
+    "committed": false,
+    "remote_modified": false,
+    "downloads": false,
+    "new_environment": false,
+    "training_started": false,
+    "original_research_tree_modified": false,
+    "official_copies_removed": true,
+    "downloaded_official_weight_binaries": false,
+    "downloaded_config_bytes_for_hash_check": true
+  },
+  "prior_staged_inputs_check": {
+    "status": "incomplete",
+    "base_family": "holomotion_official_g1_v1.4",
+    "pinned_expert_count": 12,
+    "demo_expert_count": 7,
+    "unique_expected_resources": 380,
+    "verified_files": 380,
+    "verified_bytes": 1926644302,
+    "missing_resources": [],
+    "mismatched_resources": [],
+    "missing_runtime_paths": [
+      "third_party/ATHLETE/athlete/src/athlete/scripts/play_student_onnx.py",
+      "third_party/ULTRA/ultra/sim2sim_teacher.py",
+      "third_party/InstinctMJ/src/instinct_mj/utils/noise/noise_cfg.py",
+      "third_party/mjlab/src/mjlab/__init__.py",
+      "third_party/instinct_rl/instinct_rl/__init__.py",
+      "experiments/ultra_box_v1/runtime.py"
+    ],
+    "standalone_inference_verified": false,
+    "clean_install_verified": false,
+    "training_reproduction_verified": false,
+    "public_downloads_verified": false,
+    "note": "Static input audit only. A passing result does not establish reproduction."
+  },
+  "local_inputs": {
+    "status": "incomplete",
+    "base_family": "holomotion_official_g1_v1.4",
+    "pinned_expert_count": 12,
+    "demo_expert_count": 7,
+    "unique_expected_resources": 380,
+    "verified_files": 378,
+    "verified_bytes": 231391114,
+    "missing_resources": [
+      "checkpoints/holomotion_v1.4/model_14000/actor/model.safetensors",
+      "checkpoints/holomotion_v1.4/model_14000/critic/model.safetensors"
+    ],
+    "mismatched_resources": [],
+    "missing_runtime_paths": [
+      "third_party/ATHLETE/athlete/src/athlete/scripts/play_student_onnx.py",
+      "third_party/ULTRA/ultra/sim2sim_teacher.py",
+      "third_party/InstinctMJ/src/instinct_mj/utils/noise/noise_cfg.py",
+      "third_party/mjlab/src/mjlab/__init__.py",
+      "third_party/instinct_rl/instinct_rl/__init__.py",
+      "experiments/ultra_box_v1/runtime.py"
+    ],
+    "standalone_inference_verified": false,
+    "clean_install_verified": false,
+    "training_reproduction_verified": false,
+    "public_downloads_verified": false,
+    "note": "Static input audit only. A passing result does not establish reproduction."
+  },
+  "official_base_distribution": {
+    "policy": "external_user_download_only",
+    "descriptor": "resources/holomotion_base.json",
+    "model_card_license": "cc-by-nc-sa-4.0",
+    "required_official_files": 3,
+    "weight_binaries_bundled": false,
+    "pinned_official_weight_lfs_hashes_match": true,
+    "pinned_official_config_download_hash_matches": true,
+    "original_research_checkpoints_preserved": true,
+    "removed_new_copies": [
+      {
+        "path": "checkpoints/holomotion_v1.4/model_14000/actor/model.safetensors",
+        "bytes": 1636251760,
+        "original_preserved": true
+      },
+      {
+        "path": "checkpoints/holomotion_v1.4/model_14000/critic/model.safetensors",
+        "bytes": 59001428,
+        "original_preserved": true
+      }
+    ]
+  },
+  "verification_checks": {
+    "pytest": "17 passed",
+    "static_package_audit": "178 Python files; no problems",
+    "ruff": "Changed Python files formatted; undefined-name checks passed",
+    "full_standalone_training": "not performed"
+  }
+}

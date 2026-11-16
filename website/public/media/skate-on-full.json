@@ -1,0 +1,43 @@
+{
+  "name": "Skateboard - Expert ON",
+  "expert": "Task expert ON",
+  "source": "website/.render-work/comparisons-v5/skate-on/physics.npz",
+  "source_sha256": "2743ca74b610ece1967a38afc7f7f7edbaf313bd21f8901eb07b98fe33e837b0",
+  "report": "website/.render-work/comparisons-v5/skate-on/report.json",
+  "report_sha256": "420265c77a54da1b35611fe9017f0614ba78371fc76caaa171eef77f46416267",
+  "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+  "source_fps": 25.0,
+  "source_frames": 750,
+  "source_frame_offset": 0,
+  "source_recording_start_s": 0.0,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "camera": {
+    "azimuth": 70,
+    "elevation": -27,
+    "distance": 3.05
+  },
+  "scene_style": "skate",
+  "lighting": "Studio v4: white sky; contrasting terrain, world-anchored skate grid, or original tennis-court colors according to scene. Original robot albedo retained.",
+  "all_terrain_geometry_retained": true,
+  "master": ".render-work/highlights-v5/skate-on.master.mkv",
+  "rendering": "Exact recorded actual robot and object states. Nearest timestamp resampling only; maximum quantization is half of one source interval, plus source timestamp precision. No training, simulator stepping, teacher queries or reference-pose playback during rendering.",
+  "scene": "website/.render-work/comparisons-v5/skate-on/scene.mjb",
+  "scene_sha256": "361a68736d57d932ec43655bcaf0cc1bc6b8ef1a37e0444cd4dbfd592b900f1b",
+  "id": "skate-on-full",
+  "full_recorded_episode": true,
+  "full_task_segment": false,
+  "partial_excerpt": false,
+  "excerpt_start_s": 0,
+  "excerpt_end_s": 30.0,
+  "source_start_s": 0.0,
+  "source_end_s": 30.0,
+  "output_frames": 900,
+  "duration_s": 30.0,
+  "video_sha256": "c72b1f2f5e4809c0a231617968dcccdd946462fbd2809d4a55f246dc1a0f631a"
+}

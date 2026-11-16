@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/parkour_slope-off",
+  "task": "parkour_slope",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-v1/parkour_slope/off/physics.npz",
+  "source_sha256": "dd1e51d23a1dd993bc1405a9918259540c88975f35cfa6e77ed8aeff04a56848",
+  "duration_s": 20.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "180f48eadc6f11f9461f6f90d317733e4d277d31406c43bca94159641b26f41f",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/parkour_slope/off/report.json",
+  "report_sha256": "b160b574a313bf8df55f74eef356f38a678e3a6b8903418144b3a3bce72d5401",
+  "native_termination_s": 20.000267028808594,
+  "post_termination_seconds": 0,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 8101,
+  "plugin": "reports/instinct_parkour_dagger_v1/slope/training/round_020.domain.pt",
+  "plugin_sha256": "cee9757b70738d5f4de081f3adade554e0793bd4fcfe92f5b89f2fb4563f1793",
+  "scene": "website/.render-work/catalog31-v1/parkour_slope/off/scene.mjb",
+  "scene_sha256": "0d084c665e9caa7fc15e2b800b4a23154eddf51b0f638e181566479a045ecd37"
+}

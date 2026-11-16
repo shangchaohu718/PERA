@@ -1,0 +1,1945 @@
+{
+  "schema": "pera.file_manifest.v1",
+  "self_excluded": true,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 161,
+      "sha256": "e8aa8ed31d58a7c9334a884d52795f85e7aa39b8718473220f1c4794c66b7c70",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": ".github/workflows/cpu.yml",
+      "bytes": 603,
+      "sha256": "3fbc6c27c4f3e321fe58a232fc80a24990a45ff19f362adba0f19dd613e98a02",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 626,
+      "sha256": "eb09ab498c67ba9c8634e0d1f7869de2895947e0e685f4c744fd126e484163d2",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 2828,
+      "sha256": "452c346d3dc6c9ae8d02d55ef31f8c1b8caa4628c67a4e7a3fc9b6d02542f93e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "CITATION.cff",
+      "bytes": 349,
+      "sha256": "98edd83d68833e86318cfc03b4ee1bd60be0fbdd37246d4be98b8d5daa52fb13",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1436,
+      "sha256": "e2d62fc73e58924923ee5bccdc01ac8e9dde7925e64cd7734cc252461fa7b74e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5849,
+      "sha256": "35a82f2dc534fc1152216f16ba8b1c8fded0efcc85278fef0bc5c8412ba67731",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "bytes": 5491,
+      "sha256": "a3834f6547c363e5ea294a2876e38a1fd9ec62db25ab5be08ef8f9d796c3196c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 4808,
+      "sha256": "75140d6e41375a746ad116e0255bfffd4b0cb1dbf8f81f68df59067e7b0fcb9e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/g1_29dof.xml",
+      "bytes": 24722,
+      "sha256": "016b804f4bf5da147f1b90a7b0a009d6ea6bf7242789de7f4f0beeb147b0fe4f",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "assets/g1/g1_29dof_rev_1_0.urdf",
+      "bytes": 33396,
+      "sha256": "28271c39ffa7f55e1efa8582d07efb3f070ebd1d7fd46d427ed3ee829d7e6560",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "assets/g1/meshes/head_link.STL",
+      "bytes": 932784,
+      "sha256": "005fb67fbd3eff94aa8bf4a6e83238174e9f91b6721f7111594322f223724411",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_ankle_pitch_link.STL",
+      "bytes": 71184,
+      "sha256": "d49e3abc6f5b12e532062cd575b87b5ef40cd2a3fc18f54a1ca5bba4f773d51d",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_ankle_roll_link.STL",
+      "bytes": 653384,
+      "sha256": "c4092af943141d4d9f74232f3cfa345afc6565f46a077793b8ae0e68b39dc33f",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_elbow_link.STL",
+      "bytes": 88784,
+      "sha256": "fa752198accd104d5c4c3a01382e45165b944fbbc5acce085059223324e5bed3",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_hip_pitch_link.STL",
+      "bytes": 181684,
+      "sha256": "4725168105ee768ee31638ef22b53f6be2d7641bfd7cfefe803488d884776fa4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_hip_roll_link.STL",
+      "bytes": 192184,
+      "sha256": "91f25922ee8a7c3152790051bebad17b4d9cd243569c38fe340285ff93a97acf",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_hip_yaw_link.STL",
+      "bytes": 296284,
+      "sha256": "a16d88aa6ddac8083aa7ad55ed317bea44b1fa003d314fba88965b7ed0f3b55b",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_knee_link.STL",
+      "bytes": 854884,
+      "sha256": "8d92b9e3d3a636761150bb8025e32514c4602b91c7028d523ee42b3e632de477",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_rubber_hand.STL",
+      "bytes": 2287484,
+      "sha256": "cff2221a690fa69303f61fce68f2d155c1517b52efb6ca9262dd56e0bc6e70fe",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_shoulder_pitch_link.STL",
+      "bytes": 176784,
+      "sha256": "f0d1cfd02fcf0d42f95e678eeca33da3afbcc366ffba5c052847773ec4f31d52",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_shoulder_roll_link.STL",
+      "bytes": 400284,
+      "sha256": "fb9df21687773522598dc384f1a2945c7519f11cbc8bd372a49170316d6eee88",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_shoulder_yaw_link.STL",
+      "bytes": 249184,
+      "sha256": "1aa97e9748e924336567992181f78c7cd0652fd52a4afcca3df6b2ef6f9e712e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_wrist_pitch_link.STL",
+      "bytes": 85984,
+      "sha256": "b251d8e05047f695d0f536cd78c11973cfa4e78d08cfe82759336cc3471de3a9",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_wrist_roll_link.STL",
+      "bytes": 356184,
+      "sha256": "edc387c9a0ba8c2237e9b296d32531426fabeb6f53e58df45c76106bca74148c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/left_wrist_yaw_link.STL",
+      "bytes": 318684,
+      "sha256": "83f8fb3a726bf9613d65dd14f0f447cb918c3c95b3938042a0c9c09749267d3b",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/logo_link.STL",
+      "bytes": 243384,
+      "sha256": "8571a0a19bc4916fa55f91449f51d5fdefd751000054865a842449429d5f155b",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/pelvis.STL",
+      "bytes": 1060884,
+      "sha256": "5ba6bbc888e630550140d3c26763f10206da8c8bd30ed886b8ede41c61f57a31",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/pelvis_contour_link.STL",
+      "bytes": 1805184,
+      "sha256": "5cc5c2c7a312329e3feeb2b03d3fc09fc29705bd01864f6767e51be959662420",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_ankle_pitch_link.STL",
+      "bytes": 71184,
+      "sha256": "15be426539ec1be70246d4d82a168806db64a41301af8b35c197a33348c787a9",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_ankle_roll_link.STL",
+      "bytes": 653784,
+      "sha256": "4b66222ea56653e627711b56d0a8949b4920da5df091da0ceb343f54e884e3a5",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_elbow_link.STL",
+      "bytes": 88784,
+      "sha256": "1be925d7aa268bb8fddf5362b9173066890c7d32092c05638608126e59d1e2ab",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_hip_pitch_link.STL",
+      "bytes": 181284,
+      "sha256": "e4f3c99d7f4a7d34eadbef9461fc66e3486cb5442db1ec50c86317d459f1a9c6",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_hip_roll_link.STL",
+      "bytes": 192684,
+      "sha256": "4c254ef66a356f492947f360dd931965477b631e3fcc841f91ccc46d945d54f6",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_hip_yaw_link.STL",
+      "bytes": 296284,
+      "sha256": "e479c2936ca2057e9eb2f7dff6c189b7419d7b8484dea0b298cbb36a2a6aa668",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_knee_link.STL",
+      "bytes": 852284,
+      "sha256": "63c4008449c9bbe701a6e2b557b7a252e90cf3a5abcf54cee46862b9a69f8ec8",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_rubber_hand.STL",
+      "bytes": 2192684,
+      "sha256": "99533b778bca6246144fa511bb9d4e555e075c641f2a0251e04372869cd99d67",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_shoulder_pitch_link.STL",
+      "bytes": 176784,
+      "sha256": "24cdb387e0128dfe602770a81c56cdce3a0181d34d039a11d1aaf8819b7b8c02",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_shoulder_roll_link.STL",
+      "bytes": 401884,
+      "sha256": "962b97c48f9ce9e8399f45dd9522e0865d19aa9fd299406b2d475a8fc4a53e81",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_shoulder_yaw_link.STL",
+      "bytes": 249984,
+      "sha256": "a0b76489271da0c72461a344c9ffb0f0c6e64f019ea5014c1624886c442a2fe5",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_wrist_pitch_link.STL",
+      "bytes": 79584,
+      "sha256": "d22f8f3b3127f15a63e5be1ee273cd5075786c3142f1c3d9f76cbf43d2a26477",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_wrist_roll_link.STL",
+      "bytes": 356084,
+      "sha256": "a7ee9212ff5b94d6cb7f52bb1bbf3f352194d5b598acff74f4c77d340c5b344f",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/right_wrist_yaw_link.STL",
+      "bytes": 341484,
+      "sha256": "bc9dece2d12509707e0057ba2e48df8f3d56db0c79410212963a25e8a50f61a6",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/torso_link_rev_1_0.STL",
+      "bytes": 2570584,
+      "sha256": "11ddb46f2098efbbd8816b1d65893632d8e78be936376c7cdcd6771899ccc723",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/waist_roll_link_rev_1_0.STL",
+      "bytes": 85884,
+      "sha256": "b67c347a05abc3e8ddae600d98a082bee273bb39f8e651647708b0a7140a8a97",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "assets/g1/meshes/waist_yaw_link_rev_1_0.STL",
+      "bytes": 619984,
+      "sha256": "ec6db442b11f25eed898b5add07940c85d804f300de24dcbd264ccd8be7d554c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/base_continue128.json",
+      "bytes": 1610,
+      "sha256": "34dd38071dc8a66732a3accb8d0101c045cd13f26b098544ef8d1df053376c85",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/base_retention_baseline.json",
+      "bytes": 14069,
+      "sha256": "389c64866f9f9f4a154cba49cda1313ccc1f7e07d69f36eba581cfc7f78ec58a",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/base_smoke.json",
+      "bytes": 1548,
+      "sha256": "aff5a984e4cd6c174a9962f87b5e2687bbf21424221d263a3c7e959ecccf79b6",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/base_train.json",
+      "bytes": 1559,
+      "sha256": "328038336401cce8914a5fa430c77da7ba93303f93818c15671d381ba7fbd5f0",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/data/heldout16.json",
+      "bytes": 17757,
+      "sha256": "8c41f645d47cc1cacefa0eae3676a4dbfba7385db4589996126661c0fe033287",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/data/train128.json",
+      "bytes": 103619,
+      "sha256": "50f59c1a37458428bc34e1ddc14d26e9662e1e8e40784281e03c237c55a4a858",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/demo_policy.json",
+      "bytes": 14499,
+      "sha256": "e24979fc017f6542c3dd7b45d30ae6fbd7cfe351f851cdaac7c09abaf0d2ef17",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/distillation31.json",
+      "bytes": 11121,
+      "sha256": "68f73fc2b72a856f6f209a841a38792d1daab25472c4c408ef3b300c00823f2f",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/expert_bank.json",
+      "bytes": 6224,
+      "sha256": "e08b3d3dd7cdd52d3c3b8057bc75f1e0746d057930756c439e148df2b7d72d74",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/g1_actor_io_contract.json",
+      "bytes": 4566,
+      "sha256": "a09f9b0a60ccdfcd24dc48aa3324603f93bb9ad5aaafa63e6aa4f83fa4f3cb2e",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/holomotion_v1.4.yaml",
+      "bytes": 48160,
+      "sha256": "f2bdcd26b7436123ce07478ac88dec5d0657a2a6b134e8114545434be3cb8b62",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/husky_skateboard_dagger_v2.json",
+      "bytes": 2733,
+      "sha256": "f7982bcc653cf9105d4b86220c4eb5916fdb00ecd1d5cffd258c534c33ddf837",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/instinct_parkour_dagger_v1.json",
+      "bytes": 1110,
+      "sha256": "9c7b45b109a5fb18afdf8f3bce17d9db74ecde990e89f547c89a9c3fae501b08",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/martial_isaac.yaml",
+      "bytes": 52259,
+      "sha256": "dcb0b9a8d9fd69be9cd21263a459aae97e1cfd256d932ef513ef36cf077eb94e",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/release.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1024,
+      "sha256": "8bfe2ee87f66835708e57ca490e3958a7a30ed8b9ca240b9567e86a0a2977038"
+    },
+    {
+      "path": "configs/robot.json",
+      "bytes": 2672,
+      "sha256": "a6d966f040fd0f4fdaed18ce638ce043908eacc1be45e22411ad9b578ea17595",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/router.json",
+      "bytes": 2025,
+      "sha256": "032b7d40488acd3d672fec2a1476b9aa24183db5d65991700435d1ee516fbab9",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "configs/showcase.json",
+      "bytes": 3319,
+      "sha256": "49e74691a3a118ece007a68ed68c4cc772fd5e47f46f3e439187ca62d1bdcabe",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/showcase_competitive_archived.json",
+      "bytes": 1714,
+      "sha256": "314b5811823cb87cf40a116926f43f20bc8c27eae8dbf300a3f836b2a66d78b9",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "configs/showcase_descent.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1833,
+      "sha256": "d48e9735b985b07195cded80e135d2809cb7cd93b78660987fcdd76b0c8eb5a4"
+    },
+    {
+      "path": "configs/showcase_four.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1676,
+      "sha256": "d607312dd343fcb591aca7bc9c6ec0d8e63cf19b536f07f6ff14bc3b81b1f72b"
+    },
+    {
+      "path": "configs/showcase_motion_regions.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 2533,
+      "sha256": "fb337e294d49cdbaa12a39d610bbf31ffc7aab623943618433664f11b2dd9e0b"
+    },
+    {
+      "path": "configs/showcase_nine.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 3383,
+      "sha256": "8a683cf621538f20ee75a0d67ca6b25ec1d6df031c718fa131067f209989f7b2"
+    },
+    {
+      "path": "configs/velocity_walk_dagger_v3.json",
+      "bytes": 1720,
+      "sha256": "1cf69aa1d87c677f2461c6bebb9f69aefecffaf67e099f7678809261aeec42e3",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "docs/CODE_MAP.md",
+      "bytes": 3234,
+      "sha256": "f8609e97ad491c32f27f58f761dc7a521e182d64d5ca7c9a61c4343aa3f0113c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/ENVIRONMENT.md",
+      "bytes": 3486,
+      "sha256": "0c236f57398b412719b1a4303541cebf7e5a1f9f1eb5b0dd34c61b9e7ca2ed99",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/EXPERT_SWITCHES.md",
+      "bytes": 5540,
+      "sha256": "dff8a27ef46e06bb14775e77995961fd6805103904eb429190802ee8c23759bf",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/HOLOMOTION_DOWNLOAD.md",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 2639,
+      "sha256": "0f086d7d64c10dacc61ba10798687c138afc126af27d40dd8556ff410d55ef60"
+    },
+    {
+      "path": "docs/HOLOMOTION_RELEASE_STATUS.md",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 4249,
+      "sha256": "5cfe725735494ac0c866614406b442b0fad69760f233d81571a123be41b0a44e"
+    },
+    {
+      "path": "docs/MODELS.md",
+      "bytes": 6718,
+      "sha256": "5d2544fc35524da7c1b413aa43ad5ce52afacc8a946dafa0cb13cddeb3d1ddb2",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/REPRODUCING.md",
+      "bytes": 7702,
+      "sha256": "5653a2cf836f2e508a282da0da14a4d4b6b912e747564cb3bae06a69cf7d674a",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/RESOURCES.md",
+      "bytes": 5845,
+      "sha256": "12969664090d6f5e3755a26c3920cc5bc8b7bae499f1e6fb23be59b222931785",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/SHOWCASE.md",
+      "bytes": 6933,
+      "sha256": "8738910b18feaec856de807f4e3154626e021679ab5b71c41d6d3f53c028ad69",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "docs/UPLOAD_PLAN.zh-CN.md",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 2402,
+      "sha256": "d74d3d9c51d569b198f84ab6131f124efb197138b9190010d43ff934d73c8828"
+    },
+    {
+      "path": "docs/media/box-carrying.gif",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 653907,
+      "sha256": "1ef94be64898eab12b2f0e789556df683693ed3be1eaee4684dd7887b678a433"
+    },
+    {
+      "path": "docs/media/box-carrying.mp4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 331863,
+      "sha256": "57b178e44a501d7570810ca58e716b2bea3ed71508622aa7e19f4340ecdf2220"
+    },
+    {
+      "path": "docs/media/box-carrying.webp",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 10926,
+      "sha256": "d9919021efa07d9fc3a4cdd6751ea43d4f2fdb5a8d9d0548c442b49f7db9ac9b"
+    },
+    {
+      "path": "docs/media/gap-crossing.gif",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 3270958,
+      "sha256": "86528b0e0df2e320df5c61c0a69cbb7a03366124c63c40c697b2417ad29c3ed2"
+    },
+    {
+      "path": "docs/media/gap-crossing.mp4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1214669,
+      "sha256": "8f1185148384e28bfb16ed5d83feb56fad2f03fb3a37106362d43f192fc0c0aa"
+    },
+    {
+      "path": "docs/media/gap-crossing.webp",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 56354,
+      "sha256": "3150771de0fe38dbea46be5cc24ab4ea20cc9ffa05d600cbef567ded104c3de3"
+    },
+    {
+      "path": "docs/media/skateboard.gif",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 2753860,
+      "sha256": "ed1019fec4f5daaa4a71f83fb5df98a9dc8baa5747ca7fc362e1e4637169a071"
+    },
+    {
+      "path": "docs/media/skateboard.mp4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1427238,
+      "sha256": "3da1ef467153a0a8059e61063506322d49946c696ff9f98770f4b9269901e850"
+    },
+    {
+      "path": "docs/media/skateboard.webp",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 88726,
+      "sha256": "3224651786e50029846fe7eb3cda7acd4891005c597690ccf1a184fc01dccf16"
+    },
+    {
+      "path": "docs/media/stairs.gif",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 2643395,
+      "sha256": "0304fe7d74bcbe6da84c3f8bd2eae8494000f97e379209218a906de192b25111"
+    },
+    {
+      "path": "docs/media/stairs.mp4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 945563,
+      "sha256": "eb3ce0a34a744d23926c126ec0007bdec425c435f99af5ee8e90e3c163bec6e8"
+    },
+    {
+      "path": "docs/media/stairs.webp",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 23282,
+      "sha256": "b6cd2e50025b92ab053323dbd094195d56b8cdb904bc4194eff2207b9b2981c7"
+    },
+    {
+      "path": "docs/media/tennis.gif",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 7431016,
+      "sha256": "63388166d79f09d3dac1fe47d63bd5b4b2cc7a990698bba1625bdee93fdfaaac"
+    },
+    {
+      "path": "docs/media/tennis.mp4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 4593269,
+      "sha256": "3a5682fca346d7e71d9ae27d8c656acd0a0bac5ebe6b4349635abded6ab8ca8a"
+    },
+    {
+      "path": "docs/media/tennis.webp",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 110884,
+      "sha256": "e872eee91cf3b7daadee646dad9b475d16503201ec6628f5a7f6c6bd97370867"
+    },
+    {
+      "path": "docs/media/thank-you-capybara.png",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 2552015,
+      "sha256": "6c8ca20ac59e94f4c1554c3c509a7a3599730d83fb957f0c2be112bb6455ed85"
+    },
+    {
+      "path": "docs/media/vault.gif",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 3216031,
+      "sha256": "dfec04aa7d5a7ed1f83cd14c1818d943ee43146e3725bb121d2197c77c4718c3"
+    },
+    {
+      "path": "docs/media/vault.mp4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1598974,
+      "sha256": "c3005c16a0d4715da1a5d0ad40abeaf6054409530c7f52fe3d3b8a9995ab5809"
+    },
+    {
+      "path": "docs/media/vault.webp",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 50720,
+      "sha256": "2e950965d88910f0ff9c42c4b7437326c29cb78e8e953c21f6f27ac7411fb755"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/__init__.py",
+      "bytes": 74,
+      "sha256": "364c8127c6de34570e8b3a3c2e12f520d2913801de2b3757012a0db7558ed4ab",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/algo/__init__.py",
+      "bytes": 710,
+      "sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/algo/algo_base.py",
+      "bytes": 31277,
+      "sha256": "6f90e5bbfe6ca87984bf4213d1f8b77d821d35a588f546d478fe41f7c7063212",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/algo/algo_utils.py",
+      "bytes": 22039,
+      "sha256": "d861aaf41a2930450d27e11609f9026e623d167011a45d15882608ff60cf6319",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/algo/ppo.py",
+      "bytes": 76832,
+      "sha256": "280902dc18def34a3e57d4d510a5ad9845ae04b221d70565dd8b2923212fe31c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/algo/ppo_tf.py",
+      "bytes": 96994,
+      "sha256": "1a6ac66102ea62085acf146ae6fe43f127d600d30ede835710a8b099011fe72a",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/__init__.py",
+      "bytes": 710,
+      "sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/__init__.py",
+      "bytes": 1973,
+      "sha256": "233bca259caaefa63cbcc35669090fdb0edffb0275109f33afabd5d62291df0d",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_actions.py",
+      "bytes": 3249,
+      "sha256": "200f4b0d141e1b9025c70d4224f6639fd91461bf06bf09c7a1248cc704c60e9b",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_curriculum.py",
+      "bytes": 23594,
+      "sha256": "3a18364d35472dfc429a4f8701b813ea6d0ca5246d6d1334acd03e116012a8ea",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_domain_rand.py",
+      "bytes": 10272,
+      "sha256": "849e608351dbedd2ccfe3483ba06386689e3e9dcc108a174d4d474a7ff601e88",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_motion_tracking_command.py",
+      "bytes": 119339,
+      "sha256": "da1c182c0cb7240715574bc7d0346225792e31670209a0e8dc0dbf8e5b8667c9",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_observation.py",
+      "bytes": 72947,
+      "sha256": "cf65fecc924ddd44bd8e554e7177203c9c5fa60e843522c2f30dfbf24a08969d",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_rewards.py",
+      "bytes": 98304,
+      "sha256": "37dd058d14edede6b73a675f1609a51bd12bc79f421bbb380f0e257429ccb926",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_scene.py",
+      "bytes": 27290,
+      "sha256": "5a6101b3824b201dbd44e1bccee776651e80246f37aec6b9183625d910b5b240",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_simulator.py",
+      "bytes": 1544,
+      "sha256": "1bb4cf025b7903e9bbae15ed397b8d68f7b80acae2afb1cf319ccce0affa9d9c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_termination.py",
+      "bytes": 15581,
+      "sha256": "76b0bfe211afffe5ca1e973644a096f355563a60db7aeccd290fb99f4bb652ca",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_terrain.py",
+      "bytes": 21156,
+      "sha256": "efeb4108e0d09c2aef83c8dba6bbadbb48e4fc52162f2add3847066eb954dcb2",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_utils.py",
+      "bytes": 3427,
+      "sha256": "fb61eb727149e57d7b83b73573be16d387c87e106558769b6c270685be7f1f28",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/isaaclab_velocity_tracking_command.py",
+      "bytes": 15890,
+      "sha256": "3ddcebdd958ae3f6e961ce574a960371359c3b5c282d669db3ff85ca5870d638",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/isaaclab_components/unitree_actuators.py",
+      "bytes": 11995,
+      "sha256": "bbcf7ae54d081cae0d0ce32c884fc2d03d2506806b52e52e21bdc8b86feda254",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/motion_tracking.py",
+      "bytes": 24258,
+      "sha256": "e1b8a5de8ebf047f006a399a08fea778660b126118472da604de2924a95c9e64",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/env/velocity_tracking.py",
+      "bytes": 14944,
+      "sha256": "8e00f1fac6198df660a572e9f956c3c128dde5492fb13f11a0a2f5beb5132276",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/modules/__init__.py",
+      "bytes": 710,
+      "sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/modules/agent_modules.py",
+      "bytes": 95345,
+      "sha256": "5b1db8fa1f8f53177d5a762163545428d9f39b003c41c7b7607575acbaefe210",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/modules/network_modules.py",
+      "bytes": 199549,
+      "sha256": "09a75825c4cd55c191d341008de540284d8372b2215206520e92fe51b4e704fa",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/motion_tracking/__init__.py",
+      "bytes": 1053,
+      "sha256": "4a5ac8aa4a8c1ff6c0ef35f20025ac66acd9ad1c9734750de77f88002cc0658d",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/motion_tracking/actor_observation.py",
+      "bytes": 19310,
+      "sha256": "fa37127e8b78198da8151ed620d1a80d629090d7c5ca3d73493bf32923dd4f8a",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/motion_tracking/reference_observation.py",
+      "bytes": 12602,
+      "sha256": "d85e333dd48cc72bfc782468c1431201a4e9acc83a473a5a4d32dd71def7afd6",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/training/__init__.py",
+      "bytes": 710,
+      "sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/training/h5_dataloader.py",
+      "bytes": 123273,
+      "sha256": "4b961a32a28bf490ec17a265f3a538169de9399613811744dcdb1664a595949f",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/training/reference_fk.py",
+      "bytes": 22486,
+      "sha256": "0da0c0118334a23869f57f3a8c613f2024addeab41b1d95897f5fbda09136ca4",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/__init__.py",
+      "bytes": 710,
+      "sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/config.py",
+      "bytes": 7075,
+      "sha256": "56b3f51336b9833fd526b244203dbc73fd2b084c2b8396d633bf79a6195d9b02",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/frame_utils.py",
+      "bytes": 4590,
+      "sha256": "ae09633659c464a831f99138f54086cb5199128a2d37f233ca0acf07d526d3d1",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/g1_variants.py",
+      "bytes": 15962,
+      "sha256": "8992b804f1caac69efe9ba7d7c08656f3ff40840664de38e389e6242fdf765dd",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/__init__.py",
+      "bytes": 710,
+      "sha256": "c2feb765d886184a7db803fc333837caf8f52c6d42dbb6ae56d7ef4ac0b6188c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/maths.py",
+      "bytes": 2343,
+      "sha256": "f71e0f6bfafc09093c0fcf12010e6f76e3a1ca1ea4df7a02c03d0e5b6024a406",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/rotations.py",
+      "bytes": 23641,
+      "sha256": "cb5512724680dee96b3c5d850e46223220467dd187b5874e045be5d441668593",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/isaac_utils/setup.py",
+      "bytes": 1092,
+      "sha256": "828f077635b5e550eafd7a983a7ebeab9d177a3df9f01f5ba928b8cf0d3b4f85",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/onnx_export.py",
+      "bytes": 5642,
+      "sha256": "06acdf64cdc713dfb5f9a650fb613e1eaec73592502bf6b01d1d8b836d6c7f0c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/reference_prefix.py",
+      "bytes": 1408,
+      "sha256": "c3d0d3fc737766b42b71f41d25be3720a405c3ec21698cae3e9f8193c8ad691a",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/torch_utils.py",
+      "bytes": 28757,
+      "sha256": "03af0593f18c77c2618dabd6afb793dc6d5fbe925a0013672cc7cbd94b5a29f1",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "integrations/HoloMotion/holomotion/src/utils/unitree_g1_actuator_calculator.py",
+      "bytes": 10524,
+      "sha256": "2269a4b153a3eadf2aef5989689871ee52f3cc2a598dc7fa8185c8a283aab247",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "licenses/HUSKY-CC-BY-NC-4.0.md",
+      "bytes": 17689,
+      "sha256": "176fdd712458a69435102791f06cf14bc66f86089351415c9df9c3c263798631",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "licenses/HoloMotion.txt",
+      "bytes": 11346,
+      "sha256": "e0a8d3638735b49a3d6b937f4923926b74b0770c07227afee395a701da67dec8",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "licenses/Unitree.txt",
+      "bytes": 1558,
+      "sha256": "84aac59fd3246e3ddc49d1387644e8fcf43b0def4f0b9fe687f372e90446df2d",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/CHANGES.json",
+      "bytes": 5241,
+      "sha256": "c9e5f5ca41abb8e679e461f805277ec8a3e7f195a09dddcdc20e1a2490a6603c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/CHECKPOINT_CPU_CHECK.json",
+      "bytes": 497,
+      "sha256": "4402881a75ba53fb32f5d3064bed3c05491b3d5bfe5c426e5ba03dbdfaf37d4c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/CLEAN_CAMERA_SHOWCASE_CHECK.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 4184,
+      "sha256": "da6b317b23cd8339e44f82f5ff8a2dafad8783d92b5d503ec9aaf8871a324239"
+    },
+    {
+      "path": "provenance/COMPACT_HOLOMOTION_SHOWCASE_CHECK.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 21713,
+      "sha256": "d95480fd4d141783d40a5cbeb44752942c193db3bc4a39b046d21aa500d6b741"
+    },
+    {
+      "path": "provenance/CPU_CONTRACT_CHECK.json",
+      "bytes": 269,
+      "sha256": "c561f591df08ed1e52402cc70faa60745e5fc318210c5b2fdb4a8578a8046f85",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/DEMO_SELECTION_CHANGE.json",
+      "bytes": 785,
+      "sha256": "c9378a504da4b63cfbd98d2e8b0f6a0fbeeb7e8af1f5d2a65b13ba517c1b1287",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/ENTRYPOINT_CHECKS.json",
+      "bytes": 2612,
+      "sha256": "36a6507b08f5e8e26676dc14b58c7816ef1e021dda19950bd10ddb24c3031a6e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/ENVIRONMENTS.json",
+      "bytes": 2100,
+      "sha256": "3d117d3df278e2c3688526eb2877a502d9964de96366d2fd11b275401ef05651",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/EXPERT_BANK_CHECK.json",
+      "bytes": 21850,
+      "sha256": "79432552c2443343f4c108f3ca29636f40c220620a013d7b3452b02d4c7ae30e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/HOLOMOTION_RELEASE_AUDIT.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 7630,
+      "sha256": "c10ac609fb8f2967de33c3726eac6177ce8ebcda44ac95b29948b92d3c8d667f"
+    },
+    {
+      "path": "provenance/INTERACTION_SHOWCASE_CHECK.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 9476,
+      "sha256": "30525aa4de96c21f6a643cc80681e50941115a45ef0aac1089df3f1bcc214371"
+    },
+    {
+      "path": "provenance/OBJECT_OBSTACLE_SHOWCASE_CHECK.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 27283,
+      "sha256": "7ffa4ef1c553b795ac6e2f32a23c5e9de7e34e1556a07a2969ddd752cc4628b3"
+    },
+    {
+      "path": "provenance/OFFICIAL_HOLOMOTION_SHOWCASE_CHECK.json",
+      "bytes": 9668,
+      "sha256": "46ccad1b18821f2f861638c65d387c81f3ae62b5bdd019f9595ec79d04aca1d5",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/PRIVATE_REPOSITORY_SETUP.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 486,
+      "sha256": "2ddc680711f09a0874d4e0c490894c41a683485a87ec027cdc75779659472feb"
+    },
+    {
+      "path": "provenance/PRUNED_SOURCES.json",
+      "bytes": 1327,
+      "sha256": "95439119f8b59adae494901e1b7ffac41688a5b46bb697ad8874527b493319b6",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/README_MEDIA.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 12214,
+      "sha256": "c1fbd59bc901ca80ee7ca991b2517c9273b7e452554aacbd56f878cb000b13a8"
+    },
+    {
+      "path": "provenance/REFACTOR_PARITY.json",
+      "bytes": 1627,
+      "sha256": "6d42127c0c1635f0f1f7683e81e860bc2142107ee4edb96ff120d7738210aeb9",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/RELOCATION_CHECK.json",
+      "bytes": 493,
+      "sha256": "cf6bfd9fa8bd89793e39033f1cd7607272503e42d14a8f7bc25524828d1ac0fa",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/RESOURCE_PLAN_CHECK.json",
+      "bytes": 187,
+      "sha256": "406e0881b9bd5a94e2de36110d41d5509d2d1c1212cc23fd7057cbd8bfbcc6c4",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/SHARED_WORLD_CHECK.json",
+      "bytes": 4813,
+      "sha256": "c3b4c8e2913617d5e26e0c0988a95ba91e5233c73f66b09df89e621b653555e3",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/SHARED_WORLD_EXACT50_INPUT_CHECK.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 994,
+      "sha256": "21c8a333187d8a6e59661c4615838b9633a29e06a5577335cec423733e0afd61"
+    },
+    {
+      "path": "provenance/SHARED_WORLD_FIX_CHECK.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 31426,
+      "sha256": "e289c6acca2401653887e6931116e417b48ed4951d750bfefff13ab37cdef5fe"
+    },
+    {
+      "path": "provenance/SHARED_WORLD_INPUT_CHECK.json",
+      "bytes": 1256,
+      "sha256": "7d3351688c0f2ba80c84598cb9efb69ec3ebf88a3eb87b41a763ce3e602fc152",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/STATIC_CHECK.json",
+      "bytes": 141,
+      "sha256": "3abe1545f924e4ebdad06a3b672f795a539a3d891419fa467a1b98fece8da092",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/TENNIS_INTERFACE_CHECK.json",
+      "bytes": 2739,
+      "sha256": "3a261d21dc72ffdc80b07054ae3fd207b60289ea8ab955a2926370e8154f10dd",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/VALIDATION.json",
+      "bytes": 10059,
+      "sha256": "b4f45a37cb8047bcf62a11d28f9ad0005d6aca0d509c5b0bc5ab608e00afd8ad",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/WEIGHTS_CPU_CHECK.json",
+      "bytes": 460,
+      "sha256": "e329c9854aaf7c4bc0979b6ec33fd7875bca071fc58dc486d5450406734f1fb5",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "provenance/source_files.json",
+      "bytes": 57424,
+      "sha256": "a1ea0c8a2d0739e2300d3f5b9f1f0a680ef1717622c25202417d5d1d6f489d3b",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 1164,
+      "sha256": "030713d6903d40c3e0744f9c5b7ad28aa13d2a7223cac4088b03a6bc8db3f92c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "reproduction/experiments/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/batched_teacher.py",
+      "bytes": 4417,
+      "sha256": "4386714435c81e133985cc40f910b79b3ac366a356a50e36baf97e5eb6487f57",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/compat.py",
+      "bytes": 1576,
+      "sha256": "14dd019b61689def2974e481539621a86485c35c2de642c06d18d6f1e9906ad4",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/distill.py",
+      "bytes": 35421,
+      "sha256": "0f8f99bba4f142e6789dbe11c03bd7e0aa3ee83a40bbe104ce2c3d4e20b5799c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/evaluate_official.py",
+      "bytes": 12327,
+      "sha256": "168bdacf68e6cbd287e4d94ee3d5a2e2fb1e92ab876d38e632e8bb577af3d385",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/prepare.py",
+      "bytes": 4331,
+      "sha256": "d848a6bc4620e366a4b0db11bcf5a55ca7eaa067ab2ed312f8bc581ed4645187",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/target_g1.py",
+      "bytes": 9162,
+      "sha256": "951807ead8a0389b84ed0060071e47db975138778aec70d74ee3bbd82691de52",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/athlete_tennis_v1/vector_tennis.py",
+      "bytes": 13605,
+      "sha256": "b695cfc6f69f1aa49f2adcf56d40a9aae37e556304a359e183ec62a4a7f13872",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/common.py",
+      "bytes": 3418,
+      "sha256": "2f4d8974e716e000d78ba4e328f0d68e6b053f551715961aa0a3e5f4f63db419",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/evaluate_retention.py",
+      "bytes": 3654,
+      "sha256": "9c4314240a282bbcc0a8226fa5789d079a80feff0f0669922f62d7a01ebaa59b",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/prepare.py",
+      "bytes": 4934,
+      "sha256": "09883ecef04a26228cbe12e59821de0f7c3d28aaf4d1664e01d200c41bee100b",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/routing.py",
+      "bytes": 467,
+      "sha256": "7a8617bcd616b30e6472ff827839b1e6a2e03e7804cfdd823834770d97f52088",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_competitive_martial_ppo_v1_20261106/train.py",
+      "bytes": 28671,
+      "sha256": "ad44d8956ed68add71dc9df46cc861b1327bf0c5b668685b14313b661430b86a",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_full_finetune_20261106/collect_old.py",
+      "bytes": 5801,
+      "sha256": "0ba253b31bb8620d6222b208c68335e7a0910d20aef28f382094fff4cb357df7",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_full_finetune_20261106/evaluate_retention.py",
+      "bytes": 3967,
+      "sha256": "5b9e6156e598c6ae8ed50b6c171739ac2c23ae432a42519c7f2e292f2b968a69",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_full_finetune_20261106/finetune.py",
+      "bytes": 21750,
+      "sha256": "6a260d5144343c86c8c3cb762922ff58f1067d4ba8b587d5c0a85e869b47a626",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_full_finetune_20261106/model.py",
+      "bytes": 4165,
+      "sha256": "1a3f6de3832b6b77aa020fa67b179e07c09852adc22275f01e7307818ef341c2",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_full_finetune_20261106/replay.py",
+      "bytes": 1481,
+      "sha256": "1618f8d2f2667544ec92ea4c4bdae7f0cb72adff9ec8af22c8785aae110506bb",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_routing_ab_20261106/audit_fusion.py",
+      "bytes": 2357,
+      "sha256": "6d568c97464ecdb8235f2f57b667f556ef4a7472777b539f7ff0a1c110884da6",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_routing_ab_20261106/bridge.py",
+      "bytes": 5394,
+      "sha256": "a6d798de47ed58fe5cdbd0e4ff18e37836de8184e65227144e4e2f6e03aa05d3",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_routing_ab_20261106/evaluate_retention.py",
+      "bytes": 3976,
+      "sha256": "249fc67af43315b41d0c1de09b00bb34d90c3007f2a72855956cdf9923882d40",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_routing_ab_20261106/retention.py",
+      "bytes": 1764,
+      "sha256": "2c08138958e8af085d7cf1fd655497206570bfba42222425f8e379e576fe8acb",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_routing_ab_20261106/routing.py",
+      "bytes": 507,
+      "sha256": "f0f2969ac3b2ca474ec4b072e0634db8c807f3abbd610fdff949e0ff9c61bb81",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/blink_stairs_routing_ab_20261106/train.py",
+      "bytes": 23614,
+      "sha256": "2bde17ab5cee72c99296e8d4add13911050908580a64332f4b2f11b61766936d",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/adapters.py",
+      "bytes": 23055,
+      "sha256": "c9ff631e87ca5f65a3cd7e0ff5ff432b5cebecf323b41327f27f2a5f9ab53256",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/deduplication.py",
+      "bytes": 3191,
+      "sha256": "97d3eaf92dd2574b3068de5e31bd87c1d5db10509797f61bcef32e9e1a062c03",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/evaluate_retention.py",
+      "bytes": 4255,
+      "sha256": "5ab916da38b172ff643dcfd9bc1491a3291dfe573ca406c7afd87bb24e6e9066",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/model.py",
+      "bytes": 16581,
+      "sha256": "88a5943ef82423a42f130e8d70a6b9fc4ee6aba630b403e054293b4d925667e6",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/pipeline.py",
+      "bytes": 19172,
+      "sha256": "6166a576a6776975cf306c134c31c69c5af5908b0d9df7f0fabd3c528beaa9d4",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/render_instinct.py",
+      "bytes": 7380,
+      "sha256": "a3b406b72d2fea38a20e0960b1dc5a7e9511a7705c8469f91602ea65f747b6e7",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/retention.py",
+      "bytes": 1815,
+      "sha256": "ab76b73b905b39eb22ebee4789d2a0cd88695e9fbbdac1d61e83ba3acb979bc1",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/robot_contract.py",
+      "bytes": 124,
+      "sha256": "db61319adad32c81b37b86a23734561474be05d54be4c4ae9420194554099250",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/routing_base.py",
+      "bytes": 489,
+      "sha256": "22840a643472e8c95cd7eda4fb77e2f81538a2c27f94dd176788dd7f7a4656b6",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/runtime_deps.py",
+      "bytes": 357,
+      "sha256": "de753cb2785ca2b967a402a9f5aa230d54df76ca19bd515b6eb25d0f9835c9d0",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/g1_competitive_suite31_v1/worker.py",
+      "bytes": 18514,
+      "sha256": "b82259c978af7bafcb11536900522c9563b8a8ad331e4afc6105056db9ccea65",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/evaluate.py",
+      "bytes": 14497,
+      "sha256": "a9062ab6bb3e26e05a231a47ab6b08d55334a40a993f17a667ba4093d62777c0",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/null_control.py",
+      "bytes": 3846,
+      "sha256": "091f1e21b470973087d93dd61d9a62df830041bb0ddfd662696962ab622fe1ca",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/prepare.py",
+      "bytes": 13820,
+      "sha256": "cff7b99e7d5412ec6613917c5d4419d33469be4b84be87f5e3444faebad1bf59",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/prepare_high_dynamic.py",
+      "bytes": 8858,
+      "sha256": "cd1f3dab19a60f6df055ec5c0284487f6b74e84d57761ec4f999c3bcc056e1de",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/recheck_completion.py",
+      "bytes": 11573,
+      "sha256": "29716aa9d9a9778c3090e6bfc5395f71c099cfde438be0dd0a8a87cd466ce917",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/summarize.py",
+      "bytes": 10084,
+      "sha256": "fd9d9ffb0128b0be9c8ec0aede6769c74a4b1e18c4088fdf9687ed1159598ab6",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/martial_transfer_v1_20261106/summarize_high_dynamic.py",
+      "bytes": 5292,
+      "sha256": "aefba8cf150cae2567724b6587549318e62b0292f0f9c1aecd18ad368a93fa97",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/mimicx_all_tasks_v1/runtime.py",
+      "bytes": 2823,
+      "sha256": "3e98df9fb90c8896fda91ed532595bdfd2cc0f713fb270356f90cb72df74e547",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/pmt_dagger_v1/native.py",
+      "bytes": 13239,
+      "sha256": "5c20b5e425f2b17adbf109b5775d9e48c1ee72a67c29fcf8ded3f95798c0c035",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/pmt_dagger_v1/prepare_assets.py",
+      "bytes": 4646,
+      "sha256": "648d7ed9d2f30142dfedbb861783e437c4d8431f2a3f7b3389af35d0d48e45aa",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/pmt_dagger_v2/context.py",
+      "bytes": 3486,
+      "sha256": "1899309e746b87ffdf4836f0f80be629874eee635e39fd93387c511534eb8a63",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/pmt_dagger_v2/rollout.py",
+      "bytes": 3610,
+      "sha256": "d96d742cdb1fb7f40c8855df2a587a8b903d4373eb77f8ed2930ea270ae147af",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/pmt_dagger_v5/target_robot.py",
+      "bytes": 2586,
+      "sha256": "03d4bcf9530414172c3add31379cf31acbfb03b5addd46fb563e9f0272d3c2b3",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/pmt_dagger_v5/task.py",
+      "bytes": 2732,
+      "sha256": "a0c09a21b8f64e7ccaa4811dd22d6a70b2cd724b76d955212eee886484d8698d",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/ultra_box_v1/runtime.py",
+      "bytes": 10685,
+      "sha256": "64fd52fbf1a4eb7bff164178e5f4076b5638530269f10ff012f0917110e961d0",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/experiments/ultra_box_v1/vector.py",
+      "bytes": 11491,
+      "sha256": "78985997639728442174b7a616fc9679acb29e2e9d4f66613c5d223a808a7980",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/roundhouse_impl.py",
+      "bytes": 4605,
+      "sha256": "5a7b12b8c05a3aa10bc07d22481b2ff104e0602ea80a6db24562bc94ac072296",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/scripts/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "reproduction/scripts/husky_skateboard_dagger.py",
+      "bytes": 22917,
+      "sha256": "8e71504bc25553ed302311d8af46b8e13832bb6fb8a15350324d795baa947e64",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/scripts/instinct_dagger.py",
+      "bytes": 20901,
+      "sha256": "f22617f89537fa16c2993c44b09ddb40b3d2977469999ddd2742920212f81507",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/scripts/parkour_dagger.py",
+      "bytes": 19932,
+      "sha256": "1448e6f2f98fa9f897d943b70f985ead0ce189c3264673ed06b28d5859eb8c63",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "reproduction/scripts/velocity_walk_dagger.py",
+      "bytes": 21577,
+      "sha256": "c05f3bd598d882e607d05c28739cc6b96df0a6b2cbe3b26ae3abd544412c2b79",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "resources/box_showcase_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 8011,
+      "sha256": "158f4e58b8fe5ced750ac3148f36cf725bed0eb43b596facaf84a083cab633d1"
+    },
+    {
+      "path": "resources/compact_showcase_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1834,
+      "sha256": "374a53789a4b527d59f8a0f2a90e025375499aa37c084c0f2b9c4b04062cca58"
+    },
+    {
+      "path": "resources/gaps_showcase_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 8830,
+      "sha256": "c95af9245ab188bc068fbd3ef04c76595441694d6af2b0026465b9c53a2046d0"
+    },
+    {
+      "path": "resources/holomotion_base.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 1751,
+      "sha256": "873cb94a6288c569fd4b7dceddff5c4443b7a89215e7418c3cfbf57dda0a0901"
+    },
+    {
+      "path": "resources/holomotion_weights_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 14997,
+      "sha256": "30f05faa3b5e3f221a9cb22e0110a31ae857f23b22f13fbc2221dcfddf3e4c95"
+    },
+    {
+      "path": "resources/interaction_showcase_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 31242,
+      "sha256": "594efcb792653ce63089b1603c1cca2d328008784a9b3877cb662b2f898a0f2c"
+    },
+    {
+      "path": "resources/manifest.json",
+      "bytes": 72819,
+      "sha256": "f025d12d50bb2118c609586786cfc49cd58d4ad89aae9468da1ae2bf2d83381a",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "resources/mimicx_release.json",
+      "bytes": 785,
+      "sha256": "351950e6a556b95d2031a2107636bd25e363838199c2295d55841a2da2ea1743",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "resources/rough_showcase_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 8695,
+      "sha256": "70fbfa1a1d8ebbc8708c5b81675233723aa372b9e1cc3bd004d39d3ec52fa586"
+    },
+    {
+      "path": "resources/showcase_manifest.json",
+      "bytes": 22586,
+      "sha256": "810962220b018884ed21ef0f1c97e238ec44bf1edbefd2d7ac136d85f463cd75",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "resources/upstreams.json",
+      "bytes": 1156,
+      "sha256": "65da6cc35e7351781897fccd2346fbe5605bb7a4ba1784b3564a3eb76ac7ace0",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "resources/vault_wall_showcase_manifest.json",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 8545,
+      "sha256": "a5a0212c63b13a84f4c92bb2ba4e485935f1f54a6722463a15961ad9c305eb00"
+    },
+    {
+      "path": "resources/weights_manifest.json",
+      "bytes": 50575,
+      "sha256": "f6cc252ea5b1b704264ba9a3c0217c36fdc891bf187c5b6449b882352512bf26",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/blinkmimic/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/buffer.py",
+      "bytes": 6027,
+      "sha256": "6999ab22bfc1b625f92eebac9d7b518bd5bfe6c1b5e11d7f1bd2c2e7cf42df48",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/dr.py",
+      "bytes": 16273,
+      "sha256": "4b297c9267c4196e827c57ac035553c4761a81774dbe1c2d048842a42978a38b",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/env.py",
+      "bytes": 26616,
+      "sha256": "8957e43dd84b460b51a1ac07efb5945f66b4ab0daf2cda5863c2984f46304845",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/evaluate.py",
+      "bytes": 10509,
+      "sha256": "f5ca3f774dccdcf04118a960d88d3e2e3f6e96e0c22488f0b006ed2c3b638be9",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/g1/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/g1/g1_constants.py",
+      "bytes": 6170,
+      "sha256": "85a5bb47925711e0db75a2b25b4bf93d48a8900cee171ad4c9539640287805bb",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/kinematics.py",
+      "bytes": 4264,
+      "sha256": "a6b99845cf6432e81a9e96e19e4c7ae5d013f4e66e31e63d7dbaec590b06d9ee",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/mdp.py",
+      "bytes": 9379,
+      "sha256": "6f8143eee3714cfe85ab1ae88f93e83e9e800bc45e611f7955a5348ca62911f2",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/mirror.py",
+      "bytes": 1855,
+      "sha256": "59451e0d93d6e2aae36ff9c60a5edde4ac5d253f4038c1650e45e23da81fc7b9",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/moe_diagnostics.py",
+      "bytes": 4061,
+      "sha256": "9692275d6edf38352dc09dd46dfc09d6fa6c1374a134a1c21e829208b7b0aae5",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/moe_policy.py",
+      "bytes": 8829,
+      "sha256": "39ac23e72b9b2443cf6c1ee139ac388849cbfdf2eccdb3fe66e6928812cd8fa5",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/motion.py",
+      "bytes": 8192,
+      "sha256": "081a2241b5676b494a05a2c7d5c05af17ae20b05598ed1ab07bead2e623d4e1f",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/networks.py",
+      "bytes": 13575,
+      "sha256": "be73c3d3b382cd0a5dbc5d1bdeac907dc18c5dc11b462b37fed21442e46b9097",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/objective.py",
+      "bytes": 1229,
+      "sha256": "412b5514c44a962decff63a4197118981288e1939ef6bdf41a073d359376d20d",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/optim.py",
+      "bytes": 12854,
+      "sha256": "88dd08c569e25c623d2e185e298860c8193a97f8a5e12e6f22cd6185169d6ac8",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/robot.py",
+      "bytes": 3020,
+      "sha256": "cbe7b13aa47faa96171c4d7531a1f5bb701df25326384a036867396e349f20cd",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/rotations.py",
+      "bytes": 6013,
+      "sha256": "b5e198a3f84915dae184b355bcbc877798d09b9effe95956a04973a200357c66",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/router_calibration.py",
+      "bytes": 2186,
+      "sha256": "4a6063eeb567a376054fa48ef929e75d10b49eb996d315ed3eeafca5452c8bbf",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/sensing.py",
+      "bytes": 11982,
+      "sha256": "911f8ae1aedce2745095247a36354b17ff66c8dfc2001189bfd98f9ae75fbc31",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/blinkmimic/train.py",
+      "bytes": 61968,
+      "sha256": "a361856a880ce469011373123f759c70a5fbf13bd5215bd9c088f1e5fd1fc864",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/__init__.py",
+      "bytes": 72,
+      "sha256": "a904068e17e1f8582c3fda854bf01b3672c53a2408f2c725a41366e7b6576812",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/depth_features.py",
+      "bytes": 1741,
+      "sha256": "6a89a4ca2d11b6b1194e3108395b556716f97519d7be771e7a424c0fd1c05d95",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/domain_moe.py",
+      "bytes": 21325,
+      "sha256": "84d87a180751826c72b41aaf1c2d7df4cc7d6b0b12cc52dcacb392bd8ec6bdef",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/eval_algo.py",
+      "bytes": 962,
+      "sha256": "77e7affb5a2e31ba57cbd7b0b321f80bfd2e9d84f5ce6ff1c50b3ef78a78e741",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/expert_registry.py",
+      "bytes": 6263,
+      "sha256": "986f63effdcf90284dede6cea5eb94e932fa52d6d7d8a1cdef040f31496c5c53",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/feature_dagger.py",
+      "bytes": 2978,
+      "sha256": "3e1c165dadd84497e6b21db27c607657353aa7f3136fa29227c17da72bb5c194",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/frozen_feature_ppo.py",
+      "bytes": 12477,
+      "sha256": "0356fc460e6962d887aa8ba580ff1e9ad4438f9d2e6fb834451e045f7dbfd237",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/husky_skateboarding.py",
+      "bytes": 18091,
+      "sha256": "577b93ed24d0635daaf2282a9e15d9518d06f195b32c5dbd7c45f1f3abcb8995",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/instinct_dagger.py",
+      "bytes": 12024,
+      "sha256": "0c619e822cf3c950d92801eb7965e389c9f2f4c613a3dd7ce1e035b15843fbfe",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/instinct_tasks.py",
+      "bytes": 4927,
+      "sha256": "a4d14945805ae6b60954db7f4377fc144cb68b2e67a0c30c96836c536eac84b8",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/mimicx_bridge.py",
+      "bytes": 3976,
+      "sha256": "8ae0a1ef4f9e36603e4dcdd9c9c94686fff5cf4626634e4a773d1ba5ca0acdc5",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/official.py",
+      "bytes": 3653,
+      "sha256": "ca68673a05ba6951c12981a1147168b0d860a6cafc3028c6b4a840f42fdd1b24",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/parkour_distillation.py",
+      "bytes": 17188,
+      "sha256": "f72c36245e33745661ab08060045d58e036b453ff6be551d8599e469d9366452",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/parkour_extra.py",
+      "bytes": 10987,
+      "sha256": "31a29b185e2ced079f9eac65b24b1c304355c403b68e8521d9ad0e89e0ddf99e",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/parkour_remaining.py",
+      "bytes": 7425,
+      "sha256": "face4675a28e481432b2d7a59df67bca9f1be6b0e85d05b75d03d2e3eca63231",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/parkour_remaining_rollout.py",
+      "bytes": 9603,
+      "sha256": "da308e8b2ac0fce45c714097648e8119da7245c3456727c7b6d68b6115af0e47",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/perceptive_observations.py",
+      "bytes": 17438,
+      "sha256": "42de4ea6014a42d259840c4a6ed02e0fea93e192a9579c1647b2b206a686809c",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/stairs_ppo_algo.py",
+      "bytes": 9704,
+      "sha256": "d1e37100ce713c1a440c74d96cadf69c9a57d3941b81aa41e62fd1e0e6630fc6",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/stairs_ppo_rewards.py",
+      "bytes": 4287,
+      "sha256": "fd234d790bab7a39f01de818deeaf9f4cb0746698cd9d3e927480e6364d7e079",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/teacher_authorization.py",
+      "bytes": 2585,
+      "sha256": "2364b8ca6fc8dd63ddb986c5d31bc93115c80ab15a5f97d4c30351d6c4edfe6a",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/train_algo.py",
+      "bytes": 5744,
+      "sha256": "a401f9768f29856435e234fc60e0ac28959c090266cc287aa468a8db339c06e5",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/modumotion_g1/velocity_walking.py",
+      "bytes": 14830,
+      "sha256": "90285ee2fe9dbc3b9dc659a7cd57cd1b14f8fc02769aedd91dce98c36d7bec11",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/pera/__init__.py",
+      "bytes": 95,
+      "sha256": "ec8c2fc9d92a41bec33adbe261b008bf5ffe7826a868ee1887899446860e8f9c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/__main__.py",
+      "bytes": 8456,
+      "sha256": "24ae26fa1c08f3c785ac96ccd2a910c1c0eed9ee59ca73ad7a0ed96ccd24c12c",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/box_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 7660,
+      "sha256": "758d687600091bfe7f190232a1e9191640ca73525fcf2e495f86cf55129b0c90"
+    },
+    {
+      "path": "src/pera/compact_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 8296,
+      "sha256": "026a521d9fab3365eb3cabdd28ad5cede2082291d8e23f2fa77bb3a20a12c60c"
+    },
+    {
+      "path": "src/pera/context.py",
+      "bytes": 2266,
+      "sha256": "fd26666ed983919e021c4302c1069fc93c8db2768dd15a295533366e0c659198",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/pera/demo_policy.py",
+      "bytes": 713,
+      "sha256": "23b37ff4a9d30441fb3211e20d4ba93bbba6fd3eb74caaa8e709b6f6fb10cd23",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/fusion.py",
+      "bytes": 2539,
+      "sha256": "8255cac1f05dbd1d71b74390b7221cd0e57720d0fd875cb7e3db15a4589df33a",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/pera/holomotion_showcase.py",
+      "bytes": 9558,
+      "sha256": "b1742e3ff40be15d06a9e22bd4fdbf2faaf532948ab35d83f4955a37ee602da2",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/interaction_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 56760,
+      "sha256": "6103eb6baa261e9aa1a9d608d43136df8b562ed93b38232b585d74a18f183e6a"
+    },
+    {
+      "path": "src/pera/multi_robot.py",
+      "bytes": 4609,
+      "sha256": "88a4d852c80effc4f96b229368474fb846e6cb9578e5b124cad4c2148cec05a0",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/multirate_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 5700,
+      "sha256": "a88024a30e35589ae4b21fc2461f0e0ad4b1cb6243f2a9796f666b5b4744b6bb"
+    },
+    {
+      "path": "src/pera/paths.py",
+      "bytes": 238,
+      "sha256": "6d8b0bc14926bb15b6b39da1db2574614dbbda4afd90feac9b1c72d2f03dd0ec",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/robot.py",
+      "bytes": 1138,
+      "sha256": "796d5260ef2143e9ee7f2f4671712280991eda71b7e481fa7fe2441838c50c96",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/pera/routing.py",
+      "bytes": 9547,
+      "sha256": "b1f88f46f7dec98f9b86ba5a5c84a512465cbd993ce504e8582231986548c972",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "src/pera/showcase.py",
+      "bytes": 27285,
+      "sha256": "f6921ab495f11701254227177b5454bd231bbbed7765fad26103eba89e019113",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/smoke.py",
+      "bytes": 4202,
+      "sha256": "95eee859bad68dda4764141230750f19f9bde0eb34fcb646525d21fefdd957a0",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "src/pera/switching.py",
+      "bytes": 15337,
+      "sha256": "d1649f6a43fe5db115976e757655193c4c24cbae6a92f3fe725b36e52676f82e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tests/test_demo_policy.py",
+      "bytes": 840,
+      "sha256": "55dbdd5790ce53df304af4b432f485719e25137ff377517cd15f22b712a1778a",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tests/test_expert_bank.py",
+      "bytes": 11571,
+      "sha256": "28da5b5c80836d447b22c18967b79b9410fd6b4a7b8993ff3f407e21ca668298",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tests/test_fusion_contract.py",
+      "bytes": 1898,
+      "sha256": "dcecc807e3ee3e7e767ca7ee093f6a8e76ec4d587b0e16eeb73eff77dcdf44a8",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tests/test_routing_contract.py",
+      "bytes": 191,
+      "sha256": "5a19ba66ab0a2615cecadb6a42a6d250ce431b05a1f0b7489e3657f9538e8cdd",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tests/test_showcase_reset.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 8775,
+      "sha256": "4f6c5d3bcb9f7ff0590e4eeba4e236e2bc4fc85d873f7bcf6793dcd39a39c158"
+    },
+    {
+      "path": "tools/build_reference_bank.py",
+      "bytes": 1748,
+      "sha256": "c08cda6b0c4859ab95132d19799d55fa3058294984407ec8298a6075c825ba86",
+      "origin": "adapted_or_selected"
+    },
+    {
+      "path": "tools/check_holomotion_release.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 3525,
+      "sha256": "f7f381eb8d4075fcc740f2947403168d81e90ae09be47ba6b8f37f4fb91941fa"
+    },
+    {
+      "path": "tools/check_release.py",
+      "bytes": 2861,
+      "sha256": "6371e95dd39f2f3a5746b78e9b4810e9ed19abdc4e435ee5f193e88ce08a1289",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/fetch_mimicx_release.py",
+      "bytes": 3922,
+      "sha256": "26fa03ed5ea067af4a64dcbb1a702f473682a11301e35862b71feb2a807609ac",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/fetch_upstreams.py",
+      "bytes": 1742,
+      "sha256": "aeb53e201ca6c4b37678cd0213da106dffcd87aed7087b7245eaa452544de5a6",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/import_resources.py",
+      "bytes": 2156,
+      "sha256": "56f55a2218e64f1bcf7a75ebe0266c6eb71f5de70e751a47723f6c53a9d2a296",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/pera.sh",
+      "bytes": 301,
+      "sha256": "ff5139f3df6bb3a62971918cdacd06bc4ee04b63b976eb3e8931355c494abf7e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/prepare_compact_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 14041,
+      "sha256": "3159e4f5f7644bf82f8131e60e08eb658c48701e0c6577603c7b2f4403e8345d"
+    },
+    {
+      "path": "tools/prepare_interaction_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 11012,
+      "sha256": "5aeda767e38f111f022e286eab362efbfc345989a8c96a4b324f402a1ef84ac0"
+    },
+    {
+      "path": "tools/prepare_object_showcase.py",
+      "origin": "release_interface_tooling_documentation_config_or_evidence",
+      "bytes": 4660,
+      "sha256": "ed0b647bee5cdede8f755f1c2dd0fb84c9fb4f5f9b25093ed749280e822ab484"
+    },
+    {
+      "path": "tools/prepare_showcase.py",
+      "bytes": 4952,
+      "sha256": "8817e4443a464ade3a738ef03571a65a8199842234172a8f22ce6e9a4b5820d3",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/verify_expert_bank.py",
+      "bytes": 7013,
+      "sha256": "6d766982c4f37747aadb22db8c52599d0f717870fddbeea18464f9e1dccf1a0e",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    },
+    {
+      "path": "tools/verify_weights.py",
+      "bytes": 1772,
+      "sha256": "9af8ccc206f52896319d410171fad04f0b80d0c1a44541062ee91b20bf1637d7",
+      "origin": "release_interface_tooling_documentation_config_or_evidence"
+    }
+  ],
+  "binary_weights_index": "resources/weights_manifest.json"
+}

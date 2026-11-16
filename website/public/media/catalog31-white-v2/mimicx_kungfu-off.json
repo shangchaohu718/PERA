@@ -1,0 +1,29 @@
+{
+  "id": "catalog31-white-v2/mimicx_kungfu-off",
+  "task": "mimicx_kungfu",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/final_public_4004_trajectory.npz",
+  "source_sha256": "a0e11a4a117ffc18cb4077daa1bb1038be7511d427970d0bde3c5854807a0339",
+  "duration_s": 3.234,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "2862d21b28e4def32daa7a08c122280100c15ecd772d83d778e1aabe249bff0c",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/final_public_4004.json",
+  "report_sha256": "fbf48dae25db18fada3bbe64288456a0995dbc762b8c64342dd218a04b78e259",
+  "seed": 4004,
+  "scene": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/native_scene.mjb",
+  "scene_sha256": "06036908d27f443995f79d9ec465b35caf9028f514d5d8afa8ee5fc253b7c8a0",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "resets_after_initialization": 0
+}

@@ -1,0 +1,6 @@
+{
+  "name": "pera-research", "version": "1.0.0", "private": true, "type": "module",
+  "scripts": {"dev": "vite --host 127.0.0.1", "build": "vite build", "preview": "vite preview --host 127.0.0.1", "portable": "node tools/export-preview.mjs", "deploy": "node tools/deploy-pages.mjs"},
+  "dependencies": {"react": "19.2.0", "react-dom": "19.2.0"},
+  "devDependencies": {"vite": "7.2.2"}
+}

@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use PERA in your research, please cite this software."
+title: "PERA: Plug-in Experts for Robotic Actions in Continual Whole-Body Control"
+authors:
+  - family-names: Hu
+    given-names: Shangchao
+  - family-names: Sun
+    given-names: Yadan
+version: 0.1.0
+repository-code: "https://github.com/shangchaohu718/PERA"

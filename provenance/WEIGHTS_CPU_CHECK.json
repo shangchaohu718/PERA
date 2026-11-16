@@ -1,0 +1,20 @@
+{
+  "base_networks_finite": {
+    "pi": true,
+    "pi_live": true,
+    "wm": true,
+    "critic": true
+  },
+  "context_plugin_state_dicts_strictly_loaded": 29,
+  "canonical_loaders_passed": [
+    "martial_ppo",
+    "stairs_competitive",
+    "consolidated_competitive",
+    "stairs_fusion",
+    "consolidated_fusion"
+  ],
+  "full_actor_export_parameters_preserved": true,
+  "CUDA_initialized": false,
+  "physical_rollout_performed": false,
+  "uploaded": false
+}

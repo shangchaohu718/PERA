@@ -1,0 +1,52 @@
+{
+  "background": "#FAFAFA",
+  "floor": "#EEEEEE",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "camera": {
+    "azimuth_relative_to_initial_heading": 135,
+    "elevation": -16,
+    "distance": 3.25,
+    "lookat_height": 0.8
+  },
+  "clips": [
+    {
+      "id": "charleston",
+      "name": "Charleston dance",
+      "directory": "reports/kungfubot_original_20261105/evaluation_cpu_state/isaaclab_eval_output_model_14000_references_h5",
+      "pattern": "Charleston_dance__*.npz",
+      "controller": "Frozen HoloMotion G1 v1.4 public policy; no PERA expert",
+      "role": "Public repertoire / hero",
+      "source_fps": 50,
+      "camera_distance": 2.5
+    },
+    {
+      "id": "roundhouse",
+      "name": "Roundhouse kick",
+      "directory": "reports/roundhouse_expert_20261105/evaluation/isaaclab_eval_output_model_14000_references_h5",
+      "pattern": "Roundhouse_kick__*.npz",
+      "controller": "Frozen public policy + roundhouse PPO expert",
+      "role": "New expert",
+      "source_fps": 50
+    },
+    {
+      "id": "roundhouse-base",
+      "name": "Roundhouse kick, public only",
+      "directory": "reports/kungfubot_original_20261105/evaluation_cpu_state/isaaclab_eval_output_model_14000_references_h5",
+      "pattern": "Roundhouse_kick__*.npz",
+      "controller": "Frozen public policy; expert off",
+      "role": "Matched baseline",
+      "source_fps": 50
+    },
+    {
+      "id": "stance",
+      "name": "Horse-stance punch",
+      "directory": "reports/kungfubot_original_20261105/evaluation_cpu_state/isaaclab_eval_output_model_14000_references_h5",
+      "pattern": "Horse-stance_punch__*.npz",
+      "controller": "Frozen HoloMotion G1 v1.4 public policy; no PERA expert",
+      "role": "Public repertoire",
+      "source_fps": 50
+    }
+  ]
+}

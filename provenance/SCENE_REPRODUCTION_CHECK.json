@@ -1,0 +1,924 @@
+{
+  "schema": "pera.scene_reproduction_check.v2",
+  "status": "isolated_installed_archive_15scene_replay_passed",
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "official_actor_redistributed": false,
+  "expert_count": 25,
+  "unique_physical_scene_count": 15,
+  "groups": {
+    "interaction": {
+      "simulated_seconds": 12.000000000003581,
+      "actor_instances": 1,
+      "resident_expert_count": 25,
+      "teacher_action_queries": 0,
+      "torch_cuda_peak_allocated_MiB": 1635.779296875,
+      "cache_isolation": {
+        "steps": 8,
+        "actual_official_weights": true,
+        "single_vs_shared_action_max_abs": 0.0,
+        "forward_vs_reverse_action_max_abs": 0.0,
+        "distinct_attention_cache_storage": true
+      },
+      "checkout_only_project_sources": true,
+      "runtime_files": [
+        "integrations/HoloMotion/holomotion/__init__.py",
+        "integrations/HoloMotion/holomotion/src/modules/__init__.py",
+        "integrations/HoloMotion/holomotion/src/modules/agent_modules.py",
+        "integrations/HoloMotion/holomotion/src/modules/network_modules.py",
+        "reproduction/experiments/__init__.py",
+        "reproduction/experiments/athlete_tennis_v1/compat.py",
+        "reproduction/experiments/athlete_tennis_v1/distill.py",
+        "reproduction/experiments/athlete_tennis_v1/evaluate_official.py",
+        "reproduction/experiments/athlete_tennis_v1/target_g1.py",
+        "reproduction/experiments/ultra_box_v1/runtime.py",
+        "src/blinkmimic/__init__.py",
+        "src/blinkmimic/kinematics.py",
+        "src/blinkmimic/mdp.py",
+        "src/blinkmimic/moe_policy.py",
+        "src/blinkmimic/motion.py",
+        "src/blinkmimic/networks.py",
+        "src/blinkmimic/rotations.py",
+        "src/blinkmimic/sensing.py",
+        "src/modumotion_g1/__init__.py",
+        "src/modumotion_g1/depth_features.py",
+        "src/modumotion_g1/domain_moe.py",
+        "src/modumotion_g1/feature_dagger.py",
+        "src/modumotion_g1/husky_skateboarding.py",
+        "src/modumotion_g1/official.py",
+        "src/modumotion_g1/perceptive_observations.py",
+        "src/pera/__init__.py",
+        "src/pera/box_showcase.py",
+        "src/pera/compact_showcase.py",
+        "src/pera/context.py",
+        "src/pera/demo_policy.py",
+        "src/pera/holomotion_bank.py",
+        "src/pera/holomotion_showcase.py",
+        "src/pera/interaction_showcase.py",
+        "src/pera/multi_robot.py",
+        "src/pera/multirate_showcase.py",
+        "src/pera/paths.py",
+        "src/pera/robot.py",
+        "src/pera/routing.py",
+        "src/pera/runtime_audit.py",
+        "src/pera/showcase.py",
+        "src/pera/switching.py",
+        "vendor/ATHLETE/athlete/src/athlete/__init__.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/__init__.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/torch_tennis_planner.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/warp_tennis_planner.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/play_student_onnx.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/tennis_court_spec.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/tennis_physics.py",
+        "vendor/InstinctMJ/src/instinct_mj/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/noise_cfg.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/noise_model.py",
+        "vendor/ULTRA/ultra/utils/__init__.py",
+        "vendor/ULTRA/ultra/utils/obs.py",
+        "vendor/ULTRA/ultra/utils/torch_utils_mujoco.py",
+        "vendor/instinct_rl/instinct_rl/__init__.py",
+        "vendor/instinct_rl/instinct_rl/utils/__init__.py",
+        "vendor/instinct_rl/instinct_rl/utils/utils.py",
+        "vendor/mjlab/src/mjlab/__init__.py",
+        "vendor/mjlab/src/mjlab/actuator/__init__.py",
+        "vendor/mjlab/src/mjlab/actuator/actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/builtin_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/builtin_group.py",
+        "vendor/mjlab/src/mjlab/actuator/dc_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/fused_group.py",
+        "vendor/mjlab/src/mjlab/actuator/learned_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/pd_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/xml_actuator.py",
+        "vendor/mjlab/src/mjlab/utils/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/circular_buffer.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/delay_buffer.py",
+        "vendor/mjlab/src/mjlab/utils/mujoco.py",
+        "vendor/mjlab/src/mjlab/utils/noise/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/noise/noise_cfg.py",
+        "vendor/mjlab/src/mjlab/utils/noise/noise_model.py",
+        "vendor/mjlab/src/mjlab/utils/spec.py",
+        "vendor/mjlab/src/mjlab/utils/xml.py"
+      ],
+      "environment": {
+        "python": "3.11.13",
+        "torch": "2.9.1+cu128",
+        "torchvision": "0.24.1+cu128",
+        "numpy": "1.26.0",
+        "mujoco": "3.11.0",
+        "mujoco-warp": "3.11.0",
+        "warp-lang": "1.14.0",
+        "onnx": "1.18.0",
+        "onnxruntime-gpu": "1.23.2",
+        "tyro": "1.0.13",
+        "trimesh": "4.8.3",
+        "tensordict": "0.11.0",
+        "imageio": "2.37.0",
+        "imageio-ffmpeg": "0.6.0",
+        "Pillow": "11.2.1",
+        "scipy": "1.15.3",
+        "h5py": "3.14.0",
+        "omegaconf": "2.3.0",
+        "hydra-core": "1.3.2",
+        "safetensors": "0.6.2",
+        "mediapy": "1.2.7",
+        "einops": "0.8.1",
+        "loguru": "0.7.3",
+        "gymnasium": "1.2.0",
+        "torchrunx": "0.3.4"
+      },
+      "bank_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f"
+    },
+    "motion_terrain": {
+      "simulated_seconds": 24.000000000003052,
+      "actor_instances": 1,
+      "resident_expert_count": 25,
+      "teacher_action_queries": 0,
+      "torch_cuda_peak_allocated_MiB": 1640.603515625,
+      "cache_isolation": {
+        "steps": 8,
+        "actual_official_weights": true,
+        "single_vs_shared_action_max_abs": 0.0,
+        "forward_vs_reverse_action_max_abs": 0.0,
+        "distinct_attention_cache_storage": true
+      },
+      "checkout_only_project_sources": true,
+      "runtime_files": [
+        "integrations/HoloMotion/holomotion/__init__.py",
+        "integrations/HoloMotion/holomotion/src/modules/__init__.py",
+        "integrations/HoloMotion/holomotion/src/modules/agent_modules.py",
+        "integrations/HoloMotion/holomotion/src/modules/network_modules.py",
+        "reproduction/experiments/__init__.py",
+        "reproduction/experiments/athlete_tennis_v1/compat.py",
+        "reproduction/experiments/athlete_tennis_v1/distill.py",
+        "reproduction/experiments/athlete_tennis_v1/evaluate_official.py",
+        "reproduction/experiments/athlete_tennis_v1/target_g1.py",
+        "src/blinkmimic/__init__.py",
+        "src/blinkmimic/kinematics.py",
+        "src/blinkmimic/mdp.py",
+        "src/blinkmimic/moe_policy.py",
+        "src/blinkmimic/motion.py",
+        "src/blinkmimic/networks.py",
+        "src/blinkmimic/rotations.py",
+        "src/blinkmimic/sensing.py",
+        "src/modumotion_g1/__init__.py",
+        "src/modumotion_g1/depth_features.py",
+        "src/modumotion_g1/domain_moe.py",
+        "src/modumotion_g1/feature_dagger.py",
+        "src/modumotion_g1/husky_skateboarding.py",
+        "src/modumotion_g1/official.py",
+        "src/modumotion_g1/perceptive_observations.py",
+        "src/pera/__init__.py",
+        "src/pera/compact_showcase.py",
+        "src/pera/context.py",
+        "src/pera/demo_policy.py",
+        "src/pera/holomotion_bank.py",
+        "src/pera/holomotion_showcase.py",
+        "src/pera/multi_robot.py",
+        "src/pera/paths.py",
+        "src/pera/robot.py",
+        "src/pera/routing.py",
+        "src/pera/runtime_audit.py",
+        "src/pera/showcase.py",
+        "src/pera/switching.py",
+        "vendor/ATHLETE/athlete/src/athlete/__init__.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/__init__.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/torch_tennis_planner.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/warp_tennis_planner.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/play_student_onnx.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/tennis_court_spec.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/tennis_physics.py",
+        "vendor/InstinctMJ/src/instinct_mj/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/noise_cfg.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/noise_model.py",
+        "vendor/instinct_rl/instinct_rl/__init__.py",
+        "vendor/instinct_rl/instinct_rl/utils/__init__.py",
+        "vendor/instinct_rl/instinct_rl/utils/utils.py",
+        "vendor/mjlab/src/mjlab/__init__.py",
+        "vendor/mjlab/src/mjlab/actuator/__init__.py",
+        "vendor/mjlab/src/mjlab/actuator/actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/builtin_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/builtin_group.py",
+        "vendor/mjlab/src/mjlab/actuator/dc_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/fused_group.py",
+        "vendor/mjlab/src/mjlab/actuator/learned_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/pd_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/xml_actuator.py",
+        "vendor/mjlab/src/mjlab/utils/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/circular_buffer.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/delay_buffer.py",
+        "vendor/mjlab/src/mjlab/utils/mujoco.py",
+        "vendor/mjlab/src/mjlab/utils/noise/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/noise/noise_cfg.py",
+        "vendor/mjlab/src/mjlab/utils/noise/noise_model.py",
+        "vendor/mjlab/src/mjlab/utils/spec.py",
+        "vendor/mjlab/src/mjlab/utils/xml.py"
+      ],
+      "environment": {
+        "python": "3.11.13",
+        "torch": "2.9.1+cu128",
+        "torchvision": "0.24.1+cu128",
+        "numpy": "1.26.0",
+        "mujoco": "3.11.0",
+        "mujoco-warp": "3.11.0",
+        "warp-lang": "1.14.0",
+        "onnx": "1.18.0",
+        "onnxruntime-gpu": "1.23.2",
+        "tyro": "1.0.13",
+        "trimesh": "4.8.3",
+        "tensordict": "0.11.0",
+        "imageio": "2.37.0",
+        "imageio-ffmpeg": "0.6.0",
+        "Pillow": "11.2.1",
+        "scipy": "1.15.3",
+        "h5py": "3.14.0",
+        "omegaconf": "2.3.0",
+        "hydra-core": "1.3.2",
+        "safetensors": "0.6.2",
+        "mediapy": "1.2.7",
+        "einops": "0.8.1",
+        "loguru": "0.7.3",
+        "gymnasium": "1.2.0",
+        "torchrunx": "0.3.4"
+      },
+      "bank_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f"
+    },
+    "body": {
+      "simulated_seconds": 11.999999999999755,
+      "actor_instances": 1,
+      "resident_expert_count": 25,
+      "teacher_action_queries": 0,
+      "torch_cuda_peak_allocated_MiB": 1635.48486328125,
+      "cache_isolation": {
+        "steps": 8,
+        "actual_official_weights": true,
+        "single_vs_shared_action_max_abs": 0.0,
+        "forward_vs_reverse_action_max_abs": 0.0,
+        "distinct_attention_cache_storage": true
+      },
+      "checkout_only_project_sources": true,
+      "runtime_files": [
+        "integrations/HoloMotion/holomotion/__init__.py",
+        "integrations/HoloMotion/holomotion/src/modules/__init__.py",
+        "integrations/HoloMotion/holomotion/src/modules/agent_modules.py",
+        "integrations/HoloMotion/holomotion/src/modules/network_modules.py",
+        "reproduction/experiments/__init__.py",
+        "reproduction/experiments/athlete_tennis_v1/compat.py",
+        "reproduction/experiments/athlete_tennis_v1/distill.py",
+        "reproduction/experiments/athlete_tennis_v1/evaluate_official.py",
+        "reproduction/experiments/athlete_tennis_v1/target_g1.py",
+        "src/blinkmimic/__init__.py",
+        "src/blinkmimic/kinematics.py",
+        "src/blinkmimic/mdp.py",
+        "src/blinkmimic/moe_policy.py",
+        "src/blinkmimic/motion.py",
+        "src/blinkmimic/networks.py",
+        "src/blinkmimic/rotations.py",
+        "src/blinkmimic/sensing.py",
+        "src/modumotion_g1/__init__.py",
+        "src/modumotion_g1/depth_features.py",
+        "src/modumotion_g1/domain_moe.py",
+        "src/modumotion_g1/feature_dagger.py",
+        "src/modumotion_g1/official.py",
+        "src/modumotion_g1/perceptive_observations.py",
+        "src/pera/__init__.py",
+        "src/pera/compact_showcase.py",
+        "src/pera/context.py",
+        "src/pera/demo_policy.py",
+        "src/pera/holomotion_bank.py",
+        "src/pera/holomotion_showcase.py",
+        "src/pera/multi_robot.py",
+        "src/pera/paths.py",
+        "src/pera/robot.py",
+        "src/pera/routing.py",
+        "src/pera/runtime_audit.py",
+        "src/pera/showcase.py",
+        "src/pera/switching.py",
+        "vendor/ATHLETE/athlete/src/athlete/__init__.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/__init__.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/torch_tennis_planner.py",
+        "vendor/ATHLETE/athlete/src/athlete/goal_cond_tracking/warp_tennis_planner.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/play_student_onnx.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/tennis_court_spec.py",
+        "vendor/ATHLETE/athlete/src/athlete/scripts/tennis_physics.py",
+        "vendor/InstinctMJ/src/instinct_mj/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/__init__.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/noise_cfg.py",
+        "vendor/InstinctMJ/src/instinct_mj/utils/noise/noise_model.py",
+        "vendor/instinct_rl/instinct_rl/__init__.py",
+        "vendor/instinct_rl/instinct_rl/utils/__init__.py",
+        "vendor/instinct_rl/instinct_rl/utils/utils.py",
+        "vendor/mjlab/src/mjlab/__init__.py",
+        "vendor/mjlab/src/mjlab/actuator/__init__.py",
+        "vendor/mjlab/src/mjlab/actuator/actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/builtin_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/builtin_group.py",
+        "vendor/mjlab/src/mjlab/actuator/dc_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/fused_group.py",
+        "vendor/mjlab/src/mjlab/actuator/learned_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/pd_actuator.py",
+        "vendor/mjlab/src/mjlab/actuator/xml_actuator.py",
+        "vendor/mjlab/src/mjlab/utils/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/circular_buffer.py",
+        "vendor/mjlab/src/mjlab/utils/buffers/delay_buffer.py",
+        "vendor/mjlab/src/mjlab/utils/mujoco.py",
+        "vendor/mjlab/src/mjlab/utils/noise/__init__.py",
+        "vendor/mjlab/src/mjlab/utils/noise/noise_cfg.py",
+        "vendor/mjlab/src/mjlab/utils/noise/noise_model.py",
+        "vendor/mjlab/src/mjlab/utils/spec.py",
+        "vendor/mjlab/src/mjlab/utils/xml.py"
+      ],
+      "environment": {
+        "python": "3.11.13",
+        "torch": "2.9.1+cu128",
+        "torchvision": "0.24.1+cu128",
+        "numpy": "1.26.0",
+        "mujoco": "3.11.0",
+        "mujoco-warp": "3.11.0",
+        "warp-lang": "1.14.0",
+        "onnx": "1.18.0",
+        "onnxruntime-gpu": "1.23.2",
+        "tyro": "1.0.13",
+        "trimesh": "4.8.3",
+        "tensordict": "0.11.0",
+        "imageio": "2.37.0",
+        "imageio-ffmpeg": "0.6.0",
+        "Pillow": "11.2.1",
+        "scipy": "1.15.3",
+        "h5py": "3.14.0",
+        "omegaconf": "2.3.0",
+        "hydra-core": "1.3.2",
+        "safetensors": "0.6.2",
+        "mediapy": "1.2.7",
+        "einops": "0.8.1",
+        "loguru": "0.7.3",
+        "gymnasium": "1.2.0",
+        "torchrunx": "0.3.4"
+      },
+      "bank_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f"
+    }
+  },
+  "task_traces": {
+    "interaction/ultra_largebox": {
+      "control_steps": 720,
+      "records_sha256": "db2548397c45b9c8f9110cefc1a05f3043c3fd08240deaa642304570c7ee9daf",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.8848035362031724
+    },
+    "interaction/roll_vault_wall": {
+      "control_steps": 600,
+      "records_sha256": "27ca82f3d9546723022b5a219ba6259750de047fb62fb07430c0dc67e58e1d61",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.04487919062376022
+        }
+      ],
+      "mean_expert_contribution": 0.9999967767794927
+    },
+    "interaction/parkour_gaps": {
+      "control_steps": 600,
+      "records_sha256": "10c0c67cb91d9797633d811203e2793f42da860169f96720b35e99d39b46047e",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.9999853392442067
+    },
+    "interaction/athlete_tennis": {
+      "control_steps": 600,
+      "records_sha256": "ac45906802b830a91ca4f1f68bfe441f60a7c553d5e9bfe83dd5f62c33504caa",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.5687798336148262
+    },
+    "interaction/mimicx_descent": {
+      "control_steps": 600,
+      "records_sha256": "e0163ffd767b6e74097977bca0bdfb0f31ca0c567bce1bc69ac3b23f8c6b5ef2",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.1306142956018448
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.1246228814125061
+        }
+      ],
+      "mean_expert_contribution": 0.5118194886048635
+    },
+    "interaction/mimicx_stairs": {
+      "control_steps": 600,
+      "records_sha256": "008e9b994d013b2b704124d43cd4414c69ac7bde2fbf0defcf1169ca9774a997",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.19214561581611633
+        }
+      ],
+      "mean_expert_contribution": 0.5527305089433988
+    },
+    "interaction/husky_skateboard": {
+      "control_steps": 600,
+      "records_sha256": "17ae3f7c1fb3d71a600f2579137c16226a51089bc4e2aac58bea41609288bc11",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.9893824194868406
+    },
+    "motion_terrain/mimicx_dance": {
+      "control_steps": 1200,
+      "records_sha256": "b3a5946fa052f753a12d59e572a3bf5b204decaef0c99f5bb16b713ad8bdc2d9",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.06352507323026657
+        }
+      ],
+      "mean_expert_contribution": 0.6025884427130223
+    },
+    "motion_terrain/mimicx_kungfu": {
+      "control_steps": 1200,
+      "records_sha256": "c172272e22166d7549d8cef07aac13e8fe9dcc987900f827a711223ec7e32b49",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.14434248208999634
+        }
+      ],
+      "mean_expert_contribution": 0.6584613742679357
+    },
+    "motion_terrain/mimicx_football": {
+      "control_steps": 1200,
+      "records_sha256": "55a76c6c435ce2fd64e69c4d832a5a18ed822abdaa9263826df3fc541b5617bc",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08516281843185425
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08516240119934082
+        }
+      ],
+      "mean_expert_contribution": 0.5121343367795149
+    },
+    "motion_terrain/roll_vault_no_wall": {
+      "control_steps": 1200,
+      "records_sha256": "f5f93ffe1b0c700e852340f4209ad723416e00b174d9d219a6f2eaa6db3f8d82",
+      "exact_match_to_local_probe": false,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.15550602972507477
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.1420423686504364
+        }
+      ],
+      "mean_expert_contribution": 0.9999992245435715
+    },
+    "motion_terrain/mimicx_descent": {
+      "control_steps": 1200,
+      "records_sha256": "671ce0ca604dab0ccf401001d67cc1db9a3965d5edd9f64ea4f6b9c27b612a3b",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 3,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 4,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 5,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        }
+      ],
+      "mean_expert_contribution": 0.5118136383593083
+    },
+    "motion_terrain/mimicx_stairs": {
+      "control_steps": 1200,
+      "records_sha256": "da5fdaa974da6641b5ce42ded5fefc640ea53ab45f7db61f20b226ba5e20b74f",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.182105153799057
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.1821044683456421
+        }
+      ],
+      "mean_expert_contribution": 0.5527394424378872
+    },
+    "motion_terrain/husky_skateboard": {
+      "control_steps": 1200,
+      "records_sha256": "f80f2b96d48e10cd7ea29c978fb4f3cde50bc842152b166fbe72d8a8a0714c65",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.9889842249949773
+    },
+    "motion_terrain/parkour_rough": {
+      "control_steps": 1200,
+      "records_sha256": "2c6702c51159e3a45c37fc6ee4f9dcd845c5920a8e499c43b2727c7eb9597d10",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.9999141055842241
+    },
+    "motion_terrain/athlete_tennis": {
+      "control_steps": 1200,
+      "records_sha256": "2d977adf9b7a673e1376b38fad3ad248452f62d3d2d7e0704f7544bf8a61413a",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.5831069965660572
+    },
+    "body/diveroll_lab_no_wall": {
+      "control_steps": 600,
+      "records_sha256": "dab95145fc7cd7d58fb84c9702e58efdc11d98616d32631277024bcceaf28977",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.22117699682712555
+        }
+      ],
+      "mean_expert_contribution": 0.99999613960584
+    },
+    "body/diveroll_ramp_no_wall": {
+      "control_steps": 600,
+      "records_sha256": "45be50c8754289758454a7b36c2e5adb8698b8c0cf4aa108bedb7dee9313887c",
+      "exact_match_to_local_probe": false,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.34780681133270264
+        }
+      ],
+      "mean_expert_contribution": 0.9999944432576497
+    },
+    "body/jump_sit_no_wall": {
+      "control_steps": 600,
+      "records_sha256": "15c9fa40f0231d86622e1977dcbd21f67b6c463e8d15b5d920d1cde977d9002b",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.18783394992351532
+        }
+      ],
+      "mean_expert_contribution": 0.9999994573990504
+    },
+    "body/athlete_tennis": {
+      "control_steps": 600,
+      "records_sha256": "0c580972d8bf960abaffca0740d9b864aa36ca09a0f34e7dde2a2077e3d15fdb",
+      "exact_match_to_local_probe": true,
+      "tracking_lost_frames": 0,
+      "completed_reference_intervals": [],
+      "mean_expert_contribution": 0.5913093163569768
+    }
+  },
+  "task_summary": {
+    "ultra_largebox": {
+      "group": "interaction",
+      "control_steps": 720,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": null,
+      "completed_reference_intervals": []
+    },
+    "roll_vault_wall": {
+      "group": "interaction",
+      "control_steps": 600,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.1627001166343689,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.04487919062376022
+        }
+      ]
+    },
+    "parkour_gaps": {
+      "group": "interaction",
+      "control_steps": 600,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": null,
+      "completed_reference_intervals": []
+    },
+    "athlete_tennis": {
+      "group": "body",
+      "control_steps": 600,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": null,
+      "completed_reference_intervals": []
+    },
+    "mimicx_descent": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.08740337938070297,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 3,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 4,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        },
+        {
+          "episode": 5,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994113445282
+        }
+      ]
+    },
+    "mimicx_stairs": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.22449226677417755,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.182105153799057
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.1821044683456421
+        }
+      ]
+    },
+    "husky_skateboard": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": null,
+      "completed_reference_intervals": []
+    },
+    "mimicx_dance": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.18731684982776642,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.06352507323026657
+        }
+      ]
+    },
+    "mimicx_kungfu": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.2254970222711563,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.14434248208999634
+        }
+      ]
+    },
+    "mimicx_football": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.16411162912845612,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08516281843185425
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08516240119934082
+        }
+      ]
+    },
+    "roll_vault_no_wall": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.16617918014526367,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.15550602972507477
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.1420423686504364
+        }
+      ]
+    },
+    "parkour_rough": {
+      "group": "motion_terrain",
+      "control_steps": 1200,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": null,
+      "completed_reference_intervals": []
+    },
+    "diveroll_lab_no_wall": {
+      "group": "body",
+      "control_steps": 600,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.4471871256828308,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.22117699682712555
+        }
+      ]
+    },
+    "diveroll_ramp_no_wall": {
+      "group": "body",
+      "control_steps": 600,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.51700758934021,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.34780681133270264
+        }
+      ]
+    },
+    "jump_sit_no_wall": {
+      "group": "body",
+      "control_steps": 600,
+      "tracking_lost_frames": 0,
+      "root_error_max_m": 0.18783394992351532,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.18783394992351532
+        }
+      ]
+    }
+  },
+  "physical_evidence": {
+    "ultra_largebox": {
+      "physical_carry_demonstrated": true,
+      "reference_completed": true,
+      "max_object_lift_m": 0.8038875988997283,
+      "hand_object_contact_seconds": 3.5666666666666664,
+      "lifted_contact_seconds": 2.5666666666666664,
+      "max_lifted_xy_displacement_m": 0.5335057426416584
+    },
+    "parkour_gaps": {
+      "goal_complete_observed": true,
+      "max_displacement_m": 4.041979631640015
+    },
+    "athlete_tennis": {
+      "cycles": [
+        {
+          "cycle": 0,
+          "racket_contact": true,
+          "net_crossing": {
+            "position": [
+              3.5,
+              -0.3475928295922769,
+              1.3282564605532599
+            ],
+            "clears_net": true
+          },
+          "first_bounce_after_hit": {
+            "position": [
+              4.748232003294632,
+              -0.670863499789392,
+              0.033600000000000005
+            ],
+            "inside_opponent_singles_half": true,
+            "target_error_xy_m": 0.7165507375718106
+          },
+          "complete_cycle": true
+        },
+        {
+          "cycle": 1,
+          "racket_contact": true,
+          "net_crossing": {
+            "position": [
+              3.5,
+              -1.3188938991014931,
+              1.4827594159421904
+            ],
+            "clears_net": true
+          },
+          "first_bounce_after_hit": {
+            "position": [
+              5.656755882747415,
+              -1.7740710842831084,
+              0.033600000000000005
+            ],
+            "inside_opponent_singles_half": true,
+            "target_error_xy_m": 1.8917337290466596
+          },
+          "complete_cycle": true
+        }
+      ],
+      "robot_resets": null
+    },
+    "husky_skateboard": {
+      "max_board_displacement_m": 4.0817842786590175,
+      "foot_board_contact_observed": true
+    },
+    "parkour_rough": {
+      "goal_complete_observed": true,
+      "max_displacement_m": 6.609285126646017
+    }
+  },
+  "isolated_install": "provenance/ISOLATED_ENVIRONMENT.json",
+  "all_25_network_parity": "provenance/HOLOMOTION_BANK25_CHECK.json",
+  "prior_seven_traces_exact": true,
+  "all_additional_traces_bitwise_identical": false,
+  "variation_note": "Non-identical no-wall vault and ramp-roll traces retained; no tracking loss. Maximum root-error metric difference versus local probe: 0.02761 m and 0.00163 m respectively. Selected physical replay, not a statistical success-rate estimate.",
+  "training_reproduction_verified": false,
+  "dr_generalization_verified": false,
+  "paper_wide_results_verified": false,
+  "artifact_delivery_record": "https://github.com/shangchaohu718/PERA/blob/main/provenance/RELEASE_DELIVERY.json"
+}

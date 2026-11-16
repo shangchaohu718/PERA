@@ -1,0 +1,11 @@
+{
+  "added_visual_geoms": 2,
+  "added_dofs": 0,
+  "hand_mesh_source": "third_party/ATHLETE/robots/replay_unitree_description/meshes",
+  "transforms": "Exact upstream commented visual-hand transforms on wrist_yaw_link",
+  "collision_enabled": false,
+  "density": 0,
+  "mass_and_inertia_unchanged": true,
+  "max_body_and_site_position_error_m": 0.0,
+  "simulation_used_original_model": true
+}

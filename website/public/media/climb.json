@@ -1,0 +1,28 @@
+{
+  "id": "climb",
+  "name": "50 cm knee climb, continuous-course excerpt",
+  "source": "reports/velocity_course_v11/seed7002/physical_replay.npz",
+  "source_sha256": "2a078b6066d9eaa96e829dfe8ba5ff946b7de2b4e5aba60955db069824143650",
+  "scene": "reports/velocity_course_v11/seed7002/scene.mjb",
+  "scene_sha256": "735522e2f532b60c54fa62723c8e4038fe90eaf424cbc8f42caa220860a38d1b",
+  "controller": "Frozen HoloMotion Actor + instinct_climb BC/DAgger expert; no teacher action queries",
+  "scope": "Complete skill segment from a single successful fixed course at seed 7002, nominal physics; not the independent held-out 16/16 batch. Original controller includes a 0.6 s entry-action blend.",
+  "partial_excerpt": true,
+  "source_start_s": 210.20948791503906,
+  "source_end_s": 221.22023010253906,
+  "source_frames": 276,
+  "fps": 30,
+  "source_fps": 25,
+  "output_frames": 332,
+  "duration_s": 11.066666666666666,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "all_terrain_geometry_retained": true,
+  "rendering": "Exact archived qpos, nearest-frame time sampling (max 20 ms). Only camera, texture color and lighting changed. No reference-driven poses or fresh policy inference.",
+  "master": ".render-work/climb.master.mkv",
+  "video_sha256": "74f00f6a62295dd844cca41daf51d70a90cf0f11fd0026cb0f7373efcfca3585"
+}

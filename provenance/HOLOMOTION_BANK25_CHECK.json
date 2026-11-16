@@ -1,0 +1,403 @@
+{
+  "schema": "pera.official_holomotion_bank_check.v1",
+  "status": "both_checkpoint_formats_and_seven_scene_physics_passed",
+  "checkpoint_sha256": "71c61fe915cddda5f9d91537bf540ef6b47f1f535bbcad0702c51c088f448521",
+  "checkpoint_bytes": 1689239121,
+  "expert_count": 25,
+  "source_manifest": "configs/holomotion_experts25.json",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "maximum_active_experts": 1,
+  "single_expert_action_parity": {
+    "status": "passed",
+    "expert_count": 25,
+    "base_family": "holomotion_official_g1_v1.4",
+    "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+    "checkpoint_sha256": "71c61fe915cddda5f9d91537bf540ef6b47f1f535bbcad0702c51c088f448521",
+    "checkpoint_bytes": 1689239121,
+    "contains_one_public_actor": true,
+    "all_parameters_frozen": true,
+    "public_off_action_max_abs_error": 0.0,
+    "public_restored_after_switches": true,
+    "multiple_experts_rejected": true,
+    "missing_context_rejected_and_switch_cleared": true,
+    "comparisons": [
+      {
+        "id": "husky_skateboard",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "athlete_tennis",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "roundhouse",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "velocity_walk",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_stairs",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_up",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_down",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_up_high",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_down_high",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_slope",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_rough",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_gaps",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_obstacles",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "pmt_optimized_scene0",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "ultra_largebox",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "diveroll_lab_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "diveroll_ramp_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "knee_climb_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "jump_sit_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "roll_vault_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_descent",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_kungfu",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_dance",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_football",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "roll_vault_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      }
+    ],
+    "device": "cpu",
+    "synthetic_action_parity_only": true,
+    "new_physics_skill_evaluation": false,
+    "training": false,
+    "uploaded": false
+  },
+  "seven_scene_physics": {
+    "status": "completed",
+    "resident_expert_count": 25,
+    "actor_instances": 1,
+    "teacher_action_queries": 0,
+    "isolation_check": {
+      "steps": 8,
+      "actual_official_weights": true,
+      "single_vs_shared_action_max_abs": 0.0,
+      "forward_vs_reverse_action_max_abs": 0.0,
+      "distinct_attention_cache_storage": true
+    },
+    "trace_comparison": {
+      "ultra_largebox": {
+        "control_steps": 720,
+        "exact_match": true
+      },
+      "roll_vault_wall": {
+        "control_steps": 600,
+        "exact_match": true
+      },
+      "parkour_gaps": {
+        "control_steps": 600,
+        "exact_match": true
+      },
+      "athlete_tennis": {
+        "control_steps": 600,
+        "exact_match": true
+      },
+      "mimicx_descent": {
+        "control_steps": 600,
+        "exact_match": true
+      },
+      "mimicx_stairs": {
+        "control_steps": 600,
+        "exact_match": true
+      },
+      "husky_skateboard": {
+        "control_steps": 600,
+        "exact_match": true
+      }
+    },
+    "runtime_sources_checkout_only": true,
+    "full_checkpoint_used_without_external_base_or_individual_domain_files": true,
+    "peak_torch_allocated_MiB": 1635.779296875
+  },
+  "all_25_physical_tasks_revalidated": false,
+  "standalone_physical_scene_count": 7,
+  "no_new_training": true,
+  "uploaded": false,
+  "official_actor_weights_in_source_release": false,
+  "expert_only_bank_check": {
+    "status": "passed",
+    "expert_count": 25,
+    "base_family": "holomotion_official_g1_v1.4",
+    "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+    "checkpoint_sha256": "280c79290c1a8ed7fc559602f0ca7415625d995a2f248a158310d55d756f500f",
+    "checkpoint_bytes": 52976259,
+    "contains_one_public_actor": true,
+    "all_parameters_frozen": true,
+    "public_off_action_max_abs_error": 0.0,
+    "public_restored_after_switches": true,
+    "multiple_experts_rejected": true,
+    "missing_context_rejected_and_switch_cleared": true,
+    "comparisons": [
+      {
+        "id": "husky_skateboard",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "athlete_tennis",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "roundhouse",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "velocity_walk",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_stairs",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_up",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_down",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_up_high",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_stairs_down_high",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_slope",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_rough",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_gaps",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "parkour_obstacles",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "pmt_optimized_scene0",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "ultra_largebox",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "diveroll_lab_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "diveroll_ramp_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "knee_climb_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "jump_sit_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "roll_vault_no_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_descent",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_kungfu",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_dance",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "mimicx_football",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      },
+      {
+        "id": "roll_vault_wall",
+        "action_max_abs_error": 0.0,
+        "sequence_steps": 3,
+        "inactive_expert_FFN_calls": 0
+      }
+    ],
+    "device": "cpu",
+    "synthetic_action_parity_only": true,
+    "new_physics_skill_evaluation": false,
+    "training": false,
+    "uploaded": false
+  }
+}

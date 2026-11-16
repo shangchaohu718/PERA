@@ -1,0 +1,1020 @@
+{
+  "version": 2,
+  "groups": [
+    {
+      "id": "body",
+      "label": "Rolls & climbs"
+    },
+    {
+      "id": "terrain",
+      "label": "Locomotion & terrain"
+    },
+    {
+      "id": "sports",
+      "label": "Skating & ball sports"
+    },
+    {
+      "id": "objects",
+      "label": "Object handling"
+    },
+    {
+      "id": "motions",
+      "label": "Martial arts"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "husky_skateboard",
+      "label": "Skateboard",
+      "detail": "Push off · Glide",
+      "group": "sports",
+      "number": 12,
+      "on": {
+        "id": "skate-on",
+        "fullId": "skate-on-full",
+        "duration": 5.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "skate-off",
+        "fullId": "skate-off-full",
+        "duration": 5.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        }
+      },
+      "metricLabel": "30-second skateboard survival with displacement and contact criteria met.",
+      "evidenceNotes": [
+        "Teacher seeds 9101/9102; student seeds 10101/10102, with one straight and one turning command. Different seeds prevent episode-by-episode pairing.",
+        "Starts on the board; autonomous mounting was not evaluated. The 128-dimensional context comes from the frozen HUSKY proprioceptive hidden layer, not a visual encoder.",
+        "Greater displacement does not imply more accurate velocity or turning tracking."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/husky_skateboard_dagger_v2/training/round_020.domain.pt",
+        "roster_plugin_sha256": "e370338acdd0c64b9e0d1b8e00243d23701602d78356a515d32bda34c1b2c936",
+        "sources": [
+          "reports/husky_skateboard_dagger_v2/training/report.json",
+          "reports/husky_skateboard_dagger_v1/teacher_validated_v2/report.json",
+          "reports/husky_skateboard_dagger_v2/student_eval/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "athlete_tennis",
+      "label": "Tennis return",
+      "detail": "Repeated incoming balls",
+      "group": "sports",
+      "number": 22,
+      "on": {
+        "id": "tennis",
+        "fullId": "tennis-full",
+        "duration": 20.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "tennis-off",
+        "fullId": "tennis-off-full",
+        "duration": 20.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 128,
+          "successes": 110,
+          "rate": 0.859375
+        }
+      },
+      "metricLabel": "Return crosses the net and first lands inside the opposite court.",
+      "evidenceNotes": [
+        "16 matched-seed, 40-second episodes with 8 complete incoming balls each. The 128 balls are not 128 independent robot episodes.",
+        "The student executes zero teacher-action steps. Inputs are ball state and native observations, not camera pixels.",
+        "Uses native ATHLETE G1 physics and motors; this is not cross-robot validation on the canonical HoloMotion hardware configuration.",
+        "The improvement from the earlier 35k student to the selected 44k student reflects this training process; it does not establish a causal benefit of a pretrained over a random base."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/athlete_tennis_v1/vector_512_dagger_20261104_v2/round_09.domain.pt",
+        "roster_plugin_sha256": "d5dcbae527fb1ed86a2e55e0429049a2d670221ce4db3af679a4d821f2ad23e6",
+        "sources": [
+          "reports/athlete_tennis_v1/vector_512_dagger_20261104_v2/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "roundhouse",
+      "label": "Roundhouse kick",
+      "detail": "Martial arts",
+      "group": "motions",
+      "number": 23,
+      "on": {
+        "id": "kick",
+        "fullId": "kick-full",
+        "duration": 5.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "roundhouse-base",
+        "fullId": "roundhouse-base",
+        "duration": 5.066666666666666,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 1,
+          "successes": null,
+          "rate": null,
+          "body_error_m": 0.06635395437479019
+        }
+      },
+      "metricLabel": "Reference-motion tracking error.",
+      "evidenceNotes": [
+        "The roundhouse expert uses PPO with a motion reference, without a distilled policy teacher. A kinematic reference is not a physical teacher.",
+        "The 31-task roster points to continuation_250/model_499, whereas the existing report selects continuation_100/model_349. This comparison uses the reported selection and does not mix them.",
+        "The model_840 kick with competitive routing belongs to a separate experiment and is excluded from the historical 31-task teacher-student table with continuous mixing."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/roundhouse_refine_20261105/continuation_250/model_499.domain.pt",
+        "roster_plugin_sha256": "454a372d13cc9bda6f76b432d547f57e74fafef2069e4dcde527b6348b15c405",
+        "sources": [
+          "reports/roundhouse_refine_20261105/summary.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "velocity_walk",
+      "label": "Commanded walking",
+      "detail": "Walk · Turn · Stop",
+      "group": "terrain",
+      "number": 11,
+      "on": {
+        "id": "catalog31-white-v2/velocity_walk-on",
+        "fullId": "catalog31-white-v2/velocity_walk-on",
+        "duration": 30.0,
+        "nativeEnd": 30.00049591064453,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31-white-v2/velocity_walk-off",
+        "fullId": "catalog31-white-v2/velocity_walk-off",
+        "duration": 30.0,
+        "nativeEnd": 30.00049591064453,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        }
+      },
+      "metricLabel": "30-second velocity-command sequence with tracking and stopping checks.",
+      "evidenceNotes": [
+        "The teacher uses 8 environments at seed 7002; the student uses 16 environments at seeds 8101/8102. This is a distributional comparison across different seeds.",
+        "Full-sequence survival and batch-level tracking/stopping acceptance are reported separately. Batch acceptance is not treated as independent per-environment tracking success.",
+        "Inputs are proprioceptive state and velocity commands, without camera pixels. The navigation demonstration additionally uses simulation localization."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/velocity_walk_v3/training/round_020.domain.pt",
+        "roster_plugin_sha256": "289f569dee6b118ab44d30afc1057f45bc97e5f0d6b50f19281a8d482715cb29",
+        "sources": [
+          "reports/velocity_walk_v3/teacher/report.json",
+          "reports/velocity_walk_v3/student_8101/report.json",
+          "reports/velocity_walk_v3/student_8102/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "mimicx_stairs",
+      "label": "Continuous stair ascent",
+      "detail": "Full staircase · Continuous ascent",
+      "group": "terrain",
+      "number": 32,
+      "on": {
+        "id": "catalog31-white-v2/mimicx_stairs-on",
+        "fullId": "catalog31-white-v2/mimicx_stairs-on",
+        "duration": 9.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31-white-v2/mimicx_stairs-off",
+        "fullId": "catalog31-white-v2/mimicx_stairs-off",
+        "duration": 5.234,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "metrics": {},
+      "metricLabel": "Native continuous-stair scene; one actual recording is shown here.",
+      "evidenceNotes": [],
+      "provenance": {
+        "roster_plugin": "reports/mimicx_stairs_512_v1/run_20261106_083527/training/round_07.domain.pt",
+        "roster_plugin_sha256": "4eb015a3dfcf1909531c3e0eb731ce53276da3fbdf8494eeaa7532141f1c8612",
+        "sources": [
+          "reports/mimicx_stairs_512_v1/run_20261106_083527/training/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_stairs_up",
+      "label": "Stair ascent",
+      "detail": "Staircase",
+      "group": "terrain",
+      "number": 13,
+      "on": {
+        "id": "catalog31/parkour_stairs_up-on",
+        "fullId": "catalog31/parkour_stairs_up-on",
+        "duration": 10.0,
+        "nativeEnd": 10.000039100646973,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/parkour_stairs_up-off",
+        "fullId": "catalog31/parkour_stairs_up-off",
+        "duration": 8.667,
+        "nativeEnd": 4.619996547698975,
+        "continuation": 4
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "The teacher gate result of 6/8 and student result of 16/16 use different seeds. Before refinement, the student scored 13/16 on the same 16 seeds. These are separate comparisons.",
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_parkour_stairs_refinement_v1/step_27000.domain.pt",
+        "roster_plugin_sha256": "3c030b02de123202163d7ebc9354da63bfea97314677873c88c1140eb8e425bb",
+        "sources": [
+          "reports/instinct_parkour_remaining_v5/stairs_up/teacher_41001/report.json",
+          "reports/instinct_parkour_remaining_v5/stairs_up/teacher_42001/report.json",
+          "reports/instinct_parkour_stairs_refinement_v1/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_stairs_down",
+      "label": "Stair descent",
+      "detail": "Staircase",
+      "group": "terrain",
+      "number": 14,
+      "on": {
+        "id": "catalog31/parkour_stairs_down-on",
+        "fullId": "catalog31/parkour_stairs_down-on",
+        "duration": 20.0,
+        "nativeEnd": 20.000267028808594,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/parkour_stairs_down-off",
+        "fullId": "catalog31/parkour_stairs_down-off",
+        "duration": 8.334,
+        "nativeEnd": 4.299996852874756,
+        "continuation": 4
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 1,
+          "rate": 0.25
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_parkour_dagger_v1/stairs_down/training/round_020.domain.pt",
+        "roster_plugin_sha256": "267cee757971e9294be607d4671fcbfaac58c5881847e6e9cfe8fca32d06735a",
+        "sources": [
+          "reports/instinct_parkour_dagger_v1/stairs_down/teacher_release_physics_12001/report.json",
+          "reports/instinct_parkour_dagger_v1/stairs_down/teacher_release_physics_12002/report.json",
+          "reports/instinct_parkour_dagger_v1/stairs_down/student_22001/report.json",
+          "reports/instinct_parkour_dagger_v1/stairs_down/student_22002/report.json",
+          "reports/instinct_parkour_dagger_v1/stairs_down/public_22001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_stairs_up_high",
+      "label": "High-step ascent",
+      "detail": "High steps",
+      "group": "terrain",
+      "number": 15,
+      "on": {
+        "id": "steps-on",
+        "fullId": "steps-on-full",
+        "duration": 5.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "steps-off",
+        "fullId": "steps-off-full",
+        "duration": 14.0,
+        "nativeEnd": 10.000039100646973,
+        "continuation": 4.0
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_extra_parkour_v1/stairs_up_high/training/round_020.domain.pt",
+        "roster_plugin_sha256": "4804132c6f344cb231ce91dc45442e52971e1958e5a34b34084ff817dd73e74b",
+        "sources": [
+          "reports/instinct_extra_parkour_v1/stairs_up_high/teacher_91001/report.json",
+          "reports/instinct_extra_parkour_v1/stairs_up_high/teacher_92001/report.json",
+          "reports/instinct_extra_parkour_v1/stairs_up_high/student_93001/report.json",
+          "reports/instinct_extra_parkour_v1/stairs_up_high/student_94001/report.json",
+          "reports/instinct_extra_parkour_v1/stairs_up_high/public_93001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_stairs_down_high",
+      "label": "High-step descent",
+      "detail": "High steps",
+      "group": "terrain",
+      "number": 16,
+      "on": {
+        "id": "catalog31/parkour_stairs_down_high-on",
+        "fullId": "catalog31/parkour_stairs_down_high-on",
+        "duration": 10.0,
+        "nativeEnd": 10.000039100646973,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/parkour_stairs_down_high-off",
+        "fullId": "catalog31/parkour_stairs_down_high-off",
+        "duration": 10.0,
+        "nativeEnd": 10.000039100646973,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_extra_parkour_resume_20261104/stairs_down_high/training/step_22000.domain.pt",
+        "roster_plugin_sha256": "deb20453b623476463a1186b21b005a8d045f7b6c9217d1beeeb575afc64d154",
+        "sources": [
+          "reports/instinct_extra_parkour_v1/stairs_down_high/teacher_91001/report.json",
+          "reports/instinct_extra_parkour_v1/stairs_down_high/teacher_92001/report.json",
+          "reports/instinct_extra_parkour_resume_20261104/stairs_down_high/student_93001/report.json",
+          "reports/instinct_extra_parkour_resume_20261104/stairs_down_high/student_94001/report.json",
+          "reports/instinct_extra_parkour_resume_20261104/stairs_down_high/public_93001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_slope",
+      "label": "Slope walking",
+      "detail": "Sloped terrain",
+      "group": "terrain",
+      "number": 17,
+      "on": {
+        "id": "catalog31/parkour_slope-on",
+        "fullId": "catalog31/parkour_slope-on",
+        "duration": 20.0,
+        "nativeEnd": 20.000267028808594,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/parkour_slope-off",
+        "fullId": "catalog31/parkour_slope-off",
+        "duration": 20.0,
+        "nativeEnd": 20.000267028808594,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_parkour_dagger_v1/slope/training/round_020.domain.pt",
+        "roster_plugin_sha256": "cee9757b70738d5f4de081f3adade554e0793bd4fcfe92f5b89f2fb4563f1793",
+        "sources": [
+          "reports/instinct_parkour_dagger_v1/slope/teacher_release_physics_12001/report.json",
+          "reports/instinct_parkour_dagger_v1/slope/teacher_release_physics_12002/report.json",
+          "reports/instinct_parkour_dagger_v1/slope/student_22001/report.json",
+          "reports/instinct_parkour_dagger_v1/slope/student_22002/report.json",
+          "reports/instinct_parkour_dagger_v1/slope/public_22001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_rough",
+      "label": "Uneven-ground walking",
+      "detail": "Rough terrain",
+      "group": "terrain",
+      "number": 18,
+      "on": {
+        "id": "catalog31/parkour_rough-on",
+        "fullId": "catalog31/parkour_rough-on",
+        "duration": 20.0,
+        "nativeEnd": 20.000267028808594,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/parkour_rough-off",
+        "fullId": "catalog31/parkour_rough-off",
+        "duration": 20.0,
+        "nativeEnd": 20.000267028808594,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_parkour_dagger_v1/rough/training/round_020.domain.pt",
+        "roster_plugin_sha256": "9558326f4677f0f9594e7f25beb05ce0ca380bd0d5bdef3d55f738e18611d2e5",
+        "sources": [
+          "reports/instinct_parkour_dagger_v1/rough/teacher_release_physics_12001/report.json",
+          "reports/instinct_parkour_dagger_v1/rough/teacher_release_physics_12002/report.json",
+          "reports/instinct_parkour_dagger_v1/rough/student_22001/report.json",
+          "reports/instinct_parkour_dagger_v1/rough/student_22002/report.json",
+          "reports/instinct_parkour_dagger_v1/rough/public_22001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_gaps",
+      "label": "Gap crossing",
+      "detail": "Gaps",
+      "group": "terrain",
+      "number": 19,
+      "on": {
+        "id": "gaps-on",
+        "fullId": "gaps-on-full",
+        "duration": 6.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "gaps-off",
+        "fullId": "gaps-off-full",
+        "duration": 9.2,
+        "nativeEnd": 5.179996013641357,
+        "continuation": 4.0
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_parkour_remaining_v3/gaps/training/round_020.domain.pt",
+        "roster_plugin_sha256": "917ebcb9eac46a81c356a953049fff046f0adbc79a699cab3ad8e0df2bae7267",
+        "sources": [
+          "reports/instinct_parkour_remaining_v3/gaps/teacher_41001/report.json",
+          "reports/instinct_parkour_remaining_v3/gaps/teacher_42001/report.json",
+          "reports/instinct_parkour_remaining_v3/gaps/student_51001/report.json",
+          "reports/instinct_parkour_remaining_v3/gaps/student_52001/report.json",
+          "reports/instinct_parkour_remaining_v3/gaps/public_51001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "parkour_obstacles",
+      "label": "Obstacle crossing",
+      "detail": "Obstacle terrain",
+      "group": "terrain",
+      "number": 20,
+      "on": {
+        "id": "catalog31/parkour_obstacles-on",
+        "fullId": "catalog31/parkour_obstacles-on",
+        "duration": 10.0,
+        "nativeEnd": 10.000039100646973,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/parkour_obstacles-off",
+        "fullId": "catalog31/parkour_obstacles-off",
+        "duration": 11.2,
+        "nativeEnd": 7.179994106292725,
+        "continuation": 4
+      },
+      "metrics": {
+        "on": {
+          "n": 8,
+          "successes": 8,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 4,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical target arrival and dwell, with valid physics.",
+      "evidenceNotes": [
+        "Teacher and student use different seeds. A distributional comparison on the same task and scene does not establish episode-by-episode wins.",
+        "Reset, goal generation and termination rules evolved between versions. Only the teacher corresponding to the final training version is used; earlier failed teachers are not substituted.",
+        "Goal dwell and physical validity must be checked for each task. A timeout or completion of the reference alone does not count as success."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_parkour_remaining_v3/obstacles/training/round_020.domain.pt",
+        "roster_plugin_sha256": "17ec23a5479320cb5ad3649d57764b6b94eebbfc27c005b51cfc3ba9ee9fd1c8",
+        "sources": [
+          "reports/instinct_parkour_remaining_v3/obstacles/teacher_41001/report.json",
+          "reports/instinct_parkour_remaining_v3/obstacles/teacher_42001/report.json",
+          "reports/instinct_parkour_remaining_v3/obstacles/student_51001/report.json",
+          "reports/instinct_parkour_remaining_v3/obstacles/student_52001/report.json",
+          "reports/instinct_parkour_remaining_v3/obstacles/public_51001/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "pmt_optimized_scene0",
+      "label": "Terrain dance",
+      "detail": "Uneven ground · Dance walk",
+      "group": "terrain",
+      "number": 21,
+      "on": {
+        "id": "gallery-bright-v3/pmt_optimized_scene0-on",
+        "fullId": "gallery-bright-v3/pmt_optimized_scene0-on",
+        "duration": 30.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "gallery-bright-v3/pmt_optimized_scene0-off",
+        "fullId": "gallery-bright-v3/pmt_optimized_scene0-off",
+        "duration": 6.067,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0,
+          "anchor_error_m": 0.07822547277336707
+        }
+      },
+      "metricLabel": "Complete 30-second optimized reference without termination.",
+      "evidenceNotes": [
+        "The PMT teacher was locally adapted to the canonical HoloMotion motors; it is not the unmodified official checkpoint.",
+        "Teacher seeds 7002/7003; selected student seeds 7602/7603. The selected student scores 16/16 versus 11/16 for an earlier student, not versus the teacher.",
+        "Both the actor and reward use the official optimized placement0 reference. This does not show that raw walking visually adapts to arbitrary terrain.",
+        "The teacher visual component is frozen, but student context also contains observation-bridge information. The necessity of vision has not been ablated."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/pmt_target_recovery_long_v1/training/round_007.domain.pt",
+        "roster_plugin_sha256": "b585933984b355b813550a89f6e0b2e891b47a22a78d0992cb74d96a6e6ab1c5",
+        "sources": [
+          "reports/pmt_target_recovery_long_v1/final_summary.json",
+          "reports/pmt_teacher_adaptation_v1/phase0/report.json",
+          "reports/pmt_target_recovery_long_v1/student_7602/report.json",
+          "reports/pmt_target_recovery_long_v1/student_7603/report.json",
+          "reports/pmt_target_recovery_long_v1/original_7602/report.json",
+          "reports/pmt_target_recovery_long_v1/original_7603/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "ultra_largebox",
+      "label": "Box carrying",
+      "detail": "Two-hand contact · Carry",
+      "group": "objects",
+      "number": 24,
+      "on": {
+        "id": "catalog31-white-v2/ultra_largebox-on",
+        "fullId": "catalog31-white-v2/ultra_largebox-on",
+        "duration": 10.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31-white-v2/ultra_largebox-off",
+        "fullId": "catalog31-white-v2/ultra_largebox-off",
+        "duration": 10.0,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "metrics": {
+        "on": {
+          "n": 512,
+          "successes": 512,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 512,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Physical box lift and carry with actual contact.",
+      "evidenceNotes": [
+        "The 512 environments have identical, deterministic initial states. These are repeated checks under one condition, not 512 independent trials.",
+        "Physical carrying and reference completion are scored separately. The public base survives and finishes the reference in 512/512 cases, but physically carries the box in 0/512.",
+        "The student does not exceed the teacher carrying rate. Differences in lift height, translation and contact time do not define a single quality ranking.",
+        "Uses the native ULTRA robot and actuators; this is not transfer validation on the canonical HoloMotion motor configuration."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/round_04.domain.pt",
+        "roster_plugin_sha256": "d20f1e505046aee1fbec707f9c4c2b8a45f84fbf6270276199aa2d62751244c1",
+        "sources": [
+          "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/report.json",
+          "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/round_04_paired_acceptance.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "diveroll_lab_no_wall",
+      "label": "Forward roll",
+      "detail": "No wall · Laboratory",
+      "group": "body",
+      "number": 1,
+      "on": {
+        "id": "roll-on",
+        "fullId": "roll-on-full",
+        "duration": 8.366666666666667,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "roll-off",
+        "fullId": "roll-off-full",
+        "duration": 7.633333333333334,
+        "nativeEnd": 3.6399998664855957,
+        "continuation": 4.0
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 15,
+          "rate": 0.9375
+        },
+        "off": {
+          "n": 16,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Full-reference completion rate without native failure.",
+      "evidenceNotes": [
+        "The same native MuJoCo-Warp task and reference are evaluated at seeds 7002 and 7003 with 8 environments each. Without per-environment initial-state hashes, matching seeds do not prove elementwise identical initial states.",
+        "Endpoint error includes failed episodes. Root error is averaged over surviving environments at each time, rather than over jointly surviving frames.",
+        "Completing the reference does not automatically establish geometric-goal completion. Data cover only the fixed published tasks."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/training/round_020.domain.pt",
+        "roster_plugin_sha256": "7bdba05369765a1d268a36d0bc2bf1f6362cad5398cd41265c8f8c8cb5414586",
+        "sources": [
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/final_summary.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/teacher_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/teacher_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/student_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/student_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/public_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_lab_no_wall/run/public_7003/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "diveroll_ramp_no_wall",
+      "label": "Ramp roll",
+      "detail": "No wall · Ramp",
+      "group": "body",
+      "number": 2,
+      "on": {
+        "id": "catalog31/diveroll_ramp_no_wall-on",
+        "fullId": "catalog31/diveroll_ramp_no_wall-on",
+        "duration": 8.367,
+        "nativeEnd": 8.34000015258789,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/diveroll_ramp_no_wall-off",
+        "fullId": "catalog31/diveroll_ramp_no_wall-off",
+        "duration": 7.667,
+        "nativeEnd": 3.619999885559082,
+        "continuation": 4
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 16,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Full-reference completion rate without native failure.",
+      "evidenceNotes": [
+        "The same native MuJoCo-Warp task and reference are evaluated at seeds 7002 and 7003 with 8 environments each. Without per-environment initial-state hashes, matching seeds do not prove elementwise identical initial states.",
+        "Endpoint error includes failed episodes. Root error is averaged over surviving environments at each time, rather than over jointly surviving frames.",
+        "Completing the reference does not automatically establish geometric-goal completion. Data cover only the fixed published tasks."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/training/round_020.domain.pt",
+        "roster_plugin_sha256": "80c864890459fed64c2e51c9cefffcbfe715d77b06414842723585a8234f2e0f",
+        "sources": [
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/final_summary.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/teacher_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/teacher_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/student_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/student_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/public_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/diveroll_ramp_no_wall/run/public_7003/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "knee_climb_no_wall",
+      "label": "Step climb",
+      "detail": "No wall",
+      "group": "body",
+      "number": 5,
+      "on": {
+        "id": "catalog31/knee_climb_no_wall-on",
+        "fullId": "catalog31/knee_climb_no_wall-on",
+        "duration": 11.1,
+        "nativeEnd": 11.079999923706055,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/knee_climb_no_wall-off",
+        "fullId": "catalog31/knee_climb_no_wall-off",
+        "duration": 6.9,
+        "nativeEnd": 2.879999876022339,
+        "continuation": 4
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 16,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Full-reference completion rate without native failure.",
+      "evidenceNotes": [
+        "The same native MuJoCo-Warp task and reference are evaluated at seeds 7002 and 7003 with 8 environments each. Without per-environment initial-state hashes, matching seeds do not prove elementwise identical initial states.",
+        "Endpoint error includes failed episodes. Root error is averaged over surviving environments at each time, rather than over jointly surviving frames.",
+        "Completing the reference does not automatically establish geometric-goal completion. Data cover only the fixed published tasks."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_dagger_v1/run/training/round_020.domain.pt",
+        "roster_plugin_sha256": "22dd7a6822b61d8eb40820d42561af15d5579a94f870a4cc0386180fd8e34734",
+        "sources": [
+          "reports/instinct_dagger_v1/run/final_summary.json",
+          "reports/instinct_dagger_v1/run/teacher_7002/report.json",
+          "reports/instinct_dagger_v1/run/teacher_7003/report.json",
+          "reports/instinct_dagger_v1/run/student_7002/report.json",
+          "reports/instinct_dagger_v1/run/student_7003/report.json",
+          "reports/instinct_dagger_v1/run/public_7002/report.json",
+          "reports/instinct_dagger_v1/run/public_7003/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "jump_sit_no_wall",
+      "label": "Jump to sit",
+      "detail": "No wall",
+      "group": "body",
+      "number": 7,
+      "on": {
+        "id": "catalog31/jump_sit_no_wall-on",
+        "fullId": "catalog31/jump_sit_no_wall-on",
+        "duration": 10.767,
+        "nativeEnd": 10.739999771118164,
+        "continuation": 0
+      },
+      "off": {
+        "id": "catalog31/jump_sit_no_wall-off",
+        "fullId": "catalog31/jump_sit_no_wall-off",
+        "duration": 10.7,
+        "nativeEnd": 6.659999847412109,
+        "continuation": 4
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 16,
+          "successes": 6,
+          "rate": 0.375
+        }
+      },
+      "metricLabel": "Full-reference completion rate without native failure.",
+      "evidenceNotes": [
+        "The same native MuJoCo-Warp task and reference are evaluated at seeds 7002 and 7003 with 8 environments each. Without per-environment initial-state hashes, matching seeds do not prove elementwise identical initial states.",
+        "Endpoint error includes failed episodes. Root error is averaged over surviving environments at each time, rather than over jointly surviving frames.",
+        "Completing the reference does not automatically establish geometric-goal completion. Data cover only the fixed published tasks."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/training/round_020.domain.pt",
+        "roster_plugin_sha256": "476ae3dbaf57fe88d57e69a595d584f71155de2f5b91a2ec62d27aa2fa2f41eb",
+        "sources": [
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/final_summary.json",
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/teacher_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/teacher_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/student_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/student_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/public_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/public_7003/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    },
+    {
+      "id": "roll_vault_no_wall",
+      "label": "Obstacle vault",
+      "detail": "No wall",
+      "group": "body",
+      "number": 9,
+      "on": {
+        "id": "vault-on",
+        "fullId": "vault-on-full",
+        "duration": 10.466666666666667,
+        "nativeEnd": null,
+        "continuation": 0
+      },
+      "off": {
+        "id": "vault-off",
+        "fullId": "vault-off-full",
+        "duration": 8.033333333333333,
+        "nativeEnd": 4.039999961853027,
+        "continuation": 4.0
+      },
+      "metrics": {
+        "on": {
+          "n": 16,
+          "successes": 16,
+          "rate": 1.0
+        },
+        "off": {
+          "n": 16,
+          "successes": 0,
+          "rate": 0.0
+        }
+      },
+      "metricLabel": "Full-reference completion rate without native failure.",
+      "evidenceNotes": [
+        "The same native MuJoCo-Warp task and reference are evaluated at seeds 7002 and 7003 with 8 environments each. Without per-environment initial-state hashes, matching seeds do not prove elementwise identical initial states.",
+        "Endpoint error includes failed episodes. Root error is averaged over surviving environments at each time, rather than over jointly surviving frames.",
+        "Completing the reference does not automatically establish geometric-goal completion. Data cover only the fixed published tasks."
+      ],
+      "provenance": {
+        "roster_plugin": "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/training/round_020.domain.pt",
+        "roster_plugin_sha256": "f3645f8c243de30a7df51193f9b0f14ff76949e6ef5a52efd9425a03a689ca9c",
+        "sources": [
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/final_summary.json",
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/teacher_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/teacher_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/student_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/student_7003/report.json",
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/public_7002/report.json",
+          "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/public_7003/report.json"
+        ],
+        "historical_metrics_separate_from_illustrative_video": true
+      }
+    }
+  ],
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "excluded_base_sha256": "fc5df7ad6ec83cce71853a30314e6c4c0109baab144308084279ded0679cb2eb",
+  "scope": "Selected legacy task recordings plus the existing native continuous stair task; historical metrics and illustrative replays are separate. No training or new-base results.",
+  "excluded_from_display": [
+    "diveroll_lab_wall",
+    "diveroll_ramp_wall",
+    "jump_sit_wall",
+    "knee_climb_wall",
+    "mimicx_bench",
+    "mimicx_dance",
+    "mimicx_descent",
+    "mimicx_football",
+    "mimicx_forest",
+    "mimicx_kungfu",
+    "mimicx_tennis",
+    "roll_vault_wall"
+  ],
+  "counts": {
+    "total": 20,
+    "onVideos": 20,
+    "pairedVideos": 20
+  }
+}

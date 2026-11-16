@@ -1,0 +1,35 @@
+{
+  "source_filename": "PERA.pdf",
+  "source_sha256": "01259bece9f6c87178ea09cd86ffa02e8e84cb7d3902340eee1b90cf900c25f5",
+  "source_title": "PERA: Plug-in Experts for Robotic Actions in Continual Whole-Body Control",
+  "imported_on": "2026-11-13",
+  "transformation": "Original embedded PNG images extracted with pypdf. No resampling, redrawing, recoloring, cropping or numerical changes. Full paper is not served.",
+  "figures": [
+    {
+      "id": "transfer",
+      "figure": 3,
+      "page": 7,
+      "image": "Im3.png",
+      "file": "unseen-dance-transfer.png",
+      "size": [
+        4320,
+        1512
+      ],
+      "caption": "Execution of dance motions not used to train the expert. (a) Fraction of episodes that fully execute the reference motion. (b) Mean motion completion. (c) One replay of the motion with the largest completion improvement: joint-angle and aligned-body-position RMSE are compared over the first 66 frames during which neither policy has terminated. Base-policy error is normalized to 100%; blue bars show the relative error with the expert enabled.",
+      "sha256": "a51a645897e5768d15be8ac1f7e705bfd22821cf77c4649427c052a79507966b"
+    },
+    {
+      "id": "teacher-comparison",
+      "figure": 5,
+      "page": 8,
+      "image": "Im5.png",
+      "file": "expert-teacher-errors.png",
+      "size": [
+        4320,
+        1596
+      ],
+      "caption": "Position errors of HoloMotion + expert and task teachers. The comparison includes the five tasks on which both policies fully complete all 16 evaluation episodes. (a) Per-task position-error reductions relative to the teacher: positive values indicate lower error and negative values indicate higher error than the teacher. (b) Position errors averaged equally across the five tasks.",
+      "sha256": "9301d8f72ce41fcf9d35934d3397772057fb8c6cd61acae0dcb382c3b10eb24a"
+    }
+  ]
+}

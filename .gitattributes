@@ -1,0 +1,11 @@
+* text=auto
+*.py text eol=lf
+*.sh text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.stl binary
+*.STL binary
+*.png binary
+*.webp binary
+*.gif binary
+*.mp4 binary

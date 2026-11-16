@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_dance-off",
+  "task": "mimicx_dance",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_dance/attempt_1/public.mp4",
+  "source_sha256": "2af3bbc9467669c395dbe68c024c664085f59878781a3dac3aececc28faf5664",
+  "duration_s": 15.667,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "26072ae3c0911a54fa9a9d65e37470f3a1849bd7269cce99dd587c491940c348",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_dance/attempt_1/final_public_4004.json",
+  "report_sha256": "cce34c37997ce71cdaf4f54a49558c7e0a82b1aa3feb8ad0936ab328534e4f32",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

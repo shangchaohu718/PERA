@@ -1,0 +1,26 @@
+[
+  {
+    "source": "modumotion_g1/differentiable_actor.py",
+    "destination": "src/modumotion_g1/differentiable_actor.py",
+    "source_sha256": "440bfb56aee1208869d580399a461f17c0980e15968ec0a8116bcf035f9aa495",
+    "reason": "Unused historical branch removed or replaced by a smaller shared contract; not present in release"
+  },
+  {
+    "source": "modumotion_g1/perceptive_environment.py",
+    "destination": "src/modumotion_g1/perceptive_environment.py",
+    "source_sha256": "32d7d6c432fe090317684bc54e5fea497ed6fef7e8d819466b0fe327db2ddb3a",
+    "reason": "Unused historical branch removed or replaced by a smaller shared contract; not present in release"
+  },
+  {
+    "source": "modumotion_g1/perceptive_supermimic.py",
+    "destination": "src/modumotion_g1/perceptive_supermimic.py",
+    "source_sha256": "6d33e5d590f71151b3632418cc855653f51b7fdd43441e108ce88eaafd419afe",
+    "reason": "Unused historical branch removed or replaced by a smaller shared contract; not present in release"
+  },
+  {
+    "source": "modumotion_g1/soft_residual_moe.py",
+    "destination": "src/modumotion_g1/soft_residual_moe.py",
+    "source_sha256": "ab32180a0d9d0e7664edaea417e605fdb2ab8fa77f49ac96f0362a69b902c3be",
+    "reason": "Unused historical branch removed or replaced by a smaller shared contract; not present in release"
+  }
+]

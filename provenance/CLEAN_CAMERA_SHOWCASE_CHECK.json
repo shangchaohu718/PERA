@@ -1,0 +1,118 @@
+{
+  "schema": "pera.clean_camera_check.v1",
+  "checked_at": "2026-11-13T08:43:58.731723+00:00",
+  "status": "completed_12_second_closer_overhead_render",
+  "local_run": "runs/clean_camera_20261113/video_04",
+  "video": "runs/clean_camera_20261113/video_04/overview.mp4",
+  "video_sha256": "72dc2cb00b69b50670e1332c0ce3a27e21ad21dabd4e72d49a4fad376089e872",
+  "video_metadata": {
+    "width": 1920,
+    "height": 912,
+    "duration": "12.000000",
+    "nb_frames": "300"
+  },
+  "camera": {
+    "lookat": [
+      9.3,
+      2,
+      0.65
+    ],
+    "distance": 16,
+    "azimuth": 90,
+    "elevation": -60
+  },
+  "clean_presentation": true,
+  "project_method_expert_count_banners_shown": false,
+  "status_footer_shown": false,
+  "scene_names_shown": true,
+  "episode_reset_labels_shown": true,
+  "tennis_court_edge_outside_overview": true,
+  "physics_and_weights_changed": false,
+  "new_training": false,
+  "uploaded": false,
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "actor_sha256": "e698ae9dc88b131ab8cbd0c9acbace741eabff6ab984cc699cbc42316b7f7542",
+  "actor_instances": 1,
+  "physics_worlds": 1,
+  "teacher_action_queries": 0,
+  "isolation_check": {
+    "steps": 8,
+    "actual_official_weights": true,
+    "single_vs_shared_action_max_abs": 0.0,
+    "forward_vs_reverse_action_max_abs": 0.0,
+    "distinct_attention_cache_storage": true
+  },
+  "tasks": [
+    {
+      "id": "ultra_largebox",
+      "control_steps": 720,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true,
+      "carry": {
+        "frame": 345,
+        "reference_frames": 346,
+        "reference_completed": false,
+        "physical_survival": true,
+        "minimum_pelvis_height_m": 0.5995733851673681,
+        "max_object_lift_m": 0.8038875988997283,
+        "max_object_xy_displacement_m": 0.5335057426416584,
+        "hand_object_contact_seconds": 3.4,
+        "lifted_contact_seconds": 2.4,
+        "max_lifted_xy_displacement_m": 0.5335057426416584,
+        "object_state_writes_after_reset": 0,
+        "physical_carry_demonstrated": true
+      }
+    },
+    {
+      "id": "roll_vault_wall",
+      "control_steps": 600,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true
+    },
+    {
+      "id": "parkour_gaps",
+      "control_steps": 600,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true
+    },
+    {
+      "id": "athlete_tennis",
+      "control_steps": 600,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true
+    },
+    {
+      "id": "mimicx_descent",
+      "control_steps": 600,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true
+    },
+    {
+      "id": "mimicx_stairs",
+      "control_steps": 600,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true
+    },
+    {
+      "id": "husky_skateboard",
+      "control_steps": 600,
+      "first_warning_s": null,
+      "records_identical_to_prior_render": true
+    }
+  ],
+  "source_sha256": {
+    "src/pera/interaction_showcase.py": "6103eb6baa261e9aa1a9d608d43136df8b562ed93b38232b585d74a18f183e6a",
+    "src/pera/holomotion_showcase.py": "5a79a8a2ae834f0a6e56cd9188057f7921b4b3410407693a4e06463e9b959eb4",
+    "src/pera/compact_showcase.py": "026a521d9fab3365eb3cabdd28ad5cede2082291d8e23f2fa77bb3a20a12c60c",
+    "src/pera/box_showcase.py": "758d687600091bfe7f190232a1e9191640ca73525fcf2e495f86cf55129b0c90",
+    "src/pera/multirate_showcase.py": "a88024a30e35589ae4b21fc2461f0e0ad4b1cb6243f2a9796f666b5b4744b6bb",
+    "configs/demo_policy.json": "376ad4f3441decc58e899d4387d252f5d029ef9a77fe1a3e1b48da12682e3062",
+    "configs/showcase.json": "49e74691a3a118ece007a68ed68c4cc772fd5e47f46f3e439187ca62d1bdcabe",
+    "configs/showcase_motion_regions.json": "fb337e294d49cdbaa12a39d610bbf31ffc7aab623943618433664f11b2dd9e0b"
+  },
+  "task_evidence": "OBJECT_OBSTACLE_SHOWCASE_CHECK.json",
+  "limitations": [
+    "Presentation-only update; preserves prior task contracts and labeled goal loops. Gap long-horizon stability limitation remains as documented in OBJECT_OBSTACLE_SHOWCASE_CHECK.json."
+  ]
+}

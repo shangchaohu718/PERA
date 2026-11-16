@@ -1,0 +1,43 @@
+{
+  "name": "Moonwalk",
+  "expert": "PPO expert - 500 iterations / model 499",
+  "source": "reports/moonwalk_expert_20261105/stage_500/expert_eval/isaaclab_eval_output_model_14000_reference_h5/g1_moonwalk_grounded_loop_v5_x3__start_0_len_900.npz",
+  "source_sha256": "873768d110b50539df93e3d51f2bbbf83b304da981b11048c4702db10e493abf",
+  "report": "reports/moonwalk_expert_20261105/stage_500/summary.json",
+  "report_sha256": "a735c632d839ab364bbd8a827be41fb22e6c2deb70018c9f03fa775204866d04",
+  "scope": "500-iteration PPO checkpoint, model_499; seed 42, one repeated training motion. Same frozen public Actor as the other skills, with a task-specific expert. One reference and seed; no generalization or old-skill preservation claim.",
+  "source_fps": 50,
+  "source_frames": 890,
+  "source_frame_offset": 0,
+  "source_recording_start_s": 0.0,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "camera": {
+    "azimuth": 100,
+    "elevation": -18,
+    "distance": 2.9
+  },
+  "scene_style": "skate",
+  "lighting": "Studio v4: white sky; contrasting terrain, world-anchored skate grid, or original tennis-court colors according to scene. Original robot albedo retained.",
+  "all_terrain_geometry_retained": true,
+  "master": ".render-work/highlights-v6/moonwalk.master.mkv",
+  "rendering": "Exact recorded actual robot and object states. Nearest timestamp resampling only; maximum quantization is half of one source interval, plus source timestamp precision. No training, simulator stepping, teacher queries or reference-pose playback during rendering.",
+  "model": "HoloMotion/assets/robots/unitree/G1/29dof/g1_29dof_rev_1_0.xml",
+  "model_sha256": "df60bbf86809af184c244211dc9c7e3900c4119ed0d0dd28163b8ddb52e44e8e",
+  "id": "moonwalk-full",
+  "full_recorded_episode": true,
+  "full_task_segment": false,
+  "partial_excerpt": false,
+  "excerpt_start_s": 0,
+  "excerpt_end_s": 17.8,
+  "source_start_s": 0.0,
+  "source_end_s": 17.8,
+  "output_frames": 534,
+  "duration_s": 17.8,
+  "video_sha256": "27741d56a31901836a66320ce0c9b2f9acd2ab2d2f9d63de0765f9ad05f65ecc"
+}

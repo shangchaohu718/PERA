@@ -1,0 +1,24 @@
+{
+  "id": "catalog31/ultra_largebox-off",
+  "task": "ultra_largebox",
+  "expert_enabled": false,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/final_public.mp4",
+  "source_sha256": "0398ae000bfe22443ffd624551a15c2a8a6018d848d8988a1f6a22b443b9fbe4",
+  "duration_s": 10.0,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "cac919db310d3edba0abc777f86d8387d5839ef18f9b18687e37fd6f40278bdf",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/final_public.json",
+  "report_sha256": "d5dbe84af04bcc26bd9a50f3ac05c2290020c06167db74581dc845735963f283",
+  "resets_after_initialization": 0
+}

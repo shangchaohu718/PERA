@@ -1,0 +1,271 @@
+{
+  "schema": "pera.release_validation.v1",
+  "checked_at": "2026-11-11T08:47:02.144895+08:00",
+  "status": "holomotion_release_incomplete_official_base_external_downloads",
+  "paper_scope": "v2.4 competitive G1 MoE-MLP; historical HoloMotion optional; TrustMimic excluded",
+  "checks": {
+    "static": {
+      "python_files": 169,
+      "native_runtime_copies": 1,
+      "problems": []
+    },
+    "ruff_format": "180 files already formatted",
+    "ruff_undefined_names": "All checks passed!",
+    "pytest": "15 passed",
+    "workflow_help_passed": 15,
+    "gitignore_preserves_train_holdout_contracts": true,
+    "relative_readme_links_valid": true,
+    "resource_manifest_entries": 218,
+    "source_origin_rows": 160,
+    "no_bundled_weights": false,
+    "no_symlinks": true,
+    "weights_ignored_by_git": true,
+    "relative_document_links_valid": true
+  },
+  "evidence": {
+    "core_contracts": "CPU_CONTRACT_CHECK.json",
+    "paper_checkpoint_cpu": "CHECKPOINT_CPU_CHECK.json",
+    "original_routing_parity": "REFACTOR_PARITY.json",
+    "relocation": "RELOCATION_CHECK.json",
+    "workflow_help": "ENTRYPOINT_CHECKS.json",
+    "resource_plan": "RESOURCE_PLAN_CHECK.json",
+    "current_environment_versions": "ENVIRONMENTS.json",
+    "source_changes": "CHANGES.json",
+    "switched_expert_bank": "EXPERT_BANK_CHECK.json",
+    "shared_world": "SHARED_WORLD_CHECK.json",
+    "shared_world_fix": "SHARED_WORLD_FIX_CHECK.json",
+    "interaction_showcase": "INTERACTION_SHOWCASE_CHECK.json",
+    "tennis_interface": "TENNIS_INTERFACE_CHECK.json",
+    "demo_selection": "DEMO_SELECTION_CHANGE.json",
+    "official_holomotion_showcase": "OFFICIAL_HOLOMOTION_SHOWCASE_CHECK.json",
+    "compact_holomotion_showcase": "COMPACT_HOLOMOTION_SHOWCASE_CHECK.json",
+    "object_obstacle_showcase": "OBJECT_OBSTACLE_SHOWCASE_CHECK.json",
+    "clean_camera_showcase": "CLEAN_CAMERA_SHOWCASE_CHECK.json",
+    "holomotion_release_audit": "HOLOMOTION_RELEASE_AUDIT.json",
+    "readme_media": "README_MEDIA.json",
+    "private_repository_setup": "PRIVATE_REPOSITORY_SETUP.json"
+  },
+  "limitations": [
+    "No fresh-environment installation, GPU training, physical rollout or skill-success/retention sweep performed during packaging",
+    "CPU core and current native environment have different dependency versions; snapshots are not a complete historical paper environment lock",
+    "Base weights, retargeted motion arrays, meshes and external teachers must be supplied separately; new base/private retarget exports have no public release URLs in this package",
+    "Additional historical transfer artifacts are not covered by the base/teacher importer groups",
+    "Switched bank has CPU inference parity only; no joint all-expert routing, physical transition sweep, all30 skill acceptance, teacher superiority or guaranteed enabled-expert retention"
+  ],
+  "side_effects": {
+    "new_gpu_training_started": false,
+    "environments_installed": false,
+    "resources_downloaded": false,
+    "git_commits_created": false,
+    "pushed_or_uploaded": false,
+    "original_experiment_source_modified": false,
+    "real_robot_accessed": false
+  },
+  "documentation_update": {
+    "checked_at": "2026-11-11T08:58:53.168604+08:00",
+    "files": [
+      "README.md",
+      "README.zh-CN.md",
+      "docs/CODE_MAP.md",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "project_name": "PERA",
+    "paper_title": "PERA: Plug-in Experts for Robotic Actions in Continual Whole-Body Control",
+    "local_links_valid": true,
+    "english_chinese_external_references_match": true,
+    "acknowledged_project_links": 25,
+    "code_modified": false,
+    "gpu_tests_rerun": false
+  },
+  "metadata_update": {
+    "checked_at": "2026-11-11T09:00:36.566470+08:00",
+    "files": [
+      "CITATION.cff",
+      "pyproject.toml",
+      ".gitignore",
+      "README.md",
+      "README.zh-CN.md"
+    ],
+    "authors_source": "PERA manuscript title page",
+    "package_metadata_checked_with": "setuptools.config.pyprojecttoml.read_configuration",
+    "citation_check": "YAML parsed; title, authors and version matched package/README; full CFF schema validation not run",
+    "relative_readme_links_valid": true,
+    "repository_urls_and_ci_badges": "Deferred until repository URL is established",
+    "git_init_or_commit_or_upload_performed": false,
+    "training_or_algorithm_changes": false
+  },
+  "local_weights_update": {
+    "checked_at": "2026-11-11T09:55:17.519895+08:00",
+    "stage": "local_review_only_not_uploaded",
+    "files": 35,
+    "bytes": 307141773,
+    "hash_check": "all35files_verified",
+    "model_load_check": "WEIGHTS_CPU_CHECK.json",
+    "manifest": "resources/weights_manifest.json",
+    "base_includes": [
+      "Actor",
+      "world model",
+      "Critic",
+      "optimizer states"
+    ],
+    "expert_acceptance": "Recorded individually; checkpoint presence is not acceptance",
+    "unavailable_mainline_student": "ultra_largebox",
+    "known_failed_run_checkpoint": "athlete_tennis/last.domain.pt",
+    "independent_local_copies": true,
+    "original_weight_files_modified": false,
+    "uploaded": false,
+    "git_repository_created": false
+  },
+  "expert_bank_update": {
+    "checked_at": "2026-11-11T03:31:42.168796+00:00",
+    "checks": {
+      "pytest": "......                                                                   [100%]\n6 passed in 1.50s",
+      "static": {
+        "python_files": 163,
+        "native_runtime_copies": 1,
+        "duplicate_large_python_files": [],
+        "problems": [],
+        "CUDA_initialized": false
+      },
+      "ruff_format": "119 files already formatted",
+      "ruff_undefined_names": "All checks passed!",
+      "local_weight_hashes": {
+        "status": "verified",
+        "expected_files": 36,
+        "verified_files": 36,
+        "verified_bytes": 363367392,
+        "missing": [],
+        "mismatched": []
+      },
+      "experts_CLI": {
+        "expert_count": 30,
+        "max_active_experts": 1,
+        "all_off": true
+      },
+      "compose_help": true,
+      "relative_document_links_valid": true
+    },
+    "expert_count": 30,
+    "max_active_experts": 1,
+    "default_active_expert": null,
+    "bundle": "checkpoints/composed/pera_30_experts.pt",
+    "report": "EXPERT_BANK_CHECK.json",
+    "source_config": "configs/expert_bank.json",
+    "original_weight_files_modified": false,
+    "original_experiment_source_modified": false,
+    "new_training_started": false,
+    "physical_rollouts_performed": false,
+    "uploaded": false,
+    "git_operations_performed": false
+  },
+  "shared_world_update": {
+    "checked_at": "2026-11-13T01:49:02.339437+00:00",
+    "report": "SHARED_WORLD_CHECK.json",
+    "observer_check": "SHARED_WORLD_INPUT_CHECK.json",
+    "scene_config": "configs/showcase.json",
+    "resource_manifest": "resources/showcase_manifest.json",
+    "status": "five_scene_prototype_verified_not_all30",
+    "scope": "One MuJoCo model/data and one Actor; 5 context-free task regions; original task success gates not ported",
+    "removed_scene": "mimicx_forest",
+    "no_new_training": true,
+    "uploaded": false
+  },
+  "shared_world_fix_update": {
+    "checked_at": "2026-11-13T02:16:44.708199+00:00",
+    "status": "playback_and_reference_import_corrected_remaining_student_failures",
+    "weights_unchanged": true,
+    "new_training": false,
+    "upload": false
+  },
+  "interaction_showcase_update": {
+    "status": "completed_with_tennis_failure_and_vault_endpoint_error",
+    "tasks": [
+      "mimicx_descent",
+      "husky_skateboard",
+      "athlete_tennis",
+      "roll_vault_no_wall"
+    ],
+    "new_training": false,
+    "uploaded": false,
+    "checked_at": "2026-11-13T02:53:43.423389+00:00"
+  },
+  "compact_holomotion_showcase_update": {
+    "checked_at": "2026-11-13T04:30:57.239305+00:00",
+    "status": "completed_22_second_compact_shared_world_replay",
+    "tasks": [
+      "mimicx_dance",
+      "mimicx_kungfu",
+      "mimicx_football",
+      "roll_vault_no_wall",
+      "mimicx_descent",
+      "mimicx_stairs",
+      "husky_skateboard",
+      "parkour_rough",
+      "athlete_tennis"
+    ],
+    "checks": {
+      "pytest": "16 passed",
+      "ruff_format": "21 files already formatted",
+      "ruff_undefined_names": "passed",
+      "release_static": "174 Python files; no problems"
+    },
+    "new_training": false,
+    "uploaded": false
+  },
+  "object_obstacle_showcase_update": {
+    "status": "completed_12s_student_shared_world_exhibition_with_labeled_goal_loops",
+    "checked_at": "2026-11-13T06:58:03.768421+00:00",
+    "tasks": [
+      "ultra_largebox",
+      "roll_vault_wall",
+      "parkour_gaps",
+      "athlete_tennis",
+      "mimicx_descent",
+      "mimicx_stairs",
+      "husky_skateboard"
+    ],
+    "checks": {
+      "pytest": "17 passed",
+      "static_python_files": 177,
+      "ruff_undefined_names": "passed"
+    },
+    "new_training": false,
+    "uploaded": false
+  },
+  "clean_camera_showcase_update": {
+    "checked_at": "2026-11-13T08:43:58.731723+00:00",
+    "status": "completed_12_second_closer_overhead_render",
+    "camera": {
+      "lookat": [
+        9.3,
+        2,
+        0.65
+      ],
+      "distance": 16,
+      "azimuth": 90,
+      "elevation": -60
+    },
+    "banner_removed": true,
+    "new_training": false,
+    "uploaded": false
+  },
+  "current_release_scope": "Official HoloMotion G1 v1.4 model_14000 with matching anchored plugins; historical self-trained study retained separately",
+  "current_release_audit": {
+    "report": "HOLOMOTION_RELEASE_AUDIT.json",
+    "selection": "configs/release.json",
+    "official_weights_bundled": false,
+    "official_downloads": "resources/holomotion_base.json",
+    "standalone_reproduction_verified": false,
+    "training_reproduction_verified": false,
+    "uploaded": false
+  },
+  "readme_presentation_update": {
+    "single_scene_count": 6,
+    "media_bytes": 32038292,
+    "source": "Existing project-homepage HoloMotion student recordings",
+    "new_repository_private": true,
+    "repository": "https://github.com/shangchaohu718/PERA",
+    "files_uploaded": false,
+    "commits_created": false
+  }
+}

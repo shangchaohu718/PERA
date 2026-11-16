@@ -1,0 +1,32 @@
+{
+  "id": "catalog31/jump_sit_no_wall-off",
+  "task": "jump_sit_no_wall",
+  "expert_enabled": false,
+  "source": "website/.render-work/catalog31-v1/jump_sit_no_wall/off/physics.npz",
+  "source_sha256": "02239d9b391ddb77e8a39fe391f9483b1e63934ba9f8ccc7385611e53584de7d",
+  "duration_s": 10.7,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "fcca1cc516fde16b8d260e23e3aca64813d49e12c2635aff7e3ada2be0f99de9",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Nearest actual qpos sample, original speed, preserved native scene and failure. Camera and lighting only; no simulation stepping during rendering.",
+  "report": "website/.render-work/catalog31-v1/jump_sit_no_wall/off/report.json",
+  "report_sha256": "94073630d7cbd81fb6b28c85381846cef23d1e7a647f47d4118a28dc33634f35",
+  "native_termination_s": 6.659999847412109,
+  "post_termination_seconds": 4,
+  "resets_after_initialization": 0,
+  "evaluation_result_unchanged": true,
+  "seed": 7002,
+  "plugin": "reports/instinct_all_tasks_dagger_v2/jump_sit_no_wall/run/training/round_020.domain.pt",
+  "plugin_sha256": "476ae3dbaf57fe88d57e69a595d584f71155de2f5b91a2ec62d27aa2fa2f41eb",
+  "scene": "website/.render-work/catalog31-v1/jump_sit_no_wall/off/scene.mjb",
+  "scene_sha256": "8c9ad8a90ddb30e3c699e33bb6e6f91569b0a61df0317f5b4a2447a26299fe4b"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Roundhouse kick",
+  "expert": "PPO expert \u00b7 refined checkpoint",
+  "source": "reports/roundhouse_refine_20261105/fresh_selected_a/selected_a/isaaclab_eval_output_model_14000_reference_h5/Roundhouse_kick__start_0_len_262.npz",
+  "source_sha256": "e6538e8a393da30c629eff40e58241c54b85424b8f5fbc1bd6c3064bb36d21f2",
+  "report": "reports/roundhouse_refine_20261105/fresh_validation_status.json",
+  "report_sha256": "9aa33cbe229ba46228df2be8cceaa3443ad60a8c073b7dba0759bb12f6572360",
+  "scope": "One fresh-process replay, seed 42; refined model_349 expert. Distinct from the earlier seven-clip quantitative snapshot.",
+  "source_fps": 50,
+  "source_frames": 252,
+  "source_frame_offset": 0,
+  "source_recording_start_s": 0.0,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "speed": 1,
+  "pose_interpolation": false,
+  "camera": {
+    "azimuth": 135,
+    "elevation": -17,
+    "distance": 3.05
+  },
+  "lighting": "Studio v3: white studio floor and sky, camera fill with directional key; original robot albedo retained. No post-processing exposure boost.",
+  "all_terrain_geometry_retained": true,
+  "master": ".render-work/highlights-v3/kick.master.mkv",
+  "rendering": "Exact recorded actual robot and object states. Nearest timestamp resampling only; maximum quantization is half of one source interval, plus source timestamp precision. No training, simulator stepping, teacher queries or reference-pose playback during rendering.",
+  "model": "HoloMotion/assets/robots/unitree/G1/29dof/g1_29dof_rev_1_0.xml",
+  "model_sha256": "df60bbf86809af184c244211dc9c7e3900c4119ed0d0dd28163b8ddb52e44e8e",
+  "id": "kick",
+  "full_recorded_episode": false,
+  "full_task_segment": false,
+  "partial_excerpt": true,
+  "excerpt_start_s": 0,
+  "excerpt_end_s": 5.0,
+  "source_start_s": 0.0,
+  "source_end_s": 5.0,
+  "output_frames": 150,
+  "duration_s": 5.0,
+  "video_sha256": "5b6f2c95e0067fd958c31867352db1182484171781ea177157d1d7f6c04991d5",
+  "full_video": "kick-full.mp4"
+}

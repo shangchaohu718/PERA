@@ -1,0 +1,81 @@
+{
+  "method": "PPO",
+  "stage": "stage_500",
+  "seed": 42,
+  "actor_adam_updates_total": 12000,
+  "public": {
+    "frames": 890,
+    "evaluated_seconds": 17.8,
+    "reference_cycles_covered": 2.966666666666667,
+    "mean_body_error_cm": 50.18758177757263,
+    "p95_body_error_cm": 81.34482234716415,
+    "mean_root_xy_error_cm": 49.74563717842102,
+    "max_root_xy_error_cm": 84.73301529884338,
+    "root_xy_displacement_cm": 84.42991375923157,
+    "first_sustained_fall_s": null,
+    "physically_survived_evaluated_window": true,
+    "first_sustained_tracking_loss_s": 3.4,
+    "mean_dof_rmse_rad": 0.12094075232744217,
+    "bilateral_heel_phase_rmse_cm": 5.1448417036388925,
+    "feet": [
+      {
+        "foot": "left",
+        "heel_gap_rmse_cm": 4.033065843161446,
+        "reference_heel_gap_peak_cm": 9.91716865321863,
+        "actual_heel_gap_peak_cm": 13.259629359844869,
+        "actual_gap_when_reference_above_7cm_mean_cm": 3.9856509239180755,
+        "toe_height_rmse_cm": 1.020438504670324,
+        "sole_xy_velocity_rmse_m_s": 0.5336684044764167
+      },
+      {
+        "foot": "right",
+        "heel_gap_rmse_cm": 4.303058815334896,
+        "reference_heel_gap_peak_cm": 9.928185924184689,
+        "actual_heel_gap_peak_cm": 10.165576400935706,
+        "actual_gap_when_reference_above_7cm_mean_cm": 2.5450867670344266,
+        "toe_height_rmse_cm": 1.0096711974297532,
+        "sole_xy_velocity_rmse_m_s": 0.5888129063740966
+      }
+    ]
+  },
+  "expert": {
+    "frames": 890,
+    "evaluated_seconds": 17.8,
+    "reference_cycles_covered": 2.966666666666667,
+    "mean_body_error_cm": 7.171051949262619,
+    "p95_body_error_cm": 13.952026665210724,
+    "mean_root_xy_error_cm": 6.35322779417038,
+    "max_root_xy_error_cm": 14.737078547477722,
+    "root_xy_displacement_cm": 14.737078547477722,
+    "first_sustained_fall_s": null,
+    "physically_survived_evaluated_window": true,
+    "first_sustained_tracking_loss_s": null,
+    "mean_dof_rmse_rad": 0.04361531510949135,
+    "bilateral_heel_phase_rmse_cm": 0.5882864632632097,
+    "feet": [
+      {
+        "foot": "left",
+        "heel_gap_rmse_cm": 1.1233560953833917,
+        "reference_heel_gap_peak_cm": 9.91716865321863,
+        "actual_heel_gap_peak_cm": 10.409450739671156,
+        "actual_gap_when_reference_above_7cm_mean_cm": 8.950603873035528,
+        "toe_height_rmse_cm": 0.4047990889828422,
+        "sole_xy_velocity_rmse_m_s": 0.19410078880730045
+      },
+      {
+        "foot": "right",
+        "heel_gap_rmse_cm": 0.9579736988189003,
+        "reference_heel_gap_peak_cm": 9.928185924184689,
+        "actual_heel_gap_peak_cm": 10.612019840657553,
+        "actual_gap_when_reference_above_7cm_mean_cm": 8.457229488458019,
+        "toe_height_rmse_cm": 0.1898554547513258,
+        "sole_xy_velocity_rmse_m_s": 0.19621537595750257
+      }
+    ]
+  },
+  "source": "reports/moonwalk_expert_20261105/stage_500/summary.json",
+  "source_sha256": "a735c632d839ab364bbd8a827be41fb22e6c2deb70018c9f03fa775204866d04",
+  "scope": "500-iteration checkpoint, model_499. One reference, seed 42. Shared frozen public Actor with the moonwalk expert enabled or bypassed. No generalization or old-skill-preservation claim.",
+  "public_actor_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "public_weights_unchanged": true
+}

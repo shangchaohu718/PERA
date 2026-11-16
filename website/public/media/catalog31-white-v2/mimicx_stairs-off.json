@@ -1,0 +1,41 @@
+{
+  "id": "catalog31-white-v2/mimicx_stairs-off",
+  "task": "mimicx_stairs",
+  "expert_enabled": false,
+  "source": "reports/mimicx_stairs_512_v1/run_20261106_083527/training/final_public_4004_trajectory.npz",
+  "source_sha256": "4e374fbc6759cf93a17c8418a4b3b5288c1acb2e087f9821f163ce1e0492faf9",
+  "duration_s": 5.234,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "705cb50d24b8dc26585d12ace7c8035d7bddde8f19dd520f9ce0ed9185ebd06a",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+  "report": "reports/mimicx_stairs_512_v1/run_20261106_083527/training/final_public_4004.json",
+  "report_sha256": "1e26e0bc06b386df3a190a04e7fd1f1dfca491e37377d6dc191fe83066ff3f62",
+  "seed": 4004,
+  "scene": "reports/mimicx_stairs_512_v1/run_20261106_083527/training/native_scene.mjb",
+  "scene_sha256": "2e4bd8b17b049205d1f3bdd23c230a2bb60e712efc5bf87722a972093c6a60ea",
+  "background_style": "white-studio",
+  "all_native_geometry_retained": true,
+  "lighting_profile": "studio-v2",
+  "headlight_ambient": [
+    0.47999998927116394,
+    0.47999998927116394,
+    0.47999998927116394
+  ],
+  "headlight_diffuse": [
+    0.6499999761581421,
+    0.6499999761581421,
+    0.6499999761581421
+  ],
+  "robot_only_lighting_pass": false,
+  "resets_after_initialization": 0
+}

@@ -1,0 +1,10 @@
+{
+  "files": 218,
+  "states": {
+    "available": 218
+  },
+  "source_root": "${SOURCE_ROOT}",
+  "copies_performed": false,
+  "downloads_performed": false,
+  "pinned_git_source_count": 5
+}

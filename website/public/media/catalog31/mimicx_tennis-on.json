@@ -1,0 +1,25 @@
+{
+  "id": "catalog31/mimicx_tennis-on",
+  "task": "mimicx_tennis",
+  "expert_enabled": true,
+  "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_tennis/attempt_1/student.mp4",
+  "source_sha256": "174cb3b25b039b669b5b7bbfdf8773a029e102bc997ba16121b14c199f9b663d",
+  "duration_s": 10.367,
+  "fps": 30,
+  "speed": 1,
+  "resolution": [
+    1280,
+    720
+  ],
+  "video_sha256": "3db175683dea1ef32f242fa7634afa39d18431a39b5030a39f8b40f56cc02399",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "teacher_queries": 0,
+  "training_updates": 0,
+  "full_recorded_episode": true,
+  "pose_interpolation": false,
+  "rendering": "Actual closed-loop recording; original speed. Native termination is preserved.",
+  "report": "reports/distillation_suite_v1/run_20261105_173125/mimicx_tennis/attempt_1/final_student_4004.json",
+  "report_sha256": "85017ce8a23da2982bc75f7d99aba464f8a743b79d8269394f031d410f73647b",
+  "seed": 4004,
+  "resets_after_initialization": 0
+}

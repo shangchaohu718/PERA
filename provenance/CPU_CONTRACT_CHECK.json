@@ -1,0 +1,10 @@
+{
+  "disabled_exact_public": true,
+  "rejected_exact_public": true,
+  "agrees_with_full_nine_way_top2": true,
+  "cached_full_forward_exact": true,
+  "four_new_tensors_updated": true,
+  "actual_adam_updates": 3,
+  "public_unchanged": true,
+  "CUDA_initialized": false
+}

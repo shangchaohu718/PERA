@@ -1,0 +1,214 @@
+{
+  "schema": "pera.readme_media.v1",
+  "checked_at": "2026-11-13T17:15:36.571511+08:00",
+  "presentation": "six_individual_homepage_student_scenes_no_shared_world_montage",
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "recorded_scenes": [
+    {
+      "task": "husky_skateboard",
+      "label": "Skateboard",
+      "media_name": "skateboard",
+      "source_video": "website/public/media/skate-on.mp4",
+      "source_metadata": "website/public/media/skate-on.json",
+      "source_sha256": "3da1ef467153a0a8059e61063506322d49946c696ff9f98770f4b9269901e850",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "source_recording": "website/.render-work/comparisons-v5/skate-on/physics.npz",
+      "source_recording_sha256": "2743ca74b610ece1967a38afc7f7f7edbaf313bd21f8901eb07b98fe33e837b0",
+      "duration_s": 5.0,
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "website_roster_plugin_sha256": "e370338acdd0c64b9e0d1b8e00243d23701602d78356a515d32bda34c1b2c936",
+      "note": "Existing project-homepage single-scene student footage. Checkpoint and evaluation records are historical and distinct from current shared-world replay; no new skill acceptance claimed."
+    },
+    {
+      "task": "athlete_tennis",
+      "label": "Tennis return",
+      "media_name": "tennis",
+      "source_video": "website/public/media/tennis.mp4",
+      "source_metadata": "website/public/media/tennis.json",
+      "source_sha256": "3a5682fca346d7e71d9ae27d8c656acd0a0bac5ebe6b4349635abded6ab8ca8a",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "source_recording": "website/.render-work/tennis-v3/physics.npz",
+      "source_recording_sha256": "3f186f69e6004733491afa6cf68ec829e26d1c0eb6414b24826641bd43b04ec5",
+      "duration_s": 20.0,
+      "scope": "Continuous first 20 seconds of the frozen tennis student recording, seed 97001. Multiple incoming-ball cycles, including a failed return, with no robot resets or cuts. Incoming balls are relaunched between cycles; no opponent policy. Visual hands restored in replay; original court, ball and racket states retained.",
+      "website_roster_plugin_sha256": "d5dcbae527fb1ed86a2e55e0429049a2d670221ce4db3af679a4d821f2ad23e6",
+      "note": "Existing project-homepage single-scene student footage. Checkpoint and evaluation records are historical and distinct from current shared-world replay; no new skill acceptance claimed."
+    },
+    {
+      "task": "mimicx_stairs",
+      "label": "Continuous stair ascent",
+      "media_name": "stairs",
+      "source_video": "website/public/media/catalog31-white-v2/mimicx_stairs-on.mp4",
+      "source_metadata": "website/public/media/catalog31-white-v2/mimicx_stairs-on.json",
+      "source_sha256": "eb3ce0a34a744d23926c126ec0007bdec425c435f99af5ee8e90e3c163bec6e8",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "source_recording": "reports/mimicx_stairs_512_v1/run_20261106_083527/training/final_student_4004_trajectory.npz",
+      "source_recording_sha256": "1765172384d04f1526a92a7b979f43db80c80437934285ec113d97f836955418",
+      "duration_s": 9.0,
+      "scope": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+      "website_roster_plugin_sha256": "4eb015a3dfcf1909531c3e0eb731ce53276da3fbdf8494eeaa7532141f1c8612",
+      "note": "Existing project-homepage single-scene student footage. Checkpoint and evaluation records are historical and distinct from current shared-world replay; no new skill acceptance claimed."
+    },
+    {
+      "task": "ultra_largebox",
+      "label": "Box carrying",
+      "media_name": "box-carrying",
+      "source_video": "website/public/media/catalog31-white-v2/ultra_largebox-on.mp4",
+      "source_metadata": "website/public/media/catalog31-white-v2/ultra_largebox-on.json",
+      "source_sha256": "57b178e44a501d7570810ca58e716b2bea3ed71508622aa7e19f4340ecdf2220",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "source_recording": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/final_student_trajectory.npz",
+      "source_recording_sha256": "ac986636d4e3ab7aeaf07be1cfe612d239d699128c6330f94726058e5a8dd23b",
+      "duration_s": 10.0,
+      "scope": "Exact archived actual qpos, nearest sample at original speed. Native scene and failure retained. Camera, lighting and stage color only; no physics stepping or pose interpolation.",
+      "website_roster_plugin_sha256": "d20f1e505046aee1fbec707f9c4c2b8a45f84fbf6270276199aa2d62751244c1",
+      "note": "Existing project-homepage single-scene student footage. Checkpoint and evaluation records are historical and distinct from current shared-world replay; no new skill acceptance claimed."
+    },
+    {
+      "task": "roll_vault_no_wall",
+      "label": "Obstacle vault",
+      "media_name": "vault",
+      "source_video": "website/public/media/vault-on.mp4",
+      "source_metadata": "website/public/media/vault-on.json",
+      "source_sha256": "c3005c16a0d4715da1a5d0ad40abeaf6054409530c7f52fe3d3b8a9995ab5809",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "source_recording": "website/.render-work/comparisons-v5/vault-on/physics.npz",
+      "source_recording_sha256": "6918dbc51c82762975cb52aa860c34c8e1beb28af18de76c0d4895fa1c3b577a",
+      "duration_s": 10.466666666666667,
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "website_roster_plugin_sha256": "f3645f8c243de30a7df51193f9b0f14ff76949e6ef5a52efd9425a03a689ca9c",
+      "note": "Existing project-homepage single-scene student footage. Checkpoint and evaluation records are historical and distinct from current shared-world replay; no new skill acceptance claimed."
+    },
+    {
+      "task": "parkour_gaps",
+      "label": "Gap crossing",
+      "media_name": "gap-crossing",
+      "source_video": "website/public/media/gaps-on.mp4",
+      "source_metadata": "website/public/media/gaps-on.json",
+      "source_sha256": "8f1185148384e28bfb16ed5d83feb56fad2f03fb3a37106362d43f192fc0c0aa",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "source_recording": "website/.render-work/comparisons-v5/gaps-on/recording/physics.npz",
+      "source_recording_sha256": "2c95d44908ec3b12ec5f86aaefd95556f399f246899e10a5184272a1a0b1e98d",
+      "duration_s": 6.0,
+      "scope": "Fresh frozen-policy standalone evaluation, expert ON; no training or teacher actions. Native failure/end preserved. Source report records actual duration and outcome.",
+      "website_roster_plugin_sha256": "917ebcb9eac46a81c356a953049fff046f0adbc79a699cab3ad8e0df2bae7267",
+      "note": "Existing project-homepage single-scene student footage. Checkpoint and evaluation records are historical and distinct from current shared-world replay; no new skill acceptance claimed."
+    }
+  ],
+  "preview_conversion": {
+    "tool": "ffmpeg",
+    "fps": 10,
+    "width": 640,
+    "speed": 1,
+    "loop": true,
+    "whole_homepage_excerpt_preserved": true
+  },
+  "support_illustration": {
+    "path": "docs/media/thank-you-capybara.png",
+    "tool": "built-in image_gen",
+    "prompt": "Create an ORIGINAL square illustration for the thank-you footer of an academic robotics GitHub README. No reference images. A gentle, honest-looking little capybara with natural warm brown fur, small round ears, a broad blunt brown muzzle, small simple dark eyes and a tiny peaceful smile. Sitting upright on a simple wooden stool, holding a single small white daisy with a yellow center carefully in both front paws as a quiet thank-you gift. Clearly recognizable capybara anatomy and coloring; modest and calm rather than expressive or pleading. Soft hand-painted gouache and colored-pencil picture-book style with subtle paper texture, not 3D plastic. Muted warm cream background with generous whitespace and a faint soft ground shadow, no room scene. Full character visible, centered, simple forms readable at 150 pixels. No yellow cartoon animal, no hippo, no duck, no orange muzzle, no heart hand gesture, no heart symbol, no star prop, no robot, no huge eyes, no sparkly eyes, no tears, no blush, no raised eyebrows, no exaggerated grin, no text, no letters, no numbers, no logo or watermark. Warm, sincere, understated, kind-hearted.",
+    "reference_images_used": false,
+    "concept": "Original warm brown capybara offering a white daisy, hand-painted picture-book style.",
+    "role": "Decorative thank-you illustration only; not a simulation result."
+  },
+  "files": [
+    {
+      "path": "docs/media/box-carrying.gif",
+      "bytes": 653907,
+      "sha256": "1ef94be64898eab12b2f0e789556df683693ed3be1eaee4684dd7887b678a433"
+    },
+    {
+      "path": "docs/media/box-carrying.mp4",
+      "bytes": 331863,
+      "sha256": "57b178e44a501d7570810ca58e716b2bea3ed71508622aa7e19f4340ecdf2220"
+    },
+    {
+      "path": "docs/media/box-carrying.webp",
+      "bytes": 10926,
+      "sha256": "d9919021efa07d9fc3a4cdd6751ea43d4f2fdb5a8d9d0548c442b49f7db9ac9b"
+    },
+    {
+      "path": "docs/media/gap-crossing.gif",
+      "bytes": 3270958,
+      "sha256": "86528b0e0df2e320df5c61c0a69cbb7a03366124c63c40c697b2417ad29c3ed2"
+    },
+    {
+      "path": "docs/media/gap-crossing.mp4",
+      "bytes": 1214669,
+      "sha256": "8f1185148384e28bfb16ed5d83feb56fad2f03fb3a37106362d43f192fc0c0aa"
+    },
+    {
+      "path": "docs/media/gap-crossing.webp",
+      "bytes": 56354,
+      "sha256": "3150771de0fe38dbea46be5cc24ab4ea20cc9ffa05d600cbef567ded104c3de3"
+    },
+    {
+      "path": "docs/media/skateboard.gif",
+      "bytes": 2753860,
+      "sha256": "ed1019fec4f5daaa4a71f83fb5df98a9dc8baa5747ca7fc362e1e4637169a071"
+    },
+    {
+      "path": "docs/media/skateboard.mp4",
+      "bytes": 1427238,
+      "sha256": "3da1ef467153a0a8059e61063506322d49946c696ff9f98770f4b9269901e850"
+    },
+    {
+      "path": "docs/media/skateboard.webp",
+      "bytes": 88726,
+      "sha256": "3224651786e50029846fe7eb3cda7acd4891005c597690ccf1a184fc01dccf16"
+    },
+    {
+      "path": "docs/media/stairs.gif",
+      "bytes": 2643395,
+      "sha256": "0304fe7d74bcbe6da84c3f8bd2eae8494000f97e379209218a906de192b25111"
+    },
+    {
+      "path": "docs/media/stairs.mp4",
+      "bytes": 945563,
+      "sha256": "eb3ce0a34a744d23926c126ec0007bdec425c435f99af5ee8e90e3c163bec6e8"
+    },
+    {
+      "path": "docs/media/stairs.webp",
+      "bytes": 23282,
+      "sha256": "b6cd2e50025b92ab053323dbd094195d56b8cdb904bc4194eff2207b9b2981c7"
+    },
+    {
+      "path": "docs/media/tennis.gif",
+      "bytes": 7431016,
+      "sha256": "63388166d79f09d3dac1fe47d63bd5b4b2cc7a990698bba1625bdee93fdfaaac"
+    },
+    {
+      "path": "docs/media/tennis.mp4",
+      "bytes": 4593269,
+      "sha256": "3a5682fca346d7e71d9ae27d8c656acd0a0bac5ebe6b4349635abded6ab8ca8a"
+    },
+    {
+      "path": "docs/media/tennis.webp",
+      "bytes": 110884,
+      "sha256": "e872eee91cf3b7daadee646dad9b475d16503201ec6628f5a7f6c6bd97370867"
+    },
+    {
+      "path": "docs/media/thank-you-capybara.png",
+      "bytes": 2552015,
+      "sha256": "6c8ca20ac59e94f4c1554c3c509a7a3599730d83fb957f0c2be112bb6455ed85"
+    },
+    {
+      "path": "docs/media/vault.gif",
+      "bytes": 3216031,
+      "sha256": "dfec04aa7d5a7ed1f83cd14c1818d943ee43146e3725bb121d2197c77c4718c3"
+    },
+    {
+      "path": "docs/media/vault.mp4",
+      "bytes": 1598974,
+      "sha256": "c3005c16a0d4715da1a5d0ad40abeaf6054409530c7f52fe3d3b8a9995ab5809"
+    },
+    {
+      "path": "docs/media/vault.webp",
+      "bytes": 50720,
+      "sha256": "2e950965d88910f0ff9c42c4b7437326c29cb78e8e953c21f6f27ac7411fb755"
+    }
+  ],
+  "uploaded": false,
+  "new_training": false
+}

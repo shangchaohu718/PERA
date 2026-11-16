@@ -1,0 +1,39 @@
+{
+  "schema": "pera.release_selection.v1",
+  "base_family": "holomotion_official_g1_v1.4",
+  "checkpoint": "model_14000",
+  "selection": "configs/demo_policy.json",
+  "weights_manifest": "resources/holomotion_weights_manifest.json",
+  "demo": "configs/showcase.json",
+  "routing": "continuous_anchor_group_mixture_with_native_public_Top2",
+  "maximum_active_experts_per_robot": 1,
+  "excluded_weight_manifests": [
+    "resources/weights_manifest.json"
+  ],
+  "excluded_bundles": [
+    "checkpoints/composed/pera_30_experts.pt"
+  ],
+  "stage": "isolated_15scene_replay_passed_release_prepared",
+  "standalone_reproduction_verified": true,
+  "training_reproduction_verified": false,
+  "official_base_distribution": "external_user_download_only",
+  "official_base_download": "resources/holomotion_base.json",
+  "exclude_official_weights_from_release": true,
+  "repository": "https://github.com/shangchaohu718/PERA",
+  "repository_private": true,
+  "upload_plan": "docs/UPLOAD_PLAN.zh-CN.md",
+  "readme_media": "provenance/README_MEDIA.json",
+  "standalone_reproduction_scope": "fifteen_scene_replay_three_groups_isolated_installed_environment",
+  "clean_environment_install_verified": true,
+  "scene_reproduction_check": "provenance/SCENE_REPRODUCTION_CHECK.json",
+  "expert_bank": "resources/holomotion_bank25.json",
+  "expert_count": 25,
+  "standalone_physical_scene_count": 15,
+  "skill_catalog": "docs/HOLOMOTION_SKILLS.zh-CN.md",
+  "single_weight_verified": true,
+  "bank_verification": "provenance/HOLOMOTION_BANK25_CHECK.json",
+  "fresh_install_verified": true,
+  "reproduction_suite": "configs/reproduction_suite15.json",
+  "website": "website/",
+  "website_migration": "provenance/WEBSITE_MIGRATION.json"
+}

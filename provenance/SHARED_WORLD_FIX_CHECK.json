@@ -1,0 +1,855 @@
+{
+  "schema": "pera.shared_world_fix.v1",
+  "checkpoint_sha256": "ca8d17a384e874c799fe9e118e619c1a5b6da2170a19d441a867214c91a92f0c",
+  "public_sha256": "002a0432e0ba535875d85ea075115906f69f4bf8f00b1f712da3a2aead0f9265",
+  "changes": [
+    "Per-robot reference clocks and opt-in boundary repeats; reset only selected robot/history/last action; count and show every reset.",
+    "Persistent height/tilt tracking-loss warnings and completed-interval failure flags; no early failure resets.",
+    "Match pinned native solver settings 10/20, previously100/50; physical timestep and action control period unchanged.",
+    "Relocated MimicX bridge uses package-root Actor I/O contract.",
+    "CPU MLP path skips CUDA autocast; no change to CUDA arithmetic or stored weights.",
+    "Already50Hz reference import preserves all source frames; fixes last-frame truncation on59-frame bench clip."
+  ],
+  "native_comparison": [
+    {
+      "task": "mimicx_dance",
+      "reference_steps": 783,
+      "first_native_termination_step": 195,
+      "first_native_termination_seconds": 3.9,
+      "teacher_action_queries": 0,
+      "mujoco_version": "3.5.0",
+      "mjlab_version": "1.2.0",
+      "native_robot_components_identical": {
+        "default": true,
+        "actuator": true,
+        "contact": true,
+        "worldbody/body[@name='robot/pelvis']": true
+      },
+      "local_report": "runs/shared_world_fix_20261113/dance/report.json",
+      "note": "Native environment auto-resets on done. Post-reset errors are not failure-state errors."
+    },
+    {
+      "task": "mimicx_football",
+      "reference_steps": 454,
+      "first_native_termination_step": 316,
+      "first_native_termination_seconds": 6.32,
+      "teacher_action_queries": 0,
+      "mujoco_version": "3.5.0",
+      "mjlab_version": "1.2.0",
+      "native_robot_components_identical": {
+        "default": true,
+        "actuator": true,
+        "contact": true,
+        "worldbody/body[@name='robot/pelvis']": true
+      },
+      "local_report": "runs/shared_world_fix_20261113/football/report.json",
+      "note": "Native environment auto-resets on done. Post-reset errors are not failure-state errors."
+    },
+    {
+      "task": "mimicx_tennis",
+      "reference_steps": 518,
+      "first_native_termination_step": 399,
+      "first_native_termination_seconds": 7.98,
+      "teacher_action_queries": 0,
+      "mujoco_version": "3.5.0",
+      "mjlab_version": "1.2.0",
+      "native_robot_components_identical": {
+        "default": true,
+        "actuator": true,
+        "contact": true,
+        "worldbody/body[@name='robot/pelvis']": true
+      },
+      "local_report": "runs/shared_world_fix_20261113/tennis/report.json",
+      "note": "Native environment auto-resets on done. Post-reset errors are not failure-state errors."
+    }
+  ],
+  "conclusion": "Dance, football motion and tennis swing also terminate in native single-student replays. Shared-world execution is not the sole cause. Boundary playback correction is not skill retraining or validated recovery.",
+  "checks": {
+    "pytest": "11 passed",
+    "ruff_undefined_names": "passed",
+    "weights": "36 files,363367392bytes,all hashes match",
+    "new_training": false,
+    "upload": false,
+    "source_experiment_modified": false,
+    "static_python_files": 167,
+    "ruff_format": "178 files already formatted",
+    "source_reference_input_parity": "SHARED_WORLD_EXACT50_INPUT_CHECK.json",
+    "final_video_format": {
+      "width": 1440,
+      "height": 896,
+      "frames": 400,
+      "seconds": 16
+    }
+  },
+  "limitations": [
+    "Height/tilt warning is not the full native acceptance gate.",
+    "Solver/precision/initialization and shared-model numerical effects can change failure timing.",
+    "Native replays and final video use CUDA inference; auxiliary CPU runs differ in arithmetic. Reference-boundary repeats can alter shared-model numerical trajectories; no robust success-rate claim.",
+    "Repeat mode is episodic state resetting, not continuous no-reset survival, landing or recovery."
+  ],
+  "cpu_no_reset_fixed": {
+    "device": "cpu",
+    "CUDA_initialized": false,
+    "solver_iterations": 10,
+    "solver_ls_iterations": 20,
+    "control_steps": 800,
+    "physics_steps": 3200,
+    "resets_after_initialization": 0,
+    "root_state_overwrites_after_initialization": 0,
+    "summary": [
+      {
+        "task": "mimicx_descent",
+        "reference_frames": 240,
+        "reference_steps_observed": 240,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.04259080375971583,
+        "reference_interval_last_root_error_m": 0.07135031372308731,
+        "mean_joint_rmse_rad": 0.08870046319595228,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_bench",
+        "reference_frames": 58,
+        "reference_steps_observed": 58,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.10812175648431455,
+        "reference_interval_last_root_error_m": 0.13464070856571198,
+        "mean_joint_rmse_rad": 0.24387233697905622,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_dance",
+        "reference_frames": 783,
+        "reference_steps_observed": 783,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 195,
+        "mean_root_error_m": 2.0468565707016464,
+        "reference_interval_last_root_error_m": 2.4495415687561035,
+        "mean_joint_rmse_rad": 0.3641762640351004,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_football",
+        "reference_frames": 454,
+        "reference_steps_observed": 454,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.14149878974357777,
+        "reference_interval_last_root_error_m": 0.24646122753620148,
+        "mean_joint_rmse_rad": 0.1582127764558477,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_tennis",
+        "reference_frames": 518,
+        "reference_steps_observed": 518,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.17449542192803358,
+        "reference_interval_last_root_error_m": 0.5067899823188782,
+        "mean_joint_rmse_rad": 0.1939101749347904,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      }
+    ],
+    "episodes": [
+      {
+        "task": "mimicx_bench",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.07135031372308731,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_football",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.24646122753620148,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_tennis",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.5067899823188782,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_dance",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 2.4495415687561035,
+        "task_success_accepted": false
+      }
+    ],
+    "local_report": "runs/shared_world_fix_20261113/cpu_no_reset_fixed/report.json"
+  },
+  "episodic_video_software": {
+    "device": "cpu",
+    "CUDA_initialized": false,
+    "solver_iterations": 10,
+    "solver_ls_iterations": 20,
+    "control_steps": 800,
+    "physics_steps": 3200,
+    "resets_after_initialization": 19,
+    "root_state_overwrites_after_initialization": 19,
+    "summary": [
+      {
+        "task": "mimicx_descent",
+        "reference_frames": 240,
+        "reference_steps_observed": 800,
+        "reference_time_completed": true,
+        "completed_episodes": 3,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.041308282646350565,
+        "reference_interval_last_root_error_m": 0.023939577862620354,
+        "mean_joint_rmse_rad": 0.08917445046361536,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_bench",
+        "reference_frames": 58,
+        "reference_steps_observed": 800,
+        "reference_time_completed": true,
+        "completed_episodes": 13,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.10826264786708634,
+        "reference_interval_last_root_error_m": 0.08055894076824188,
+        "mean_joint_rmse_rad": 0.24322404007427395,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_dance",
+        "reference_frames": 783,
+        "reference_steps_observed": 800,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 195,
+        "mean_root_error_m": 2.001925586174475,
+        "reference_interval_last_root_error_m": 0.05946138873696327,
+        "mean_joint_rmse_rad": 0.361630750913173,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_football",
+        "reference_frames": 454,
+        "reference_steps_observed": 800,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.13519304477900732,
+        "reference_interval_last_root_error_m": 0.14899714291095734,
+        "mean_joint_rmse_rad": 0.16189184677787125,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_tennis",
+        "reference_frames": 518,
+        "reference_steps_observed": 800,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 498,
+        "mean_root_error_m": 0.19924217848456466,
+        "reference_interval_last_root_error_m": 0.14641672372817993,
+        "mean_joint_rmse_rad": 0.1940677652414888,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      }
+    ],
+    "episodes": [
+      {
+        "task": "mimicx_bench",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 2,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 3,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 4,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.07135031372308731,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 5,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 6,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 7,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_football",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.2517040967941284,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 8,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 2,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.07135031372308731,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_tennis",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 2.1524739265441895,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 9,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 10,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 11,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 12,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 3,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.07135045528411865,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 13,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.13464070856571198,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_dance",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 2.4254720211029053,
+        "task_success_accepted": false
+      }
+    ],
+    "local_report": "runs/shared_world_fix_20261113/episodic_video_software/report.json",
+    "video": "runs/shared_world_fix_20261113/episodic_video_software/overview.mp4",
+    "backend": {
+      "renderer": "llvmpipe (LLVM 15.0.7, 256 bits)",
+      "cuda_initialized": false,
+      "hardware_gpu_used": false
+    }
+  },
+  "final_video_exact50": {
+    "device": "cuda:0",
+    "CUDA_initialized": true,
+    "solver_iterations": 10,
+    "solver_ls_iterations": 20,
+    "control_steps": 800,
+    "physics_steps": 3200,
+    "resets_after_initialization": 19,
+    "root_state_overwrites_after_initialization": 19,
+    "summary": [
+      {
+        "task": "mimicx_descent",
+        "reference_frames": 240,
+        "reference_steps_observed": 800,
+        "first_episode_reference_steps_observed": 240,
+        "reference_time_completed": true,
+        "completed_episodes": 3,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.03972322029061615,
+        "first_episode_last_root_error_m": 0.0858248770236969,
+        "last_in_reference_root_error_m": 0.024753281846642494,
+        "mean_joint_rmse_rad": 0.09036805949173868,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_bench",
+        "reference_frames": 58,
+        "reference_steps_observed": 800,
+        "first_episode_reference_steps_observed": 58,
+        "reference_time_completed": true,
+        "completed_episodes": 13,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.10856456459849141,
+        "first_episode_last_root_error_m": 0.09427859634160995,
+        "last_in_reference_root_error_m": 0.07854655385017395,
+        "mean_joint_rmse_rad": 0.24381230651400984,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_dance",
+        "reference_frames": 783,
+        "reference_steps_observed": 800,
+        "first_episode_reference_steps_observed": 783,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 196,
+        "mean_root_error_m": 1.9701301570539362,
+        "first_episode_last_root_error_m": 2.655945062637329,
+        "last_in_reference_root_error_m": 0.058146655559539795,
+        "mean_joint_rmse_rad": 0.3280648940335959,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_football",
+        "reference_frames": 454,
+        "reference_steps_observed": 800,
+        "first_episode_reference_steps_observed": 454,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.13032756129745393,
+        "first_episode_last_root_error_m": 0.15436610579490662,
+        "last_in_reference_root_error_m": 0.1862448900938034,
+        "mean_joint_rmse_rad": 0.16875816649757325,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_tennis",
+        "reference_frames": 518,
+        "reference_steps_observed": 800,
+        "first_episode_reference_steps_observed": 518,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 390,
+        "mean_root_error_m": 0.2538523101923056,
+        "first_episode_last_root_error_m": 0.9000351428985596,
+        "last_in_reference_root_error_m": 0.29026490449905396,
+        "mean_joint_rmse_rad": 0.20764056679792703,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      }
+    ],
+    "episodes": [
+      {
+        "task": "mimicx_bench",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 2,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 3,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 4,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.0858248770236969,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 5,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 6,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 7,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_football",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.15436610579490662,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 8,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 2,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.0858248770236969,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_tennis",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 0.9000351428985596,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 9,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 10,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 11,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 12,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 3,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.0858248770236969,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_bench",
+        "episode": 13,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_dance",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 2.655945062637329,
+        "task_success_accepted": false
+      }
+    ],
+    "local_report": "runs/shared_world_fix_20261113/final_video_exact50/report.json",
+    "video": "runs/shared_world_fix_20261113/final_video_exact50/overview.mp4",
+    "backend": {
+      "inference": "CUDA",
+      "render": "EGL GPU"
+    }
+  },
+  "final_no_reset_exact50": {
+    "device": "cuda:0",
+    "CUDA_initialized": true,
+    "solver_iterations": 10,
+    "solver_ls_iterations": 20,
+    "control_steps": 800,
+    "physics_steps": 3200,
+    "resets_after_initialization": 0,
+    "root_state_overwrites_after_initialization": 0,
+    "summary": [
+      {
+        "task": "mimicx_descent",
+        "reference_frames": 240,
+        "reference_steps_observed": 240,
+        "first_episode_reference_steps_observed": 240,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.04067424643435515,
+        "first_episode_last_root_error_m": 0.0858248770236969,
+        "last_in_reference_root_error_m": 0.0858248770236969,
+        "mean_joint_rmse_rad": 0.08975953805881241,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_bench",
+        "reference_frames": 58,
+        "reference_steps_observed": 58,
+        "first_episode_reference_steps_observed": 58,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.10831988539450385,
+        "first_episode_last_root_error_m": 0.09427859634160995,
+        "last_in_reference_root_error_m": 0.09427859634160995,
+        "mean_joint_rmse_rad": 0.24420906275767704,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_dance",
+        "reference_frames": 783,
+        "reference_steps_observed": 783,
+        "first_episode_reference_steps_observed": 783,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 196,
+        "mean_root_error_m": 2.012656496698572,
+        "first_episode_last_root_error_m": 2.661877393722534,
+        "last_in_reference_root_error_m": 2.661877393722534,
+        "mean_joint_rmse_rad": 0.3299249189918906,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_football",
+        "reference_frames": 454,
+        "reference_steps_observed": 454,
+        "first_episode_reference_steps_observed": 454,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 0,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": null,
+        "mean_root_error_m": 0.13643211586244963,
+        "first_episode_last_root_error_m": 0.15442733466625214,
+        "last_in_reference_root_error_m": 0.15442733466625214,
+        "mean_joint_rmse_rad": 0.1651866609796816,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      },
+      {
+        "task": "mimicx_tennis",
+        "reference_frames": 518,
+        "reference_steps_observed": 518,
+        "first_episode_reference_steps_observed": 518,
+        "reference_time_completed": true,
+        "completed_episodes": 1,
+        "completed_episodes_with_tracking_loss": 1,
+        "first_reference_height_or_tilt_tolerance_exceeded_step": 390,
+        "mean_root_error_m": 0.33353634817799027,
+        "first_episode_last_root_error_m": 0.9023779034614563,
+        "last_in_reference_root_error_m": 0.9023779034614563,
+        "mean_joint_rmse_rad": 0.22711770279642238,
+        "task_success_accepted": false,
+        "acceptance": "Not assessed by original native task gate"
+      }
+    ],
+    "episodes": [
+      {
+        "task": "mimicx_bench",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.09427859634160995,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_descent",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.0858248770236969,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_football",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": false,
+        "endpoint_root_error_m": 0.15442733466625214,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_tennis",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 0.9023779034614563,
+        "task_success_accepted": false
+      },
+      {
+        "task": "mimicx_dance",
+        "episode": 1,
+        "reference_time_completed": true,
+        "tracking_lost": true,
+        "endpoint_root_error_m": 2.661877393722534,
+        "task_success_accepted": false
+      }
+    ],
+    "local_report": "runs/shared_world_fix_20261113/final_no_reset_exact50/report.json"
+  },
+  "checked_at": "2026-11-13T02:16:44.708199+00:00",
+  "final_video": "runs/shared_world_fix_20261113/final_video_exact50/overview.mp4",
+  "no_reset_comparison": "runs/shared_world_fix_20261113/final_no_reset_exact50/report.json",
+  "source_sha256": {
+    "src/pera/showcase.py": "7bdb0ebfee27f0acad3e4a080f55274b1119e53a363b781e068e1f0459441172",
+    "src/blinkmimic/networks.py": "be73c3d3b382cd0a5dbc5d1bdeac907dc18c5dc11b462b37fed21442e46b9097",
+    "src/blinkmimic/motion.py": "081a2241b5676b494a05a2c7d5c05af17ae20b05598ed1ab07bead2e623d4e1f",
+    "src/modumotion_g1/mimicx_bridge.py": "8ae0a1ef4f9e36603e4dcdd9c9c94686fff5cf4626634e4a773d1ba5ca0acdc5",
+    "configs/showcase.json": "4915b1945aef979c51aa361d5100df90fb1874c7c0d0a589daa025b4b469d216"
+  }
+}

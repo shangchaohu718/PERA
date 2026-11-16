@@ -1,0 +1,345 @@
+{
+  "schema": "pera.holomotion_weights.v1",
+  "stage": "local_review_only_not_uploaded",
+  "base_family": "holomotion_official_g1_v1.4",
+  "public_actor_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "expert_count": 12,
+  "resources": [
+    {
+      "path": "checkpoints/holomotion_v1.4/config.yaml",
+      "source": "checkpoints/holomotion_v1.4/config.yaml",
+      "kind": "official_base",
+      "bytes": 48160,
+      "sha256": "f2bdcd26b7436123ce07478ac88dec5d0657a2a6b134e8114545434be3cb8b62",
+      "distribution": "user_download_from_official_upstream",
+      "upstream_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/resolve/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0/config.yaml"
+    },
+    {
+      "path": "checkpoints/holomotion_v1.4/model_14000/actor/model.safetensors",
+      "source": "checkpoints/holomotion_v1.4/model_14000/actor/model.safetensors",
+      "kind": "official_base",
+      "bytes": 1636251760,
+      "sha256": "e698ae9dc88b131ab8cbd0c9acbace741eabff6ab984cc699cbc42316b7f7542",
+      "distribution": "user_download_from_official_upstream",
+      "upstream_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/resolve/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0/model_14000/actor/model.safetensors"
+    },
+    {
+      "path": "checkpoints/holomotion_v1.4/model_14000/critic/model.safetensors",
+      "source": "checkpoints/holomotion_v1.4/model_14000/critic/model.safetensors",
+      "kind": "official_critic_required_by_current_loader",
+      "bytes": 59001428,
+      "sha256": "9892bb1cd171ec3ead919e524eda23d294c9694c8e0330b721a65cd397de50d8",
+      "distribution": "user_download_from_official_upstream",
+      "upstream_url": "https://huggingface.co/HorizonRobotics/HoloMotion_models/resolve/e3c90dd1f7483d02d3b4d2e5fb3a359c6ff9c67a/HoloMotion_motion_tracking_model_v1.4.0/model_14000/critic/model.safetensors"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/athlete_tennis.domain.pt",
+      "source": "reports/athlete_tennis_v1/vector_512_dagger_20261104_v2/round_09.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 2884845,
+      "sha256": "d5dcbae527fb1ed86a2e55e0429049a2d670221ce4db3af679a4d821f2ad23e6",
+      "expert": "athlete_tennis",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 631,
+        "schema": {
+          "kind": "ATHLETE_observable_631",
+          "normalization_sha256": "e3590d6a3161d339f60ebd211a317589711a7c5ee7d57f6d42374bcf6faac283",
+          "frozen_preprocessing": true,
+          "camera_pixels": false,
+          "reference_free_teacher": true
+        },
+        "encoder_sha256": "e3590d6a3161d339f60ebd211a317589711a7c5ee7d57f6d42374bcf6faac283",
+        "sha256": "102b8be5647e22af51de0fb5512e3ba0a476eb2e252b5397ea446abc9686f15d"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/husky_skateboard.domain.pt",
+      "source": "reports/husky_skateboard_dagger_v2/training/round_020.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1841271,
+      "sha256": "e370338acdd0c64b9e0d1b8e00243d23701602d78356a515d32bda34c1b2c936",
+      "expert": "husky_skateboard",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 128,
+        "schema": {
+          "kind": "released_husky_frozen_proprioceptive_encoder_v1",
+          "input": "395D block-major five-frame actual proprioception/executed-action history, requested speed/absolute heading, 6s clock",
+          "output": "third released actor hidden layer after ELU",
+          "uses_vision": false,
+          "uses_teacher_output_or_future_state": false,
+          "reference": "constant HUSKY initial joint posture plus requested planar velocity; no teacher future trajectory"
+        },
+        "encoder_sha256": "7cde18b68d86b67c2e9b2e06c38851c791903980687e1d4ba1c6302aadcf791f",
+        "sha256": "bf84f784788fa2c886c7193c5bd96a1d952e145531f1d384890e14a901a4996b"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/mimicx_descent.domain.pt",
+      "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/round_01.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1578385,
+      "sha256": "e6c49d38434da0a3dd49998177fad9d5e52c1c7f7b36e9f758fe8b98efc71179",
+      "expert": "mimicx_descent",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": null,
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/roll_vault_no_wall.domain.pt",
+      "source": "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/training/round_020.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1644215,
+      "sha256": "f3645f8c243de30a7df51193f9b0f14ff76949e6ef5a52efd9425a03a689ca9c",
+      "expert": "roll_vault_no_wall",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 32,
+        "schema": {
+          "kind": "instinct_released_depth_features",
+          "depth_shape": [
+            1,
+            18,
+            32
+          ],
+          "normalization": "released_policy_normalizer",
+          "frozen": true
+        },
+        "encoder_sha256": "e1b51e23b669ecd8c37873067251f1073bb9c1012a1fb3b804d092b0b8e50868",
+        "sha256": "94f069902a871597e06f4a479a50ae33d6f03c7e817e418f093f005deeda9dd3"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/mimicx_stairs.domain.pt",
+      "source": "reports/mimicx_stairs_512_v1/run_20261106_083527/training/round_07.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1578385,
+      "sha256": "4eb015a3dfcf1909531c3e0eb731ce53276da3fbdf8494eeaa7532141f1c8612",
+      "expert": "mimicx_stairs",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": null,
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/mimicx_kungfu.domain.pt",
+      "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/round_05.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1907729,
+      "sha256": "6812172adaa51a837299c4c7cd1cd5785a3255f4f286a408cea64cb9f326ea88",
+      "expert": "mimicx_kungfu",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 160,
+        "schema": {
+          "kind": "native_mimicx_state_and_reference_observation",
+          "dim": 160,
+          "groups": [
+            "actor"
+          ],
+          "normalization": "frozen released RSL actor normalizer",
+          "epsilon": 0.01,
+          "camera_pixels": false,
+          "teacher_current_action": false,
+          "teacher_hidden_features": false,
+          "reason": "Preserve published non-FK body targets; do not reconstruct them from joint angles"
+        },
+        "encoder_sha256": "e6e99ae3f331a4e44705ba6dabc3aa7f36bf09f37dd7f3b3aa93e333b8d98a68",
+        "sha256": "8de62a7e5349b77e2458c971db4d866374b1feec4f1f69d8cc18eb899c93fdd2"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/mimicx_dance.domain.pt",
+      "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_dance/attempt_1/round_09.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1578385,
+      "sha256": "cb604ad6b9ccc97c5f684dc0a03f3cf91a4e2f83ce850e9b9eda97ae0f9e5ab0",
+      "expert": "mimicx_dance",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": null,
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/mimicx_football.domain.pt",
+      "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_football/attempt_1/round_01.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1578385,
+      "sha256": "9ab577e93aa197f537ced50988d81f38c1c1aa74c707a798b961e03770b051cd",
+      "expert": "mimicx_football",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": null,
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/parkour_rough.domain.pt",
+      "source": "reports/instinct_parkour_dagger_v1/rough/training/round_020.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1851575,
+      "sha256": "9558326f4677f0f9594e7f25beb05ce0ca380bd0d5bdef3d55f738e18611d2e5",
+      "expert": "parkour_rough",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 133,
+        "schema": {
+          "kind": "instinct_parkour_frozen_depth_command_clock_v1",
+          "depth_shape": [
+            8,
+            18,
+            32
+          ],
+          "depth_features": 128,
+          "additional_fields": [
+            "requested_vx_body",
+            "requested_vy_body",
+            "requested_yaw_rate",
+            "phase_sin",
+            "phase_cos"
+          ],
+          "normalization": "released_policy_normalizer",
+          "clock_period_s": 0.6,
+          "uses_teacher_action_or_future_state": false,
+          "reference": "constant native standing posture and measured pelvis pose integrated by current requested velocity; no motion-file future",
+          "frozen": true
+        },
+        "encoder_sha256": "b8f2c590fa34bb498a24c11b983d61cc752799720458172b37e460bcf23ce72f",
+        "sha256": "09b64d0e3e8f50f858eb59d6628a311795c47f5ed5b10ffb41c9f7414d624437"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/ultra_largebox.domain.pt",
+      "source": "reports/distillation_suite_v1/run_20261105_173125/ultra_largebox/attempt_1/round_04.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 9894033,
+      "sha256": "d20f1e505046aee1fbec707f9c4c2b8a45f84fbf6270276199aa2d62751244c1",
+      "expert": "ultra_largebox",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 4052,
+        "schema": {
+          "name": "ultra_native_teacher_observation_v1",
+          "dim": 4052,
+          "future_reference_offsets": [
+            1,
+            16
+          ],
+          "contact_task_IG": "original MuJoCo release zero masks",
+          "previous_action": "actually executed native action",
+          "current_teacher_action_in_context": false,
+          "camera_pixels": false,
+          "normalization": "frozen published running mean/variance; clamp[-5,5]"
+        },
+        "encoder_sha256": "a12eea7d07349f1ad9922c4ab25d319a0188af9de555ef0ca5c0cf5560f2add4",
+        "sha256": "f52f46cf0ddfa353786c8b6c633366658d9ef094bcb0c4f8fc4fa070aadf8834"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/roll_vault_wall.domain.pt",
+      "source": "reports/instinct_all_tasks_dagger_v2/roll_vault_wall/run/training/round_020.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1644215,
+      "sha256": "94e65d3f948849b78720dba4db3d8c2ca0f7f28682eeb34e0338b594449f271c",
+      "expert": "roll_vault_wall",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 32,
+        "schema": {
+          "kind": "instinct_released_depth_features",
+          "depth_shape": [
+            1,
+            18,
+            32
+          ],
+          "normalization": "released_policy_normalizer",
+          "frozen": true
+        },
+        "encoder_sha256": "e1b51e23b669ecd8c37873067251f1073bb9c1012a1fb3b804d092b0b8e50868",
+        "sha256": "94f069902a871597e06f4a479a50ae33d6f03c7e817e418f093f005deeda9dd3"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    },
+    {
+      "path": "checkpoints/holomotion_experts/parkour_gaps.domain.pt",
+      "source": "reports/instinct_parkour_remaining_v3/gaps/training/round_020.domain.pt",
+      "kind": "official_base_domain_plugin",
+      "bytes": 1851575,
+      "sha256": "917ebcb9eac46a81c356a953049fff046f0adbc79a699cab3ad8e0df2bae7267",
+      "expert": "parkour_gaps",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "context": {
+        "dim": 133,
+        "schema": {
+          "kind": "instinct_parkour_frozen_depth_command_clock_v1",
+          "depth_shape": [
+            8,
+            18,
+            32
+          ],
+          "depth_features": 128,
+          "additional_fields": [
+            "requested_vx_body",
+            "requested_vy_body",
+            "requested_yaw_rate",
+            "phase_sin",
+            "phase_cos"
+          ],
+          "normalization": "released_policy_normalizer",
+          "clock_period_s": 0.6,
+          "uses_teacher_action_or_future_state": false,
+          "reference": "constant native standing posture and measured pelvis pose integrated by current requested velocity; no motion-file future",
+          "frozen": true
+        },
+        "encoder_sha256": "b8f2c590fa34bb498a24c11b983d61cc752799720458172b37e460bcf23ce72f",
+        "sha256": "09b64d0e3e8f50f858eb59d6628a311795c47f5ed5b10ffb41c9f7414d624437"
+      },
+      "merge_bias": [
+        0.0
+      ],
+      "distribution": "local_task_plugin_pending_review"
+    }
+  ],
+  "notes": [
+    "Official Actor/Critic weights are external dependencies and are not included in the release folder.",
+    "Users obtain the pinned v1.4.0 config/Actor/Critic directly from the official model repository, then verify SHA256.",
+    "The 12 local task plugins match the official frozen public Actor; this count is not acceptance or an inventory of every historical skill.",
+    "Code, base models, plugins, encoders and datasets retain their applicable upstream terms; the root MIT license does not relicense them."
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "schema": "pera.official_holomotion_showcase_check.v1",
+  "status": "locally_verified_12_second_shared_world_demonstration",
+  "local_run": "runs/holomotion_four_20261113/video_01",
+  "video": "runs/holomotion_four_20261113/video_01/overview.mp4",
+  "video_sha256": "60927a6cc71ff7ef8990cf5ea212071060cd5dd7dc49745d9e5bac8fda66c0ac",
+  "video_seconds": 12,
+  "video_frames": 300,
+  "video_resolution": [
+    1920,
+    1008
+  ],
+  "base_family": "holomotion_official_g1_v1.4",
+  "checkpoint": "model_14000",
+  "actor_sha256": "e698ae9dc88b131ab8cbd0c9acbace741eabff6ab984cc699cbc42316b7f7542",
+  "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+  "actor_instances": 1,
+  "physics_worlds": 1,
+  "physics_steps": 4800,
+  "teacher_action_queries": 0,
+  "new_training": false,
+  "auxiliary_native_mirrors": 4,
+  "auxiliary_physics_steps": 0,
+  "isolation_check": {
+    "steps": 8,
+    "actual_official_weights": true,
+    "single_vs_shared_action_max_abs": 0.0,
+    "forward_vs_reverse_action_max_abs": 0.0,
+    "distinct_attention_cache_storage": true
+  },
+  "expert_checkpoints": {
+    "athlete_tennis": {
+      "source_relative_to_native_root": "reports/athlete_tennis_v1/vector_512_dagger_20261104_v2/round_09.domain.pt",
+      "sha256": "d5dcbae527fb1ed86a2e55e0429049a2d670221ce4db3af679a4d821f2ad23e6",
+      "format": "modumotion_g1_anchor_domain_v2",
+      "domain": "athlete_tennis",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "interface_sha256": "d03c249b9a7e874d1dd2267b4f65997125086aff1af451a8517f43af2fcd16b7",
+      "context": {
+        "dim": 631,
+        "schema": {
+          "kind": "ATHLETE_observable_631",
+          "normalization_sha256": "e3590d6a3161d339f60ebd211a317589711a7c5ee7d57f6d42374bcf6faac283",
+          "frozen_preprocessing": true,
+          "camera_pixels": false,
+          "reference_free_teacher": true
+        },
+        "encoder_sha256": "e3590d6a3161d339f60ebd211a317589711a7c5ee7d57f6d42374bcf6faac283",
+        "sha256": "102b8be5647e22af51de0fb5512e3ba0a476eb2e252b5397ea446abc9686f15d"
+      },
+      "merge_bias": [
+        0.0
+      ]
+    },
+    "husky_skateboard": {
+      "source_relative_to_native_root": "reports/husky_skateboard_dagger_v2/training/round_020.domain.pt",
+      "sha256": "e370338acdd0c64b9e0d1b8e00243d23701602d78356a515d32bda34c1b2c936",
+      "format": "modumotion_g1_anchor_domain_v2",
+      "domain": "husky_skateboard",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "interface_sha256": "d03c249b9a7e874d1dd2267b4f65997125086aff1af451a8517f43af2fcd16b7",
+      "context": {
+        "dim": 128,
+        "schema": {
+          "kind": "released_husky_frozen_proprioceptive_encoder_v1",
+          "input": "395D block-major five-frame actual proprioception/executed-action history, requested speed/absolute heading, 6s clock",
+          "output": "third released actor hidden layer after ELU",
+          "uses_vision": false,
+          "uses_teacher_output_or_future_state": false,
+          "reference": "constant HUSKY initial joint posture plus requested planar velocity; no teacher future trajectory"
+        },
+        "encoder_sha256": "7cde18b68d86b67c2e9b2e06c38851c791903980687e1d4ba1c6302aadcf791f",
+        "sha256": "bf84f784788fa2c886c7193c5bd96a1d952e145531f1d384890e14a901a4996b"
+      },
+      "merge_bias": [
+        0.0
+      ]
+    },
+    "mimicx_descent": {
+      "source_relative_to_native_root": "reports/distillation_suite_v1/run_20261105_173125/mimicx_descent/attempt_1/round_01.domain.pt",
+      "sha256": "e6c49d38434da0a3dd49998177fad9d5e52c1c7f7b36e9f758fe8b98efc71179",
+      "format": "modumotion_g1_anchor_domain_v1",
+      "domain": "mimicx_descent",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "interface_sha256": "d03c249b9a7e874d1dd2267b4f65997125086aff1af451a8517f43af2fcd16b7",
+      "context": null,
+      "merge_bias": [
+        0.0
+      ]
+    },
+    "roll_vault_no_wall": {
+      "source_relative_to_native_root": "reports/instinct_all_tasks_dagger_v2/roll_vault_no_wall/run/training/round_020.domain.pt",
+      "sha256": "f3645f8c243de30a7df51193f9b0f14ff76949e6ef5a52efd9425a03a689ca9c",
+      "format": "modumotion_g1_anchor_domain_v2",
+      "domain": "instinct_roll_vault_no_wall",
+      "public_sha256": "898d1a02829f901fbad4ed07178df2b06778620b54e8bccf5e07ffcb4c31d32d",
+      "interface_sha256": "d03c249b9a7e874d1dd2267b4f65997125086aff1af451a8517f43af2fcd16b7",
+      "context": {
+        "dim": 32,
+        "schema": {
+          "kind": "instinct_released_depth_features",
+          "depth_shape": [
+            1,
+            18,
+            32
+          ],
+          "normalization": "released_policy_normalizer",
+          "frozen": true
+        },
+        "encoder_sha256": "e1b51e23b669ecd8c37873067251f1073bb9c1012a1fb3b804d092b0b8e50868",
+        "sha256": "94f069902a871597e06f4a479a50ae33d6f03c7e817e418f093f005deeda9dd3"
+      },
+      "merge_bias": [
+        0.0
+      ]
+    }
+  },
+  "tasks": [
+    {
+      "expert": "mimicx_descent",
+      "control_steps": 600,
+      "first_tracking_warning_s": null,
+      "mean_expert_contribution": 0.5118191663424174,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234994858503342
+        },
+        {
+          "episode": 2,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.08234953135251999
+        }
+      ],
+      "final_root_error_m": 0.030714280903339386
+    },
+    {
+      "expert": "husky_skateboard",
+      "control_steps": 600,
+      "first_tracking_warning_s": null,
+      "mean_expert_contribution": 0.9885696338613829,
+      "completed_reference_intervals": [],
+      "final_board_displacement_m": 15.369403768702947,
+      "final_board_distance_m": 0.18809252550636069,
+      "final_root_error_m": null
+    },
+    {
+      "expert": "athlete_tennis",
+      "control_steps": 600,
+      "first_tracking_warning_s": null,
+      "mean_expert_contribution": 0.5854684973259767,
+      "completed_reference_intervals": [],
+      "final_root_error_m": null
+    },
+    {
+      "expert": "roll_vault_no_wall",
+      "control_steps": 600,
+      "first_tracking_warning_s": null,
+      "mean_expert_contribution": 0.999999368985494,
+      "completed_reference_intervals": [
+        {
+          "episode": 1,
+          "tracking_lost": false,
+          "endpoint_error_m": 0.14869102835655212
+        }
+      ],
+      "final_root_error_m": 0.03729190304875374,
+      "final_depth_pixel_std": 0.1966123878955841
+    }
+  ],
+  "tennis": {
+    "first_unstable_s": null,
+    "complete_cycles": 2,
+    "legal_returns": 2,
+    "cycles": [
+      {
+        "cycle": 0,
+        "racket_contact": true,
+        "net_crossing": {
+          "position": [
+            3.5,
+            -0.177146858990347,
+            1.0895378411862828
+          ],
+          "clears_net": true
+        },
+        "first_bounce_after_hit": {
+          "position": [
+            4.444814423605905,
+            -0.36671437423916053,
+            0.033600000000000005
+          ],
+          "inside_opponent_singles_half": true,
+          "target_error_xy_m": 0.6653649047775683
+        },
+        "complete_cycle": true
+      },
+      {
+        "cycle": 1,
+        "racket_contact": true,
+        "net_crossing": {
+          "position": [
+            3.5,
+            -1.2935278880005645,
+            1.178139008394554
+          ],
+          "clears_net": true
+        },
+        "first_bounce_after_hit": {
+          "position": [
+            4.665913921925743,
+            -1.5540499861524761,
+            0.033600000000000005
+          ],
+          "inside_opponent_singles_half": true,
+          "target_error_xy_m": 1.5895549273376968
+        },
+        "complete_cycle": true
+      }
+    ],
+    "current_partial_cycle": {
+      "cycle": 2,
+      "racket_contact": true,
+      "net_crossing": null,
+      "first_bounce_after_hit": null
+    }
+  },
+  "reset_events": [
+    {
+      "task": "mimicx_descent",
+      "time_s": 4.8000000000000504,
+      "tracking_lost": false
+    },
+    {
+      "task": "mimicx_descent",
+      "time_s": 9.600000000000232,
+      "tracking_lost": false
+    },
+    {
+      "task": "roll_vault_no_wall",
+      "time_s": 10.440000000000065,
+      "tracking_lost": false
+    }
+  ],
+  "torch_cuda_peak_allocated_MiB": 3237.49609375,
+  "source_sha256": {
+    "src/pera/interaction_showcase.py": "5a5e77d05f09c57481be902d735717d537ac89fb8b988d9c5c0d5a4149d95c5a",
+    "src/pera/holomotion_showcase.py": "9536db91d896edb229042f400723ab2dd55e78e380df2b1c5de98ee6db88e096",
+    "configs/demo_policy.json": "93d0be0bdcaf1475ba662a752b032dbd1a4c2e76e5ba8a923ee557ec5c76e532",
+    "configs/showcase.json": "d607312dd343fcb591aca7bc9c6ec0d8e63cf19b536f07f6ff14bc3b81b1f72b"
+  },
+  "source_snapshot": "runs/holomotion_four_20261113/video_01/source_snapshot",
+  "pytest": "15 passed",
+  "limits": [
+    "Shared-world scene port, not original native acceptance gates or a success-rate estimate",
+    "Common2.5ms physics is native ATHLETE rate; descent, skateboard and vault were originally5ms",
+    "Only vault uses camera pixels; HUSKY uses proprioceptive128D and tennis uses observable ball-state631D context",
+    "Reference-boundary repeats are labeled state resets, not learned recovery; ball relaunch/rebound follows native game rules",
+    "All four robot actions come from one unchanged official HoloMotion Actor with matching trained FFN/router experts; teacher action heads are not evaluated"
+  ]
+}

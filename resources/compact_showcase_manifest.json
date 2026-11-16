@@ -1,0 +1,42 @@
+{
+  "schema": "pera.showcase_resources.v1",
+  "stage": "local_review_only_not_uploaded",
+  "files": [
+    {
+      "source": "third_party/mimicx_release/MimicX-Assets/releases/2026-10-11-scenes/tasks/stairs/motion.npz",
+      "path": "data/showcase/stairs/motion.npz",
+      "sha256": "a1192b8cbd87088ff62d15eb029c313c2cddc17d6b099f461642da32cae82adc",
+      "bytes": 808194
+    },
+    {
+      "source": "third_party/mimicx_release/MimicX-Assets/releases/2026-10-11-scenes/tasks/stairs/scene.json",
+      "path": "data/showcase/stairs/scene.json",
+      "sha256": "5e3efd077305b5b93dd18f395def59f3e4879c59d31faef63e55144aa609c25a",
+      "bytes": 5402
+    },
+    {
+      "source": "third_party/mimicx_release/MimicX-Assets/releases/2026-10-14-demonstrations/tasks/kungfu/motion.npz",
+      "path": "data/showcase/kungfu/motion.npz",
+      "sha256": "8f3f80bd7e125902b59f6afe7ff96034f1b5145cd26ee4f1c64c03fe36d5624b",
+      "bytes": 1904898
+    },
+    {
+      "source": "third_party/mimicx_release/MimicX-Assets/releases/2026-10-14-demonstrations/tasks/dance/motion.npz",
+      "path": "data/showcase/dance/motion.npz",
+      "sha256": "2154de69a602529ba86de4e5b4e99b22f83907ce3d4906dc2bdee4105898cd1e",
+      "bytes": 1406722
+    },
+    {
+      "source": "third_party/mimicx_release/MimicX-Assets/releases/2026-10-14-demonstrations/tasks/football/motion.npz",
+      "path": "data/showcase/football/motion.npz",
+      "sha256": "9b58b814cd186b70e7a29d56732a61d79362cf0cb212ef6dd6c27c1eae9faaae",
+      "bytes": 817154
+    },
+    {
+      "source": "reports/distillation_suite_v1/run_20261105_173125/mimicx_kungfu/attempt_1/frozen_context_normalizer.pt",
+      "path": "data/showcase/kungfu/frozen_context_normalizer.pt",
+      "sha256": "e6e99ae3f331a4e44705ba6dabc3aa7f36bf09f37dd7f3b3aa93e333b8d98a68",
+      "bytes": 4753
+    }
+  ]
+}
