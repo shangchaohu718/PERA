@@ -6,7 +6,7 @@
 
 一个冻结的 HoloMotion 底座，按需启用独立训练的任务专家。
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [项目网站源码](website/) · [模型](docs/MODELS.md) · [安装](docs/ENVIRONMENT.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [项目网站源码](https://github.com/shangchaohu718/PERA/tree/main/website) · [模型](docs/MODELS.md) · [安装](docs/ENVIRONMENT.md)
 
 </div>
 
@@ -70,7 +70,7 @@ bash scripts/replay_all_scenes.sh --base-dir /path/to/holomotion-v1.4 \
 
 ## 项目网站
 
-网站源码和单场景素材位于本仓库的 [website/](website/)。PERA 保持私有；当前账号套餐不支持该私有仓库的 GitHub Pages，因此新地址尚未上线，旧网页暂时保留。首页与本自述文件不展示合并场景测试拼图。
+网站源码和单场景素材位于本仓库的 [website/](https://github.com/shangchaohu718/PERA/tree/main/website)。PERA 保持私有；当前账号套餐不支持该私有仓库的 GitHub Pages，因此新地址尚未上线，旧网页暂时保留。首页与本自述文件不展示合并场景测试拼图。
 
 ## 验证范围
 

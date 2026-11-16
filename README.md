@@ -6,7 +6,7 @@
 
 One frozen HoloMotion base. Independently trained task experts.
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [Website source](website/) · [Models](docs/MODELS.md) · [Setup](docs/ENVIRONMENT.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [Website source](https://github.com/shangchaohu718/PERA/tree/main/website) · [Models](docs/MODELS.md) · [Setup](docs/ENVIRONMENT.md)
 
 </div>
 
@@ -70,7 +70,7 @@ This command runs the three scene groups in sequence and writes videos and measu
 
 ## Website
 
-Website source and media are in [website/](website/), in this same PERA repository. The repository remains private. Pages hosting is currently blocked by the account plan; the previous public website is retained during migration. Shared-world test mosaics are not homepage media.
+Website source and media are in [website/](https://github.com/shangchaohu718/PERA/tree/main/website), in this same PERA repository. The repository remains private. Pages hosting is currently blocked by the account plan; the previous public website is retained during migration. Shared-world test mosaics are not homepage media.
 
 ## Verification scope
 
