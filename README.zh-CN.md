@@ -4,7 +4,7 @@
 
 **Plug-in Experts for Robotic Actions in Continual Whole-Body Control**
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [项目网站源码](https://github.com/shangchaohu718/PERA/tree/main/website) · [模型](docs/MODELS.md) · [安装](docs/ENVIRONMENT.md)
+[论文](https://arxiv.org/abs/2611.16188) · [PDF](https://arxiv.org/pdf/2611.16188) · [English](README.md) · [简体中文](README.zh-CN.md) · [项目网站源码](https://github.com/shangchaohu718/PERA/tree/main/website) · [模型](docs/MODELS.md) · [安装](docs/ENVIRONMENT.md)
 
 </div>
 
@@ -76,7 +76,7 @@ bash scripts/replay_all_scenes.sh --base-dir /path/to/holomotion-v1.4 \
 
 ## 引用
 
-如果你的研究使用了 PERA，请引用 [PERA](CITATION.cff)。
+如果你的研究使用了 PERA，请引用[我们的论文](https://arxiv.org/abs/2611.16188)。引用信息见 [CITATION.cff](CITATION.cff)。
 
 InstinctMJ、instinct_rl 和 HUSKY 的部分组件适用非商业条款，详见[第三方声明](THIRD_PARTY_NOTICES.md)。
 

@@ -4,7 +4,7 @@
 
 **Plug-in Experts for Robotic Actions in Continual Whole-Body Control**
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [Website source](https://github.com/shangchaohu718/PERA/tree/main/website) · [Models](docs/MODELS.md) · [Setup](docs/ENVIRONMENT.md)
+[Paper](https://arxiv.org/abs/2611.16188) · [PDF](https://arxiv.org/pdf/2611.16188) · [English](README.md) · [简体中文](README.zh-CN.md) · [Website source](https://github.com/shangchaohu718/PERA/tree/main/website) · [Models](docs/MODELS.md) · [Setup](docs/ENVIRONMENT.md)
 
 </div>
 
@@ -76,7 +76,7 @@ The original seven-region replay matched the previous student demonstration exac
 
 ## Citation
 
-If you use PERA in your research, please cite [PERA](CITATION.cff).
+If you use PERA in your research, please cite [our paper](https://arxiv.org/abs/2611.16188). Citation metadata are available in [CITATION.cff](CITATION.cff).
 
 Third-party InstinctMJ, instinct_rl and HUSKY components include noncommercial terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
 
